@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AlertService, AuthenticationService } from '../_services';
 
-declare var $ : any;
+import * as sha1 from 'sha1';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("LOGIN");
 
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
@@ -55,7 +54,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
+    this.authenticationService.login(this.f.email.value, sha1(this.f.password.value))
       .pipe(first())
       .subscribe(
         data => {
