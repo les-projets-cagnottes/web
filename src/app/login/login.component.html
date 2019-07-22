@@ -1,0 +1,45 @@
+<div class="login-box">
+    <div class="login-logo">
+        <a href="/">Val<b>you</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group has-feedback">
+                <input type="email" formControlName="email" class="form-control" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email is required</div>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8" data-toggle="buttons">
+                    <label class="btn btn-success btn-flat active">
+                        <input type="checkbox" autocomplete="off" checked>
+                        <span class="glyphicon glyphicon-ok"></span>
+                        Remember Me
+                    </label>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button [disabled]="loading" class="btn btn-primary btn-block btn-flat">Login</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+        <div class="text-center">
+            <a href="#">Forgotten password ?</a>
+        </div>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->

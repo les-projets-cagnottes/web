@@ -75,7 +75,12 @@
               {
                 "glob": "**/*", 
                 "input": "node_modules/chart.js/dist/", 
-                "output": "./assets/lib/chart.js/"
+                "output": "./assets/lib/chartjs"
+              },
+              {
+                "glob": "**/*", 
+                "input": "node_modules/icheck/", 
+                "output": "./assets/lib/icheck"
               }
             ],
             "styles": [
