@@ -24,7 +24,6 @@ export class ValyouComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("VALYOU");
   }
 
   ngOnDestroy() {

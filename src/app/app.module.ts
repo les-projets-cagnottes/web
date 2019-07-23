@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppNavbarComponent } from './navbar/navbar.component';
+import { AppNavbarComponent } from './valyou/navbar/navbar.component';
 import { ValyouComponent } from './valyou/valyou.component';
 import { LoginComponent } from './login/login.component';
 

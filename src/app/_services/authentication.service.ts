@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -20,9 +20,9 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<any>(`${environment.apiUrl}/user/login`,
-            { 
-                email, 
+        return this.http.post<any>(`${environment.apiUrl}/auth/login`,
+            {
+                email,
                 password
             })
             .pipe(map(user => {
@@ -32,7 +32,14 @@ export class AuthenticationService {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                 }
+                return user;
+            }));
+    }
 
+    whoami(): Observable<User> {
+        return this.http.get<User>(`${environment.apiUrl}/whoami`)
+            .pipe(map(user => {
+                console.log(user);
                 return user;
             }));
     }

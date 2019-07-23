@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router"
+import { Router } from "@angular/router"
 
-import { AuthenticationService } from '../_services';
+import { AuthenticationService } from '../../_services';
+import { User } from 'src/app/_models';
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +10,8 @@ import { AuthenticationService } from '../_services';
   styleUrls: ['./navbar.component.css']
 })
 export class AppNavbarComponent implements OnInit {
+
+  currentUser = new User();
 
   constructor(
     private router: Router,
@@ -18,6 +21,13 @@ export class AppNavbarComponent implements OnInit {
 
 
   ngOnInit() {
+    this.whoami();
+  }
+
+  whoami() {
+    console.log("helo")
+    this.authenticationService.whoami()
+      .subscribe(user => this.currentUser = user);
   }
 
   logout() {
