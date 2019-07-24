@@ -20,6 +20,7 @@ export class ValyouComponent implements OnInit, OnDestroy {
   ) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
+      this.currentUser.authorities[0].name == 'ROLE_ADMIN';
     });
   }
 

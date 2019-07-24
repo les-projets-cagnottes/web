@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DataTablesModule } from 'angular-datatables';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,8 @@ import { fakeBackendProvider } from './_helpers';
 
 import { AlertComponent } from './_components'
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { UsersComponent } from './valyou/users/users.component';
+import { ProjectsComponent } from './valyou/projects/projects.component';
 
 
 @NgModule({
@@ -21,13 +24,16 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
     AppComponent,
     AppNavbarComponent,
     ValyouComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

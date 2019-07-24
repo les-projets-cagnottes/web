@@ -9,13 +9,18 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">MAIN NAVIGATION</li>
                 <li>
-                    <a routerLink="/projects">
-                        <i class="fa fa-book"></i> <span>Projects</span>
+                    <a [routerLink]="['projects']">
+                        <i class="fa fa-plus"></i> <span>Add my projects</span>
                     </a>
                 </li>
-                <li class="header">ADMINISTRATION</li>
                 <li>
-                    <a routerLink="/users">
+                    <a [routerLink]="['projects']">
+                        <i class="fa fa-book"></i> <span>Consult Projects</span>
+                    </a>
+                </li>
+                <li *ngIf="currentUser.authorities[0].name == 'ROLE_ADMIN'" class="header">ADMINISTRATION</li>
+                <li *ngIf="currentUser.authorities[0].name == 'ROLE_ADMIN'">
+                    <a [routerLink]="['users']">
                         <i class="fa fa-users"></i> <span>Users</span>
                     </a>
                 </li>
@@ -29,7 +34,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                {{ title }}
+                Valyou
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

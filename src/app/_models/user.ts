@@ -6,4 +6,5 @@
     firstname: string;
     lastname: string;
     token: string;
+    authorities;
 }

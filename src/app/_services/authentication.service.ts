@@ -39,7 +39,9 @@ export class AuthenticationService {
     whoami(): Observable<User> {
         return this.http.get<User>(`${environment.apiUrl}/whoami`)
             .pipe(map(user => {
-                console.log(user);
+                user.token = JSON.parse(localStorage.getItem('currentUser')).token;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
                 return user;
             }));
     }
