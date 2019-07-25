@@ -25,7 +25,6 @@ export class AppNavbarComponent implements OnInit {
   }
 
   whoami() {
-    console.log("helo")
     this.authenticationService.whoami()
       .subscribe(user => this.currentUser = user);
   }

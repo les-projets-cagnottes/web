@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { User } from '../_models';
 import { AuthenticationService } from '../_services';
+import { Role } from '../_models/role';
 
 @Component({
   selector: 'app-valyou',
@@ -20,7 +21,6 @@ export class ValyouComponent implements OnInit, OnDestroy {
   ) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
-      this.currentUser.authorities[0].name == 'ROLE_ADMIN';
     });
   }
 
@@ -30,6 +30,16 @@ export class ValyouComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();
+  }
+
+  get isSponsor() {
+    var isSponsor = this.currentUser != null && this.currentUser.authorities != null;
+    return isSponsor && this.currentUser.authorities.some(a => a.name === Role.Admin);
+  }
+
+  get isAdmin() {
+    var isAdmin = this.currentUser != null && this.currentUser.authorities != null;
+    return isAdmin && this.currentUser.authorities.some(a => a.name === Role.Admin);
   }
 
 }
