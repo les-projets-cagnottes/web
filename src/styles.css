@@ -1,1 +1,157 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Skin: Valyou
+ * -----------
+ */
+ .content-wrapper {
+    background-color: #EFF1F4;
+}
+
+ .skin-valyou .main-header .navbar {
+    background-color: #222E4D;
+  }
+  .skin-valyou .main-header .navbar .nav > li > a {
+    color: #ffffff;
+  }
+  .skin-valyou .main-header .navbar .nav > li > a:hover,
+  .skin-valyou .main-header .navbar .nav > li > a:active,
+  .skin-valyou .main-header .navbar .nav > li > a:focus,
+  .skin-valyou .main-header .navbar .nav .open > a,
+  .skin-valyou .main-header .navbar .nav .open > a:hover,
+  .skin-valyou .main-header .navbar .nav .open > a:focus,
+  .skin-valyou .main-header .navbar .nav > .active > a {
+    background: rgba(0, 0, 0, 0.1);
+    color: #f6f6f6;
+  }
+  .skin-valyou .main-header .navbar .sidebar-toggle {
+    color: #ffffff;
+  }
+  .skin-valyou .main-header .navbar .sidebar-toggle:hover {
+    color: #f6f6f6;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .skin-valyou .main-header .navbar .sidebar-toggle {
+    color: #fff;
+  }
+  .skin-valyou .main-header .navbar .sidebar-toggle:hover {
+    background-color: #6CBFBB;
+  }
+  @media (max-width: 767px) {
+    .skin-valyou .main-header .navbar .dropdown-menu li.divider {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .skin-valyou .main-header .navbar .dropdown-menu li a {
+      color: #fff;
+    }
+    .skin-valyou .main-header .navbar .dropdown-menu li a:hover {
+      background: #6CBFBB;
+    }
+  }
+  .skin-valyou .main-header .logo {
+    background-color: #222E4D;
+    color: #ffffff;
+    border-bottom: 0 solid transparent;
+  }
+  .skin-valyou .main-header .logo:hover {
+    background-color: #6CBFBB;
+  }
+  .skin-valyou .main-header li.user-header {
+    background-color: #222E4D;
+  }
+  .skin-valyou .content-header {
+    background: transparent;
+  }
+  .skin-valyou .wrapper,
+  .skin-valyou .main-sidebar,
+  .skin-valyou .left-side {
+    background-color: #f9fafc;
+  }
+  .skin-valyou .main-sidebar {
+    border-right: 1px solid #d2d6de;
+  }
+  .skin-valyou .user-panel > .info,
+  .skin-valyou .user-panel > .info > a {
+    color: #444444;
+  }
+  .skin-valyou .sidebar-menu > li {
+    -webkit-transition: border-left-color 0.3s ease;
+    -o-transition: border-left-color 0.3s ease;
+    transition: border-left-color 0.3s ease;
+  }
+  .skin-valyou .sidebar-menu > li.header {
+    color: #848484;
+    background: #f9fafc;
+  }
+  .skin-valyou .sidebar-menu > li > a {
+    border-left: 3px solid transparent;
+    font-weight: 600;
+  }
+  .skin-valyou .sidebar-menu > li:hover > a,
+  .skin-valyou .sidebar-menu > li.active > a {
+    color: #000000;
+    background: #f4f4f5;
+  }
+  .skin-valyou .sidebar-menu > li.active {
+    border-left-color: #222E4D;
+  }
+  .skin-valyou .sidebar-menu > li.active > a {
+    font-weight: 600;
+  }
+  .skin-valyou .sidebar-menu > li > .treeview-menu {
+    background: #f4f4f5;
+  }
+  .skin-valyou .sidebar a {
+    color: #444444;
+  }
+  .skin-valyou .sidebar a:hover {
+    text-decoration: none;
+  }
+  .skin-valyou .sidebar-menu .treeview-menu > li > a {
+    color: #777777;
+  }
+  .skin-valyou .sidebar-menu .treeview-menu > li.active > a,
+  .skin-valyou .sidebar-menu .treeview-menu > li > a:hover {
+    color: #000000;
+  }
+  .skin-valyou .sidebar-menu .treeview-menu > li.active > a {
+    font-weight: 600;
+  }
+  .skin-valyou .sidebar-form {
+    border-radius: 3px;
+    border: 1px solid #d2d6de;
+    margin: 10px 10px;
+  }
+  .skin-valyou .sidebar-form input[type="text"],
+  .skin-valyou .sidebar-form .btn {
+    box-shadow: none;
+    background-color: #fff;
+    border: 1px solid transparent;
+    height: 35px;
+  }
+  .skin-valyou .sidebar-form input[type="text"] {
+    color: #666;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+  }
+  .skin-valyou .sidebar-form input[type="text"]:focus,
+  .skin-valyou .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+    background-color: #fff;
+    color: #666;
+  }
+  .skin-valyou .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+    border-left-color: #fff;
+  }
+  .skin-valyou .sidebar-form .btn {
+    color: #999;
+    border-top-left-radius: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 0;
+  }
+  @media (min-width: 768px) {
+    .skin-valyou.sidebar-mini.sidebar-collapse .sidebar-menu > li > .treeview-menu {
+      border-left: 1px solid #d2d6de;
+    }
+  }
+  

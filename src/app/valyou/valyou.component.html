@@ -7,15 +7,20 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">PROJECTS</li>
                 <li>
                     <a routerLink="/projects">
-                        <i class="fa fa-plus"></i> <span>Add my project</span>
+                        <i class="fa fa-lightbulb-o"></i> <span>I have an idea</span>
                     </a>
                 </li>
                 <li>
                     <a routerLink="/projects">
-                        <i class="fa fa-book"></i> <span>Discover projects</span>
+                        <i class="fa fa-paper-plane-o"></i> <span>Submit a project</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/projects">
+                        <i class="fa fa-book"></i> <span>Discover ideas & projects</span>
                     </a>
                 </li>
                 <li *ngIf="isSponsor" class="header">SPONSORING</li>
