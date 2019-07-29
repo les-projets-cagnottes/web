@@ -5,6 +5,9 @@
     password: string;
     firstname: string;
     lastname: string;
+    avatarUrl: string;
+    color: string;
+    isActivated: boolean;
     token: string;
     authorities;
 }
