@@ -64,10 +64,10 @@
                     <div class="col-xs-6">
                         <div class="dataTables_length text-right"><label for="pageSize">Nb entries</label><select id="pageSize"
                                 name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
                             </select></div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 dataTables_info_container">
                         <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }}
                             of {{ pager.totalItems }} entries</div>
                     </div>

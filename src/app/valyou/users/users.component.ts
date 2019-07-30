@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
   private rawResponse: any;
   pager: any = {};
   pagedItems: any[];
-  pageSize: number = 1;
+  pageSize: number = 10;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,7 +39,6 @@ export class UsersComponent implements OnInit {
       color: ['']
     });
     this.userEdited = new User();
-    this.pager = this.pagerService.getPager(1, 1);
     this.refresh();
   }
 
