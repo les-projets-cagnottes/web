@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataTablesModule } from 'angular-datatables';
 
@@ -13,7 +13,6 @@ import { LoginComponent } from './login/login.component';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 
-import { AlertComponent } from './_components'
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { UsersComponent } from './valyou/users/users.component';
 import { ProjectsComponent } from './valyou/projects/projects.component';
@@ -31,6 +30,7 @@ import { ProjectsComponent } from './valyou/projects/projects.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule

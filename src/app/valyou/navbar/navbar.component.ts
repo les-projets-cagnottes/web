@@ -17,6 +17,7 @@ export class AppNavbarComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
+    this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
 
 

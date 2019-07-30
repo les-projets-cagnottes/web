@@ -2,6 +2,11 @@
  * Skin: Valyou
  * -----------
  */
+.datatable-nb-entries {
+  display: inline-block;
+  width: auto;
+  margin-left: .5em;
+}
  .content-wrapper {
     background-color: #EFF1F4;
 }

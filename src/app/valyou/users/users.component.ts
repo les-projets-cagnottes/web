@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/_services';
+import { UserService, PagerService } from 'src/app/_services';
 import { User } from 'src/app/_models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -14,77 +13,75 @@ export class UsersComponent implements OnInit {
 
   editUserForm: FormGroup;
   closeResult: string;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
-  users: User[];
   userEdited: User;
   editUserModalLabel: string;
   submitting: boolean;
+  refreshStatus: string = "no-refresh";
+
+  private rawResponse: any;
+  pager: any = {};
+  pagedItems: any[];
+  pageSize: number = 1;
 
   constructor(
     private formBuilder: FormBuilder,
+    private pagerService: PagerService,
     private userService: UserService) { }
 
   ngOnInit() {
     this.editUserForm = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       firstname: [''],
       lastname: [''],
       isActivated: [''],
       avatarUrl: [''],
       color: ['']
     });
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10
-    };
     this.userEdited = new User();
-    this.getUsers();
+    this.pager = this.pagerService.getPager(1, 1);
+    this.refresh();
   }
 
-  getUsers(): void {
-    this.userService.getAll(0, this.dtOptions.pageLength)
-      .subscribe(users => {
-        this.users = users['content'];
-        this.dtTrigger.next();
-      });
-  }
-
-  refresh(): void {
-    this.userService.getAll(0, this.dtOptions.pageLength)
-      .subscribe(users => {
-        this.users = users['content'];
+  
+  refresh(page: number = 1): void {
+    this.userService.getAll(page - 1, this.pageSize)
+      .subscribe(response => {
+        this.rawResponse = response;
+        this.setPage(page);
+        this.refreshStatus = 'success';
+        setTimeout(() => {
+          this.refreshStatus = 'no-refresh';
+        }, 2000);
       });
   }
 
   openModalCreateUser(): void {
+    this.userEdited = new User();
     this.editUserModalLabel = "New User";
+    this.f.email.setValue("");
+    this.f.firstname.setValue("");
+    this.f.lastname.setValue("");
+    this.f.avatarUrl.setValue("");
+    this.f.color.setValue("");
+    this.f.isActivated.setValue(false);
   }
 
-  get f() { return this.editUserForm.controls; }
+  openModalEditUser(user: User): void {
+    this.editUserModalLabel = user.firstname + " " + user.lastname;
+    this.userEdited = user;
+    this.f.email.setValue(user.email);
+    this.f.firstname.setValue(user.firstname);
+    this.f.lastname.setValue(user.lastname);
+    this.f.avatarUrl.setValue(user.avatarUrl);
+    this.f.color.setValue("#" + user.color);
+    this.f.isActivated.setValue(user.isActivated);
+  }
 
-  onSubmit() {
-
-    console.log("riezop")
-    // stop here if form is invalid
-    if (this.editUserForm.invalid) {
-      return;
-    }
-    this.submitting = true;
-    this.userEdited = new User();
-    this.userEdited.email = this.f.email.value;
-    this.userEdited.password = this.f.password.value;
-    this.userEdited.firstname = this.f.firstname.value;
-    this.userEdited.lastname = this.f.lastname.value;
-    this.userEdited.avatarUrl = this.f.avatarUrl.value;
-    this.userEdited.color = this.f.color.value;
-    this.userEdited.isActivated = this.f.isActivated.value;
-
-    this.userService.create(this.userEdited)
-      .pipe(first())
+  delete(user: User): void {
+    this.userService.delete(user.id)
       .subscribe(
-        data => {
+        () => {
           this.refresh();
           this.submitting = false;
         },
@@ -92,6 +89,60 @@ export class UsersComponent implements OnInit {
           console.log(error);
           this.submitting = false;
         });
+  }
+
+  setPage(page: number) {
+    this.pager = this.pagerService.getPager(this.rawResponse.totalElements, page, this.pageSize);
+    this.pagedItems = this.rawResponse.content;
+  }
+
+  get f() { return this.editUserForm.controls; }
+
+  onSubmit() {
+
+    // stop here if form is invalid
+    if (this.editUserForm.invalid) {
+      return;
+    }
+    if(this.userEdited.id === undefined && this.f.password.value === '') {
+      this.f.password.errors.append('Password is required when creating a user');
+      return;
+    }
+
+    this.submitting = true;
+    this.userEdited.email = this.f.email.value;
+    this.userEdited.firstname = this.f.firstname.value;
+    this.userEdited.lastname = this.f.lastname.value;
+    this.userEdited.avatarUrl = this.f.avatarUrl.value;
+    this.userEdited.color = this.f.color.value.substring(1);
+    this.userEdited.isActivated = this.f.isActivated.value;
+
+    if (this.userEdited.id === undefined) {
+      this.userService.create(this.userEdited)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this.refresh();
+            this.submitting = false;
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+          });
+    } else {
+      this.userService.update(this.userEdited)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this.refresh();
+            this.submitting = false;
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+          });
+    }
+
   }
 
 }
