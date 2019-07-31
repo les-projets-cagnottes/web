@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit {
     this.refresh();
   }
 
-  
+
   refresh(page: number = 1): void {
     this.userService.getAll(page - 1, this.pageSize)
       .subscribe(response => {
@@ -103,7 +103,7 @@ export class UsersComponent implements OnInit {
     if (this.editUserForm.invalid) {
       return;
     }
-    if(this.userEdited.id === undefined && this.f.password.value === '') {
+    if (this.userEdited.id === undefined && this.f.password.value === '') {
       this.f.password.errors.append('Password is required when creating a user');
       return;
     }
@@ -117,6 +117,7 @@ export class UsersComponent implements OnInit {
     this.userEdited.isActivated = this.f.isActivated.value;
 
     if (this.userEdited.id === undefined) {
+      this.userEdited.password = this.f.password.value;
       this.userService.create(this.userEdited)
         .pipe(first())
         .subscribe(
@@ -129,6 +130,9 @@ export class UsersComponent implements OnInit {
             this.submitting = false;
           });
     } else {
+      if (this.f.password.value !== undefined) {
+        this.userEdited.password = this.f.password.value;
+      }
       this.userService.update(this.userEdited)
         .pipe(first())
         .subscribe(

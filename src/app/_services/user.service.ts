@@ -19,6 +19,10 @@ export class UserService {
         return this.http.get(`${environment.apiUrl}/user/${id}`);
     }
 
+    getByEmail(email: string) {
+        return this.http.get(`${environment.apiUrl}/user?email=${email}`);
+    }
+
     create(user: User) {
         return this.http.post(`${environment.apiUrl}/user`, user);
     }

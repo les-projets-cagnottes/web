@@ -16,6 +16,9 @@ import { fakeBackendProvider } from './_helpers';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { UsersComponent } from './valyou/users/users.component';
 import { ProjectsComponent } from './valyou/projects/projects.component';
+import { OrganizationsComponent } from './valyou/organizations/organizations.component';
+import { NewOrganizationComponent } from './valyou/organizations/new-organization/new-organization.component';
+import { NewProjectComponent } from './valyou/projects/new-project/new-project.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { ProjectsComponent } from './valyou/projects/projects.component';
     ValyouComponent,
     LoginComponent,
     UsersComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    OrganizationsComponent,
+    NewOrganizationComponent,
+    NewProjectComponent
   ],
   imports: [
     BrowserModule,
