@@ -33,13 +33,13 @@ export class ValyouComponent implements OnInit, OnDestroy {
   }
 
   get isSponsor() {
-    var isSponsor = this.currentUser != null && this.currentUser.authorities != null;
-    return isSponsor && this.currentUser.authorities.some(a => a.name === Role.Admin);
+    var isSponsor = this.currentUser != null && this.currentUser.userAuthorities != null;
+    return isSponsor && this.currentUser.userAuthorities.some(a => a.name === Role.Admin);
   }
 
   get isAdmin() {
-    var isAdmin = this.currentUser != null && this.currentUser.authorities != null;
-    return isAdmin && this.currentUser.authorities.some(a => a.name === Role.Admin);
+    var isAdmin = this.currentUser != null && this.currentUser.userAuthorities != null;
+    return isAdmin && this.currentUser.userAuthorities.some(a => a.name === Role.Admin);
   }
 
 }

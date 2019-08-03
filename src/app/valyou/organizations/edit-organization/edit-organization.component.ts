@@ -6,11 +6,11 @@ import { first } from 'rxjs/operators';
 import { UserService } from 'src/app/_services';
 
 @Component({
-  selector: 'app-new-organization',
-  templateUrl: './new-organization.component.html',
-  styleUrls: ['./new-organization.component.css']
+  selector: 'app-edit-organization',
+  templateUrl: './edit-organization.component.html',
+  styleUrls: ['./edit-organization.component.css']
 })
-export class NewOrganizationComponent implements OnInit {
+export class EditOrganizationComponent implements OnInit {
 
   editOrgForm: FormGroup;
   addMemberOrgForm: FormGroup;

@@ -6,14 +6,17 @@ import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './valyou/users/users.component';
 import { ProjectsComponent } from './valyou/projects/projects.component';
 import { NewProjectComponent } from './valyou/projects/new-project/new-project.component';
-import { NewOrganizationComponent } from './valyou/organizations/new-organization/new-organization.component';
+import { EditOrganizationComponent } from './valyou/organizations/edit-organization/edit-organization.component';
+import { OrganizationsComponent } from './valyou/organizations/organizations.component';
 
 const routes: Routes = [
   {
     path: '', component: ValyouComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'projects', pathMatch: 'full' },
-      { path: 'organizations/new', component: NewOrganizationComponent },
+      { path: 'organizations/new', redirectTo: 'organizations/edit/0' },
+      { path: 'organizations/edit/:id', component: EditOrganizationComponent },
+      { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: NewProjectComponent },
       { path: 'projects', component: ProjectsComponent },
       { path: 'users', component: UsersComponent }

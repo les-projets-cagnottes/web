@@ -17,7 +17,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { UsersComponent } from './valyou/users/users.component';
 import { ProjectsComponent } from './valyou/projects/projects.component';
 import { OrganizationsComponent } from './valyou/organizations/organizations.component';
-import { NewOrganizationComponent } from './valyou/organizations/new-organization/new-organization.component';
+import { EditOrganizationComponent } from './valyou/organizations/edit-organization/edit-organization.component';
 import { NewProjectComponent } from './valyou/projects/new-project/new-project.component';
 
 
@@ -30,8 +30,8 @@ import { NewProjectComponent } from './valyou/projects/new-project/new-project.c
     UsersComponent,
     ProjectsComponent,
     OrganizationsComponent,
-    NewOrganizationComponent,
-    NewProjectComponent
+    NewProjectComponent,
+    EditOrganizationComponent
   ],
   imports: [
     BrowserModule,

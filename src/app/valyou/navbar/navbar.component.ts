@@ -3,6 +3,7 @@ import { Router } from "@angular/router"
 
 import { AuthenticationService } from '../../_services';
 import { User } from 'src/app/_models';
+import { OrganizationService } from 'src/app/_services/organization.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,12 +23,15 @@ export class AppNavbarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.whoami();
+    this.refresh();
   }
 
-  whoami() {
+  refresh() {
+
     this.authenticationService.whoami()
-      .subscribe(user => this.currentUser = user);
+      .subscribe(user => {
+        this.currentUser = user
+      });
   }
 
   logout() {
