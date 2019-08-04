@@ -6,8 +6,11 @@ export class Project {
     title: string;
     shortDescription: string;
     longDescription: string;
+    donationsRequired: number;
+    peopleRequired: number;
     leader: User;
     fundingDeadline: Date;
     donations: Donation[];
     peopleGivingTime: User[];
 }
+

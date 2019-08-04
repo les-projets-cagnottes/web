@@ -74,13 +74,18 @@
               },
               {
                 "glob": "**/*", 
-                "input": "node_modules/chart.js/dist/", 
-                "output": "./assets/lib/chartjs"
+                "input": "node_modules/icheck/", 
+                "output": "./assets/lib/icheck"
               },
               {
                 "glob": "**/*", 
-                "input": "node_modules/icheck/", 
-                "output": "./assets/lib/icheck"
+                "input": "node_modules/simplemde/dist/", 
+                "output": "./assets/lib/simplemde"
+              },
+              {
+                "glob": "**/*", 
+                "input": "node_modules/chart.js/dist/", 
+                "output": "./assets/lib/chartjs"
               }
             ],
             "styles": [
@@ -90,7 +95,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
-              "node_modules/datatables.net-bs/js/dataTables.bootstrap.js"
+              "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
+              "src/assets/plugins/simplemde/simplemde.start.js"
             ]
           },
           "configurations": {
