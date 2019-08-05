@@ -1,3 +1,3 @@
 function startSimpleMDE() {
-    var simplemde = new SimpleMDE();
+    return new SimpleMDE();
 }

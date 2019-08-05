@@ -21,6 +21,9 @@ export class NewProjectComponent implements OnInit {
   private nowPlus3Months = new Date();
   private fundingDeadlineValue = new Date();
 
+  // Long description field
+  private simplemde;
+
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
@@ -33,12 +36,11 @@ export class NewProjectComponent implements OnInit {
       shortDescription: ['', Validators.required],
       fundingDeadline: [''],
       donationsRequired: ['0.00', Validators.required],
-      peopleRequired: ['3', Validators.required],
-      longDescription: ['', Validators.required]
+      peopleRequired: ['3', Validators.required]
     });
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
-    startSimpleMDE();
+    this.simplemde = startSimpleMDE();
   }
 
   get f() { return this.form.controls; }
@@ -57,7 +59,9 @@ export class NewProjectComponent implements OnInit {
     var project = new Project();
     project.title = this.f.title.value;
     project.shortDescription = this.f.shortDescription.value;
-    project.longDescription = this.f.longDescription.value;
+    project.donationsRequired = this.f.donationsRequired.value;
+    project.peopleRequired = this.f.peopleRequired.value;
+    project.longDescription = this.simplemde.value();
     project.leader = this.authenticationService.currentUserValue;
     project.fundingDeadline = this.fundingDeadlineValue;
 
