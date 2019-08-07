@@ -29,6 +29,20 @@
     background-color: #EFF1F4;
 }
 
+.item-clickable {
+    cursor: pointer;
+}
+
+.btn-money,
+.btn-money:hover {
+    background-color: #F8D671;
+}
+
+.btn-team,
+.btn-team:hover {
+    background-color: #F2A397;
+}
+
 .skin-valyou .main-header .navbar {
     background-color: #222E4D;
 }

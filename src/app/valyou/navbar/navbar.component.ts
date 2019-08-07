@@ -21,13 +21,11 @@ export class AppNavbarComponent implements OnInit {
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
 
-
   ngOnInit() {
     this.refresh();
   }
 
   refresh() {
-
     this.authenticationService.whoami()
       .subscribe(user => {
         this.currentUser = user

@@ -17,6 +17,9 @@ export class ProjectService {
     return this.http.get<Project[]>(`${environment.apiUrl}/project`, { params });
   }
 
+  getById(id: number) {
+    return this.http.get<Project>(`${environment.apiUrl}/project/${id}`);
+  }
 
   create(project: Project) {
     return this.http.post(`${environment.apiUrl}/project`, project);

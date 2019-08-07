@@ -3,6 +3,7 @@ import { Donation } from './donation';
 
 export class Project {
     id: number;
+    createdAt: Date;
     title: string;
     shortDescription: string;
     longDescription: string;
@@ -12,5 +13,12 @@ export class Project {
     fundingDeadline: Date;
     donations: Donation[];
     peopleGivingTime: User[];
+
+    // Only in Valyou-Web
+    remainingDays: number;
+    fundingDeadlinePercent: string;
+    peopleRequiredPercent: string;
+    donationsRequiredPercent: string;
+    totalDonations: number = 0;
 }
 

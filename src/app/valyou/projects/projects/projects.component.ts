@@ -53,7 +53,6 @@ export class ProjectsComponent implements OnInit {
 
   computeDatePercent(start: Date, deadline: Date) {
     var now = new Date();
-    console.log(deadline);
     var totalDuration = deadline.getTime() - start.getTime();
     var expiredDuration = now.getTime() - start.getTime();
     return this.computeNumberPercent(expiredDuration, totalDuration);
