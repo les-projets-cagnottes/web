@@ -9,6 +9,7 @@ import { NewProjectComponent } from './valyou/projects/new-project/new-project.c
 import { EditOrganizationComponent } from './valyou/organizations/edit-organization/edit-organization.component';
 import { OrganizationsComponent } from './valyou/organizations/organizations/organizations.component';
 import { ViewProjectComponent } from './valyou/projects/view-project/view-project.component';
+import { BudgetsComponent } from './valyou/budgets/budgets.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'projects/new', component: NewProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ProjectsComponent },
+      { path: 'budgets', component: BudgetsComponent },
       { path: 'users', component: UsersComponent }
     ]
   },

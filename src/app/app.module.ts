@@ -21,6 +21,7 @@ import { OrganizationsComponent } from './valyou/organizations/organizations/org
 import { EditOrganizationComponent } from './valyou/organizations/edit-organization/edit-organization.component';
 import { NewProjectComponent } from './valyou/projects/new-project/new-project.component';
 import { ViewProjectComponent } from './valyou/projects/view-project/view-project.component';
+import { BudgetsComponent } from './valyou/budgets/budgets.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ViewProjectComponent } from './valyou/projects/view-project/view-projec
     OrganizationsComponent,
     NewProjectComponent,
     EditOrganizationComponent,
-    ViewProjectComponent
+    ViewProjectComponent,
+    BudgetsComponent
   ],
   imports: [
     BrowserModule,
