@@ -4,11 +4,12 @@ import { Donation } from './donation';
 
 export class Budget {
     id: number;
+    name: string;
     amountPerMember: number;
     organization: Organization;
     sponsor: User;
     donations: Donation[];
     
     // Only in Valyou-Web
-    usage: number;
+    usage: string;
 }
