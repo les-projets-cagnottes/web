@@ -25,12 +25,28 @@
                 </dl>
             </div>
             <div class="box-footer text-center">
-                <a class="btn btn-app btn-team">
+                <a class="btn btn-app btn-money" (click)="join()"
+                    *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id">
                     <i class="fa fa-pencil"></i> Join the team
                 </a>
-                <a class="btn btn-app btn-money">
+                <a class="btn btn-app btn-team" (click)="join()"
+                    *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id">
+                    <i class="fa fa-close"></i> Leave the team
+                </a>
+                <a class="btn btn-app btn-money" (click)="openModal(template)">
                     <i class="fa fa-money"></i> Contribute financially
                 </a>
+                <ng-template #template>
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left">Modal</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        This is a modal.
+                    </div>
+                </ng-template>
             </div>
         </div>
         <div class="box box-default">
@@ -66,7 +82,8 @@
                 <ul class="users-list clearfix">
                     <li>
                         <img [src]="project.leader.avatarUrl" alt="User Image">
-                        <a class="users-list-name" href="#">{{ project.leader.firstname }} {{ project.leader.lastname }}</a>
+                        <a class="users-list-name" href="#">{{ project.leader.firstname }}
+                            {{ project.leader.lastname }}</a>
                     </li>
                     <li *ngFor="let user of project.peopleGivingTime">
                         <img [src]="user.avatarUrl" alt="User Image">

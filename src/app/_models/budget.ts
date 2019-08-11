@@ -6,6 +6,8 @@ export class Budget {
     id: number;
     name: string;
     amountPerMember: number;
+    startDate: Date;
+    endDate: Date;
     organization: Organization;
     sponsor: User;
     donations: Donation[];

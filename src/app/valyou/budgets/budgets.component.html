@@ -33,6 +33,8 @@
                             <th>Name</th>
                             <th style="width: 20%">Organization</th>
                             <th style="width: 10%">Amount by person</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th style="width: 40%">Usage</th>
                             <th style="width: 40px"></th>
                         </tr>
@@ -49,6 +51,8 @@
                                     <span class="input-group-addon">€</span>
                                 </div>
                             </td>
+                            <td>{{ pagedItems[i].startDate | date:medium }}</td>
+                            <td>{{ pagedItems[i].endDate | date:medium }}</td>
                             <td>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': pagedItems[i].usage }">

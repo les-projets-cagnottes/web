@@ -100,6 +100,8 @@ export class BudgetsComponent implements OnInit {
           id: [value.id],
           name: [value.name, Validators.required],
           amountPerMember: [value.amountPerMember, [Validators.required]],
+          startDate: [value.startDate],
+          endDate: [value.endDate],
           organization: [value.organization],
           sponsor: [value.sponsor],
           donations: [value.donations]

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/_services/project.service';
-import { Project, Donation } from 'src/app/_models';
+import { Project, User } from 'src/app/_models';
+import { AuthenticationService, ProjectService } from 'src/app/_services';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-view-project',
@@ -11,12 +12,22 @@ import { Project, Donation } from 'src/app/_models';
 export class ViewProjectComponent implements OnInit {
 
   private id: number;
+  private userLoggedIn: User;
   private project: Project;
+
+  private modalRef: BsModalRef;
+  private isUserInTeam: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService) {
+    private authenticationService: AuthenticationService,
+    private projectService: ProjectService,
+    private modalService: BsModalService) {
+
     this.route.params.subscribe(params => this.id = params.id);
+    this.project = new Project();
+    this.project.leader = new User();
+
   }
 
   ngOnInit() {
@@ -24,20 +35,31 @@ export class ViewProjectComponent implements OnInit {
   }
 
   refresh() {
-    var that = this;
+    this.userLoggedIn = this.authenticationService.currentUserValue;
     this.projectService.getById(this.id)
       .subscribe(response => {
-        this.project = response;
-        var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
-        this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24)); 
-        this.project.fundingDeadlinePercent = that.computeDatePercent(new Date(this.project.createdAt), new Date(this.project.fundingDeadline)) + "%";
-        this.project.peopleRequiredPercent = that.computeNumberPercent(this.project.peopleGivingTime.length, this.project.peopleRequired) + "%";
-        this.project.donationsRequiredPercent = that.computeNumberPercent(this.project.donations.length, this.project.donationsRequired) + "%";
-        this.project.totalDonations = 0;
-        for(var k = 0 ; k < this.project.donations.length; k++) {
-          this.project.totalDonations+= this.project.donations[k].amount;
-        }
+        this.refreshUI(response);
       });
+  }
+
+  refreshUI(response) {
+    this.project = response;
+    var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
+    this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+    this.project.fundingDeadlinePercent = this.computeDatePercent(new Date(this.project.createdAt), new Date(this.project.fundingDeadline)) + "%";
+    this.project.peopleRequiredPercent = this.computeNumberPercent(this.project.peopleGivingTime.length, this.project.peopleRequired) + "%";
+    this.project.donationsRequiredPercent = this.computeNumberPercent(this.project.donations.length, this.project.donationsRequired) + "%";
+    this.project.totalDonations = 0;
+    for (var k = 0; k < this.project.donations.length; k++) {
+      this.project.totalDonations += this.project.donations[k].amount;
+    }
+    this.isUserInTeam = this.project.peopleGivingTime.find(user => {
+      return this.userLoggedIn.id === user.id;
+    }) !== undefined;
+  }
+  
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
   computeDatePercent(start: Date, deadline: Date) {
@@ -48,9 +70,17 @@ export class ViewProjectComponent implements OnInit {
   }
 
   computeNumberPercent(number: number, max: number) {
-    if(max == 0) {
+    if (max == 0) {
       return "100";
     }
     return 100 * number / max;
   }
+
+  join() {
+    this.projectService.join(this.id)
+      .subscribe(response => {
+        this.refreshUI(response);
+      })
+  }
+
 }

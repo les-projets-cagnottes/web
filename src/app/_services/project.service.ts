@@ -25,4 +25,8 @@ export class ProjectService {
     return this.http.post(`${environment.apiUrl}/project`, project);
   }
 
+  join(id: number) {
+    return this.http.get(`${environment.apiUrl}/project/${id}/join`);
+  }
+
 }
