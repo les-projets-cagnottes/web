@@ -5,5 +5,5 @@ export class Organization {
     id: number;
     name: string;
     members: User[];
-    budget: Budget[];
+    budgets: Budget[];
 }

@@ -1,5 +1,6 @@
 ﻿import { User } from './user';
 import { Donation } from './donation';
+import { Organization } from './organization';
 
 export class Project {
     id: number;
@@ -13,6 +14,7 @@ export class Project {
     fundingDeadline: Date;
     donations: Donation[];
     peopleGivingTime: User[];
+    organizations: Organization[];
 
     // Only in Valyou-Web
     remainingDays: number;

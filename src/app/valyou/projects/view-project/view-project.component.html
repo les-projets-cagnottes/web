@@ -44,7 +44,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        This is a modal.
+                        <form [formGroup]="donationForm">
+                            <div class="form-group">
+                                <label for="amount">Budget</label>
+                                <select class="form-control select2" style="width: 100%;" formControlName="budget">
+                                    <option *ngFor="let budget of budgets; index as i" value="{{ i }}">{{ budget.organization.name }} - {{ budget.name }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
+                                <label for="amount">Amount (in €)</label>
+                                <input type="number" formControlName="amount" class="form-control" id="amount"
+                                    min="0.00" step="0.01">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button [disabled]="submitting" class="btn btn-primary btn-flat"
+                            (click)="onSubmitDonation()">Submit</button>
                     </div>
                 </ng-template>
             </div>

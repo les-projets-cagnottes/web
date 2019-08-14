@@ -89,7 +89,6 @@
               }
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
               "src/styles.css"
             ],

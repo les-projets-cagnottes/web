@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Project } from '../_models';
+import { Project, Organization } from '../_models';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -21,12 +21,21 @@ export class ProjectService {
     return this.http.get<Project>(`${environment.apiUrl}/project/${id}`);
   }
 
+  getByIdOrganizations(id: number) {
+    return this.http.get<Organization[]>(`${environment.apiUrl}/project/${id}/organizations`);
+  }
+
   create(project: Project) {
-    return this.http.post(`${environment.apiUrl}/project`, project);
+    return this.http.post<Project>(`${environment.apiUrl}/project`, project);
+  }
+
+  createOrganizations(id: number, organizations: Organization[]) {
+    return this.http.post(`${environment.apiUrl}/project/${id}/organizations`, organizations);
   }
 
   join(id: number) {
     return this.http.get(`${environment.apiUrl}/project/${id}/join`);
   }
+  
 
 }

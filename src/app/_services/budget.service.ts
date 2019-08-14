@@ -17,6 +17,10 @@ export class BudgetService {
     return this.http.get<Budget[]>(`${environment.apiUrl}/budget`, { params });
   }
 
+  getByIsActive(isActive: boolean) {
+    return this.http.get<Budget[]>(`${environment.apiUrl}/budget?isActive=${isActive}`);
+  }
+
   updateAll(budgets: Budget[]) {
     return this.http.put(`${environment.apiUrl}/budget`, budgets);
   }

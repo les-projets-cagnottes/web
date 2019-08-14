@@ -15,7 +15,7 @@ export class OrganizationService {
   }
 
   getByMember(member: User) {
-    return this.http.get(`${environment.apiUrl}/organization?member_id=${member.id}`);
+    return this.http.get<Organization[]>(`${environment.apiUrl}/organization?member_id=${member.id}`);
   }
 
   getByOwner(owner: User, offset, limit) {
@@ -27,5 +27,11 @@ export class OrganizationService {
 
   delete(id: number) {
       return this.http.delete(`${environment.apiUrl}/organization/${id}`);
+  }
+  
+  getBudgets(organizationsId: Number[]) {
+    const params = new HttpParams()
+        .set('organizations_id', organizationsId.toLocaleString());
+    return this.http.get<User[]>(`${environment.apiUrl}/organization/budget`, { params });
   }
 }

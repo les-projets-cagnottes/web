@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/_services/project.service';
-import { Project } from 'src/app/_models';
-import { AuthenticationService } from 'src/app/_services';
+import { Project, Organization } from 'src/app/_models';
+import { AuthenticationService, OrganizationService } from 'src/app/_services';
 
 declare function startSimpleMDE(): any;
 
@@ -13,6 +13,10 @@ declare function startSimpleMDE(): any;
 })
 export class NewProjectComponent implements OnInit {
 
+  // Data
+  private organizations: Organization[];
+
+  // Form
   private form: FormGroup;
   private submitting: boolean;
 
@@ -27,11 +31,13 @@ export class NewProjectComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private organizationService: OrganizationService,
     private projectService: ProjectService
   ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      organizations: [''],
       title: ['', Validators.required],
       shortDescription: ['', Validators.required],
       fundingDeadline: [''],
@@ -41,6 +47,10 @@ export class NewProjectComponent implements OnInit {
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
     this.simplemde = startSimpleMDE();
+    this.organizationService.getByMember(this.authenticationService.currentUserValue)
+      .subscribe(orgs => {
+        this.organizations = orgs;
+      })
   }
 
   get f() { return this.form.controls; }
@@ -57,6 +67,7 @@ export class NewProjectComponent implements OnInit {
 
     // Get data from form
     var project = new Project();
+    project.organizations = [this.organizations[this.f.organizations.value]];
     project.title = this.f.title.value;
     project.shortDescription = this.f.shortDescription.value;
     project.donationsRequired = this.f.donationsRequired.value;
@@ -68,13 +79,22 @@ export class NewProjectComponent implements OnInit {
     // Submit item to backend
     this.projectService.create(project)
       .subscribe(
-        () => {
-          this.submitting = false;
+        response => {
+          this.projectService.createOrganizations(response.id, project.organizations)
+            .subscribe(
+              () => {
+                this.submitting = false;
+              },
+              error => {
+                console.log(error);
+                this.submitting = false;
+              });
         },
         error => {
           console.log(error);
           this.submitting = false;
         });
+
   }
 
 }
