@@ -20,6 +20,7 @@ const routes: Routes = [
       { path: 'organizations/edit/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: NewProjectComponent },
+      { path: 'projects/:id/edit', component: NewProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ProjectsComponent },
       { path: 'budgets', component: BudgetsComponent },

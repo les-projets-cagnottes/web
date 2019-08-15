@@ -17,6 +17,8 @@ export class ViewProjectComponent implements OnInit {
   private userLoggedIn: User;
   private project: Project = new Project();
   private budgets: Budget[] = [];
+  private donations: Donation[] = [];
+  private totalDonations: number;
 
   private modalRef: BsModalRef;
   private isUserInTeam: boolean = false;
@@ -49,29 +51,17 @@ export class ViewProjectComponent implements OnInit {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     this.projectService.getById(this.id)
       .subscribe(response => {
-        this.refreshUI(response);
+        this.project = response;
+        var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
+        this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+        this.isUserInTeam = this.project.peopleGivingTime.find(user => {
+          return this.userLoggedIn.id === user.id;
+        }) !== undefined;
       });
     this.budgetService.getByIsActive(true)
       .subscribe(budgets => {
         this.budgets = budgets;
       });
-  }
-
-  refreshUI(response) {
-    this.project = response;
-
-    var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
-    this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
-    this.project.fundingDeadlinePercent = this.computeDatePercent(new Date(this.project.createdAt), new Date(this.project.fundingDeadline)) + "%";
-    this.project.peopleRequiredPercent = this.computeNumberPercent(this.project.peopleGivingTime.length, this.project.peopleRequired) + "%";
-    this.project.donationsRequiredPercent = this.computeNumberPercent(this.project.donations.length, this.project.donationsRequired) + "%";
-    this.project.totalDonations = 0;
-    for (var k = 0; k < this.project.donations.length; k++) {
-      this.project.totalDonations += this.project.donations[k].amount;
-    }
-    this.isUserInTeam = this.project.peopleGivingTime.find(user => {
-      return this.userLoggedIn.id === user.id;
-    }) !== undefined;
   }
 
   openModal(template: TemplateRef<any>) {
@@ -94,8 +84,8 @@ export class ViewProjectComponent implements OnInit {
 
   join() {
     this.projectService.join(this.id)
-      .subscribe(response => {
-        this.refreshUI(response);
+      .subscribe(() => {
+        this.refresh();
       })
   }
 
@@ -113,8 +103,7 @@ export class ViewProjectComponent implements OnInit {
     donation.amount = this.f.amount.value;
     donation.project = this.project;
     donation.budget = this.budgets[this.f.budget.value];
-    console.log(donation.budget);
-
+    
     this.donationService.create(donation)
       .pipe(first())
       .subscribe(

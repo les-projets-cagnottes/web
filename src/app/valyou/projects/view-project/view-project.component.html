@@ -16,12 +16,16 @@
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
-                    <dt>Created By</dt>
+                    <dt>Project Leader</dt>
                     <dd>{{ project.leader.firstname }} {{ project.leader.lastname }}</dd>
                     <dt>Created At</dt>
                     <dd>{{ project.createdAt | date:medium }}</dd>
                     <dt>Remaining days</dt>
                     <dd>{{ project.remainingDays }}</dd>
+                    <dt>People needed</dt>
+                    <dd>{{ project.peopleGivingTime.length }} / {{ project.peopleRequired }}</dd>
+                    <dt>Budget</dt>
+                    <dd>{{ project.totalDonations }} € / {{ project.donationsRequired }} €</dd>
                 </dl>
             </div>
             <div class="box-footer text-center">
@@ -80,7 +84,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let donation of project.donation">
+                            <tr *ngFor="let donation of donations">
                                 <td>{{ donation.createdAt | date:medium }}</td>
                                 <td>{{ donation.amount }}</td>
                             </tr>

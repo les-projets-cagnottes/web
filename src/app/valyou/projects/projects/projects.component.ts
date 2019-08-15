@@ -47,7 +47,7 @@ export class ProjectsComponent implements OnInit {
     this.pagedItems.forEach(function (value) {
       value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
       value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
-      value.donationsRequiredPercent = that.computeNumberPercent(value.donations.length, value.donationsRequired) + "%";
+      value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
     });
   }
 

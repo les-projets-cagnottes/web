@@ -14,4 +14,8 @@ export class DonationService {
       return this.http.post(`${environment.apiUrl}/donation`, donation);
   }
 
+  getByProjectId(projectId: number) {
+    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?projectId=${projectId}`);
+  }
+
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/_services/project.service';
 import { Project, Organization } from 'src/app/_models';
 import { AuthenticationService, OrganizationService } from 'src/app/_services';
+import { ActivatedRoute } from '@angular/router';
 
 declare function startSimpleMDE(): any;
 
@@ -14,10 +15,19 @@ declare function startSimpleMDE(): any;
 export class NewProjectComponent implements OnInit {
 
   // Data
+  private id: number = 0;
+  private project: Project = new Project();
   private organizations: Organization[];
 
   // Form
-  private form: FormGroup;
+  private form: FormGroup = this.formBuilder.group({
+    organizations: [0],
+    title: ['', Validators.required],
+    shortDescription: ['', Validators.required],
+    fundingDeadline: [''],
+    donationsRequired: [0, Validators.required],
+    peopleRequired: [2, Validators.required]
+  });
   private submitting: boolean;
 
   // Funding Deadline field
@@ -29,24 +39,40 @@ export class NewProjectComponent implements OnInit {
   private simplemde;
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private organizationService: OrganizationService,
     private projectService: ProjectService
-  ) { }
+  ) {
+    this.route.params.subscribe(params => this.id = params.id);
+  }
 
   ngOnInit() {
+    if (this.id > 0) {
+      this.projectService.getById(this.id)
+        .subscribe(response => {
+          this.project = response;
+          this.refresh();
+        });
+    } else {
+      this.refresh();
+    }
+  }
+
+  refresh() {
     this.form = this.formBuilder.group({
-      organizations: [''],
-      title: ['', Validators.required],
-      shortDescription: ['', Validators.required],
-      fundingDeadline: [''],
-      donationsRequired: ['0.00', Validators.required],
-      peopleRequired: ['3', Validators.required]
+      organizations: [0],
+      title: [this.project.title, Validators.required],
+      shortDescription: [this.project.shortDescription, Validators.required],
+      fundingDeadline: [this.project.fundingDeadline],
+      donationsRequired: [this.project.donationsRequired, Validators.required],
+      peopleRequired: [this.project.peopleRequired, Validators.required]
     });
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
     this.simplemde = startSimpleMDE();
+    this.simplemde.value(this.project.longDescription);
     this.organizationService.getByMember(this.authenticationService.currentUserValue)
       .subscribe(orgs => {
         this.organizations = orgs;
@@ -66,29 +92,22 @@ export class NewProjectComponent implements OnInit {
     this.submitting = true;
 
     // Get data from form
-    var project = new Project();
-    project.organizations = [this.organizations[this.f.organizations.value]];
-    project.title = this.f.title.value;
-    project.shortDescription = this.f.shortDescription.value;
-    project.donationsRequired = this.f.donationsRequired.value;
-    project.peopleRequired = this.f.peopleRequired.value;
-    project.longDescription = this.simplemde.value();
-    project.leader = this.authenticationService.currentUserValue;
-    project.fundingDeadline = this.fundingDeadlineValue;
+    var selectedOrg = new Organization();
+    selectedOrg.id = this.organizations[this.f.organizations.value].id;
+    this.project.organizations = [selectedOrg];
+    this.project.title = this.f.title.value;
+    this.project.shortDescription = this.f.shortDescription.value;
+    this.project.donationsRequired = this.f.donationsRequired.value;
+    this.project.peopleRequired = this.f.peopleRequired.value;
+    this.project.longDescription = this.simplemde.value();
+    this.project.leader.id = this.authenticationService.currentUserValue.id;
+    this.project.fundingDeadline = this.fundingDeadlineValue;
 
     // Submit item to backend
-    this.projectService.create(project)
+    this.projectService.create(this.project)
       .subscribe(
-        response => {
-          this.projectService.createOrganizations(response.id, project.organizations)
-            .subscribe(
-              () => {
-                this.submitting = false;
-              },
-              error => {
-                console.log(error);
-                this.submitting = false;
-              });
+        () => {
+          this.submitting = false;
         },
         error => {
           console.log(error);
