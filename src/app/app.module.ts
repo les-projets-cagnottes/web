@@ -23,6 +23,7 @@ import { EditOrganizationComponent } from './valyou/organizations/edit-organizat
 import { NewProjectComponent } from './valyou/projects/new-project/new-project.component';
 import { ViewProjectComponent } from './valyou/projects/view-project/view-project.component';
 import { BudgetsComponent } from './valyou/budgets/budgets.component';
+import { ProfileComponent } from './valyou/profile/profile.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { BudgetsComponent } from './valyou/budgets/budgets.component';
     NewProjectComponent,
     EditOrganizationComponent,
     ViewProjectComponent,
-    BudgetsComponent
+    BudgetsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

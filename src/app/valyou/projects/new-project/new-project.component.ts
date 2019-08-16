@@ -73,7 +73,7 @@ export class NewProjectComponent implements OnInit {
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
     this.simplemde = startSimpleMDE();
     this.simplemde.value(this.project.longDescription);
-    this.organizationService.getByMember(this.authenticationService.currentUserValue)
+    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
       .subscribe(orgs => {
         this.organizations = orgs;
       })

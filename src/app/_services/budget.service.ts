@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class BudgetService {
-
   constructor(private http: HttpClient) { }
 
   getAll(offset, limit) {
@@ -19,6 +18,10 @@ export class BudgetService {
 
   getByIsActive(isActive: boolean) {
     return this.http.get<Budget[]>(`${environment.apiUrl}/budget?isActive=${isActive}`);
+  }
+
+  getByOrganizationId(organizationId: number) {
+    return this.http.get<Budget[]>(`${environment.apiUrl}/budget?organizationId=${organizationId}`);
   }
 
   updateAll(budgets: Budget[]) {

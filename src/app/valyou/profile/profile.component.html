@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-md-3">
+
+        <!-- Profile Image -->
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+                <img class="profile-user-img img-responsive img-circle" [src]="user.avatarUrl"
+                    alt="User profile picture">
+
+                <h3 class="profile-username text-center">{{ user.firstname }} {{ user.lastname }}</h3>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+        <!-- About Me Box -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">My pots usage</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="progress-group" *ngFor="let budget of budgets">
+                    <span class="progress-text">{{ budget.organization.name }} - {{ budget.name }}</span>
+                    <span class="progress-number"><b>{{ budget.totalDonations }} €</b> / {{ budget.amountPerMember }} €</span>
+
+                    <div class="progress sm">
+                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': budget.totalDonationsPercent }"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#projects" data-toggle="tab" aria-expanded="true">Projects</a></li>
+                <li class=""><a href="#contributions" data-toggle="tab" aria-expanded="false">Contributions</a></li>
+                <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="projects">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Funding & teamup deadline</th>
+                                <th>People needed</th>
+                                <th>Money needed</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-green">Ready</span></td>
+                                <td>Test project</td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="contributions">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Budget</th>
+                                <th>Date</th>
+                                <th>Project</th>
+                                <th>Amount</th>
+                            </tr>
+                            <tr>
+                                <td>Valyou</td>
+                                <td>My Budget</td>
+                                <td>12/08/2019</td>
+                                <td>Test project</td>
+                                <td>100 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" id="settings">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputFirstname" class="col-sm-2 control-label">Firstname</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputFirstname" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLastname" class="col-sm-2 control-label">Lastname</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputLastname" placeholder="Lastname">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAvatarUrl" class="col-sm-2 control-label">Avatar URL</label>
+
+                            <div class="col-sm-10">
+                                <input type="url" class="form-control" id="inputAvatarUrl" placeholder="Avatar URL">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>

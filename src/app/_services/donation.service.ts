@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DonationService {
-
   constructor(private http: HttpClient) { }
 
   create(donation: Donation) {
@@ -16,6 +15,10 @@ export class DonationService {
 
   getByProjectId(projectId: number) {
     return this.http.get<Donation[]>(`${environment.apiUrl}/donation?projectId=${projectId}`);
+  }
+
+  getByContributorId(contributorId: number) {
+    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}`);
   }
 
 }

@@ -14,8 +14,8 @@ export class OrganizationService {
     return this.http.post(`${environment.apiUrl}/organization`, organization);
   }
 
-  getByMember(member: User) {
-    return this.http.get<Organization[]>(`${environment.apiUrl}/organization?member_id=${member.id}`);
+  getByMemberId(memberId: number) {
+    return this.http.get<Organization[]>(`${environment.apiUrl}/organization?member_id=${memberId}`);
   }
 
   getByOwner(owner: User, offset, limit) {

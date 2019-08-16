@@ -10,6 +10,7 @@ import { EditOrganizationComponent } from './valyou/organizations/edit-organizat
 import { OrganizationsComponent } from './valyou/organizations/organizations/organizations.component';
 import { ViewProjectComponent } from './valyou/projects/view-project/view-project.component';
 import { BudgetsComponent } from './valyou/budgets/budgets.component';
+import { ProfileComponent } from './valyou/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ProjectsComponent },
       { path: 'budgets', component: BudgetsComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: 'users', component: UsersComponent }
     ]
   },

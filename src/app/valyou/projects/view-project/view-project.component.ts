@@ -101,8 +101,10 @@ export class ViewProjectComponent implements OnInit {
 
     var donation = new Donation();
     donation.amount = this.f.amount.value;
-    donation.project = this.project;
-    donation.budget = this.budgets[this.f.budget.value];
+    donation.project = new Project();
+    donation.project.id = this.project.id;
+    donation.budget = new Budget()
+    donation.budget.id = this.budgets[this.f.budget.value].id;
     
     this.donationService.create(donation)
       .pipe(first())
