@@ -4,6 +4,7 @@ import { OrganizationService } from 'src/app/_services/organization.service';
 import { Organization, User } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { UserService } from 'src/app/_services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit-organization',
@@ -12,27 +13,51 @@ import { UserService } from 'src/app/_services';
 })
 export class EditOrganizationComponent implements OnInit {
 
+  // Data
+  id: number;
+  organization: Organization = new Organization();
+
   editOrgForm: FormGroup;
   addMemberOrgForm: FormGroup;
   submitting: boolean;
   submittingEmail: boolean;
-  orgEdited: Organization = new Organization();
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private organizationService: OrganizationService
-  ) { }
+  ) {
+    this.route.params.subscribe(params => this.id = <number>params.id);
+  }
 
   ngOnInit() {
+    if (this.id > 0) {
+      this.organizationService.getById(this.id)
+        .subscribe(
+          organization => {
+            this.organization = organization;
+            this.refreshForm();
+          },
+          error => {
+            console.log(error);
+          });
+    } else {
+      this.refreshForm();
+    }
+  }
+
+  refreshForm() {
     this.editOrgForm = this.formBuilder.group({
-      name: ['', Validators.required]
+      name: [this.organization.name, Validators.required]
     });
     this.addMemberOrgForm = this.formBuilder.group({
       email: ['', Validators.required]
     });
-    this.orgEdited.members = [];
-    this.orgEdited.members.push(JSON.parse(localStorage.getItem('currentUser')));
+    if (!(this.id > 0)) {
+      this.organization.members = [];
+      this.organization.members.push(JSON.parse(localStorage.getItem('currentUser')));
+    }
   }
 
   onSubmitEmail() {
@@ -41,7 +66,7 @@ export class EditOrganizationComponent implements OnInit {
     }
     this.userService.getByEmail(this.addMemberOrgForm.controls.email.value).subscribe(
       response => {
-        this.orgEdited.members.push(response as User);
+        this.organization.members.push(response as User);
       },
       error => {
         console.log(error);
@@ -51,6 +76,7 @@ export class EditOrganizationComponent implements OnInit {
 
 
   get f() { return this.editOrgForm.controls; }
+
   onSubmit() {
 
     // stop here if form is invalid
@@ -58,18 +84,30 @@ export class EditOrganizationComponent implements OnInit {
       return;
     }
 
-    this.orgEdited.name = this.f.name.value;
+    this.organization.name = this.f.name.value;
 
-    this.organizationService.create(this.orgEdited)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this.submitting = false;
-        },
-        error => {
-          console.log(error);
-          this.submitting = false;
-        });
+    if (this.id > 0) {
+      this.organizationService.update(this.organization)
+        .subscribe(
+          () => {
+            this.submitting = false;
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+          });
+    } else {
+      this.organizationService.create(this.organization)
+        .subscribe(
+          () => {
+            this.submitting = false;
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+          });
+    }
+
   }
 
 }

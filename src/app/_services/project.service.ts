@@ -25,6 +25,10 @@ export class ProjectService {
     return this.http.get<Organization[]>(`${environment.apiUrl}/project/${id}/organizations`);
   }
 
+  getByMemberId(memberId: number) {
+    return this.http.get<Project[]>(`${environment.apiUrl}/project?memberId=${memberId}`);
+  }
+
   create(project: Project) {
     return this.http.post<Project>(`${environment.apiUrl}/project`, project);
   }

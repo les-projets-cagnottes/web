@@ -47,30 +47,30 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr>
-                                <th>Status</th>
-                                <th>Name</th>
-                                <th>Funding & teamup deadline</th>
-                                <th>People needed</th>
-                                <th>Money needed</th>
+                                <th>Title</th>
+                                <th style="width: 20%">Funding & teamup deadline</th>
+                                <th style="width: 20%">People needed</th>
+                                <th style="width: 20%">Money needed</th>
+                                <th style="width: 40px">Status</th>
                             </tr>
-                            <tr>
+                            <tr *ngFor="let project of projects">
+                                <td>{{ project.title }}</td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-red" [ngStyle]="{'width': project.fundingDeadlinePercent }"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': project.peopleRequiredPercent }"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-green" [ngStyle]="{'width': project.donationsRequiredPercent }"></div>
+                                    </div>
+                                </td>
                                 <td><span class="badge bg-green">Ready</span></td>
-                                <td>Test project</td>
-                                <td>
-                                    <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                    </div>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -85,12 +85,12 @@
                                 <th>Project</th>
                                 <th>Amount</th>
                             </tr>
-                            <tr>
-                                <td>Valyou</td>
-                                <td>My Budget</td>
-                                <td>12/08/2019</td>
-                                <td>Test project</td>
-                                <td>100 €</td>
+                            <tr *ngFor="let donation of donations">
+                                <td>{{ budgetsSorted[donation.budget.id].organization.name }}</td>
+                                <td>{{ donation.budget.name }}</td>
+                                <td>{{ donation.createdAt | date:medium }}</td>
+                                <td>{{ donation.project.title }}</td>
+                                <td>{{ donation.amount }} €</td>
                             </tr>
                         </tbody>
                     </table>

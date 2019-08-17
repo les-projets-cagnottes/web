@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/_services/project.service';
 import { Project, Organization } from 'src/app/_models';
 import { AuthenticationService, OrganizationService } from 'src/app/_services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare function startSimpleMDE(): any;
 
@@ -40,6 +40,7 @@ export class NewProjectComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private organizationService: OrganizationService,
@@ -106,8 +107,9 @@ export class NewProjectComponent implements OnInit {
     // Submit item to backend
     this.projectService.create(this.project)
       .subscribe(
-        () => {
+        response => {
           this.submitting = false;
+          this.router.navigate(['/projects/' + response.id]);
         },
         error => {
           console.log(error);

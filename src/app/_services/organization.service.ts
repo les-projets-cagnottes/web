@@ -10,8 +10,8 @@ import { Organization, User } from '../_models';
 export class OrganizationService {
   constructor(private http: HttpClient) { }
 
-  create(organization: Organization) {
-    return this.http.post(`${environment.apiUrl}/organization`, organization);
+  getById(id: number) {
+    return this.http.get<Organization>(`${environment.apiUrl}/organization/${id}`);
   }
 
   getByMemberId(memberId: number) {
@@ -25,6 +25,14 @@ export class OrganizationService {
     return this.http.get<User[]>(`${environment.apiUrl}/organization?owner_id=${owner.id}`, { params });
   }
 
+  create(organization: Organization) {
+    return this.http.post(`${environment.apiUrl}/organization`, organization);
+  }
+
+  update(organization: Organization) {
+    return this.http.put(`${environment.apiUrl}/organization/${organization.id}`, organization);
+  }
+  
   delete(id: number) {
       return this.http.delete(`${environment.apiUrl}/organization/${id}`);
   }

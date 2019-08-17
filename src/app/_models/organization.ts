@@ -3,7 +3,7 @@ import { Budget } from './budget';
 
 export class Organization {
     id: number;
-    name: string;
+    name: string = '';
     members: User[];
     budgets: Budget[];
 }

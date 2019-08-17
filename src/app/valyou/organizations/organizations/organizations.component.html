@@ -41,7 +41,7 @@
                                     <td>{{item.name}}</td>
                                     <td>{{item.createdAt | date:medium}}</td>
                                     <td class="action-bar">
-                                        <button type="button" class="btn btn-default" routerLink="/organizations/edit/1"><i
+                                        <button type="button" class="btn btn-default" [routerLink]="['/organizations/edit/', item.id]"><i
                                                 class="fa fa-pencil"></i> Edit</button>
                                         <button type="button" class="btn btn-default" (click)="delete(item)"><i
                                                 class="fa fa-trash"></i> Delete</button>

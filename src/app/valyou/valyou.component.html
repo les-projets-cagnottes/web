@@ -30,25 +30,10 @@
                         <i class="fa fa-user"></i> <span>Users</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="#">
+                <li *ngIf="isAdmin">
+                    <a routerLink="/organizations">
                         <i class="fa fa-users"></i> <span>Organizations</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a routerLink="/organizations/new">
-                                <i class="fa fa-circle-o"></i> <span>Create</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a routerLink="/organizations">
-                                <i class="fa fa-circle-o"></i> <span>Edit</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </section>
