@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetService, PagerService } from 'src/app/_services';
-import { Budget } from 'src/app/_models';
+import { BudgetService, PagerService, AuthenticationService, OrganizationService } from 'src/app/_services';
+import { Budget, Organization } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
@@ -12,105 +12,110 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 })
 export class BudgetsComponent implements OnInit {
 
+  // Data
+  private organizations: Organization[];
+
   // Form
-  mainForm: FormGroup;
-  get f() { return this.mainForm.controls; }
-  get t() { return this.f.budgets as FormArray; }
+  private mainForms: FormGroup[] = [];
 
   // Buttons states
   refreshStatus: string = "no-refresh";
   saveStatus: string = "no-refresh";
 
-  // Pagination
-  private rawResponse: any;
-  pager: any = {};
-  pagedItems: Budget[];
-  pageSize: number = 10;
-
   constructor(
-    private formBuilder: FormBuilder,
-    private pagerService: PagerService,
-    private budgetService: BudgetService
-    ) {
-      this.mainForm = this.formBuilder.group({
-          budgets: new FormArray([])
-      });
-    }
+    private fb: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private budgetService: BudgetService,
+    private organizationService: OrganizationService
+  ) {
+    this.fb.group({
+      organizations: this.fb.group({
+        budgets: this.fb.array([])
+      })
+    });
+  }
 
   ngOnInit() {
     this.refresh();
   }
 
-  refresh(page: number = 1): void {
-    this.budgetService.getAll(page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawResponse = response;
-        console.log(response);
-        this.setPage(page);
-        this.refreshStatus = 'success';
-        setTimeout(() => {
-          this.refreshStatus = 'no-refresh';
-        }, 2000);
-      });
+  refresh(): void {
+    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+      .subscribe(
+        response => {
+          this.organizations = response;
+          this.mainForms = [];
+          var that = this;
+          this.organizations.forEach((organization, index) => {
+            that.mainForms[index] = that.fb.group({
+              budgets: new FormArray([])
+            });
+            organization.budgets.forEach(budget => {
+              var totalDonations = 0;
+              budget.donations.forEach(element => {
+                totalDonations += element.amount;
+              });;
+              budget.usage = that.computeNumberPercent(totalDonations, organization.members.length * budget.amountPerMember) + "%";
+              (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
+                id: [budget.id],
+                name: [budget.name, Validators.required],
+                amountPerMember: [budget.amountPerMember, [Validators.required]],
+                startDate: [budget.startDate],
+                endDate: [budget.endDate],
+                organization: [budget.organization],
+                sponsor: [budget.sponsor],
+                donations: [budget.donations]
+              }));
+            });
+            this.refreshStatus = 'success';
+            setTimeout(() => {
+              this.refreshStatus = 'no-refresh';
+            }, 2000);
+          });
+        },
+        error => {
+          console.log(error);
+          this.refreshStatus = 'error';
+          setTimeout(() => {
+            this.refreshStatus = 'no-refresh';
+          }, 2000);
+        });
   }
 
   save(): void {
     var budgets: Budget[] = [];
-    // stop here if form is invalid
-    if (this.mainForm.invalid) {
-        return;
-    }
 
-    this.t.value.forEach(formGroup => {
-      budgets.push(formGroup);
+    // stop here if form is invalid
+    this.organizations.forEach((organization, index) => {
+      if (this.mainForms[index].invalid) {
+        return;
+      }
+      (this.mainForms[index].controls.budgets as FormArray).value.forEach(formGroup => {
+        budgets.push(formGroup);
+      });
     });
 
     this.budgetService.updateAll(budgets)
-    .pipe(first())
-    .subscribe(
-      () => {
-        this.saveStatus = 'success';
-        setTimeout(() => {
-          this.saveStatus = 'no-refresh';
-        }, 2000);
-      },
-      error => {
-        console.log(error);
-        this.saveStatus = 'error';
-        setTimeout(() => {
-          this.saveStatus = 'no-refresh';
-        }, 2000);
-      });
-  }
-
-  setPage(page: number) {
-    this.pager = this.pagerService.getPager(this.rawResponse.totalElements, page, this.pageSize);
-    this.pagedItems = this.rawResponse.content;
-    for (let i = this.t.length; i >= 0; i--) {
-        this.t.removeAt(i);
-    }
-    var that = this;
-    this.pagedItems.forEach(function (value) {
-      var totalDonations = 0;
-      value.donations.forEach(element => {
-        totalDonations+= element.amount;
-      });;
-      value.usage = that.computeNumberPercent(totalDonations, value.organization.members.length * value.amountPerMember) + "%";
-      that.t.push(that.formBuilder.group({
-          id: [value.id],
-          name: [value.name, Validators.required],
-          amountPerMember: [value.amountPerMember, [Validators.required]],
-          startDate: [value.startDate],
-          endDate: [value.endDate],
-          organization: [value.organization],
-          sponsor: [value.sponsor],
-          donations: [value.donations]
-      }));
-    });
+      .pipe(first())
+      .subscribe(
+        () => {
+          this.saveStatus = 'success';
+          this.refresh();
+          setTimeout(() => {
+            this.saveStatus = 'no-refresh';
+          }, 2000);
+        },
+        error => {
+          console.log(error);
+          this.saveStatus = 'error';
+          setTimeout(() => {
+            this.saveStatus = 'no-refresh';
+          }, 2000);
+        });
   }
 
   computeNumberPercent(number: number, max: number) {
-    if(max == 0) {
+    if (max == 0) {
       return "0";
     }
     return 100 * number / max;

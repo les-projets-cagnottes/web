@@ -20,7 +20,7 @@ export class UserService {
     }
 
     getByEmail(email: string) {
-        return this.http.get(`${environment.apiUrl}/user?email=${email}`);
+        return this.http.get<User>(`${environment.apiUrl}/user?email=${email}`);
     }
 
     create(user: User) {

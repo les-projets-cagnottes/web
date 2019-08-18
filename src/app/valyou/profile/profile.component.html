@@ -54,19 +54,19 @@
                                 <th style="width: 40px">Status</th>
                             </tr>
                             <tr *ngFor="let project of projects">
-                                <td>{{ project.title }}</td>
+                                <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
                                 <td>
-                                    <div class="progress progress-xs">
+                                    <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.fundingDeadlinePercent }}">
                                         <div class="progress-bar progress-bar-red" [ngStyle]="{'width': project.fundingDeadlinePercent }"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="progress progress-xs">
+                                    <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.peopleRequiredPercent }}">
                                         <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': project.peopleRequiredPercent }"></div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="progress progress-xs">
+                                    <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.donationsRequiredPercent }}">
                                         <div class="progress-bar progress-bar-green" [ngStyle]="{'width': project.donationsRequiredPercent }"></div>
                                     </div>
                                 </td>

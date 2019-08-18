@@ -64,14 +64,20 @@ export class EditOrganizationComponent implements OnInit {
     if (this.addMemberOrgForm.invalid) {
       return;
     }
-    this.userService.getByEmail(this.addMemberOrgForm.controls.email.value).subscribe(
-      response => {
-        this.organization.members.push(response as User);
-      },
-      error => {
-        console.log(error);
-        this.submitting = false;
-      });
+    this.userService.getByEmail(this.addMemberOrgForm.controls.email.value)
+      .subscribe(
+        response => {
+          var user = new User();
+          user.id = response.id;
+          user.firstname = response.firstname;
+          user.lastname = response.lastname;
+          user.email = response.email;
+          this.organization.members.push(response as User);
+        },
+        error => {
+          console.log(error);
+          this.submitting = false;
+        });
   }
 
 
@@ -84,10 +90,13 @@ export class EditOrganizationComponent implements OnInit {
       return;
     }
 
-    this.organization.name = this.f.name.value;
+    var organization2save = new Organization();
+    organization2save.name = this.f.name.value;
+    organization2save.members = this.organization.members;
 
     if (this.id > 0) {
-      this.organizationService.update(this.organization)
+      organization2save.id = this.id;
+      this.organizationService.update(organization2save)
         .subscribe(
           () => {
             this.submitting = false;
@@ -97,7 +106,7 @@ export class EditOrganizationComponent implements OnInit {
             this.submitting = false;
           });
     } else {
-      this.organizationService.create(this.organization)
+      this.organizationService.create(organization2save)
         .subscribe(
           () => {
             this.submitting = false;

@@ -9,89 +9,45 @@
             (click)="save()"><i class="fa fa-floppy-o"></i>
             Save</button>
     </div>
-    <div class="col-xs-6">
-        <div class="dataTables_length text-right"><label for="pageSize">Nb entries</label><select id="pageSize"
-                name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize"
-                (ngModelChange)="refresh()">
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select></div>
-    </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
+        <div class="box" *ngFor="let organization of organizations; let i = index">
             <div class="box-header">
-                <h3 class="box-title">My budgets</h3>
+                <h3 class="box-title">Budgets of {{ organization.name }}</h3>
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
                             <th>Name</th>
-                            <th style="width: 20%">Organization</th>
                             <th style="width: 10%">Amount by person</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th style="width: 40%">Usage</th>
                             <th style="width: 40px"></th>
                         </tr>
-                        <tr *ngFor="let budget of t.controls; let i = index" [formGroup]="budget">
+                        <tr *ngFor="let budget of mainForms[i].controls.budgets.controls; let j = index" [formGroup]="budget">
                             <td><input class="form-control" type="text" formControlName="name" /></td>
-                            <td>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option selected="selected">{{ pagedItems[i].organization.name }}</option>
-                                </select>
-                            </td>
                             <td>
                                 <div class="input-group">
                                     <input class="form-control" type="number" min="0.00" step="0.01" formControlName="amountPerMember">
                                     <span class="input-group-addon">€</span>
                                 </div>
                             </td>
-                            <td>{{ pagedItems[i].startDate | date:medium }}</td>
-                            <td>{{ pagedItems[i].endDate | date:medium }}</td>
+                            <td>{{ organizations[i].budgets[j].startDate | date:medium }}</td>
+                            <td>{{ organizations[i].budgets[j].endDate | date:medium }}</td>
                             <td>
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': pagedItems[i].usage }">
+                                    <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': organizations[i].budgets[j].usage }">
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="badge">{{ pagedItems[i].usage }}</span></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-5 dataTables_info_container">
-        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to
-            {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
-    </div>
-    <div class="col-sm-7">
-        <div class="dataTables_paginate paging_simple_numbers text-right">
-            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-                <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
-                    <a (click)="refresh(1)">First</a>
-                </li>
-                <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
-                    <a (click)="refresh(pager.currentPage - 1)">Previous</a>
-                </li>
-                <li class="paginate_button" *ngFor="let page of pager.pages"
-                    [ngClass]="{active:pager.currentPage === page}">
-                    <a (click)="refresh(page)">{{page}}</a>
-                </li>
-                <li class="paginate_button next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                    <a (click)="refresh(pager.currentPage + 1)">Next</a>
-                </li>
-                <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                    <a (click)="refresh(pager.totalPages)">Last</a>
-                </li>
-            </ul>
         </div>
     </div>
 </div>
