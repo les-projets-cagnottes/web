@@ -6,6 +6,7 @@ export class Budget {
     id: number;
     name: string;
     amountPerMember: number = 0;
+    distributed: boolean = false;
     startDate: Date;
     endDate: Date;
     organization: Organization;

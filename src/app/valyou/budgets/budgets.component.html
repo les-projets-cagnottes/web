@@ -1,12 +1,8 @@
 <div class="row action-bar">
     <div class="col-xs-6">
-        <button type="button" class="btn btn-default"
-            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
-            (click)="refresh()"><i class="fa fa-refresh"></i>
+        <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fa fa-refresh"></i>
             Refresh</button>
-        <button type="button" class="btn btn-default"
-            [ngClass]="{ 'btn-success': saveStatus == 'success', 'btn-danger': saveStatus == 'error' }"
-            (click)="save()"><i class="fa fa-floppy-o"></i>
+        <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': saveStatus == 'success', 'btn-danger': saveStatus == 'error' }" (click)="save()"><i class="fa fa-floppy-o"></i>
             Save</button>
     </div>
 </div>
@@ -15,6 +11,8 @@
         <div class="box" *ngFor="let organization of organizations; let i = index">
             <div class="box-header">
                 <h3 class="box-title">Budgets of {{ organization.name }}</h3>
+                <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error' }" (click)="add(organization.id)" style="margin-left: 15px"><i class="fa fa-plus"></i>
+                    Add</button>
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
@@ -25,7 +23,7 @@
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th style="width: 40%">Usage</th>
-                            <th style="width: 40px"></th>
+                            <th>Actions</th>
                         </tr>
                         <tr *ngFor="let budget of mainForms[i].controls.budgets.controls; let j = index" [formGroup]="budget">
                             <td><input class="form-control" type="text" formControlName="name" /></td>
@@ -35,15 +33,26 @@
                                     <span class="input-group-addon">€</span>
                                 </div>
                             </td>
-                            <td>{{ organizations[i].budgets[j].startDate | date:medium }}</td>
-                            <td>{{ organizations[i].budgets[j].endDate | date:medium }}</td>
+                            <td style="vertical-align: middle;">
+                                <input formControlName="startDate" type="date" id="startDate" name="startDate">
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <input formControlName="endDate" type="date" id="endDate" name="endDate">
+                            </td>
                             <td>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': organizations[i].budgets[j].usage }">
                                     </div>
                                 </div>
                             </td>
-                            <td></td>
+                            <td class="action-bar">
+                                <button *ngIf="!organizations[i].budgets[j].distributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)"><i class="fa fa-paper-plane"></i>
+                                Distribute</button>
+                                <button *ngIf="organizations[i].budgets[j].distributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)">
+                                    <i class="fa fa-stop"></i> Cancel distribution
+                                </button>
+                                <button type="button" class="btn btn-default" [ngClass]="{ 'btn-danger': deleteStatus[i][j] == 'error' }" (click)="delete(organizations[i].budgets[j].id, i, j)"><i class="fa fa-trash"></i>
+                                Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
