@@ -21,4 +21,8 @@ export class DonationService {
     return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}`);
   }
 
+  getByContributorIdAndBudgetId(contributorId: number, budgetId: number) {
+    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}&budgetId=${budgetId}`);
+  }
+
 }

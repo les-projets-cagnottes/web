@@ -17,4 +17,5 @@ export class Budget {
     usage: string;
     totalDonations: number = 0;
     totalDonationsPercent: string;
+    totalUserDonations: number = 0;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project, User, Donation, Budget } from 'src/app/_models';
-import { AuthenticationService, ProjectService, DonationService, BudgetService } from 'src/app/_services';
+import { AuthenticationService, ProjectService, DonationService, BudgetService, OrganizationService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -28,6 +28,7 @@ export class ViewProjectComponent implements OnInit {
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
+    private organizationService: OrganizationService,
     private projectService: ProjectService,
     private donationService: DonationService,
     private formBuilder: FormBuilder,
@@ -37,10 +38,9 @@ export class ViewProjectComponent implements OnInit {
     this.project = new Project();
     this.project.leader = new User();
     this.donationForm = this.formBuilder.group({
-      budget: [],
+      budget: [0],
       amount: [10, Validators.required]
     });
-
   }
 
   ngOnInit() {
@@ -58,9 +58,27 @@ export class ViewProjectComponent implements OnInit {
           return this.userLoggedIn.id === user.id;
         }) !== undefined;
       });
-    this.budgetService.getByIsActive(true)
-      .subscribe(budgets => {
-        this.budgets = budgets;
+    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+      .subscribe(response => {
+        response.forEach(organization => {
+          organization.budgets.forEach(budget => {
+            var now = new Date();
+            if (budget.distributed && new Date(budget.startDate).getTime() <= now.getTime() && now.getTime() <= new Date(budget.endDate).getTime()) {
+              budget.organization = organization;
+              budget.totalUserDonations = 0;
+              this.budgets.push(budget);
+            }
+          });
+        });
+        this.budgets.forEach(budget => {
+          this.donationService.getByContributorIdAndBudgetId(this.authenticationService.currentUserValue.id, budget.id)
+            .subscribe(donations => {
+              donations.forEach(donation => {
+                console.log(budget.totalUserDonations);
+                budget.totalUserDonations += donation.amount;
+              });
+            });
+        });
       });
   }
 
@@ -105,7 +123,7 @@ export class ViewProjectComponent implements OnInit {
     donation.project.id = this.project.id;
     donation.budget = new Budget()
     donation.budget.id = this.budgets[this.f.budget.value].id;
-    
+
     this.donationService.create(donation)
       .pipe(first())
       .subscribe(

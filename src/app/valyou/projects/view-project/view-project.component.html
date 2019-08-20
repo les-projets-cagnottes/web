@@ -29,12 +29,10 @@
                 </dl>
             </div>
             <div class="box-footer text-center">
-                <a class="btn btn-app btn-money" (click)="join()"
-                    *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id">
+                <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id">
                     <i class="fa fa-pencil"></i> Join the team
                 </a>
-                <a class="btn btn-app btn-team" (click)="join()"
-                    *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id">
+                <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id">
                     <i class="fa fa-close"></i> Leave the team
                 </a>
                 <a class="btn btn-app btn-money" (click)="openModal(template)">
@@ -57,14 +55,15 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
                                 <label for="amount">Amount (in €)</label>
-                                <input type="number" formControlName="amount" class="form-control" id="amount"
-                                    min="0.00" step="0.01">
+                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations }}">
+                            </div>
+                            <div>
+                                It will remains <b>{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value }} €</b> on your pot for this budget afterwards.
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button [disabled]="submitting" class="btn btn-primary btn-flat"
-                            (click)="onSubmitDonation()">Submit</button>
+                        <button [disabled]="submitting" class="btn btn-primary btn-flat" (click)="onSubmitDonation()">Submit</button>
                     </div>
                 </ng-template>
             </div>
