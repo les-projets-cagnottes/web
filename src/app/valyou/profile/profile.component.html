@@ -4,8 +4,7 @@
         <!-- Profile Image -->
         <div class="box box-primary">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" [src]="user.avatarUrl"
-                    alt="User profile picture">
+                <img class="profile-user-img img-responsive img-circle" [src]="user.avatarUrl" alt="User profile picture">
 
                 <h3 class="profile-username text-center">{{ user.firstname }} {{ user.lastname }}</h3>
 
@@ -70,7 +69,11 @@
                                         <div class="progress-bar progress-bar-green" [ngStyle]="{'width': project.donationsRequiredPercent }"></div>
                                     </div>
                                 </td>
-                                <td><span class="badge bg-green">Ready</span></td>
+                                <td>
+                                    <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow">In Progress</span>
+                                    <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey">Avorted</span>
+                                    <span *ngIf="project.status == 'READY'" class="badge bg-green">Ready</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

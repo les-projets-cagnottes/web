@@ -61,6 +61,8 @@ export class ProjectsComponent implements OnInit {
   computeNumberPercent(number: number, max: number) {
     if(max == 0) {
       return "100";
+    } else if(max < 0) {
+      return "100";
     }
     return 100 * number / max;
   }

@@ -20,6 +20,8 @@
                     <dd>{{ project.leader.firstname }} {{ project.leader.lastname }}</dd>
                     <dt>Created At</dt>
                     <dd>{{ project.createdAt | date:medium }}</dd>
+                    <dt>Status</dt>
+                    <dd>{{ project.status }}</dd>
                     <dt>Remaining days</dt>
                     <dd>{{ project.remainingDays }}</dd>
                     <dt>People needed</dt>
@@ -29,13 +31,13 @@
                 </dl>
             </div>
             <div class="box-footer text-center">
-                <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id">
+                <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-pencil"></i> Join the team
                 </a>
-                <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id">
+                <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-close"></i> Leave the team
                 </a>
-                <a class="btn btn-app btn-money" (click)="openModal(template)">
+                <a class="btn btn-app btn-money" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-money"></i> Contribute financially
                 </a>
                 <ng-template #template>
