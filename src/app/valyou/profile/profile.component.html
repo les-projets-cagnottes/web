@@ -91,7 +91,7 @@
                             <tr *ngFor="let donation of donations">
                                 <td>{{ budgetsSorted[donation.budget.id].organization.name }}</td>
                                 <td>{{ donation.budget.name }}</td>
-                                <td>{{ donation.createdAt | date:medium }}</td>
+                                <td>{{ donation.createdAt | date:'medium' }}</td>
                                 <td>{{ donation.project.title }}</td>
                                 <td>{{ donation.amount }} €</td>
                             </tr>

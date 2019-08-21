@@ -14,15 +14,15 @@ import { first } from 'rxjs/operators';
 export class ViewProjectComponent implements OnInit {
 
   private id: number;
-  private userLoggedIn: User;
-  private project: Project = new Project();
-  private budgets: Budget[] = [];
-  private donations: Donation[] = [];
+  userLoggedIn: User;
+  project: Project = new Project();
+  budgets: Budget[] = [];
+  donations: Donation[] = [];
   private totalDonations: number;
 
-  private modalRef: BsModalRef;
-  private isUserInTeam: boolean = false;
-  private donationForm: FormGroup;
+  modalRef: BsModalRef;
+  isUserInTeam: boolean = false;
+  donationForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,

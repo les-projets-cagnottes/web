@@ -3,6 +3,7 @@ import { Organization } from './organization';
 
 export class User {
     id: number;
+    createdAt: Date;
     username: string;
     email: string;
     password: string;

@@ -13,17 +13,17 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 export class BudgetsComponent implements OnInit {
 
   // Data
-  private organizations: Organization[];
+  organizations: Organization[];
 
   // Form
-  private mainForms: FormGroup[] = [];
+  mainForms: FormGroup[] = [];
 
   // Buttons states
-  private addStatus: string = "no-refresh";
-  private refreshStatus: string = "no-refresh";
-  private saveStatus: string = "no-refresh";
-  private distributeStatus: string[][] = [];
-  private deleteStatus: string[][] = [];
+  addStatus: string = "no-refresh";
+  refreshStatus: string = "no-refresh";
+  saveStatus: string = "no-refresh";
+  distributeStatus: string[][] = [];
+  deleteStatus: string[][] = [];
 
   constructor(
     private fb: FormBuilder,

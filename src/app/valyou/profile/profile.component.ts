@@ -9,12 +9,12 @@ import { User, Organization, Budget, Donation, Project } from 'src/app/_models';
 })
 export class ProfileComponent implements OnInit {
 
-  private budgets: Budget[] = [];
-  private budgetsSorted: Budget[] = [];
-  private donations: Donation[] = [];
+  budgets: Budget[] = [];
+  budgetsSorted: Budget[] = [];
+  donations: Donation[] = [];
   private organizations: Organization[] = [];
-  private projects: Project[] = [];
-  private user: User = new User();
+  projects: Project[] = [];
+  user: User = new User();
 
   constructor(
     private authenticationService: AuthenticationService,

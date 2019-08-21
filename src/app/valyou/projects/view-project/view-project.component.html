@@ -19,7 +19,7 @@
                     <dt>Project Leader</dt>
                     <dd>{{ project.leader.firstname }} {{ project.leader.lastname }}</dd>
                     <dt>Created At</dt>
-                    <dd>{{ project.createdAt | date:medium }}</dd>
+                    <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt>Status</dt>
                     <dd>{{ project.status }}</dd>
                     <dt>Remaining days</dt>
@@ -65,7 +65,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button [disabled]="submitting" class="btn btn-primary btn-flat" (click)="onSubmitDonation()">Submit</button>
+                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()">Submit</button>
                     </div>
                 </ng-template>
             </div>
@@ -86,7 +86,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let donation of donations">
-                                <td>{{ donation.createdAt | date:medium }}</td>
+                                <td>{{ donation.createdAt | date:'medium' }}</td>
                                 <td>{{ donation.amount }}</td>
                             </tr>
                         </tbody>

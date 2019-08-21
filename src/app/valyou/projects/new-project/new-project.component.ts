@@ -17,10 +17,10 @@ export class NewProjectComponent implements OnInit {
   // Data
   private id: number = 0;
   private project: Project = new Project();
-  private organizations: Organization[];
+  organizations: Organization[];
 
   // Form
-  private form: FormGroup = this.formBuilder.group({
+  form: FormGroup = this.formBuilder.group({
     organizations: [0],
     title: ['', Validators.required],
     shortDescription: ['', Validators.required],
@@ -28,12 +28,12 @@ export class NewProjectComponent implements OnInit {
     donationsRequired: [0, Validators.required],
     peopleRequired: [2, Validators.required]
   });
-  private submitting: boolean;
+  submitting: boolean;
 
   // Funding Deadline field
-  private now: Date = new Date();
-  private nowPlus3Months = new Date();
-  private fundingDeadlineValue = new Date();
+  now: Date = new Date();
+  nowPlus3Months = new Date();
+  fundingDeadlineValue = new Date();
 
   // Long description field
   private simplemde;
