@@ -1,4 +1,4 @@
-FROM node:8.10.0-alpine as builder
+FROM node:12.8.1-alpine as builder
 COPY package.json ./
 RUN yarn install && mkdir /valyou && mv ./node_modules ./valyou
 WORKDIR /valyou
