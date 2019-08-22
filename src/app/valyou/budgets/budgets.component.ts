@@ -43,50 +43,52 @@ export class BudgetsComponent implements OnInit {
   }
 
   refresh(): void {
-    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(
-        response => {
-          this.organizations = response;
-          this.mainForms = [];
-          var that = this;
-          this.organizations.forEach((organization, index) => {
-            that.mainForms[index] = that.fb.group({
-              budgets: new FormArray([])
+    if (this.authenticationService.currentUserValue !== null) {
+      this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+        .subscribe(
+          response => {
+            this.organizations = response;
+            this.mainForms = [];
+            var that = this;
+            this.organizations.forEach((organization, index) => {
+              that.mainForms[index] = that.fb.group({
+                budgets: new FormArray([])
+              });
+              that.deleteStatus[index] = [];
+              that.distributeStatus[index] = [];
+              organization.budgets.forEach((budget, indexBudget) => {
+                var totalDonations = 0;
+                budget.donations.forEach(element => {
+                  totalDonations += element.amount;
+                });;
+                budget.usage = that.computeNumberPercent(totalDonations, organization.members.length * budget.amountPerMember) + "%";
+                (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
+                  id: [budget.id],
+                  name: [budget.name, Validators.required],
+                  amountPerMember: [{ value: budget.amountPerMember, disabled: budget.distributed }, [Validators.required]],
+                  startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.distributed }, [Validators.required]],
+                  endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.distributed }, [Validators.required]],
+                  organization: [budget.organization],
+                  sponsor: [budget.sponsor],
+                  donations: [budget.donations]
+                }));
+                that.deleteStatus[index][indexBudget] = "no-refresh";
+                that.distributeStatus[index][indexBudget] = "no-refresh";
+              });
+              this.refreshStatus = 'success';
+              setTimeout(() => {
+                this.refreshStatus = 'no-refresh';
+              }, 2000);
             });
-            that.deleteStatus[index] = [];
-            that.distributeStatus[index] = [];
-            organization.budgets.forEach((budget, indexBudget) => {
-              var totalDonations = 0;
-              budget.donations.forEach(element => {
-                totalDonations += element.amount;
-              });;
-              budget.usage = that.computeNumberPercent(totalDonations, organization.members.length * budget.amountPerMember) + "%";
-              (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
-                id: [budget.id],
-                name: [budget.name, Validators.required],
-                amountPerMember: [{ value: budget.amountPerMember, disabled: budget.distributed }, [Validators.required]],
-                startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.distributed }, [Validators.required]],
-                endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.distributed }, [Validators.required]],
-                organization: [budget.organization],
-                sponsor: [budget.sponsor],
-                donations: [budget.donations]
-              }));
-              that.deleteStatus[index][indexBudget] = "no-refresh";
-              that.distributeStatus[index][indexBudget] = "no-refresh";
-            });
-            this.refreshStatus = 'success';
+          },
+          error => {
+            console.log(error);
+            this.refreshStatus = 'error';
             setTimeout(() => {
               this.refreshStatus = 'no-refresh';
             }, 2000);
           });
-        },
-        error => {
-          console.log(error);
-          this.refreshStatus = 'error';
-          setTimeout(() => {
-            this.refreshStatus = 'no-refresh';
-          }, 2000);
-        });
+    }
   }
 
   save(): void {
@@ -199,7 +201,7 @@ export class BudgetsComponent implements OnInit {
 
   dateToString(date: Date) {
     var date = new Date(date);
-    return date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
   }
 
 }

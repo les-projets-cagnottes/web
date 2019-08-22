@@ -30,15 +30,17 @@ export class OrganizationsComponent implements OnInit {
   }
 
   refresh(page: number = 1): void {
-    this.organizationService.getByOwner(this.authenticationService.currentUserValue, page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawResponse = response;
-        this.setPage(page);
-        this.refreshStatus = 'success';
-        setTimeout(() => {
-          this.refreshStatus = 'no-refresh';
-        }, 2000);
-      });
+    if(this.authenticationService.currentUserValue !== null) {
+      this.organizationService.getByOwner(this.authenticationService.currentUserValue, page - 1, this.pageSize)
+        .subscribe(response => {
+          this.rawResponse = response;
+          this.setPage(page);
+          this.refreshStatus = 'success';
+          setTimeout(() => {
+            this.refreshStatus = 'no-refresh';
+          }, 2000);
+        });
+    }
   }
 
   delete(org: Organization): void {

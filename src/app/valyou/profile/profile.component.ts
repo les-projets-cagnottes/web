@@ -33,39 +33,39 @@ export class ProfileComponent implements OnInit {
     this.authenticationService.whoami()
       .subscribe(user => {
         this.user = user;
-      });
-    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(organizations => {
-        this.organizations = organizations;
-        var nbBudgetOrgsRetreived = 0;
-        for (var i = 0; i < this.organizations.length; i++) {
-          this.budgetService.getByOrganizationId(this.organizations[i].id)
-            .subscribe(budgets => {
-              for (var j = 0; j < budgets.length; j++) {
-                budgets[j].totalDonations = 0;
-                this.budgetsSorted[budgets[j].id] = budgets[j];
-              }
-              nbBudgetOrgsRetreived++;
-              if (nbBudgetOrgsRetreived === this.organizations.length) {
-                this.refreshDonations();
-              }
+        this.organizationService.getByMemberId(this.user.id)
+          .subscribe(organizations => {
+            this.organizations = organizations;
+            var nbBudgetOrgsRetreived = 0;
+            for (var i = 0; i < this.organizations.length; i++) {
+              this.budgetService.getByOrganizationId(this.organizations[i].id)
+                .subscribe(budgets => {
+                  for (var j = 0; j < budgets.length; j++) {
+                    budgets[j].totalDonations = 0;
+                    this.budgetsSorted[budgets[j].id] = budgets[j];
+                  }
+                  nbBudgetOrgsRetreived++;
+                  if (nbBudgetOrgsRetreived === this.organizations.length) {
+                    this.refreshDonations();
+                  }
+                });
+            }
+          });
+        this.projectService.getByMemberId(this.user.id)
+          .subscribe(projects => {
+            this.projects = projects;
+            var that = this;
+            this.projects.forEach(function (value) {
+              value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
+              value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
+              value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
             });
-        }
-      });
-    this.projectService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(projects => {
-        this.projects = projects;
-        var that = this;
-        this.projects.forEach(function (value) {
-          value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
-          value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
-          value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
-        });
+          });
       });
   }
 
   refreshDonations() {
-    this.donationService.getByContributorId(this.authenticationService.currentUserValue.id)
+    this.donationService.getByContributorId(this.user.id)
       .subscribe(donations => {
         this.donations = donations;
         for (var k = 0; k < donations.length; k++) {

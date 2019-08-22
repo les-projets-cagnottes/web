@@ -72,12 +72,14 @@ export class NewProjectComponent implements OnInit {
     });
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
-    this.simplemde = startSimpleMDE();
-    this.simplemde.value(this.project.longDescription);
-    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(orgs => {
-        this.organizations = orgs;
-      })
+    if(typeof startSimpleMDE === 'function') {
+      this.simplemde = startSimpleMDE();
+      this.simplemde.value(this.project.longDescription);
+      this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+        .subscribe(orgs => {
+          this.organizations = orgs;
+        })
+    }
   }
 
   get f() { return this.form.controls; }

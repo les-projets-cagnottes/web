@@ -56,7 +56,10 @@ export class EditOrganizationComponent implements OnInit {
     });
     if (!(this.id > 0)) {
       this.organization.members = [];
-      this.organization.members.push(JSON.parse(localStorage.getItem('currentUser')));
+      var user = JSON.parse(localStorage.getItem('currentUser'));
+      if(user !== null) {
+        this.organization.members.push(JSON.parse(localStorage.getItem('currentUser')));
+      }
     }
   }
 
