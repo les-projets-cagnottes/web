@@ -30,9 +30,6 @@ before_install:
 install:
   - yarn
 
-script:
-  - yarn test
-
 after_success:
   - sudo docker login --username $HEROKU_DOCKER_USERNAME --password $HEROKU_AUTH_TOKEN registry.heroku.com
   - sudo docker tag valyou:latest registry.heroku.com/valyou/web
