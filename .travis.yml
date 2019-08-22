@@ -28,8 +28,10 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 install:
-  - yarn add @angular-devkit/build-angular
-  - yarn test --watch=false
+  - yarn
+
+script:
+  - yarn test
 
 after_success:
   - sudo docker login --username $HEROKU_DOCKER_USERNAME --password $HEROKU_AUTH_TOKEN registry.heroku.com
