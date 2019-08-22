@@ -28,6 +28,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 install:
+  - yarn add @angular-devkit/build-angular
   - yarn test --watch=false
 
 after_success:
