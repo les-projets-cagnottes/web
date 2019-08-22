@@ -1,9 +1,9 @@
 FROM node:12.8.1-alpine as builder
 COPY package.json ./
-RUN yarn install && mkdir /valyou && mv ./node_modules ./valyou
+RUN npm install && mkdir /valyou && mv ./node_modules ./valyou
 WORKDIR /valyou
 COPY . .
-RUN yarn run build --prod --build-optimizer
+RUN npm install --prod --build-optimizer
 FROM nginx:1.13.9-alpine
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
                                   
