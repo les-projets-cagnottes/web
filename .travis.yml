@@ -8,7 +8,7 @@ apt:
   packages:
     - google-chrome-stable
     - google-chrome-beta
-
+  yarn: 1.17.3
 services:
   - docker
 
