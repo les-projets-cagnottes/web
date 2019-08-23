@@ -12,6 +12,10 @@ script:
   - docker build -t valyou-web .
   - docker tag valyou-web registry.heroku.com/valyou/web
 
-after_success:
-  - if [ $TRAVIS_PULL_REQUEST = "false" ]; then sudo docker push registry.heroku.com/valyou/web; fi
-  - if [ $TRAVIS_PULL_REQUEST = "false" ]; then heroku container:release web --app valyou; fi
+deploy:
+  provider: script
+  script: 
+    docker push registry.heroku.com/valyou/web;
+    heroku container:release web --app valyou
+  on:
+    branch: master
