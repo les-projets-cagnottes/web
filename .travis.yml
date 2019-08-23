@@ -14,3 +14,4 @@ script:
 
 after_success:
   - if [ $TRAVIS_PULL_REQUEST = "false" ]; then sudo docker push registry.heroku.com/valyou/web; fi
+  - if [ $TRAVIS_PULL_REQUEST = "false" ]; then heroku container:release web --app valyou; fi
