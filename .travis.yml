@@ -18,4 +18,4 @@ deploy:
     docker push registry.heroku.com/valyou/web;
     heroku container:release web --app valyou
   on:
-    branch: master
+    branch: develop
