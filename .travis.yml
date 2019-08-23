@@ -15,7 +15,7 @@ script:
 deploy:
   provider: script
   script: 
-    heroku container:push web --app valyou
+    heroku container:push web --app valyou;
     heroku container:release web --app valyou
   on:
     branch: develop
