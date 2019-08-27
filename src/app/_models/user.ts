@@ -32,6 +32,7 @@ export class User {
     }
 
     public getDefaultAvatarUrl(): string {
-        return "https://ui-avatars.com/api/?name=" + this.firstname + "+" + this.lastname + "&background=6CBFBB";
+        //return "https://ui-avatars.com/api/?name=" + this.firstname + "+" + this.lastname + "&background=6CBFBB";
+        return "https://i.pravatar.cc/100?u=" + this.email
     }
 }
