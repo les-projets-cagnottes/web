@@ -52,7 +52,7 @@ export class ViewProjectComponent implements OnInit {
       this.projectService.getById(this.id)
         .subscribe(response => {
           this.project = response;
-          this.project.leader.decode(this.project.leader);
+          this.project.leader = new User().decode(this.project.leader);
           var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
           this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
           this.isUserInTeam = this.project.peopleGivingTime.find(user => {
