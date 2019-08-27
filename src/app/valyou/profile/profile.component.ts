@@ -9,12 +9,12 @@ import { User, Organization, Budget, Donation, Project } from 'src/app/_models';
 })
 export class ProfileComponent implements OnInit {
 
-  private budgets: Budget[] = [];
-  private budgetsSorted: Budget[] = [];
-  private donations: Donation[] = [];
+  budgets: Budget[] = [];
+  budgetsSorted: Budget[] = [];
+  donations: Donation[] = [];
   private organizations: Organization[] = [];
-  private projects: Project[] = [];
-  private user: User = new User();
+  projects: Project[] = [];
+  user: User = new User();
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -33,39 +33,39 @@ export class ProfileComponent implements OnInit {
     this.authenticationService.whoami()
       .subscribe(user => {
         this.user = user;
-      });
-    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(organizations => {
-        this.organizations = organizations;
-        var nbBudgetOrgsRetreived = 0;
-        for (var i = 0; i < this.organizations.length; i++) {
-          this.budgetService.getByOrganizationId(this.organizations[i].id)
-            .subscribe(budgets => {
-              for (var j = 0; j < budgets.length; j++) {
-                budgets[j].totalDonations = 0;
-                this.budgetsSorted[budgets[j].id] = budgets[j];
-              }
-              nbBudgetOrgsRetreived++;
-              if (nbBudgetOrgsRetreived === this.organizations.length) {
-                this.refreshDonations();
-              }
+        this.organizationService.getByMemberId(this.user.id)
+          .subscribe(organizations => {
+            this.organizations = organizations;
+            var nbBudgetOrgsRetreived = 0;
+            for (var i = 0; i < this.organizations.length; i++) {
+              this.budgetService.getByOrganizationId(this.organizations[i].id)
+                .subscribe(budgets => {
+                  for (var j = 0; j < budgets.length; j++) {
+                    budgets[j].totalDonations = 0;
+                    this.budgetsSorted[budgets[j].id] = budgets[j];
+                  }
+                  nbBudgetOrgsRetreived++;
+                  if (nbBudgetOrgsRetreived === this.organizations.length) {
+                    this.refreshDonations();
+                  }
+                });
+            }
+          });
+        this.projectService.getByMemberId(this.user.id)
+          .subscribe(projects => {
+            this.projects = projects;
+            var that = this;
+            this.projects.forEach(function (value) {
+              value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
+              value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
+              value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
             });
-        }
-      });
-    this.projectService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(projects => {
-        this.projects = projects;
-        var that = this;
-        this.projects.forEach(function (value) {
-          value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
-          value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
-          value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
-        });
+          });
       });
   }
 
   refreshDonations() {
-    this.donationService.getByContributorId(this.authenticationService.currentUserValue.id)
+    this.donationService.getByContributorId(this.user.id)
       .subscribe(donations => {
         this.donations = donations;
         for (var k = 0; k < donations.length; k++) {
@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
         }
         for (var k = 0; k < this.budgetsSorted.length; k++) {
           if (this.budgetsSorted[k] != null) {
-            this.budgetsSorted[k].totalDonationsPercent = this.computeNumberPercent(this.budgetsSorted[k].totalDonations, this.budgetsSorted[k].amountPerMember) + "%";
+            this.budgetsSorted[k].remaining = (100 - this.computeNumberPercent(this.budgetsSorted[k].totalDonations, this.budgetsSorted[k].amountPerMember)) + "%";
             this.budgets.push(this.budgetsSorted[k]);
           }
         }
@@ -89,11 +89,11 @@ export class ProfileComponent implements OnInit {
     return this.computeNumberPercent(expiredDuration, totalDuration);
   }
 
-  computeNumberPercent(number: number, max: number) {
+  computeNumberPercent(number: number, max: number): number {
     if (max == 0) {
-      return "100";
+      return 100;
     } else if(max < 0) {
-      return "100";
+      return 100;
     }
     return 100 * number / max;
   }

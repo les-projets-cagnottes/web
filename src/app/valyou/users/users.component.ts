@@ -73,7 +73,6 @@ export class UsersComponent implements OnInit {
     this.f.firstname.setValue(user.firstname);
     this.f.lastname.setValue(user.lastname);
     this.f.avatarUrl.setValue(user.avatarUrl);
-    this.f.color.setValue("#" + user.color);
     this.f.isActivated.setValue(user.isActivated);
   }
 
@@ -113,7 +112,6 @@ export class UsersComponent implements OnInit {
     this.userEdited.firstname = this.f.firstname.value;
     this.userEdited.lastname = this.f.lastname.value;
     this.userEdited.avatarUrl = this.f.avatarUrl.value;
-    this.userEdited.color = this.f.color.value.substring(1);
     this.userEdited.isActivated = this.f.isActivated.value;
 
     if (this.userEdited.id === undefined) {

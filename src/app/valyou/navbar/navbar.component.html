@@ -5,7 +5,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>V</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Val</b>you</span>
+        <span class="logo-lg">Val<b>you</b></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -21,13 +21,13 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img [src]="currentUser.avatarUrl" class="user-image" alt="User Image">
+                        <img [src]="currentUser.avatarUrl || currentUser.getDefaultAvatarUrl()" class="user-image" alt="User Image">
                         <span class="hidden-xs">{{ currentUser.firstname }} {{ currentUser.lastname }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img [src]="currentUser.avatarUrl" class="img-circle" alt="User Image">
+                            <img [src]="currentUser.avatarUrl || currentUser.getDefaultAvatarUrl()" class="img-circle" alt="User Image">
 
                             <p>
                                 {{ currentUser.firstname }} {{ currentUser.lastname }}

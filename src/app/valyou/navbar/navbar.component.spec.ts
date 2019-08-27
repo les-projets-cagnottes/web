@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppNavbarComponent } from './navbar.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppNavbarComponent', () => {
   let component: AppNavbarComponent;
@@ -8,9 +11,13 @@ describe('AppNavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppNavbarComponent ]
+      declarations: [AppNavbarComponent],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([])]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

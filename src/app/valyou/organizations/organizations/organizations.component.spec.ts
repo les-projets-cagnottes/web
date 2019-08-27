@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrganizationsComponent } from './organizations.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 describe('OrganizationsComponent', () => {
   let component: OrganizationsComponent;
@@ -8,7 +11,12 @@ describe('OrganizationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganizationsComponent ]
+      declarations: [ OrganizationsComponent ],
+      imports: [
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([])]
     })
     .compileComponents();
   }));

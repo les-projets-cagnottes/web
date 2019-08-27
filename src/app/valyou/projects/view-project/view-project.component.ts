@@ -14,15 +14,15 @@ import { first } from 'rxjs/operators';
 export class ViewProjectComponent implements OnInit {
 
   private id: number;
-  private userLoggedIn: User;
-  private project: Project = new Project();
-  private budgets: Budget[] = [];
-  private donations: Donation[] = [];
+  userLoggedIn: User;
+  project: Project = new Project();
+  budgets: Budget[] = [];
+  donations: Donation[] = [];
   private totalDonations: number;
 
-  private modalRef: BsModalRef;
-  private isUserInTeam: boolean = false;
-  private donationForm: FormGroup;
+  modalRef: BsModalRef;
+  isUserInTeam: boolean = false;
+  donationForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,11 +35,10 @@ export class ViewProjectComponent implements OnInit {
     private modalService: BsModalService) {
 
     this.route.params.subscribe(params => this.id = params.id);
-    this.project = new Project();
     this.project.leader = new User();
     this.donationForm = this.formBuilder.group({
       budget: [0],
-      amount: [10, Validators.required]
+      amount: [10, Validators.max(0)]
     });
   }
 
@@ -49,37 +48,42 @@ export class ViewProjectComponent implements OnInit {
 
   refresh() {
     this.userLoggedIn = this.authenticationService.currentUserValue;
-    this.projectService.getById(this.id)
-      .subscribe(response => {
-        this.project = response;
-        var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
-        this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
-        this.isUserInTeam = this.project.peopleGivingTime.find(user => {
-          return this.userLoggedIn.id === user.id;
-        }) !== undefined;
-      });
-    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
-      .subscribe(response => {
-        response.forEach(organization => {
-          organization.budgets.forEach(budget => {
-            var now = new Date();
-            if (budget.distributed && new Date(budget.startDate).getTime() <= now.getTime() && now.getTime() <= new Date(budget.endDate).getTime()) {
-              budget.organization = organization;
-              budget.totalUserDonations = 0;
-              this.budgets.push(budget);
-            }
+    if (this.userLoggedIn !== null) {
+      this.projectService.getById(this.id)
+        .subscribe(response => {
+          this.project = response;
+          var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
+          this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+          this.isUserInTeam = this.project.peopleGivingTime.find(user => {
+            return this.userLoggedIn.id === user.id;
+          }) !== undefined;
+        });
+      this.organizationService.getByMemberId(this.userLoggedIn.id)
+        .subscribe(response => {
+          response.forEach(organization => {
+            organization.budgets.forEach(budget => {
+              var now = new Date();
+              if (budget.isDistributed && new Date(budget.startDate).getTime() <= now.getTime() && now.getTime() <= new Date(budget.endDate).getTime()) {
+                budget.organization = organization;
+                budget.totalUserDonations = 0;
+                this.budgets.push(budget);
+              }
+            });
+          });
+          this.budgets.forEach(budget => {
+            this.donationService.getByContributorIdAndBudgetId(this.userLoggedIn.id, budget.id)
+              .subscribe(donations => {
+                donations.forEach(donation => {
+                  budget.totalUserDonations += donation.amount;
+                });
+                this.donationForm.controls.amount.setValidators([Validators.required, Validators.max(
+                  this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations))]);
+              });
           });
         });
-        this.budgets.forEach(budget => {
-          this.donationService.getByContributorIdAndBudgetId(this.authenticationService.currentUserValue.id, budget.id)
-            .subscribe(donations => {
-              donations.forEach(donation => {
-                console.log(budget.totalUserDonations);
-                budget.totalUserDonations += donation.amount;
-              });
-            });
-        });
-      });
+    } else {
+      this.userLoggedIn = new User();
+    }
   }
 
   openModal(template: TemplateRef<any>) {
@@ -133,6 +137,14 @@ export class ViewProjectComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+
+  min(val1: number, val2: number): number {
+    if(val1 > val2) {
+      return val2;
+    } else {
+      return val1;
+    }
   }
 
 }

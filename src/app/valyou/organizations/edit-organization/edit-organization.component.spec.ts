@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditOrganizationComponent } from './edit-organization.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 describe('EditOrganizationComponent', () => {
   let component: EditOrganizationComponent;
@@ -8,7 +11,11 @@ describe('EditOrganizationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditOrganizationComponent ]
+      declarations: [ EditOrganizationComponent ],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([])]
     })
     .compileComponents();
   }));

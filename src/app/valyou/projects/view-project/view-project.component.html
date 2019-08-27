@@ -19,7 +19,7 @@
                     <dt>Project Leader</dt>
                     <dd>{{ project.leader.firstname }} {{ project.leader.lastname }}</dd>
                     <dt>Created At</dt>
-                    <dd>{{ project.createdAt | date:medium }}</dd>
+                    <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt>Status</dt>
                     <dd>{{ project.status }}</dd>
                     <dt>Remaining days</dt>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
                                 <label for="amount">Amount (in €)</label>
-                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations }}">
+                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ min(budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations, project.donationsRequired - project.totalDonations) }}">
                             </div>
                             <div>
                                 It will remains <b>{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value }} €</b> on your pot for this budget afterwards.
@@ -65,7 +65,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button [disabled]="submitting" class="btn btn-primary btn-flat" (click)="onSubmitDonation()">Submit</button>
+                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()">Submit</button>
                     </div>
                 </ng-template>
             </div>
@@ -86,7 +86,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let donation of donations">
-                                <td>{{ donation.createdAt | date:medium }}</td>
+                                <td>{{ donation.createdAt | date:'medium' }}</td>
                                 <td>{{ donation.amount }}</td>
                             </tr>
                         </tbody>
