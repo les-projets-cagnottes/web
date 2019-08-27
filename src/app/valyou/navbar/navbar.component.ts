@@ -27,8 +27,8 @@ export class AppNavbarComponent implements OnInit {
 
   refresh() {
     this.authenticationService.whoami()
-      .subscribe(user => {
-        this.currentUser = user
+      .subscribe(json => {
+        this.currentUser.decode(json);
       });
   }
 

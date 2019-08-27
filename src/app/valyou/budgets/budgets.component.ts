@@ -65,9 +65,10 @@ export class BudgetsComponent implements OnInit {
                 (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
                   id: [budget.id],
                   name: [budget.name, Validators.required],
-                  amountPerMember: [{ value: budget.amountPerMember, disabled: budget.distributed }, [Validators.required]],
-                  startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.distributed }, [Validators.required]],
-                  endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.distributed }, [Validators.required]],
+                  amountPerMember: [{ value: budget.amountPerMember, disabled: budget.isDistributed }, [Validators.required]],
+                  startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.isDistributed }, [Validators.required]],
+                  endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.isDistributed }, [Validators.required]],
+                  isDistributed: [budget.isDistributed],
                   organization: [budget.organization],
                   sponsor: [budget.sponsor],
                   donations: [budget.donations]

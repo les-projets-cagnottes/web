@@ -46,9 +46,9 @@
                                 </div>
                             </td>
                             <td class="action-bar">
-                                <button *ngIf="!organizations[i].budgets[j].distributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)"><i class="fa fa-paper-plane"></i>
+                                <button *ngIf="!organizations[i].budgets[j].isDistributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)"><i class="fa fa-paper-plane"></i>
                                 Distribute</button>
-                                <button *ngIf="organizations[i].budgets[j].distributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)">
+                                <button *ngIf="organizations[i].budgets[j].isDistributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)">
                                     <i class="fa fa-stop"></i> Cancel distribution
                                 </button>
                                 <button type="button" class="btn btn-default" [ngClass]="{ 'btn-danger': deleteStatus[i][j] == 'error' }" (click)="delete(organizations[i].budgets[j].id, i, j)"><i class="fa fa-trash"></i>

@@ -6,7 +6,7 @@ export class Budget {
     id: number;
     name: string;
     amountPerMember: number = 0;
-    distributed: boolean = false;
+    isDistributed: boolean = false;
     startDate: Date;
     endDate: Date;
     organization: Organization;
@@ -17,5 +17,6 @@ export class Budget {
     usage: string;
     totalDonations: number = 0;
     totalDonationsPercent: string;
+    remaining: string;
     totalUserDonations: number = 0;
 }

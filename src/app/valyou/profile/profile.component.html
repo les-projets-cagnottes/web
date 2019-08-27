@@ -16,16 +16,16 @@
         <!-- About Me Box -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">My pots usage</h3>
+                <h3 class="box-title">My pots</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="progress-group" *ngFor="let budget of budgets">
                     <span class="progress-text">{{ budget.organization.name }} - {{ budget.name }}</span>
-                    <span class="progress-number"><b>{{ budget.totalDonations }} €</b> / {{ budget.amountPerMember }} €</span>
+                    <span class="progress-number">{{ budget.amountPerMember - budget.totalDonations }} € / {{ budget.amountPerMember }} €</span>
 
                     <div class="progress sm">
-                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': budget.totalDonationsPercent }"></div>
+                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': budget.remaining, 'float': 'right' }"></div>
                     </div>
                 </div>
             </div>

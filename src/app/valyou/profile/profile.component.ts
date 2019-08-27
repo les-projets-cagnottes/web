@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
         }
         for (var k = 0; k < this.budgetsSorted.length; k++) {
           if (this.budgetsSorted[k] != null) {
-            this.budgetsSorted[k].totalDonationsPercent = this.computeNumberPercent(this.budgetsSorted[k].totalDonations, this.budgetsSorted[k].amountPerMember) + "%";
+            this.budgetsSorted[k].remaining = (100 - this.computeNumberPercent(this.budgetsSorted[k].totalDonations, this.budgetsSorted[k].amountPerMember)) + "%";
             this.budgets.push(this.budgetsSorted[k]);
           }
         }
@@ -89,11 +89,11 @@ export class ProfileComponent implements OnInit {
     return this.computeNumberPercent(expiredDuration, totalDuration);
   }
 
-  computeNumberPercent(number: number, max: number) {
+  computeNumberPercent(number: number, max: number): number {
     if (max == 0) {
-      return "100";
+      return 100;
     } else if(max < 0) {
-      return "100";
+      return 100;
     }
     return 100 * number / max;
   }
