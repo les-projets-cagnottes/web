@@ -57,9 +57,9 @@ export class ViewProjectComponent implements OnInit {
           this.isUserInTeam = this.project.peopleGivingTime.find(user => {
             return this.userLoggedIn.id === user.id;
           }) !== undefined;
-          this.project.peopleGivingTime.forEach(user => {
-            user = new User().decode(user);
-          });
+          for(var k = 0 ; k < this.project.peopleGivingTime.length ; k++) {
+            this.project.peopleGivingTime[k] = new User().decode(this.project.peopleGivingTime[k]);
+          }
         });
       this.organizationService.getByMemberId(this.userLoggedIn.id)
         .subscribe(response => {
