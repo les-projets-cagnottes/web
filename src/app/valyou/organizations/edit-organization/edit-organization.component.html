@@ -19,7 +19,7 @@
                 <ul class="products-list product-list-in-box">
                     <li class="item" *ngFor="let user of organization.members">
                         <div class="product-img">
-                            <img [src]="user.avatarUrl" alt="Profile picture" />
+                            <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" />
                         </div>
                         <div class="product-info">
                             {{ user.firstname }} {{ user.lastname }}

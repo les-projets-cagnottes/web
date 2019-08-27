@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
   refresh() {
     this.authenticationService.whoami()
       .subscribe(user => {
-        this.user = user;
+        this.user.decode(user);
         this.organizationService.getByMemberId(this.user.id)
           .subscribe(organizations => {
             this.organizations = organizations;

@@ -28,6 +28,7 @@ export class User {
         this.token = user.token;
         this.userAuthorities = user.userAuthorities;
         this.organizations = user.organizations;
+        return this;
     }
 
     public getDefaultAvatarUrl(): string {

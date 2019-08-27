@@ -37,6 +37,9 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           organization => {
             this.organization = organization;
+            for(var k = 0 ; k < this.organization.members.length ; k++) {
+              this.organization.members[k] = new User().decode(this.organization.members[k]);
+            }
             this.refreshForm();
           },
           error => {
@@ -70,12 +73,8 @@ export class EditOrganizationComponent implements OnInit {
     this.userService.getByEmail(this.addMemberOrgForm.controls.email.value)
       .subscribe(
         response => {
-          var user = new User();
-          user.id = response.id;
-          user.firstname = response.firstname;
-          user.lastname = response.lastname;
-          user.email = response.email;
-          this.organization.members.push(response as User);
+          var user = new User().decode(response);
+          this.organization.members.push(user);
         },
         error => {
           console.log(error);
