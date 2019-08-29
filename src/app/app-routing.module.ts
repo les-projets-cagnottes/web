@@ -30,6 +30,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'login/slack', component: LoginComponent },
   { path: '**', redirectTo: '' }
 ];
 
