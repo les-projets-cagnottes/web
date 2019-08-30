@@ -1,36 +1,74 @@
 <div class="row">
-    <div class="col-md-6">
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
+    <div class="col-md-8">
+        <div class="box">
+            <div class="box-header">
                 <h3 class="box-title">Members</h3>
             </div>
             <!-- /.box-header -->
-            <!-- form start -->
-            <div class="box-body">
-                <form [formGroup]="addMemberOrgForm">
-                    <div class="form-group input-group has-feedback">
-                        <input type="email" class="form-control" formControlName="email" placeholder="Enter user email" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-flat" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i></button>
-                        </span>
+            <div class="box-body no-padding">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <form [formGroup]="addMemberOrgForm">
+                                    <div class="form-group has-feedback">
+                                        <input type="email" class="form-control" formControlName="email" placeholder="Enter user email" />
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-flat" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i> Add</button>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let user of pagedItems">
+                            <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
+                            <td>{{ user.firstname }} {{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <button type="button" class="btn btn-default btn-flat" (click)="onRemoveMember(user)"><i
+                                            class="fa fa-trash"></i> Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-5 dataTables_info_container">
+                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
                     </div>
-                </form>
-                <ul class="products-list product-list-in-box">
-                    <li class="item" *ngFor="let user of organization.members">
-                        <div class="product-img">
-                            <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" />
-                        </div>
-                        <div class="product-info">
-                            {{ user.firstname }} {{ user.lastname }}
-                        </div>
-                    </li>
-                </ul>
+                    <div class="col-md-7">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
+                            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a (click)="refreshMembers(1)">First</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a (click)="refreshMembers(pager.currentPage - 1)">Previous</a>
+                            </li>
+                            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                <a (click)="refreshMembers(page)">{{page}}</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a (click)="refreshMembers(pager.currentPage + 1)">Next</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a (click)="refreshMembers(pager.totalPages)">Last</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- /.box -->
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -45,8 +83,14 @@
                         <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
                     </div>
                 </div>
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="submitting">Submit</button>
+                <div class="box-body">
+                    <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
+                        <label for="slackTeamId">Slack Team ID</label>
+                        <input type="text" formControlName="slackTeamId" class="form-control" id="slackTeamId" placeholder="Enter Slack Team ID">
+                    </div>
+                </div>
+                <div class="box-footer" style="text-align: center">
+                    <button type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }" (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> Submit</button>
                 </div>
             </form>
         </div>
