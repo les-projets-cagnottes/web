@@ -42,4 +42,19 @@ export class OrganizationService {
         .set('organizations_id', organizationsId.toLocaleString());
     return this.http.get<User[]>(`${environment.apiUrl}/organization/budget`, { params });
   }
+
+  getMembers(organizationId: Number, offset, limit) {
+    const params = new HttpParams()
+        .set('offset', offset)
+        .set('limit', limit);
+    return this.http.get<User[]>(`${environment.apiUrl}/organization/${organizationId}/members`, { params });
+  }
+
+  addMember(organizationId: number, userId: number) {
+    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/members`, userId);
+  }
+
+  removeMember(organizationId: number, userId: number) {
+    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/members?userId=${userId}`);
+  }
 }
