@@ -68,10 +68,7 @@ export class BudgetsComponent implements OnInit {
                   amountPerMember: [{ value: budget.amountPerMember, disabled: budget.isDistributed }, [Validators.required]],
                   startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.isDistributed }, [Validators.required]],
                   endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.isDistributed }, [Validators.required]],
-                  isDistributed: [budget.isDistributed],
-                  organization: [budget.organization],
-                  sponsor: [budget.sponsor],
-                  donations: [budget.donations]
+                  isDistributed: [budget.isDistributed]
                 }));
                 that.deleteStatus[index][indexBudget] = "no-refresh";
                 that.distributeStatus[index][indexBudget] = "no-refresh";
@@ -101,7 +98,6 @@ export class BudgetsComponent implements OnInit {
         return;
       }
       (this.mainForms[index].controls.budgets as FormArray).value.forEach(formGroup => {
-        console.log(formGroup);
         budgets.push(formGroup);
       });
     });

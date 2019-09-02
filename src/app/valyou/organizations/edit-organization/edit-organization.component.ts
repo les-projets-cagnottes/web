@@ -18,8 +18,13 @@ export class EditOrganizationComponent implements OnInit {
   organization: Organization = new Organization();
 
   // Forms
-  editOrgForm: FormGroup;
-  addMemberOrgForm: FormGroup;
+  editOrgForm: FormGroup = this.formBuilder.group({
+    name: [this.organization.name, Validators.required],
+    slackTeamId: [this.organization.slackTeamId]
+  });;
+  addMemberOrgForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required]
+  });
   submitting: boolean;
   submittingEmail: boolean;
   addStatus: string = 'idle';
@@ -59,13 +64,8 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshForm() {
-    this.editOrgForm = this.formBuilder.group({
-      name: [this.organization.name, Validators.required],
-      slackTeamId: [this.organization.slackTeamId]
-    });
-    this.addMemberOrgForm = this.formBuilder.group({
-      email: ['', Validators.required]
-    });
+    this.editOrgForm.controls.name.setValue(this.organization.name);
+    this.editOrgForm.controls.slackTeamId.setValue(this.organization.slackTeamId);
     if (!(this.id > 0)) {
       this.organization.members = [];
       var user = JSON.parse(localStorage.getItem('currentUser'));
