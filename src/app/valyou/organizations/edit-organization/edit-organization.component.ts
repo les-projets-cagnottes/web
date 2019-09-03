@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OrganizationService } from 'src/app/_services/organization.service';
 import { Organization, User } from 'src/app/_models';
 import { first } from 'rxjs/operators';
-import { UserService } from 'src/app/_services';
+import { UserService, PagerService } from 'src/app/_services';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -17,14 +17,29 @@ export class EditOrganizationComponent implements OnInit {
   id: number;
   organization: Organization = new Organization();
 
-  editOrgForm: FormGroup;
-  addMemberOrgForm: FormGroup;
+  // Forms
+  editOrgForm: FormGroup = this.formBuilder.group({
+    name: [this.organization.name, Validators.required],
+    slackTeamId: [this.organization.slackTeamId]
+  });;
+  addMemberOrgForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required]
+  });
   submitting: boolean;
   submittingEmail: boolean;
+  addStatus: string = 'idle';
+  submitStatus: string = 'idle';
+
+  // Pagination
+  private rawResponse: any;
+  pager: any = {};
+  pagedItems: any[];
+  pageSize: number = 10;
 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private pagerService: PagerService,
     private userService: UserService,
     private organizationService: OrganizationService
   ) {
@@ -37,10 +52,8 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           organization => {
             this.organization = organization;
-            for(var k = 0 ; k < this.organization.members.length ; k++) {
-              this.organization.members[k] = new User().decode(this.organization.members[k]);
-            }
             this.refreshForm();
+            this.refreshMembers();
           },
           error => {
             console.log(error);
@@ -51,18 +64,30 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshForm() {
-    this.editOrgForm = this.formBuilder.group({
-      name: [this.organization.name, Validators.required]
-    });
-    this.addMemberOrgForm = this.formBuilder.group({
-      email: ['', Validators.required]
-    });
+    this.editOrgForm.controls.name.setValue(this.organization.name);
+    this.editOrgForm.controls.slackTeamId.setValue(this.organization.slackTeamId);
     if (!(this.id > 0)) {
       this.organization.members = [];
       var user = JSON.parse(localStorage.getItem('currentUser'));
-      if(user !== null) {
+      if (user !== null) {
         this.organization.members.push(JSON.parse(localStorage.getItem('currentUser')));
       }
+    }
+  }
+
+  refreshMembers(page: number = 1) {
+    this.organizationService.getMembers(this.organization.id, page - 1, this.pageSize)
+      .subscribe(response => {
+        this.rawResponse = response;
+        this.setPage(page);
+      });
+  }
+
+  setPage(page: number) {
+    this.pager = this.pagerService.getPager(this.rawResponse.totalElements, page, this.pageSize);
+    this.pagedItems = this.rawResponse.content;
+    for (var k = 0; k < this.pagedItems.length; k++) {
+      this.pagedItems[k] = new User().decode(this.pagedItems[k]);
     }
   }
 
@@ -74,14 +99,41 @@ export class EditOrganizationComponent implements OnInit {
       .subscribe(
         response => {
           var user = new User().decode(response);
-          this.organization.members.push(user);
+          this.organizationService.addMember(this.organization.id, user.id)
+            .subscribe(
+              () => {
+                this.refreshMembers(this.pager.page);
+                this.addStatus = 'success';
+                setTimeout(() => {
+                  this.addStatus = 'idle';
+                }, 2000);
+              },
+              error => {
+                console.log(error);
+                this.submitting = false;
+                this.addStatus = 'error';
+                setTimeout(() => {
+                  this.addStatus = 'idle';
+                }, 2000);
+              }
+            );
         },
         error => {
           console.log(error);
           this.submitting = false;
+          this.addStatus = 'error';
+          setTimeout(() => {
+            this.addStatus = 'idle';
+          }, 2000);
         });
   }
 
+  onRemoveMember(user: User) {
+    this.organizationService.removeMember(this.organization.id, user.id)
+      .subscribe(() => {
+        this.refreshMembers(this.pager.page);
+      });
+  }
 
   get f() { return this.editOrgForm.controls; }
 
@@ -94,7 +146,8 @@ export class EditOrganizationComponent implements OnInit {
 
     var organization2save = new Organization();
     organization2save.name = this.f.name.value;
-    organization2save.members = this.organization.members;
+    organization2save.slackTeamId = this.f.slackTeamId.value;
+    //organization2save.members = this.organization.members;
 
     if (this.id > 0) {
       organization2save.id = this.id;
@@ -102,20 +155,36 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           () => {
             this.submitting = false;
+            this.submitStatus = 'success';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
           },
           error => {
             console.log(error);
             this.submitting = false;
+            this.submitStatus = 'error';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
           });
     } else {
       this.organizationService.create(organization2save)
         .subscribe(
           () => {
             this.submitting = false;
+            this.submitStatus = 'success';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
           },
           error => {
             console.log(error);
             this.submitting = false;
+            this.submitStatus = 'error';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
           });
     }
 

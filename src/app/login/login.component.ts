@@ -17,6 +17,10 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
 
+  // slack oauth
+  redirectUrlOAuth: string;
+  code: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -27,6 +31,18 @@ export class LoginComponent implements OnInit {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
+    }
+    if (this.router.url.startsWith('/login')
+      && !this.router.url.startsWith('/login/slack')) {
+      this.redirectUrlOAuth = location.href.replace("/login", "/login/slack");
+    }
+    if(this.router.url.startsWith('/login/slack')) {
+      this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
+      this.code = this.route.snapshot.queryParams['code'];
+      this.authenticationService.slack(this.code, this.redirectUrlOAuth)
+        .subscribe(() => {
+          this.router.navigate([this.returnUrl]);
+        });
     }
   }
 
@@ -55,7 +71,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
+        () => {
           this.router.navigate([this.returnUrl]);
         },
         error => {
