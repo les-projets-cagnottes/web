@@ -70,29 +70,51 @@
                 </ng-template>
             </div>
         </div>
-        <div class="box box-default">
-            <div class="box-header with-border">
+        <div class="box">
+            <div class="box-header">
                 <h3 class="box-title">Donations</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-                <div class="table-responsive">
-                    <table class="table no-margin">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let donation of donations">
-                                <td>{{ donation.createdAt | date:'medium' }}</td>
-                                <td>{{ donation.amount }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="box-body no-padding">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                        <tr *ngFor="let donation of pagedItems">
+                            <td>{{ donation.createdAt | date:'medium' }}</td>
+                            <td>{{ donation.amount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-sm-5 dataTables_info_container">
+                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
+                    </div>
+                    <div class="col-md-7">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
+                            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a (click)="refreshMembers(1)">First</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a (click)="refreshMembers(pager.currentPage - 1)">Previous</a>
+                            </li>
+                            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                <a (click)="refreshMembers(page)">{{page}}</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a (click)="refreshMembers(pager.currentPage + 1)">Next</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a (click)="refreshMembers(pager.totalPages)">Last</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <!-- /.table-responsive -->
             </div>
         </div>
         <div class="box box-default">
@@ -103,12 +125,12 @@
                 <ul class="users-list clearfix">
                     <li>
                         <img [src]="project.leader.avatarUrl" alt="User Image">
-                        <a class="users-list-name" href="#">{{ project.leader.firstname }}
+                        <a class="users-list-name">{{ project.leader.firstname }}
                             {{ project.leader.lastname }}</a>
                     </li>
                     <li *ngFor="let user of project.peopleGivingTime">
                         <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image">
-                        <a class="users-list-name" href="#">{{ user.firstname }} {{ user.lastname }}</a>
+                        <a class="users-list-name">{{ user.firstname }} {{ user.lastname }}</a>
                     </li>
                 </ul>
             </div>
