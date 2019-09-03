@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project, User, Donation, Budget } from 'src/app/_models';
-import { AuthenticationService, ProjectService, DonationService, BudgetService, OrganizationService } from 'src/app/_services';
+import { AuthenticationService, ProjectService, DonationService, BudgetService, OrganizationService, PagerService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -24,6 +24,12 @@ export class ViewProjectComponent implements OnInit {
   isUserInTeam: boolean = false;
   donationForm: FormGroup;
 
+  // Pagination
+  private rawResponse: any;
+  pager: any = {};
+  pagedItems: any[];
+  pageSize: number = 10;
+  
   constructor(
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
@@ -32,6 +38,7 @@ export class ViewProjectComponent implements OnInit {
     private projectService: ProjectService,
     private donationService: DonationService,
     private formBuilder: FormBuilder,
+    private pagerService: PagerService,
     private modalService: BsModalService) {
 
     this.route.params.subscribe(params => this.id = params.id);
@@ -44,6 +51,7 @@ export class ViewProjectComponent implements OnInit {
 
   ngOnInit() {
     this.refresh();
+    this.refreshDonations();
   }
 
   refresh() {
@@ -88,6 +96,19 @@ export class ViewProjectComponent implements OnInit {
     } else {
       this.userLoggedIn = new User();
     }
+  }
+
+  refreshDonations(page: number = 1) {
+    this.projectService.getDonations(this.id, page - 1, this.pageSize)
+      .subscribe(response => {
+        this.rawResponse = response;
+        this.setPage(page);
+      });
+  }
+
+  setPage(page: number) {
+    this.pager = this.pagerService.getPager(this.rawResponse.totalElements, page, this.pageSize);
+    this.pagedItems = this.rawResponse.content;
   }
 
   openModal(template: TemplateRef<any>) {

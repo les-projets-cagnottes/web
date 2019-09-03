@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Project, Organization } from '../_models';
+import { Project, Organization, Donation } from '../_models';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -41,5 +41,11 @@ export class ProjectService {
     return this.http.get(`${environment.apiUrl}/project/${id}/join`);
   }
   
+  getDonations(projectId: Number, offset, limit) {
+    const params = new HttpParams()
+        .set('offset', offset)
+        .set('limit', limit);
+    return this.http.get<Donation[]>(`${environment.apiUrl}/project/${projectId}/donations`, { params });
+  }
 
 }
