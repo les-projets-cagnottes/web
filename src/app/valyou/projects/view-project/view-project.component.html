@@ -98,19 +98,19 @@
                     <div class="col-md-7">
                         <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshMembers(1)">First</a>
+                                <a (click)="refreshDonations(1)">First</a>
                             </li>
                             <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshMembers(pager.currentPage - 1)">Previous</a>
+                                <a (click)="refreshDonations(pager.currentPage - 1)">Previous</a>
                             </li>
                             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                                <a (click)="refreshMembers(page)">{{page}}</a>
+                                <a (click)="refreshDonations(page)">{{page}}</a>
                             </li>
                             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshMembers(pager.currentPage + 1)">Next</a>
+                                <a (click)="refreshDonations(pager.currentPage + 1)">Next</a>
                             </li>
                             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshMembers(pager.totalPages)">Last</a>
+                                <a (click)="refreshDonations(pager.totalPages)">Last</a>
                             </li>
                         </ul>
                     </div>
