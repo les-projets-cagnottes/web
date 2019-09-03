@@ -17,3 +17,5 @@ deploy:
   script: 
     heroku container:push web --app valyou;
     heroku container:release web --app valyou
+  on:
+    tags: true
