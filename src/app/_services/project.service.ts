@@ -33,6 +33,10 @@ export class ProjectService {
     return this.http.post<Project>(`${environment.apiUrl}/project`, project);
   }
 
+  update(project: Project) {
+    return this.http.put<Project>(`${environment.apiUrl}/project`, project);
+  }
+
   createOrganizations(id: number, organizations: Organization[]) {
     return this.http.post(`${environment.apiUrl}/project/${id}/organizations`, organizations);
   }

@@ -18,6 +18,7 @@ export class NewProjectComponent implements OnInit {
   private id: number = 0;
   private project: Project = new Project();
   organizations: Organization[];
+  minDonations: string = "0.00";
 
   // Form
   form: FormGroup = this.formBuilder.group({
@@ -62,14 +63,19 @@ export class NewProjectComponent implements OnInit {
   }
 
   refresh() {
-    this.form = this.formBuilder.group({
-      organizations: [0],
-      title: [this.project.title, Validators.required],
-      shortDescription: [this.project.shortDescription, Validators.required],
-      fundingDeadline: [this.project.fundingDeadline],
-      donationsRequired: [this.project.donationsRequired, Validators.required],
-      peopleRequired: [this.project.peopleRequired, Validators.required]
-    });
+    this.form.controls['organizations'].setValue(0);
+    this.form.controls['title'].setValue(this.project.title);
+    this.form.controls['shortDescription'].setValue(this.project.shortDescription);
+    this.form.controls['fundingDeadline'].setValue(this.dateToString(this.project.fundingDeadline));
+    this.form.controls['donationsRequired'].setValue(this.project.donationsRequired);
+    this.form.controls['peopleRequired'].setValue(this.project.peopleRequired);
+
+    if(this.id > 0) {
+      this.form.controls['fundingDeadline'].disable();
+      this.form.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.project.donationsRequired)]);
+      this.minDonations = this.project.donationsRequired.toString();
+    }
+
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
     if(typeof startSimpleMDE === 'function') {
@@ -104,20 +110,39 @@ export class NewProjectComponent implements OnInit {
     this.project.peopleRequired = this.f.peopleRequired.value;
     this.project.longDescription = this.simplemde.value();
     this.project.leader.id = this.authenticationService.currentUserValue.id;
-    this.project.fundingDeadline = this.fundingDeadlineValue;
 
     // Submit item to backend
-    this.projectService.create(this.project)
-      .subscribe(
-        response => {
-          this.submitting = false;
-          this.router.navigate(['/projects/' + response.id]);
-        },
-        error => {
-          console.log(error);
-          this.submitting = false;
-        });
+    if(this.id > 0) {
+      this.project.donations = [];
+      this.projectService.update(this.project)
+        .subscribe(
+          response => {
+            this.submitting = false;
+            this.router.navigate(['/projects/' + response.id]);
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+          });
+    } else {
+      this.project.fundingDeadline = this.fundingDeadlineValue;
+      this.projectService.create(this.project)
+        .subscribe(
+          response => {
+            this.submitting = false;
+            this.router.navigate(['/projects/' + response.id]);
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+          });
+    }
 
+  }
+
+  dateToString(date: Date) {
+    var date = new Date(date);
+    return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
   }
 
 }

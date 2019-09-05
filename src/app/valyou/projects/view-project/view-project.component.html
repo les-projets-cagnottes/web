@@ -31,6 +31,9 @@
                 </dl>
             </div>
             <div class="box-footer text-center">
+                <a class="btn btn-app btn-money" routerLink="/projects/{{ id }}/edit" *ngIf="project.leader.id === userLoggedIn.id">
+                    <i class="fa fa-pencil-square-o"></i> Edit
+                </a>
                 <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-pencil"></i> Join the team
                 </a>
