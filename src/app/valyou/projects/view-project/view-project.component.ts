@@ -13,7 +13,7 @@ import { first } from 'rxjs/operators';
 })
 export class ViewProjectComponent implements OnInit {
 
-  private id: number;
+  id: number;
   userLoggedIn: User;
   project: Project = new Project();
   budgets: Budget[] = [];
