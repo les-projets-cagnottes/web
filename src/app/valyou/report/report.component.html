@@ -1,0 +1,18 @@
+<div class="row action-bar">
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label for="amount">Organization</label>
+            <select class="form-control select2" style="width: 100%;" (change)="refreshBudgets($event.target.value)">
+                <option *ngFor="let organization of organizations; index as i" value="{{ i }}">{{ organization.name }}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label for="amount">Budget</label>
+            <select class="form-control select2" style="width: 100%;">
+                <option *ngFor="let budget of budgets; index as i" value="{{ i }}">{{ budget.name }}</option>
+            </select>
+        </div>
+    </div>
+</div>

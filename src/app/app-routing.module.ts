@@ -11,6 +11,7 @@ import { OrganizationsComponent } from './valyou/organizations/organizations/org
 import { ViewProjectComponent } from './valyou/projects/view-project/view-project.component';
 import { BudgetsComponent } from './valyou/budgets/budgets.component';
 import { ProfileComponent } from './valyou/profile/profile.component';
+import { ReportComponent } from './valyou/report/report.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'projects', component: ProjectsComponent },
       { path: 'budgets', component: BudgetsComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'report', component: ReportComponent },
       { path: 'users', component: UsersComponent }
     ]
   },
