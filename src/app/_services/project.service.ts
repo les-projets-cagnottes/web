@@ -7,7 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProjectService {
-
+  
   constructor(private http: HttpClient) { }
 
   getAll(offset, limit) {
@@ -27,6 +27,14 @@ export class ProjectService {
 
   getByMemberId(memberId: number) {
     return this.http.get<Project[]>(`${environment.apiUrl}/project?memberId=${memberId}`);
+  }
+
+  getByBudgetId(budgetId: any, offset, limit) {
+    const params = new HttpParams()
+        .set('budgetId', budgetId)
+        .set('offset', offset)
+        .set('limit', limit);
+    return this.http.get<Project[]>(`${environment.apiUrl}/project`, { params });
   }
 
   create(project: Project) {

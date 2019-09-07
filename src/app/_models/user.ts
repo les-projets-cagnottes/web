@@ -15,6 +15,9 @@ export class User {
     userAuthorities: Authority[];
     organizations: Organization[];
 
+    // Only in Valyou-Web
+    budgetUsage: string;
+
     decode(user: User) {
         this.id = user.id
         this.createdAt = user.createdAt;
