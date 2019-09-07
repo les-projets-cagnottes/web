@@ -139,10 +139,10 @@
                             <li *ngFor="let page of userPager.pages" [ngClass]="{active:userPager.currentPage === page}">
                                 <a (click)="refreshUsers(page)">{{page}}</a>
                             </li>
-                            <li [ngClass]="{disabled:userPager.currentPage === pager.totalPages}">
+                            <li [ngClass]="{disabled:userPager.currentPage === userPager.totalPages}">
                                 <a (click)="refreshUsers(userPager.currentPage + 1)">Next</a>
                             </li>
-                            <li [ngClass]="{disabled:userPager.currentPage === pager.totalPages}">
+                            <li [ngClass]="{disabled:userPager.currentPage === userPager.totalPages}">
                                 <a (click)="refreshUsers(userPager.totalPages)">Last</a>
                             </li>
                         </ul>
