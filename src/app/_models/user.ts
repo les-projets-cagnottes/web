@@ -14,6 +14,7 @@ export class User {
     token: string;
     userAuthorities: Authority[];
     organizations: Organization[];
+    totalBudgetDonations: number;
 
     // Only in Valyou-Web
     budgetUsage: string;

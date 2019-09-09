@@ -24,8 +24,8 @@
                     <span class="progress-text">{{ budget.organization.name }} - {{ budget.name }}</span>
                     <span class="progress-number">{{ budget.amountPerMember - budget.totalDonations }} € / {{ budget.amountPerMember }} €</span>
 
-                    <div class="progress sm">
-                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': budget.remaining, 'float': 'right' }"></div>
+                    <div class="progress sm" title="{{ budget.remaining }}">
+                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': budget.remaining }"></div>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                                 <td>{{ budgetsSorted[donation.budget.id].organization.name }}</td>
                                 <td>{{ donation.budget.name }}</td>
                                 <td>{{ donation.createdAt | date:'medium' }}</td>
-                                <td>{{ donation.project.title }}</td>
+                                <td><a [routerLink]="['/projects/', donation.project.id]">{{ donation.project.title }}</a></td>
                                 <td>{{ donation.amount }} €</td>
                             </tr>
                         </tbody>

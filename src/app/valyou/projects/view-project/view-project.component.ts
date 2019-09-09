@@ -45,7 +45,7 @@ export class ViewProjectComponent implements OnInit {
     this.project.leader = new User();
     this.donationForm = this.formBuilder.group({
       budget: [0],
-      amount: [10, Validators.max(0)]
+      amount: [10, [Validators.min(0), Validators.max(0)]]
     });
   }
 
@@ -88,7 +88,7 @@ export class ViewProjectComponent implements OnInit {
                 donations.forEach(donation => {
                   budget.totalUserDonations += donation.amount;
                 });
-                this.donationForm.controls.amount.setValidators([Validators.required, Validators.max(
+                this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
                   this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations))]);
               });
           });
@@ -150,6 +150,7 @@ export class ViewProjectComponent implements OnInit {
     donation.amount = this.f.amount.value;
     donation.project = new Project();
     donation.project.id = this.project.id;
+    donation.project.title = this.project.title;
     donation.budget = new Budget()
     donation.budget.id = this.budgets[this.f.budget.value].id;
 

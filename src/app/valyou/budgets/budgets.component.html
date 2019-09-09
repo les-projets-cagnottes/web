@@ -40,7 +40,7 @@
                                 <input formControlName="endDate" type="date" id="endDate" name="endDate">
                             </td>
                             <td>
-                                <div class="progress">
+                                <div class="progress" title="{{ organizations[i].budgets[j].usage }}">
                                     <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': organizations[i].budgets[j].usage }">
                                     </div>
                                 </div>

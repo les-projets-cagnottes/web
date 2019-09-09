@@ -26,7 +26,7 @@
                             <span class="progress-text">Funding & Team-up Deadline</span>
                             <span class="progress-number"><b>{{ item.fundingDeadline | date:'medium' }}</b></span>
 
-                            <div class="progress sm">
+                            <div class="progress sm" title="{{ item.fundingDeadlinePercent }}">
                                 <div class="progress-bar progress-bar-red" [ngStyle]="{'width': item.fundingDeadlinePercent }"></div>
                             </div>
                         </div>
@@ -36,13 +36,13 @@
                             <span class="progress-text">People needed</span>
                             <span class="progress-number"><b>{{ item.peopleGivingTime.length }}</b> / {{ item.peopleRequired }}</span>
 
-                            <div class="progress sm">
+                            <div class="progress sm" title="{{ item.peopleRequiredPercent }}">
                                 <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="progress-group">
+                        <div class="progress-group" title="{{ item.donationsRequiredPercent }}">
                             <span class="progress-text">Money needed</span>
                             <span class="progress-number"><b>{{ item.totalDonations }} €</b>/ {{ item.donationsRequired }} €</span>
 

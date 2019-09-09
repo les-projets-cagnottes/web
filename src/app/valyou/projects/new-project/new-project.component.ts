@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/_services/project.service';
-import { Project, Organization } from 'src/app/_models';
-import { AuthenticationService, OrganizationService } from 'src/app/_services';
+import { Project, Organization, Budget } from 'src/app/_models';
+import { AuthenticationService, OrganizationService, BudgetService } from 'src/app/_services';
 import { ActivatedRoute, Router } from '@angular/router';
 
 declare function startSimpleMDE(): any;
@@ -17,12 +17,14 @@ export class NewProjectComponent implements OnInit {
   // Data
   private id: number = 0;
   private project: Project = new Project();
-  organizations: Organization[];
+  organizations: Organization[] = [];
+  budgets: Budget[] = [];
   minDonations: string = "0.00";
 
   // Form
   form: FormGroup = this.formBuilder.group({
-    organizations: [0],
+    organization: [0],
+    budget: [0],
     title: ['', Validators.required],
     shortDescription: ['', Validators.required],
     fundingDeadline: [''],
@@ -44,6 +46,7 @@ export class NewProjectComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private budgetService: BudgetService,
     private organizationService: OrganizationService,
     private projectService: ProjectService
   ) {
@@ -63,14 +66,14 @@ export class NewProjectComponent implements OnInit {
   }
 
   refresh() {
-    this.form.controls['organizations'].setValue(0);
+    this.form.controls['organization'].setValue(0);
     this.form.controls['title'].setValue(this.project.title);
     this.form.controls['shortDescription'].setValue(this.project.shortDescription);
     this.form.controls['fundingDeadline'].setValue(this.dateToString(this.project.fundingDeadline));
     this.form.controls['donationsRequired'].setValue(this.project.donationsRequired);
     this.form.controls['peopleRequired'].setValue(this.project.peopleRequired);
 
-    if(this.id > 0) {
+    if (this.id > 0) {
       this.form.controls['fundingDeadline'].disable();
       this.form.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.project.donationsRequired)]);
       this.minDonations = this.project.donationsRequired.toString();
@@ -78,14 +81,26 @@ export class NewProjectComponent implements OnInit {
 
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
-    if(typeof startSimpleMDE === 'function') {
+    if (typeof startSimpleMDE === 'function') {
       this.simplemde = startSimpleMDE();
       this.simplemde.value(this.project.longDescription);
       this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
         .subscribe(orgs => {
           this.organizations = orgs;
+          this.form.controls['organization'].setValue(0);
         })
+      this.form.controls['organization'].valueChanges.subscribe(val => {
+        this.refreshBudgets(this.organizations[val].id);
+      });
     }
+  }
+
+  refreshBudgets(organizationId: number) {
+    this.budgetService.getByOrganizationId(organizationId)
+      .subscribe(budgets => {
+        this.budgets = budgets;
+        this.form.controls['budget'].setValue(0);
+      });
   }
 
   get f() { return this.form.controls; }
@@ -101,9 +116,14 @@ export class NewProjectComponent implements OnInit {
     this.submitting = true;
 
     // Get data from form
-    var selectedOrg = new Organization();
-    selectedOrg.id = this.organizations[this.f.organizations.value].id;
-    this.project.organizations = [selectedOrg];
+    var selectedOrganization = new Organization();
+    selectedOrganization.id = this.organizations[this.f.organization.value].id;
+    this.project.organizations = [selectedOrganization];
+
+    var selectedBudget = new Budget();
+    selectedBudget.id = this.budgets[this.f.organization.value].id;
+    this.project.budgets = [selectedBudget];
+    
     this.project.title = this.f.title.value;
     this.project.shortDescription = this.f.shortDescription.value;
     this.project.donationsRequired = this.f.donationsRequired.value;
@@ -112,7 +132,7 @@ export class NewProjectComponent implements OnInit {
     this.project.leader.id = this.authenticationService.currentUserValue.id;
 
     // Submit item to backend
-    if(this.id > 0) {
+    if (this.id > 0) {
       this.project.donations = [];
       this.projectService.update(this.project)
         .subscribe(

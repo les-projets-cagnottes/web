@@ -19,8 +19,7 @@
     <div class="col-md-8 col-xs-12">
         <div class="progress-group">
             <span class="progress-text">Usage overview</span>
-            <div class="progress" style="margin-top: 1em; border-color: gray; border-style: dotted;"
-                title="{{ budget.usage }}">
+            <div class="progress" style="margin-top: 1em; border-color: gray; border-style: dotted;" title="{{ budget.usage }}">
                 <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': budget.usage }">
                 </div>
             </div>
@@ -41,7 +40,8 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>Teammates</th>
-                            <th>Total donations</th>
+                            <th>Donations on this budget</th>
+                            <th>Donations on all budgets</th>
                             <th>Donations required</th>
                             <th>Status</th>
                         </tr>
@@ -49,6 +49,7 @@
                             <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
                             <td>{{ project.shortDescription }}</td>
                             <td>{{ project.peopleGivingTime.length + 1 }}</td>
+                            <td>{{ totalDonations[project.id] }} €</td>
                             <td>{{ project.totalDonations }} €</td>
                             <td>{{ project.donationsRequired }} €</td>
                             <td>
@@ -64,12 +65,10 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ projectPager.startIndex + 1 }}
-                            to {{ projectPager.endIndex + 1 }} of {{ projectPager.totalItems }} entries</div>
+                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ projectPager.startIndex + 1 }} to {{ projectPager.endIndex + 1 }} of {{ projectPager.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="projectPager.pages && projectPager.pages.length"
-                            class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="projectPager.pages && projectPager.pages.length" class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:projectPager.currentPage === 1}">
                                 <a (click)="refreshProjects(1)">First</a>
                             </li>
@@ -110,9 +109,8 @@
                             <td>{{ user.firstname }} {{ user.lastname }}</td>
                             <td>
                                 <div class="progress-group">
-                                    <div class="progress sm">
-                                        <div class="progress-bar progress-bar-aqua"
-                                            [ngStyle]="{'width': user.budgetUsage, 'float': 'right' }"></div>
+                                    <div class="progress sm" title="{{ user.budgetUsage }}">
+                                        <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': user.budgetUsage }"></div>
                                     </div>
                                 </div>
                             </td>
@@ -124,12 +122,10 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ userPager.startIndex + 1 }}
-                            to {{ userPager.endIndex + 1 }} of {{ userPager.totalItems }} entries</div>
+                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ userPager.startIndex + 1 }} to {{ userPager.endIndex + 1 }} of {{ userPager.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="userPager.pages && userPager.pages.length"
-                            class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="userPager.pages && userPager.pages.length" class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:userPager.currentPage === 1}">
                                 <a (click)="refreshUsers(1)">First</a>
                             </li>

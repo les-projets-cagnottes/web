@@ -29,8 +29,16 @@ export class UserService {
             .set('offset', offset)
             .set('limit', limit);
         return this.http.get<User[]>(`${environment.apiUrl}/user`, { params });
-      }
-    
+    }
+
+    getByBudgetId(budgetId: any, offset, limit) {
+        const params = new HttpParams()
+            .set('budgetId', budgetId)
+            .set('offset', offset)
+            .set('limit', limit);
+        return this.http.get<User[]>(`${environment.apiUrl}/user`, { params });
+    }
+
     create(user: User) {
         return this.http.post(`${environment.apiUrl}/user`, user);
     }

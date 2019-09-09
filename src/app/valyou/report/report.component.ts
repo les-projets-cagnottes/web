@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, BudgetService, DonationService, OrganizationService, ProjectService, PagerService, UserService } from 'src/app/_services';
-import { Organization, Budget } from 'src/app/_models';
+import { Organization, Budget, User } from 'src/app/_models';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -14,6 +14,7 @@ export class ReportComponent implements OnInit {
   organization: Organization = new Organization();
   budgets: Budget[] = [];
   budget: Budget = new Budget();
+  totalDonations: number[] = [];
 
   // Form
   selectBudgetForm = this.fb.group({
@@ -27,7 +28,7 @@ export class ReportComponent implements OnInit {
   pagedProjects: any[];
   private rawUsersResponse: any;
   userPager: any = {};
-  pagedUsers: any[];
+  pagedUsers: User[] = [];
   pageSize: number = 10;
   
   constructor(
@@ -83,7 +84,7 @@ export class ReportComponent implements OnInit {
   }
 
   refreshUsers(page: number = 1) {
-    this.userService.getByOrganizationId(this.selectBudgetForm.controls['organization'].value, page - 1, this.pageSize)
+    this.userService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
       .subscribe(response => {
         this.rawUsersResponse = response;
         this.setUsersPage(page);
@@ -93,11 +94,20 @@ export class ReportComponent implements OnInit {
   setProjectsPage(page: number) {
     this.projectPager = this.pagerService.getPager(this.rawProjectsResponse.totalElements, page, this.pageSize);
     this.pagedProjects = this.rawProjectsResponse.content;
+    this.pagedProjects.forEach(project => {
+      this.totalDonations[project.id] = 0;
+    })
+    this.budget.donations.forEach(donation => {
+      this.totalDonations[donation.project.id]+= donation.amount;
+    })
   }
 
   setUsersPage(page: number) {
     this.userPager = this.pagerService.getPager(this.rawUsersResponse.totalElements, page, this.pageSize);
     this.pagedUsers = this.rawUsersResponse.content;
+    this.pagedUsers.forEach(user => {
+      user.budgetUsage = this.computeNumberPercent(user.totalBudgetDonations, this.budget.amountPerMember) + "%"
+    })
   }
 
   computeNumberPercent(number: number, max: number) {
