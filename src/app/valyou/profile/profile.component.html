@@ -95,7 +95,7 @@
                                 <td>{{ donation.createdAt | date:'medium' }}</td>
                                 <td><a [routerLink]="['/projects/', donation.project.id]">{{ donation.project.title }}</a></td>
                                 <td>{{ donation.amount }} €</td>
-                                <td><button *ngIf="donation.project.status == 'IN_PROGRESS'" type="button" class="btn btn-flat" [ngClass]="{ 'btn-danger': deleteDonationsStatus[id] == 'error' }" (click)="deleteDonations(donation)"><i class="fa fa-trash"></i>
+                                <td><button *ngIf="donation.project.status == 'IN_PROGRESS'" type="button" class="btn btn-flat" [ngClass]="{ 'btn-danger': deleteDonationsStatus[donation.id] == 'error' }" (click)="deleteDonations(donation)"><i class="fa fa-trash"></i>
                                     Delete</button></td>
                             </tr>
                         </tbody>
