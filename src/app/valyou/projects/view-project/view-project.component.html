@@ -127,7 +127,7 @@
             <div class="box-body no-padding">
                 <ul class="users-list clearfix">
                     <li>
-                        <img [src]="project.leader.avatarUrl" alt="User Image">
+                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image">
                         <a class="users-list-name">{{ project.leader.firstname }}
                             {{ project.leader.lastname }}</a>
                     </li>
