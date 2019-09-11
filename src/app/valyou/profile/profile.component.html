@@ -87,6 +87,7 @@
                                 <th>Date</th>
                                 <th>Project</th>
                                 <th>Amount</th>
+                                <th>Actions</th>
                             </tr>
                             <tr *ngFor="let donation of donations">
                                 <td>{{ budgetsSorted[donation.budget.id].organization.name }}</td>
@@ -94,6 +95,8 @@
                                 <td>{{ donation.createdAt | date:'medium' }}</td>
                                 <td><a [routerLink]="['/projects/', donation.project.id]">{{ donation.project.title }}</a></td>
                                 <td>{{ donation.amount }} €</td>
+                                <td><button type="button" class="btn btn-flat" [ngClass]="{ 'btn-danger': deleteDonationsStatus[id] == 'error' }" (click)="deleteDonations(donation)"><i class="fa fa-trash"></i>
+                                    Delete</button></td>
                             </tr>
                         </tbody>
                     </table>

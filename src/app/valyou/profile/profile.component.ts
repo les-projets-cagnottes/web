@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   private organizations: Organization[] = [];
   projects: Project[] = [];
   user: User = new User();
+  deleteDonationsStatus: string[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -68,17 +69,30 @@ export class ProfileComponent implements OnInit {
     this.donationService.getByContributorId(this.user.id)
       .subscribe(donations => {
         this.donations = donations;
+        this.donations.forEach(donation => { this.deleteDonationsStatus[donation.id] = 'idle'});
         for (var k = 0; k < donations.length; k++) {
           var budgetId = donations[k].budget.id;
           this.budgetsSorted[budgetId].donations.push(donations[k]);
           this.budgetsSorted[budgetId].totalDonations += donations[k].amount;
         }
+        this.budgets = [];
         for (var k = 0; k < this.budgetsSorted.length; k++) {
           if (this.budgetsSorted[k] != null) {
             this.budgetsSorted[k].remaining = (100 - this.computeNumberPercent(this.budgetsSorted[k].totalDonations, this.budgetsSorted[k].amountPerMember)) + "%";
             this.budgets.push(this.budgetsSorted[k]);
           }
         }
+      });
+  }
+
+  deleteDonations(donation: Donation) {
+    this.donationService.delete(donation.id)
+      .subscribe(() => {
+        this.refreshDonations();
+      },
+      error => {
+        console.log(error);
+        this.deleteDonationsStatus[donation.id] = 'error';
       });
   }
 

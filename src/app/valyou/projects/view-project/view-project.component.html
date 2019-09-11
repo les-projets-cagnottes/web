@@ -82,10 +82,12 @@
                 <table class="table">
                     <tbody>
                         <tr>
+                            <th>Contributor</th>
                             <th>Date</th>
                             <th>Amount</th>
                         </tr>
                         <tr *ngFor="let donation of pagedItems">
+                            <td>{{ donation.contributor.firstname }} {{ donation.contributor.lastname }}</td>
                             <td>{{ donation.createdAt | date:'medium' }}</td>
                             <td>{{ donation.amount }}</td>
                         </tr>

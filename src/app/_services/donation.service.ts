@@ -25,4 +25,8 @@ export class DonationService {
     return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}&budgetId=${budgetId}`);
   }
 
+  delete(id: number) {
+    return this.http.delete(`${environment.apiUrl}/donation/${id}`);
+  }
+
 }
