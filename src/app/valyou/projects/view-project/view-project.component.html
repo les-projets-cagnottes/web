@@ -129,12 +129,12 @@
             <div class="box-body no-padding">
                 <ul class="users-list clearfix">
                     <li>
-                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image">
+                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image" style="height: 90px;">
                         <a class="users-list-name">{{ project.leader.firstname }}
                             {{ project.leader.lastname }}</a>
                     </li>
                     <li *ngFor="let user of project.peopleGivingTime">
-                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image">
+                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image" style="height: 90px;">
                         <a class="users-list-name">{{ user.firstname }} {{ user.lastname }}</a>
                     </li>
                 </ul>

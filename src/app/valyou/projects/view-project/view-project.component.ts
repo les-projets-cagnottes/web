@@ -159,6 +159,7 @@ export class ViewProjectComponent implements OnInit {
       .subscribe(
         () => {
           this.refresh();
+          this.refreshDonations();
         },
         error => {
           console.log(error);

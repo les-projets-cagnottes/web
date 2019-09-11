@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, OrganizationService, BudgetService, DonationService, ProjectService } from 'src/app/_services';
+import { AuthenticationService, OrganizationService, BudgetService, DonationService, ProjectService, UserService } from 'src/app/_services';
 import { User, Organization, Budget, Donation, Project } from 'src/app/_models';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -17,12 +18,25 @@ export class ProfileComponent implements OnInit {
   user: User = new User();
   deleteDonationsStatus: string[] = [];
 
+  // Settings tab
+  editUserForm = this.fb.group({
+    email: ['', Validators.required],
+    password: [''],
+    firstname: [''],
+    lastname: [''],
+    avatarUrl: ['']
+  });
+  submitStatus = 'idle';
+  submitting = false;
+
   constructor(
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
     private donationService: DonationService,
     private organizationService: OrganizationService,
-    private projectService: ProjectService) {
+    private projectService: ProjectService,
+    private userService: UserService,
+    private fb: FormBuilder) {
     this.user.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
 
@@ -34,6 +48,10 @@ export class ProfileComponent implements OnInit {
     this.authenticationService.whoami()
       .subscribe(user => {
         this.user.decode(user);
+        this.editUserForm.controls['email'].setValue(this.user.email);
+        this.editUserForm.controls['firstname'].setValue(this.user.firstname);
+        this.editUserForm.controls['lastname'].setValue(this.user.lastname);
+        this.editUserForm.controls['avatarUrl'].setValue(this.user.avatarUrl);
         this.organizationService.getByMemberId(this.user.id)
           .subscribe(organizations => {
             this.organizations = organizations;
@@ -69,7 +87,7 @@ export class ProfileComponent implements OnInit {
     this.donationService.getByContributorId(this.user.id)
       .subscribe(donations => {
         this.donations = donations;
-        this.donations.forEach(donation => { this.deleteDonationsStatus[donation.id] = 'idle'});
+        this.donations.forEach(donation => { this.deleteDonationsStatus[donation.id] = 'idle' });
         for (var k = 0; k < donations.length; k++) {
           var budgetId = donations[k].budget.id;
           this.budgetsSorted[budgetId].donations.push(donations[k]);
@@ -88,12 +106,49 @@ export class ProfileComponent implements OnInit {
   deleteDonations(donation: Donation) {
     this.donationService.delete(donation.id)
       .subscribe(() => {
-        this.refreshDonations();
+        this.refresh();
       },
-      error => {
-        console.log(error);
-        this.deleteDonationsStatus[donation.id] = 'error';
-      });
+        error => {
+          console.log(error);
+          this.deleteDonationsStatus[donation.id] = 'error';
+        });
+  }
+
+  submit() {
+
+    // stop here if form is invalid
+    if (this.editUserForm.invalid) {
+      return;
+    }
+
+    // starting submitting
+    this.submitting = true;
+
+    var user = new User();
+    user.id = this.user.id;
+    user.email = this.editUserForm.controls['email'].value;
+    user.firstname = this.editUserForm.controls['firstname'].value;
+    user.lastname = this.editUserForm.controls['lastname'].value;
+    user.avatarUrl = this.editUserForm.controls['avatarUrl'].value;
+    if (this.editUserForm.controls['password'].value !== undefined) {
+      user.password = this.editUserForm.controls['password'].value;
+    }
+
+    this.userService.update(user)
+      .subscribe(
+        () => {
+          this.submitting = false;
+          this.submitStatus = 'success';
+          setTimeout(() => {
+            this.submitStatus = 'idle';
+          }, 2000);
+        },
+        error => {
+          console.log(error);
+          this.submitStatus = 'error';
+          this.submitting = false;
+        });
+
   }
 
   computeDatePercent(start: Date, deadline: Date) {
@@ -106,7 +161,7 @@ export class ProfileComponent implements OnInit {
   computeNumberPercent(number: number, max: number): number {
     if (max == 0) {
       return 100;
-    } else if(max < 0) {
+    } else if (max < 0) {
       return 100;
     }
     return 100 * number / max;
