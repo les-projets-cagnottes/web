@@ -12,6 +12,7 @@ import { ViewProjectComponent } from './valyou/projects/view-project/view-projec
 import { BudgetsComponent } from './valyou/budgets/budgets.component';
 import { ProfileComponent } from './valyou/profile/profile.component';
 import { ReportComponent } from './valyou/report/report.component';
+import { GettingStartedComponent } from './valyou/documentation/getting-started/getting-started.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
       { path: 'budgets', component: BudgetsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },
-      { path: 'users', component: UsersComponent }
+      { path: 'users', component: UsersComponent },
+      { path: 'doc/getting-started', component: GettingStartedComponent }
     ]
   },
   { path: 'login', component: LoginComponent },

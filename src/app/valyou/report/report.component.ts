@@ -15,6 +15,7 @@ export class ReportComponent implements OnInit {
   budgets: Budget[] = [];
   budget: Budget = new Budget();
   totalDonations: number[] = [];
+  warn: number = 0;
 
   // Form
   selectBudgetForm = this.fb.group({
@@ -30,7 +31,7 @@ export class ReportComponent implements OnInit {
   userPager: any = {};
   pagedUsers: User[] = [];
   pageSize: number = 10;
-  
+
   constructor(
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
@@ -63,19 +64,29 @@ export class ReportComponent implements OnInit {
         this.budgets = budgets;
         this.selectBudgetForm.controls['budget'].setValue(this.budgets[0].id);
       });
-      this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
-        this.budget = this.budgets.find(budget => budget.id === +val);
-        this.budget.totalDonations = 0;
-        this.budget.donations.forEach(element => {
-          this.budget.totalDonations += element.amount;
-        });;
-        this.budget.usage = this.computeNumberPercent(this.budget.totalDonations, this.organization.members.length * this.budget.amountPerMember) + "%";
-        this.refreshProjects(this.projectPager.page);
-        this.refreshUsers(this.userPager.page);
-      });
+    this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
+      this.budget = this.budgets.find(budget => budget.id === +val);
+      this.budget.totalDonations = 0;
+      this.budget.donations.forEach(element => {
+        this.budget.totalDonations += element.amount;
+      });;
+      this.budget.usage = this.computeNumberPercent(this.budget.totalDonations, this.organization.members.length * this.budget.amountPerMember) + "%";
+      this.refreshProjects(this.projectPager.page);
+      this.refreshUsers(this.userPager.page);
+    });
   }
 
   refreshProjects(page: number = 1) {
+    this.warn++;
+    setTimeout(() => {
+      if (this.warn < 8) {
+        this.warn--;
+      } else {
+        setTimeout(() => {
+          this.warn = 0;
+        }, 10000);
+      }
+    }, 1000);
     this.projectService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
       .subscribe(response => {
         this.rawProjectsResponse = response;
@@ -98,7 +109,7 @@ export class ReportComponent implements OnInit {
       this.totalDonations[project.id] = 0;
     })
     this.budget.donations.forEach(donation => {
-      this.totalDonations[donation.project.id]+= donation.amount;
+      this.totalDonations[donation.project.id] += donation.amount;
     })
   }
 

@@ -26,6 +26,7 @@ import { ViewProjectComponent } from './valyou/projects/view-project/view-projec
 import { BudgetsComponent } from './valyou/budgets/budgets.component';
 import { ProfileComponent } from './valyou/profile/profile.component';
 import { ReportComponent } from './valyou/report/report.component';
+import { GettingStartedComponent } from './valyou/documentation/getting-started/getting-started.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ReportComponent } from './valyou/report/report.component';
     ViewProjectComponent,
     BudgetsComponent,
     ProfileComponent,
-    ReportComponent
+    ReportComponent,
+    GettingStartedComponent
   ],
   imports: [
     BrowserModule,
