@@ -13,6 +13,8 @@ before_install:
 script:
   - docker build --build-arg configuration=heroku -t valyou-web .
   - docker tag valyou-web registry.heroku.com/valyou/web
+  - npm ci
+  - npm run ng build -- --configuration production --output-path=dist
 
 deploy:
   provider: script
@@ -24,7 +26,7 @@ deploy:
 
 after_success:
   - ".travis/deploy.sh"
-  
+
 addons:
   ssh_known_hosts:
   - 15.188.32.86 
