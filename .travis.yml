@@ -9,7 +9,7 @@ before_install:
   - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 
 script:
-  - docker build -t valyou-web .
+  - docker build --build-arg configuration=heroku -t valyou-web .
   - docker tag valyou-web registry.heroku.com/valyou/web
 
 deploy:

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
 import { AlertService, AuthenticationService } from '../_services';
 
 @Component({
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  slackClientId: string;
 
   // slack oauth
   redirectUrlOAuth: string;
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         });
     }
+    this.slackClientId = environment.slackClientId;
   }
 
   ngOnInit() {
