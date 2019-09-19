@@ -9,7 +9,7 @@ ssh-add $TRAVIS_BUILD_DIR/.travis/id_rsa
 ssh-keyscan -t rsa -H $IP >> ~/.ssh/known_hosts
 
 ssh -p $PORT apps@$IP -o StrictHostKeyChecking=no "$( cat <<EOT
-    rm -rf $DEPLOY_DIR/*
+    rm -rf $DEPLOY_DIR/dist
     exit
 EOT
 )"
