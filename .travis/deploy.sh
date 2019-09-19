@@ -14,7 +14,7 @@ ssh -p $PORT apps@$IP -o StrictHostKeyChecking=no "$( cat <<EOT
 EOT
 )"
 
-scp -rp $TRAVIS_BUILD_DIR/dist/* apps@$IP:$DEPLOY_DIR/dist
+scp -rp $TRAVIS_BUILD_DIR/dist apps@$IP:$DEPLOY_DIR
 
 ssh -p $PORT apps@$IP -o StrictHostKeyChecking=no "$( cat <<EOT
     cd $DEPLOY_DIR
