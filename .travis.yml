@@ -7,10 +7,14 @@ services:
 before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+  - openssl aes-256-cbc -K $encrypted_bcb77b4b1f50_key -iv $encrypted_bcb77b4b1f50_iv
+    -in ./.travis/id_rsa.enc -out ./.travis/id_rsa -d
 
 script:
-  - docker build -t valyou-web .
+  - docker build --build-arg configuration=heroku -t valyou-web .
   - docker tag valyou-web registry.heroku.com/valyou/web
+  - npm ci
+  - npm run ng build -- --configuration production --output-path=dist
 
 deploy:
   provider: script
@@ -19,3 +23,10 @@ deploy:
     heroku container:release web --app valyou
   on:
     branch: master
+
+after_success:
+  - ".travis/deploy.sh"
+
+addons:
+  ssh_known_hosts:
+  - 15.188.32.86
