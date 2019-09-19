@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! [[ "$TRAVIS_BRANCH" == "develop-travis" ]]; then exit 0; fi
+if ! [[ "$TRAVIS_BRANCH" == "master" ]]; then exit 0; fi
 
 eval "$(ssh-agent -s)"
 chmod 600 $TRAVIS_BUILD_DIR/.travis/id_rsa
