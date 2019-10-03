@@ -69,32 +69,88 @@
         </div>
     </div>
     <div class="col-md-4">
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Informations</h3>
+        <div class="row">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Informations</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form [formGroup]="editOrgForm">
+                    <div class="box-body">
+                        <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
+                            <label for="name">Name</label>
+                            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
+                            <label for="slackTeamId">Slack Team ID</label>
+                            <input type="text" formControlName="slackTeamId" class="form-control" id="slackTeamId" placeholder="Enter Slack Team ID">
+                        </div>
+                    </div>
+                    <div class="box-footer" style="text-align: center">
+                        <button type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }" (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> Submit</button>
+                    </div>
+                </form>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form [formGroup]="editOrgForm">
-                <div class="box-body">
-                    <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
-                        <label for="name">Name</label>
-                        <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Documents</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" (click)="openContentModal(template, 0)"><i class="fa fa-plus"></i> Add
+                            </button>
                     </div>
                 </div>
-                <div class="box-body">
-                    <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
-                        <label for="slackTeamId">Slack Team ID</label>
-                        <input type="text" formControlName="slackTeamId" class="form-control" id="slackTeamId" placeholder="Enter Slack Team ID">
+                <div class="box-body no-padding">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td>Content #1</td>
+                                <td><button type="button" class="btn btn-flat" (click)="openContentModal(template, 1)"><i class="fa fa-pencil"></i>
+                                    Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-5 dataTables_info_container">
+
+                        </div>
+                        <div class="col-md-7">
+                        </div>
                     </div>
                 </div>
-                <div class="box-footer" style="text-align: center">
-                    <button type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }" (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> Submit</button>
+            </div>
+            <ng-template #template>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Edit content</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                 </div>
-            </form>
+                <div class="modal-body">
+                    <form [formGroup]="contentForm">
+                        <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.name.errors }">
+                            <label for="name">Name</label>
+                            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter content name">
+                        </div>
+                        <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
+                            <label for="value">Content</label>
+                            <textarea id="value" formControlName="value" class="form-control" rows="3" placeholder="Put your content here"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-flat" (click)="onSubmitContent()">Submit</button>
+                </div>
+            </ng-template>
         </div>
-        <!-- /.box -->
     </div>
 </div>
 <!-- /.row -->

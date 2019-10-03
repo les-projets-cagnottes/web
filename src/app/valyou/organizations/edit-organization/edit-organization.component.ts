@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OrganizationService } from 'src/app/_services/organization.service';
-import { Organization, User } from 'src/app/_models';
+import { Organization, User, Content } from 'src/app/_models';
 import { first } from 'rxjs/operators';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
 import { ActivatedRoute } from '@angular/router';
+import { ContentService } from 'src/app/_services/content.service';
+
+declare function startSimpleMDE(): any;
 
 @Component({
   selector: 'app-edit-organization',
@@ -25,10 +29,18 @@ export class EditOrganizationComponent implements OnInit {
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
   });
+  contentForm: FormGroup = this.formBuilder.group({
+    name: ['', Validators.required],
+    value: ['']
+  });
   submitting: boolean;
   submittingEmail: boolean;
   addStatus: string = 'idle';
   submitStatus: string = 'idle';
+
+  // Content modal
+  modalRef: BsModalRef;
+  private simplemde;
 
   // Pagination
   private rawResponse: any;
@@ -40,8 +52,10 @@ export class EditOrganizationComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
+    private contentService: ContentService,
     private userService: UserService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private modalService: BsModalService
   ) {
     this.route.params.subscribe(params => this.id = <number>params.id);
   }
@@ -89,6 +103,39 @@ export class EditOrganizationComponent implements OnInit {
     for (var k = 0; k < this.pagedItems.length; k++) {
       this.pagedItems[k] = new User().decode(this.pagedItems[k]);
     }
+  }
+
+  openContentModal(template: TemplateRef<any>, content) {
+    this.modalRef = this.modalService.show(template);
+    if (typeof startSimpleMDE === 'function') {
+      this.simplemde = startSimpleMDE();
+      this.simplemde.value("");
+    }
+  }
+
+  onSubmitContent() {
+    console.log(this.simplemde.value());
+    if (this.contentForm.invalid) {
+      return;
+    }
+
+    var content = new Content();
+    content.name = this.contentForm.controls['name'].value;
+    content.value = this.simplemde.value();
+
+    var org = new Organization();
+    org.id = this.organization.id;
+    content.organizations = [org];
+
+    this.contentService.create(content)
+    .subscribe(
+      () => {
+        this.modalRef.hide();
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   onSubmitEmail() {
