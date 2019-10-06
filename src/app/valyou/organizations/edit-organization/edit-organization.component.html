@@ -28,7 +28,7 @@
                                 <button type="button" class="btn btn-flat" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i> Add</button>
                             </td>
                         </tr>
-                        <tr *ngFor="let user of pagedItems">
+                        <tr *ngFor="let user of pagedItemsMembers">
                             <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
                             <td>{{ user.firstname }} {{ user.lastname }}</td>
                             <td>{{ user.email }}</td>
@@ -43,24 +43,24 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
+                        <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pagerMembers.startIndex + 1 }} to {{ pagerMembers.endIndex + 1 }} of {{ pagerMembers.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
-                            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <ul *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="pagination pagination-sm no-margin pull-right">
+                            <li [ngClass]="{disabled:pagerMembers.currentPage === 1}">
                                 <a (click)="refreshMembers(1)">First</a>
                             </li>
-                            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshMembers(pager.currentPage - 1)">Previous</a>
+                            <li [ngClass]="{disabled:pagerMembers.currentPage === 1}">
+                                <a (click)="refreshMembers(pagerMembers.currentPage - 1)">Previous</a>
                             </li>
-                            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                            <li *ngFor="let page of pagerMembers.pages" [ngClass]="{active:pagerMembers.currentPage === page}">
                                 <a (click)="refreshMembers(page)">{{page}}</a>
                             </li>
-                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshMembers(pager.currentPage + 1)">Next</a>
+                            <li [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
+                                <a (click)="refreshMembers(pagerMembers.currentPage + 1)">Next</a>
                             </li>
-                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshMembers(pager.totalPages)">Last</a>
+                            <li [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
+                                <a (click)="refreshMembers(pagerMembers.totalPages)">Last</a>
                             </li>
                         </ul>
                     </div>
@@ -98,7 +98,7 @@
                 <div class="box-header">
                     <h3 class="box-title">Documents</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse" (click)="openContentModal(template, 0)"><i class="fa fa-plus"></i> Add
+                        <button type="button" class="btn btn-box-tool" (click)="openContentModal(template, 0)"><i class="fa fa-plus"></i> Add
                             </button>
                     </div>
                 </div>
@@ -109,10 +109,14 @@
                                 <th>Name</th>
                                 <th>Action</th>
                             </tr>
-                            <tr>
-                                <td>Content #1</td>
-                                <td><button type="button" class="btn btn-flat" (click)="openContentModal(template, 1)"><i class="fa fa-pencil"></i>
-                                    Edit</button></td>
+                            <tr *ngFor="let content of pagedItemsContents">
+                                <td>{{ content.name }}</td>
+                                <td class="action-bar">
+                                    <button type="button" class="btn btn-default btn-flat" (click)="openContentModal(template, content)"><i
+                                    class="fa fa-pencil"></i> Edit</button>
+                                    <button type="button" class="btn btn-default btn-flat" (click)="onRemoveContent(content)"><i
+                                                class="fa fa-trash"></i> Remove</button>
+                                            </td>
                             </tr>
                         </tbody>
                     </table>
@@ -120,9 +124,26 @@
                 <div class="box-footer">
                     <div class="row">
                         <div class="col-sm-5 dataTables_info_container">
-
+                            <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pagerContents.startIndex + 1 }} to {{ pagerContents.endIndex + 1 }} of {{ pagerContents.totalItems }} entries</div>
                         </div>
                         <div class="col-md-7">
+                                <ul *ngIf="pagerContents.pages && pagerContents.pages.length" class="pagination pagination-sm no-margin pull-right">
+                                    <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
+                                        <a (click)="refreshContents(1)">First</a>
+                                    </li>
+                                    <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
+                                        <a (click)="refreshContents(pagerContents.currentPage - 1)">Previous</a>
+                                    </li>
+                                    <li *ngFor="let page of pagerContents.pages" [ngClass]="{active:pagerContents.currentPage === page}">
+                                        <a (click)="refreshContents(page)">{{page}}</a>
+                                    </li>
+                                    <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
+                                        <a (click)="refreshContents(pagerContents.currentPage + 1)">Next</a>
+                                    </li>
+                                    <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
+                                        <a (click)="refreshContents(pagerContents.totalPages)">Last</a>
+                                    </li>
+                                </ul>
                         </div>
                     </div>
                 </div>

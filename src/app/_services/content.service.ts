@@ -20,4 +20,19 @@ export class ContentService {
     return this.http.post(`${environment.apiUrl}/content`, content);
   }
 
+  update(content: Content) {
+    return this.http.put<Content>(`${environment.apiUrl}/content`, content);
+  }
+
+  getByOrganizationId(organizationId, offset, limit) {
+    const params = new HttpParams()
+      .set('offset', offset)
+      .set('limit', limit)
+      .set('organizationId', organizationId);
+    return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
+  }
+
+  removeContent(organizationId: number, contentId: number) {
+    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/contents?contentId=${contentId}`);
+  }
 }

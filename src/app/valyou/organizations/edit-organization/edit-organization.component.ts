@@ -41,12 +41,19 @@ export class EditOrganizationComponent implements OnInit {
   // Content modal
   modalRef: BsModalRef;
   private simplemde;
+  contentId: number;
 
-  // Pagination
-  private rawResponse: any;
-  pager: any = {};
-  pagedItems: any[];
-  pageSize: number = 10;
+  // Members pagination
+  private rawResponseMembers: any;
+  pagerMembers: any = {};
+  pagedItemsMembers: any[];
+  pageSizeMembers: number = 10;
+
+  // Contents pagination
+  private rawResponseContents: any;
+  pagerContents: any = {};
+  pagedItemsContents: any[];
+  pageSizeContents: number = 10;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,6 +75,7 @@ export class EditOrganizationComponent implements OnInit {
             this.organization = organization;
             this.refreshForm();
             this.refreshMembers();
+            this.refreshContents();
           },
           error => {
             console.log(error);
@@ -90,31 +98,50 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshMembers(page: number = 1) {
-    this.organizationService.getMembers(this.organization.id, page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawResponse = response;
-        this.setPage(page);
+    if (this.pagerService.canChangePage(this.pagerMembers, page)) {
+      this.organizationService.getMembers(this.organization.id, page - 1, this.pageSizeMembers)
+        .subscribe(response => {
+          this.rawResponseMembers = response;
+          this.setMembersPage(page);
+        });
+    }
+  }
+
+  setMembersPage(page: number) {
+    this.pagerMembers = this.pagerService.getPager(this.rawResponseMembers.totalElements, page, this.pageSizeMembers);
+    this.pagedItemsMembers = this.rawResponseMembers.content;
+    for (var k = 0; k < this.pagedItemsMembers.length; k++) {
+      this.pagedItemsMembers[k] = new User().decode(this.pagedItemsMembers[k]);
+    }
+  }
+
+  refreshContents(page: number = 1) {
+    this.contentService.getByOrganizationId(this.organization.id, page - 1, this.pageSizeContents)
+      .subscribe(contents => {
+        this.rawResponseContents = contents;
+        this.setContentsPage(page);
       });
   }
 
-  setPage(page: number) {
-    this.pager = this.pagerService.getPager(this.rawResponse.totalElements, page, this.pageSize);
-    this.pagedItems = this.rawResponse.content;
-    for (var k = 0; k < this.pagedItems.length; k++) {
-      this.pagedItems[k] = new User().decode(this.pagedItems[k]);
+  setContentsPage(page: number) {
+    this.pagerContents = this.pagerService.getPager(this.rawResponseContents.totalElements, page, this.pageSizeContents);
+    this.pagedItemsContents = this.rawResponseContents.content;
+    for (var k = 0; k < this.pagedItemsContents.length; k++) {
+      this.pagedItemsContents[k] = this.pagedItemsContents[k];
     }
   }
 
   openContentModal(template: TemplateRef<any>, content) {
     this.modalRef = this.modalService.show(template);
+    this.contentForm.controls['name'].setValue(content.name);
+    this.contentId = content.id;
     if (typeof startSimpleMDE === 'function') {
       this.simplemde = startSimpleMDE();
-      this.simplemde.value("");
+      this.simplemde.value(content.value);
     }
   }
 
   onSubmitContent() {
-    console.log(this.simplemde.value());
     if (this.contentForm.invalid) {
       return;
     }
@@ -127,15 +154,29 @@ export class EditOrganizationComponent implements OnInit {
     org.id = this.organization.id;
     content.organizations = [org];
 
-    this.contentService.create(content)
-    .subscribe(
-      () => {
-        this.modalRef.hide();
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    if (this.contentId > 0) {
+      content.id = this.contentId;
+      this.contentService.update(content)
+        .subscribe(
+          () => {
+            this.modalRef.hide();
+            this.refreshContents(this.pagerContents.currentPage);
+          },
+          error => {
+            console.log(error);
+          });
+    } else {
+      this.contentService.create(content)
+        .subscribe(
+          () => {
+            this.modalRef.hide();
+            this.refreshContents(this.pagerContents.currentPage);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    }
   }
 
   onSubmitEmail() {
@@ -149,7 +190,7 @@ export class EditOrganizationComponent implements OnInit {
           this.organizationService.addMember(this.organization.id, user.id)
             .subscribe(
               () => {
-                this.refreshMembers(this.pager.page);
+                this.refreshMembers(this.pagerMembers.currentPage);
                 this.addStatus = 'success';
                 setTimeout(() => {
                   this.addStatus = 'idle';
@@ -178,7 +219,14 @@ export class EditOrganizationComponent implements OnInit {
   onRemoveMember(user: User) {
     this.organizationService.removeMember(this.organization.id, user.id)
       .subscribe(() => {
-        this.refreshMembers(this.pager.page);
+        this.refreshMembers(this.pagerMembers.page);
+      });
+  }
+
+  onRemoveContent(content: Content) {
+    this.contentService.removeContent(this.organization.id, content.id)
+      .subscribe(() => {
+        this.refreshContents(this.pagerContents.page);
       });
   }
 

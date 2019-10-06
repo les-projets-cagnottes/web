@@ -65,7 +65,7 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ projectPager.startIndex + 1 }} to {{ projectPager.endIndex + 1 }} of {{ projectPager.totalItems }} entries</div>
+                        <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ projectPager.startIndex + 1 }} to {{ projectPager.endIndex + 1 }} of {{ projectPager.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="projectPager.pages && projectPager.pages.length" class="pagination pagination-sm no-margin pull-right">
@@ -122,7 +122,7 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ userPager.startIndex + 1 }} to {{ userPager.endIndex + 1 }} of {{ userPager.totalItems }} entries</div>
+                        <div *ngIf="userPager.pages && userPager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ userPager.startIndex + 1 }} to {{ userPager.endIndex + 1 }} of {{ userPager.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="userPager.pages && userPager.pages.length" class="pagination pagination-sm no-margin pull-right">

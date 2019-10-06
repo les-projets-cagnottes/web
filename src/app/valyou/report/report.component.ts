@@ -95,6 +95,16 @@ export class ReportComponent implements OnInit {
   }
 
   refreshUsers(page: number = 1) {
+    this.warn++;
+    setTimeout(() => {
+      if (this.warn < 8) {
+        this.warn--;
+      } else {
+        setTimeout(() => {
+          this.warn = 0;
+        }, 10000);
+      }
+    }, 1000);
     this.userService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
       .subscribe(response => {
         this.rawUsersResponse = response;
