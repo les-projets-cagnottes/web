@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProjectService } from 'src/app/_services/project.service';
-import { Project, Organization, Budget } from 'src/app/_models';
-import { AuthenticationService, OrganizationService, BudgetService } from 'src/app/_services';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Project, Organization, Budget } from 'src/app/_models';
+import { AuthenticationService, OrganizationService, ProjectService, BudgetService } from 'src/app/_services';
 
 declare function startSimpleMDE(): any;
 
@@ -29,7 +30,8 @@ export class NewProjectComponent implements OnInit {
     shortDescription: ['', Validators.required],
     fundingDeadline: [''],
     donationsRequired: [0, Validators.required],
-    peopleRequired: [2, Validators.required]
+    peopleRequired: [2, Validators.required],
+    rulesCompliant: [false, Validators.pattern("true")]
   });
   submitting: boolean;
 
@@ -41,10 +43,14 @@ export class NewProjectComponent implements OnInit {
   // Long description field
   private simplemde;
 
+  // TermsOfUse modal
+  modalRef: BsModalRef;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
+    private modalService: BsModalService,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
     private organizationService: OrganizationService,
@@ -103,6 +109,10 @@ export class NewProjectComponent implements OnInit {
       });
   }
 
+  onViewTermsOfUse(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
   get f() { return this.form.controls; }
 
   onSubmit() {
@@ -121,7 +131,7 @@ export class NewProjectComponent implements OnInit {
     this.project.organizations = [selectedOrganization];
 
     var selectedBudget = new Budget();
-    selectedBudget.id = this.budgets[this.f.organization.value].id;
+    selectedBudget.id = this.budgets[this.f.budget.value].id;
     this.project.budgets = [selectedBudget];
     
     this.project.title = this.f.title.value;

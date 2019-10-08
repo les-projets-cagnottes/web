@@ -57,6 +57,25 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="checkbox" [ngClass]="{ 'has-error': f.rulesCompliant.errors }">
+                        <label for="rulesCompliant">
+                                <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant" name="rulesCompliant" /> This project is compliant with the
+                        </label> <span class="item-clickable" style="margin-left: 0.2em" (click)="onViewTermsOfUse(template)"><b><u>{{ budgets[f.budget.value].name }} Terms of Use</u></b></span>
+                    </div>
+                    <ng-template #template>
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left">{{ budgets[f.budget.value].rules.name }}</h4>
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <markdown [data]="budgets[f.budget.value].rules.value"></markdown>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary btn-flat" (click)="modalRef.hide()">Close</button>
+                        </div>
+                    </ng-template>
 
                     <div class="text-center">
                         <button [disabled]="submitting" type="button" class="btn btn-primary btn-lg" (click)="onSubmit()">Save</button>

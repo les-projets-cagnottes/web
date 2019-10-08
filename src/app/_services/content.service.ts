@@ -32,6 +32,11 @@ export class ContentService {
     return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
   }
 
+  getAllByOrganizationId(organizationId) {
+    const params = new HttpParams()
+      .set('organizationId', organizationId);
+    return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
+  }
   removeContent(organizationId: number, contentId: number) {
     return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/contents?contentId=${contentId}`);
   }

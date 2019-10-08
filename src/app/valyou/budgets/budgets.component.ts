@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BudgetService, PagerService, AuthenticationService, OrganizationService } from 'src/app/_services';
-import { Budget, Organization, User } from 'src/app/_models';
+import { Budget, Organization, User, Content } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
@@ -14,6 +14,7 @@ export class BudgetsComponent implements OnInit {
 
   // Data
   organizations: Organization[];
+  contents: Content[];
 
   // Form
   mainForms: FormGroup[] = [];
@@ -62,12 +63,20 @@ export class BudgetsComponent implements OnInit {
                   totalDonations += element.amount;
                 });;
                 budget.usage = that.computeNumberPercent(totalDonations, organization.members.length * budget.amountPerMember) + "%";
+                var rulesNumber;
+                if(budget.rules == null) {
+                  rulesNumber = 0;
+                } else {
+                  rulesNumber = organization.contents.findIndex(content => content.id == budget.rules.id);
+                }
+                console.log(rulesNumber);
                 (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
                   id: [budget.id],
                   name: [budget.name, Validators.required],
                   amountPerMember: [{ value: budget.amountPerMember, disabled: budget.isDistributed }, [Validators.required]],
                   startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.isDistributed }, [Validators.required]],
                   endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.isDistributed }, [Validators.required]],
+                  rules: [rulesNumber, [Validators.required]],
                   isDistributed: [budget.isDistributed]
                 }));
                 that.deleteStatus[index][indexBudget] = "no-refresh";
@@ -98,6 +107,9 @@ export class BudgetsComponent implements OnInit {
         return;
       }
       (this.mainForms[index].controls.budgets as FormArray).value.forEach(formGroup => {
+        var content = new Content();
+        content.id = organization.contents[formGroup.rules].id;
+        formGroup.rules = content;
         budgets.push(formGroup);
       });
     });

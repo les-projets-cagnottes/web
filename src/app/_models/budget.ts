@@ -1,6 +1,7 @@
 import { User } from './user';
 import { Organization } from './organization';
 import { Donation } from './donation';
+import { Content } from './content';
 
 export class Budget {
     id: number;
@@ -12,6 +13,7 @@ export class Budget {
     organization: Organization;
     sponsor: User;
     donations: Donation[];
+    rules: Content;
     
     // Only in Valyou-Web
     usage: string;
