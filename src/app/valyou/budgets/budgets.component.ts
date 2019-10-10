@@ -69,7 +69,6 @@ export class BudgetsComponent implements OnInit {
                 } else {
                   rulesNumber = organization.contents.findIndex(content => content.id == budget.rules.id);
                 }
-                console.log(rulesNumber);
                 (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
                   id: [budget.id],
                   name: [budget.name, Validators.required],

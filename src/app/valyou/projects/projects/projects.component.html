@@ -60,7 +60,7 @@
 </div>
 <div class="row">
     <div class="col-sm-5 dataTables_info_container">
-        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
+        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
     </div>
     <div class="col-sm-7">
         <div class="dataTables_paginate paging_simple_numbers text-right">

@@ -7,16 +7,12 @@
             <div class="box-body">
                 <div class="row action-bar">
                     <div class="col-xs-6">
-                        <button type="button" class="btn btn-default"
-                            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
-                            (click)="refresh()"><i class="fa fa-refresh"></i>
+                        <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fa fa-refresh"></i>
                             Refresh</button>
                         <button type="button" class="btn btn-default" routerLink="/organizations/new"><i class="fa fa-plus"></i> Add</button>
                     </div>
                     <div class="col-xs-6">
-                        <div class="dataTables_length text-right"><label for="pageSize">Nb entries</label><select
-                                id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm"
-                                [(ngModel)]="pageSize" (ngModelChange)="refresh()">
+                        <div class="dataTables_length text-right"><label for="pageSize">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
@@ -61,9 +57,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }}
-                            to {{ pager.endIndex + 1 }}
-                            of {{ pager.totalItems }} entries</div>
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
                     </div>
                     <div class="col-sm-7">
                         <div class="dataTables_paginate paging_simple_numbers text-right">
@@ -74,16 +68,13 @@
                                 <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
                                     <a (click)="refresh(pager.currentPage - 1)">Previous</a>
                                 </li>
-                                <li class="paginate_button" *ngFor="let page of pager.pages"
-                                    [ngClass]="{active:pager.currentPage === page}">
+                                <li class="paginate_button" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                                     <a (click)="refresh(page)">{{page}}</a>
                                 </li>
-                                <li class="paginate_button next"
-                                    [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <li class="paginate_button next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
                                     <a (click)="refresh(pager.currentPage + 1)">Next</a>
                                 </li>
-                                <li class="paginate_button"
-                                    [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
                                     <a (click)="refresh(pager.totalPages)">Last</a>
                                 </li>
                             </ul>
