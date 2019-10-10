@@ -20,11 +20,11 @@ export class ProfileComponent implements OnInit {
 
   // Settings tab
   editUserForm = this.fb.group({
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.maxLength(255)]],
     password: [''],
-    firstname: [''],
-    lastname: [''],
-    avatarUrl: ['']
+    firstname: ['', [Validators.required, Validators.maxLength(255)]],
+    lastname: ['', [Validators.required, Validators.maxLength(255)]],
+    avatarUrl: ['', [Validators.required, Validators.maxLength(255)]]
   });
   submitStatus = 'idle';
   submitting = false;

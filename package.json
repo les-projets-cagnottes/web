@@ -5,9 +5,11 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
+        "build:fr": "ng build --aot --i18nFile=src/locale/messages.fr.xlf --i18nFormat=xlf --i18nLocale=fr",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
+        "int:extract": "ng xi18n --output-path src/locale",
         "change-version": "bash ./version-manager.sh"
     },
     "private": true,

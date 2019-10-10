@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Project description</h3>
+                <h3 class="box-title">{{ project.title }}</h3>
             </div>
             <div class="box-body">
                 <markdown [data]="project.longDescription"></markdown>
@@ -21,11 +21,15 @@
                     <dt>Created At</dt>
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt>Status</dt>
-                    <dd>{{ project.status }}</dd>
+                    <dd>
+                        <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow">In Progress</span>
+                        <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey">Avorted</span>
+                        <span *ngIf="project.status == 'READY'" class="badge bg-green">Ready</span>
+                    </dd>
                     <dt>Remaining days</dt>
                     <dd>{{ project.remainingDays }}</dd>
                     <dt>People needed</dt>
-                    <dd>{{ project.peopleGivingTime.length }} / {{ project.peopleRequired }}</dd>
+                    <dd>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</dd>
                     <dt>Budget</dt>
                     <dd>{{ project.totalDonations }} € / {{ project.donationsRequired }} €</dd>
                 </dl>
@@ -98,7 +102,7 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">

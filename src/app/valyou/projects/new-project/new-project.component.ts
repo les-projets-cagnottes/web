@@ -26,8 +26,8 @@ export class NewProjectComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     organization: [0],
     budget: [0],
-    title: ['', Validators.required],
-    shortDescription: ['', Validators.required],
+    title: ['', [Validators.required, Validators.maxLength(255)]],
+    shortDescription: ['', [Validators.required, Validators.maxLength(255)]],
     fundingDeadline: [''],
     donationsRequired: [0, Validators.required],
     peopleRequired: [2, Validators.required],
@@ -67,6 +67,7 @@ export class NewProjectComponent implements OnInit {
           this.refresh();
         });
     } else {
+      this.project.longDescription = "# Mon super projet\n## De quoi s'agit-il ?\n## Qui est concerné ?\n## A quoi va servir le budget ?\n## Pourquoi ça me tient à coeur\n"
       this.refresh();
     }
   }

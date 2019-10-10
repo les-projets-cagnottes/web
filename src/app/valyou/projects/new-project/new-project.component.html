@@ -3,10 +3,11 @@
         <div class="col-md-8">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Detailed Presentation</h3>
+                    <h3 i18n="Box Header|Title for detailed presentation box@@newProject_DetailedPresentation_BoxHeader" class="box-title">Detailed Presentation</h3>
                 </div>
                 <div class="box-body">
                     <div class="form-group">
+                        <label for="longDescriptionc">To format your presentation, you can use the Markdown syntax. <a href="https://docs.framasoft.org/fr/grav/markdown.html">More info here</a></label>
                         <textarea id="longDescriptionc" lass="form-control" rows="3" placeholder="Put your detailed presentation here"></textarea>
                     </div>
                 </div>
@@ -46,13 +47,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group input-group" [ngClass]="{ 'has-error': f.donationsRequired.errors }">
-                                <label for="donationsRequired">Money we need (in €)</label>
+                                <label for="donationsRequired">Money needed (in €)</label>
                                 <input formControlName="donationsRequired" type="number" class="form-control" id="donationsRequired" min="{{ minDonations }}" step="0.01">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" [ngClass]="{ 'has-error': f.peopleRequired.errors }">
-                                <label for="peopleRequired">People we need</label>
+                                <label for="peopleRequired">People needed (in addition of me)</label>
                                 <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired" min="2">
                             </div>
                         </div>

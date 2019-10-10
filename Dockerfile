@@ -1,12 +1,13 @@
 FROM node:12.8.1-stretch as builder
 
 ARG configuration
+ARG locale
 
 COPY package.json package-lock.json ./
 RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
 WORKDIR /ng-app
 COPY . .
-RUN npm run ng build -- --configuration $configuration --output-path=dist
+RUN npm run build:$locale -- --configuration $configuration --output-path=dist
 
 FROM nginx:1.17.3
 
