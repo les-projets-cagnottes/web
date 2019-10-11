@@ -19,7 +19,7 @@ script:
 deploy:
   provider: script
   script: 
-    heroku container:push web --app valyou;
+    docker push registry.heroku.com/valyou/web
     heroku container:release web --app valyou
   on:
     branch: master
