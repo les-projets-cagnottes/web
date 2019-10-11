@@ -127,7 +127,7 @@
                                 "with": "src/environments/environment.heroku.ts"
                             }],
                             "aot": true,
-                            "outputPath": "dist/fr/",
+                            "outputPath": "dist/",
                             "i18nFile": "src/locale/messages.fr.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "fr",
