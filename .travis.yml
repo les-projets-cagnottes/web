@@ -11,10 +11,10 @@ before_install:
     -in ./.travis/id_rsa.enc -out ./.travis/id_rsa -d
 
 script:
-  - docker build --build-arg configuration=heroku --build-arg locale=fr -t valyou-web .
+  - docker build --build-arg configuration=heroku-fr -t valyou-web .
   - docker tag valyou-web registry.heroku.com/valyou/web
   - npm ci
-  - npm run build:fr -- --configuration production --output-path=dist
+  - npm run build -- --configuration production --output-path=dist
 
 deploy:
   provider: script
