@@ -143,17 +143,23 @@
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
                             }]
+                        },
+                        "dev": {
+                            "aot": true,
+                            "i18nFile": "src/locale/messages.fr.xlf",
+                            "i18nFormat": "xlf",
+                            "i18nLocale": "fr"
                         }
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "valyou:build"
+                        "browserTarget": "valyou:build:dev"
                     },
                     "configurations": {
-                        "production": {
-                            "browserTarget": "valyou:build:production"
+                        "dev": {
+                            "browserTarget": "valyou:build:dev"
                         }
                     }
                 },

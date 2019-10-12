@@ -7,43 +7,43 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">PROJECTS</li>
+                <li class="header" i18n="Menu Category Name Projects|Menu Category Name Projects@@menu_CategoryName_Projects">PROJECTS</li>
                 <li>
                     <a routerLink="/projects/new">
-                        <i class="fa fa-paper-plane-o"></i> <span>Submit a project</span>
+                        <i class="fa fa-paper-plane-o"></i> <span i18n="Menu Name Submit Project|Menu Name Submit Project@@menuName_SubmitProject">Submit my project</span>
                     </a>
                 </li>
                 <li>
                     <a routerLink="/projects">
-                        <i class="fa fa-book"></i> <span>Discover projects</span>
+                        <i class="fa fa-book"></i> <span i18n="Menu Name Discover Projects|Menu Name Discover Projects@@menuName_DiscoverProject">Discover projects</span>
                     </a>
                 </li>
                 <li>
                     <a routerLink="/report">
-                        <i class="fa fa-dashboard"></i> <span>Reporting</span>
+                        <i class="fa fa-dashboard"></i> <span i18n="Menu Name Reporting|Menu Name Reporting@@menuName_Reporting">Reporting</span>
                     </a>
                 </li>
-                <li *ngIf="isSponsor" class="header">SPONSORING</li>
+                <li *ngIf="isSponsor" class="header" i18n="Menu Category Name Sponsoring|Menu Category Sponsoring@@menu_CategoryName_Sponsoring">SPONSORING</li>
                 <li *ngIf="isSponsor">
                     <a routerLink="/budgets">
-                        <i class="fa fa-money"></i> <span>My Budgets</span>
+                        <i class="fa fa-money"></i> <span i18n="Menu Name Budgets|Menu Name Budgets@@menuName_Budgets">My Budgets</span>
                     </a>
                 </li>
-                <li *ngIf="isAdmin" class="header">ADMINISTRATION</li>
+                <li *ngIf="isAdmin" class="header" i18n="Menu Category Name Administration|Menu Category Administration@@menu_CategoryName_Administration">ADMINISTRATION</li>
                 <li *ngIf="isAdmin">
                     <a routerLink="/users">
-                        <i class="fa fa-user"></i> <span>Users</span>
+                        <i class="fa fa-user"></i> <span i18n="Menu Name Users|Menu Name Users@@menuName_Users">Users</span>
                     </a>
                 </li>
                 <li *ngIf="isAdmin">
                     <a routerLink="/organizations">
-                        <i class="fa fa-users"></i> <span>Organizations</span>
+                        <i class="fa fa-users"></i> <span i18n="Menu Name Organizations|Menu Name Organizations@@menuName_Organizations">Organizations</span>
                     </a>
                 </li>
-                <li class="header">DOCUMENTATION</li>
+                <li class="header" i18n="Menu Category Name Documentation|Menu Category Documentation@@menu_CategoryName_Documentation">DOCUMENTATION</li>
                 <li>
                     <a routerLink="/doc/getting-started">
-                        <i class="fa fa-book"></i> <span>Getting Started</span>
+                        <i class="fa fa-book"></i> <span i18n="Menu Name Getting Started|Menu Name Getting Started@@menuName_GettingStarted">Getting Started</span>
                     </a>
                 </li>
             </ul>

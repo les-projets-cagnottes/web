@@ -2,14 +2,176 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="menu_CategoryName_Projects" datatype="html">
+        <source>PROJECTS</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">Menu Category Name Projects</note>
+        <note priority="1" from="meaning">Menu Category Name Projects</note>
+      </trans-unit>
+      <trans-unit id="menuName_SubmitProject" datatype="html">
+        <source>Submit my project</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Submit Project</note>
+        <note priority="1" from="meaning">Menu Name Submit Project</note>
+      </trans-unit>
+      <trans-unit id="menuName_DiscoverProject" datatype="html">
+        <source>Discover projects</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Discover Projects</note>
+        <note priority="1" from="meaning">Menu Name Discover Projects</note>
+      </trans-unit>
+      <trans-unit id="menuName_Reporting" datatype="html">
+        <source>Reporting</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Reporting</note>
+        <note priority="1" from="meaning">Menu Name Reporting</note>
+      </trans-unit>
+      <trans-unit id="menu_CategoryName_Sponsoring" datatype="html">
+        <source>SPONSORING</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Menu Category Sponsoring</note>
+        <note priority="1" from="meaning">Menu Category Name Sponsoring</note>
+      </trans-unit>
+      <trans-unit id="menuName_Budgets" datatype="html">
+        <source>My Budgets</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Budgets</note>
+        <note priority="1" from="meaning">Menu Name Budgets</note>
+      </trans-unit>
+      <trans-unit id="menu_CategoryName_Administration" datatype="html">
+        <source>ADMINISTRATION</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <note priority="1" from="description">Menu Category Administration</note>
+        <note priority="1" from="meaning">Menu Category Name Administration</note>
+      </trans-unit>
+      <trans-unit id="menuName_Users" datatype="html">
+        <source>Users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Users</note>
+        <note priority="1" from="meaning">Menu Name Users</note>
+      </trans-unit>
+      <trans-unit id="menuName_Organizations" datatype="html">
+        <source>Organizations</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Organizations</note>
+        <note priority="1" from="meaning">Menu Name Organizations</note>
+      </trans-unit>
+      <trans-unit id="menu_CategoryName_Documentation" datatype="html">
+        <source>DOCUMENTATION</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="description">Menu Category Documentation</note>
+        <note priority="1" from="meaning">Menu Category Name Documentation</note>
+      </trans-unit>
+      <trans-unit id="menuName_GettingStarted" datatype="html">
+        <source>Getting Started</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="description">Menu Name Getting Started</note>
+        <note priority="1" from="meaning">Menu Name Getting Started</note>
+      </trans-unit>
       <trans-unit id="login_BoxHeader" datatype="html">
-        <source>Sign in to start your session</source>
+        <source>Sign in to start your session
+        </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="description">Title login box</note>
         <note priority="1" from="meaning">Login Box Header</note>
+      </trans-unit>
+      <trans-unit id="placeholder_email" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login_Email_ErrorMessage" datatype="html">
+        <source>Email is
+                        required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">Login Email Error Message</note>
+        <note priority="1" from="meaning">Login Email Error Message</note>
+      </trans-unit>
+      <trans-unit id="placeholder_password" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="login_Password_ErrorMessage" datatype="html">
+        <source>
+                        Password is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">Login Password Error Message</note>
+        <note priority="1" from="meaning">Login Password Error Message</note>
+      </trans-unit>
+      <trans-unit id="login_Button" datatype="html">
+        <source>Login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="description">Login Button</note>
+        <note priority="1" from="meaning">Login Button</note>
+      </trans-unit>
+      <trans-unit id="login_Or_Separator" datatype="html">
+        <source>- OR -</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <note priority="1" from="description">Login Or Separator</note>
+        <note priority="1" from="meaning">Login Or Separator</note>
+      </trans-unit>
+      <trans-unit id="login_Slack_Button" datatype="html">
+        <source>Sign in using
+                    Slack</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <note priority="1" from="description">Login Slack Button</note>
+        <note priority="1" from="meaning">Login Slack Button</note>
       </trans-unit>
       <trans-unit id="newProject_DetailedPresentation_BoxHeader" datatype="html">
         <source>Detailed Presentation</source>
