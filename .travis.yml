@@ -14,7 +14,7 @@ script:
   - docker build --build-arg configuration=heroku-fr -t valyou-web .
   - docker tag valyou-web registry.heroku.com/valyou/web
   - npm ci
-  - npm run build -- --configuration production --output-path=dist
+  - npm run build -- --configuration production-fr --output-path=dist
 
 deploy:
   provider: script

@@ -12,44 +12,50 @@
     <div class="col-md-4">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Informations</h3>
+                <h3 class="box-title" i18n="@@projectInformationsTitle">Informations</h3>
             </div>
             <div class="box-body">
                 <dl class="dl-horizontal">
-                    <dt>Project Leader</dt>
+                    <dt i18n="@@projectLeader">Project Leader</dt>
                     <dd>{{ project.leader.firstname }} {{ project.leader.lastname }}</dd>
-                    <dt>Created At</dt>
+                    <dt i18n="@@createdAt">Created At</dt>
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
-                    <dt>Status</dt>
+                    <dt i18n="@@projectStatus">Status</dt>
                     <dd>
                         <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow">In Progress</span>
                         <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey">Avorted</span>
                         <span *ngIf="project.status == 'READY'" class="badge bg-green">Ready</span>
                     </dd>
-                    <dt>Remaining days</dt>
+                    <dt i18n="@@projectFundingDeadlineProgress">Remaining days</dt>
                     <dd>{{ project.remainingDays }}</dd>
-                    <dt>People needed</dt>
+                    <dt i18n="@@projectPeopleNeededProgress">People needed</dt>
                     <dd>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</dd>
-                    <dt>Budget</dt>
+                    <dt i18n="@@projectMoneyNeededProgress">Budget</dt>
                     <dd>{{ project.totalDonations }} € / {{ project.donationsRequired }} €</dd>
                 </dl>
             </div>
             <div class="box-footer text-center">
-                <a class="btn btn-app btn-money" routerLink="/projects/{{ id }}/edit" *ngIf="project.leader.id === userLoggedIn.id">
-                    <i class="fa fa-pencil-square-o"></i> Edit
+                <a class="btn btn-app btn-money" routerLink="/projects/{{ id }}/edit"
+                    *ngIf="project.leader.id === userLoggedIn.id">
+                    <i class="fa fa-pencil-square-o"></i><span i18n="@@projectEditAppButton">Edit</span>
                 </a>
-                <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
-                    <i class="fa fa-pencil"></i> Join the team
+                <a class="btn btn-app btn-money" (click)="join()"
+                    *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
+                    <i class="fa fa-pencil"></i><span i18n="@@projectJoinTeamAppButton">Join the team</span>
                 </a>
-                <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
-                    <i class="fa fa-close"></i> Leave the team
+                <a class="btn btn-app btn-team" (click)="join()"
+                    *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
+                    <i class="fa fa-close"></i><span i18n="@@projectLeaveTeamAppButton">Leave the team</span>
                 </a>
-                <a class="btn btn-app btn-money" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.status == 'IN_PROGRESS'">
-                    <i class="fa fa-money"></i> Contribute financially
+                <a class="btn btn-app btn-money" (click)="openModal(template)"
+                    *ngIf="budgets.length > 0 && project.status == 'IN_PROGRESS'">
+                    <i class="fa fa-money"></i><span i18n="@@projectContributeFinanciallyAppButton">Contribute
+                        financially</span>
                 </a>
                 <ng-template #template>
                     <div class="modal-header">
-                        <h4 class="modal-title pull-left">Modal</h4>
+                        <h4 class="modal-title pull-left" i18n="@@projectContributeFinanciallyAppButton">Contribute
+                            financially</h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -57,29 +63,35 @@
                     <div class="modal-body">
                         <form [formGroup]="donationForm">
                             <div class="form-group">
-                                <label for="amount">Budget</label>
+                                <label for="amount" i18n="@@budgetName">Budget</label>
                                 <select class="form-control select2" style="width: 100%;" formControlName="budget">
-                                    <option *ngFor="let budget of budgets; index as i" value="{{ i }}">{{ budget.organization.name }} - {{ budget.name }}</option>
+                                    <option *ngFor="let budget of budgets; index as i" value="{{ i }}">
+                                        {{ budget.organization.name }} - {{ budget.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
-                                <label for="amount">Amount (in €)</label>
-                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ min(budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations, project.donationsRequired - project.totalDonations) }}">
+                                <label for="amount" i18n="@@donationAmount">Amount (in €)</label>
+                                <input type="number" formControlName="amount" class="form-control" id="amount"
+                                    min="0.00" step="0.01"
+                                    max="{{ min(budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations, project.donationsRequired - project.totalDonations) }}">
                             </div>
                             <div>
-                                It will remains <b>{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value }} €</b> on your pot for this budget afterwards.
+                                It will remains
+                                <b>{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value }}
+                                    €</b> on your pot for this budget afterwards.
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()">Submit</button>
+                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()"
+                            i18n="@@donationSubmit">Submit</button>
                     </div>
                 </ng-template>
             </div>
         </div>
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Donations</h3>
+                <h3 class="box-title" i18n="@@donationsPanelTitle">Donations</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -102,10 +114,13 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status"
+                            aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of
+                            {{ pager.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="pager.pages && pager.pages.length"
+                            class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:pager.currentPage === 1}">
                                 <a (click)="refreshDonations(1)">First</a>
                             </li>
@@ -133,12 +148,14 @@
             <div class="box-body no-padding">
                 <ul class="users-list clearfix">
                     <li>
-                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image" style="height: 90px;">
+                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image"
+                            style="height: 90px;">
                         <a class="users-list-name">{{ project.leader.firstname }}
                             {{ project.leader.lastname }}</a>
                     </li>
                     <li *ngFor="let user of project.peopleGivingTime">
-                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image" style="height: 90px;">
+                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image"
+                            style="height: 90px;">
                         <a class="users-list-name">{{ user.firstname }} {{ user.lastname }}</a>
                     </li>
                 </ul>

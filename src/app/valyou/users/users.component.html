@@ -55,7 +55,7 @@
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editUserModal" (click)="openModalCreateUser()"><i class="fa fa-plus"></i> Add</button>
                     </div>
                     <div class="col-xs-6">
-                        <div class="dataTables_length text-right"><label for="pageSize">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
+                        <div class="dataTables_length text-right"><label for="pageSize" i18n="Number of entries|Number of entries@@pagination_nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>

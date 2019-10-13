@@ -73,6 +73,7 @@ export class ViewProjectComponent implements OnInit {
       this.organizationService.getByMemberId(this.userLoggedIn.id)
         .subscribe(response => {
           response.forEach(organization => {
+            this.budgets = [];
             organization.budgets.forEach(budget => {
               var now = new Date();
               if (budget.isDistributed && new Date(budget.startDate).getTime() <= now.getTime() && now.getTime() <= new Date(budget.endDate).getTime()) {

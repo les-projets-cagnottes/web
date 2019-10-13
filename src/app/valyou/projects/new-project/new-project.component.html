@@ -3,12 +3,20 @@
         <div class="col-md-8">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 i18n="Box Header|Title for detailed presentation box@@newProject_DetailedPresentation_BoxHeader" class="box-title">Detailed Presentation</h3>
+                    <h3 i18n="Box Header|Title for detailed presentation box@@newProject_DetailedPresentation_BoxHeader"
+                        class="box-title">Detailed Presentation</h3>
                 </div>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="longDescriptionc">To format your presentation, you can use the Markdown syntax. <a href="https://docs.framasoft.org/fr/grav/markdown.html">More info here</a></label>
-                        <textarea id="longDescriptionc" lass="form-control" rows="3" placeholder="Put your detailed presentation here"></textarea>
+                        <label for="longDescriptionc"><span
+                                i18n="Use Markdown Help|Use Markdown Help@@newProject_useMarkdown_Help">
+                                To format your presentation, you can use the Markdown syntax.</span> <a
+                                href="https://docs.framasoft.org/fr/grav/markdown.html"
+                                i18n="More info here|More info here@@newProject_moreInfosHere">More info
+                                here</a></label>
+                        <textarea id="longDescriptionc" lass="form-control" rows="3"
+                            placeholder="Put your detailed presentation here"
+                            i18n-placeholder="@@placeholder_longDescription"></textarea>
                     </div>
                 </div>
             </div>
@@ -17,69 +25,95 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Infos</h3>
+                    <h3 class="box-title" i18n="@@projectInformationsTitle">
+                        Infos</h3>
                 </div>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="amount">Organization</label>
+                        <label for="amount"
+                            i18n="Label for organization field|Label for organization field@@newProject_Organization_Label">Organization</label>
                         <select class="form-control select2" style="width: 100%;" formControlName="organization">
-                            <option *ngFor="let item of organizations; index as i" value="{{ i }}">{{ item.name }}</option>
+                            <option *ngFor="let item of organizations; index as i" value="{{ i }}">{{ item.name }}
+                            </option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="amount">Budget</label>
+                        <label for="amount"
+                            i18n="Label for budget field|Label for budget field@@newProject_Budget_Label">Budget</label>
                         <select class="form-control select2" style="width: 100%;" formControlName="budget">
                             <option *ngFor="let item of budgets; index as i" value="{{ i }}">{{ item.name }}</option>
                         </select>
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.title.errors }">
-                        <label for="title">Title</label>
-                        <input type="text" formControlName="title" class="form-control" id="title" placeholder="Enter title">
+                        <label for="title"
+                            i18n="Label for title field|Label for title field@@newProject_Title_Label">Title</label>
+                        <input type="text" formControlName="title" class="form-control" id="title"
+                            placeholder="Enter title">
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.shortDescription.errors }">
-                        <label for="shortDescription">Short Description</label>
-                        <input formControlName="shortDescription" type="text" class="form-control" id="shortDescription" placeholder="Enter a short description">
+                        <label for="shortDescription"
+                            i18n="Label for short description field|Label for short description field@@newProject_ShortDescription_Label">Short
+                            Description</label>
+                        <input formControlName="shortDescription" type="text" class="form-control" id="shortDescription"
+                            placeholder="Enter a short description">
                     </div>
                     <div class="form-group" [ngClass]="{ 'has-error': f.fundingDeadline.errors }">
-                        <label for="fundingDeadline">Funding Deadline</label>
-                        <input formControlName="fundingDeadline" type="date" id="fundingDeadline" name="fundingDeadline" value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}" min="{{ now | date:'yyyy-MM-dd' }}" max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}">
+                        <label for="fundingDeadline" i18n="@@fundingDeadline_Label" style="display: block;">Funding &
+                            Team-up Deadline</label>
+                        <input formControlName="fundingDeadline" type="date" id="fundingDeadline" name="fundingDeadline"
+                            value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}" min="{{ now | date:'yyyy-MM-dd' }}"
+                            max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group input-group" [ngClass]="{ 'has-error': f.donationsRequired.errors }">
-                                <label for="donationsRequired">Money needed (in €)</label>
-                                <input formControlName="donationsRequired" type="number" class="form-control" id="donationsRequired" min="{{ minDonations }}" step="0.01">
+                                <label for="donationsRequired"
+                                    i18n="Label for money needed field|Label for money needed field@@moneyNeeded_Label">Money
+                                    needed (in €)</label>
+                                <input formControlName="donationsRequired" type="number" class="form-control"
+                                    id="donationsRequired" min="{{ minDonations }}" step="0.01">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" [ngClass]="{ 'has-error': f.peopleRequired.errors }">
-                                <label for="peopleRequired">People needed (in addition of me)</label>
-                                <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired" min="2">
+                                <label for="peopleRequired" i18n="@@peopleNeeded_Label">People
+                                    needed (in addition of the project leader)</label>
+                                <input formControlName="peopleRequired" type="number" class="form-control"
+                                    id="peopleRequired" min="2">
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="checkbox" [ngClass]="{ 'has-error': f.rulesCompliant.errors }">
+                    <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="checkbox"
+                        [ngClass]="{ 'has-error': f.rulesCompliant.errors }">
                         <label for="rulesCompliant">
-                                <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant" name="rulesCompliant" /> This project is compliant with the
-                        </label> <span class="item-clickable" style="margin-left: 0.2em" (click)="onViewTermsOfUse(template)"><b><u>{{ budgets[f.budget.value].name }} Terms of Use</u></b></span>
+                            <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant"
+                                name="rulesCompliant" /> <span
+                                i18n="Label for rules compliant checkbox|Label for rules compliant checkbox@@newProject_RulesCompliant_Label">
+                                This project is compliant with the rules of</span>
+                        </label> <span class="item-clickable" style="margin-left: 0.2em"
+                            (click)="onViewTermsOfUse(template)"><b> <u>{{ budgets[f.budget.value].name }}</u>
+                            </b></span>
                     </div>
                     <ng-template #template>
                         <div class="modal-header">
                             <h4 class="modal-title pull-left">{{ budgets[f.budget.value].rules.name }}</h4>
                             <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <markdown [data]="budgets[f.budget.value].rules.value"></markdown>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary btn-flat" (click)="modalRef.hide()">Close</button>
+                            <button class="btn btn-primary btn-flat" (click)="modalRef.hide()"
+                                i18n="Budget Rules Close Modal Button|Budget Rules Close Modal Button@@newProject_Close_BudgetRulesModal_Button">Close</button>
                         </div>
                     </ng-template>
 
                     <div class="text-center">
-                        <button [disabled]="submitting" type="button" class="btn btn-primary btn-lg" (click)="onSubmit()">Save</button>
+                        <button [disabled]="submitting" type="button" class="btn btn-primary btn-lg"
+                            (click)="onSubmit()"
+                            i18n="Save Edited Project Button|Save Edited Project Button@@newProject_Save_Button">Save</button>
                     </div>
                 </div>
             </div>
