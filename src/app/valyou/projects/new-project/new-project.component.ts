@@ -127,11 +127,11 @@ export class NewProjectComponent implements OnInit {
     this.submitting = true;
 
     // Get data from form
-    var selectedOrganization = new Organization();
+    var selectedOrganization: any = {};
     selectedOrganization.id = this.organizations[this.f.organization.value].id;
     this.project.organizations = [selectedOrganization];
 
-    var selectedBudget = new Budget();
+    var selectedBudget: any = {};
     selectedBudget.id = this.budgets[this.f.budget.value].id;
     this.project.budgets = [selectedBudget];
     

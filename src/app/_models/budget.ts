@@ -12,7 +12,7 @@ export class Budget {
     endDate: Date;
     organization: Organization;
     sponsor: User;
-    donations: Donation[];
+    donations: Donation[] = [];
     rules: Content;
     
     // Only in Valyou-Web

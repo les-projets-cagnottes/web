@@ -163,6 +163,9 @@
                     "configurations": {
                         "dev": {
                             "browserTarget": "valyou:build:dev"
+                        },
+                        "heroku-fr": {
+                            "browserTarget": "valyou:build:heroku-fr"
                         }
                     }
                 },

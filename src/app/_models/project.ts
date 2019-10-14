@@ -1,8 +1,4 @@
 ﻿import { User } from './user';
-import { Donation } from './donation';
-import { Organization } from './organization';
-import { Budget } from './budget';
-
 
 export class Project {
     id: number;
@@ -15,11 +11,11 @@ export class Project {
     peopleRequired: number = 2;
     leader: User = new User();
     fundingDeadline: Date;
-    donations: Donation[] = [];
+    donations: any[] = [];
     totalDonations: number = 0;
-    peopleGivingTime: User[] = [];
-    organizations: Organization[] = [];
-    budgets: Budget[] = [];
+    peopleGivingTime: any[] = [];
+    organizations: any[] = [];
+    budgets: any[] = [];
 
     // Only in Valyou-Web
     remainingDays: number;
