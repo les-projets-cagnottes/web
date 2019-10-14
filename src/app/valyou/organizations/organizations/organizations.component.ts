@@ -30,7 +30,7 @@ export class OrganizationsComponent implements OnInit {
   }
 
   refresh(page: number = 1): void {
-    if(this.authenticationService.currentUserValue !== null) {
+    if(this.authenticationService.currentUserValue !== null && this.pagerService.canChangePage(this.pager, page)) {
       this.organizationService.getByOwner(this.authenticationService.currentUserValue, page - 1, this.pageSize)
         .subscribe(response => {
           this.rawResponse = response;

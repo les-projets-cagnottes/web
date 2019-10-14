@@ -22,9 +22,9 @@
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt i18n="@@projectStatus">Status</dt>
                     <dd>
-                        <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow">In Progress</span>
-                        <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey">Avorted</span>
-                        <span *ngIf="project.status == 'READY'" class="badge bg-green">Ready</span>
+                        <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
+                        <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
+                        <span *ngIf="project.status == 'READY'" class="badge bg-green" i18n="@@projectStatusReady">Ready</span>
                     </dd>
                     <dt i18n="@@projectFundingDeadlineProgress">Remaining days</dt>
                     <dd>{{ project.remainingDays }}</dd>
@@ -98,9 +98,9 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Contributor</th>
-                            <th>Date</th>
-                            <th>Amount</th>
+                            <th i18n="@@donationContributor">Contributor</th>
+                            <th i18n="@@donationDate">Date</th>
+                            <th i18n="@@donationAmount">Amount</th>
                         </tr>
                         <tr *ngFor="let donation of pagedItems">
                             <td>{{ donation.contributor.firstname }} {{ donation.contributor.lastname }}</td>
@@ -115,26 +115,28 @@
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
                         <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status"
-                            aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of
-                            {{ pager.totalItems }} entries</div>
+                            aria-live="polite"><span i18n="@@pagination_start">Showing
+                            </span>{{ pager.startIndex + 1 }}<span i18n="@@pagination_end"> to
+                            </span>{{ pager.endIndex + 1 }}<span i18n="@@pagination_total"> of
+                            </span>{{ pager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="pager.pages && pager.pages.length"
                             class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshDonations(1)">First</a>
+                                <a (click)="refreshDonations(1)">&#171;</a>
                             </li>
                             <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshDonations(pager.currentPage - 1)">Previous</a>
+                                <a (click)="refreshDonations(pager.currentPage - 1)">&#8249;</a>
                             </li>
                             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                                 <a (click)="refreshDonations(page)">{{page}}</a>
                             </li>
                             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshDonations(pager.currentPage + 1)">Next</a>
+                                <a (click)="refreshDonations(pager.currentPage + 1)">&#8250;</a>
                             </li>
                             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshDonations(pager.totalPages)">Last</a>
+                                <a (click)="refreshDonations(pager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
@@ -143,7 +145,7 @@
         </div>
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">Team</h3>
+                <h3 class="box-title" i18n="@@projectTeamBoxTitle">Team</h3>
             </div>
             <div class="box-body no-padding">
                 <ul class="users-list clearfix">

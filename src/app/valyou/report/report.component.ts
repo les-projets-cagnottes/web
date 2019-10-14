@@ -77,39 +77,43 @@ export class ReportComponent implements OnInit {
   }
 
   refreshProjects(page: number = 1) {
-    this.warn++;
-    setTimeout(() => {
-      if (this.warn < 8) {
-        this.warn--;
-      } else {
-        setTimeout(() => {
-          this.warn = 0;
-        }, 10000);
-      }
-    }, 1000);
-    this.projectService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawProjectsResponse = response;
-        this.setProjectsPage(page);
-      });
+    if (this.pagerService.canChangePage(this.projectPager, page)) {
+      this.warn++;
+      setTimeout(() => {
+        if (this.warn < 8) {
+          this.warn--;
+        } else {
+          setTimeout(() => {
+            this.warn = 0;
+          }, 10000);
+        }
+      }, 1000);
+      this.projectService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
+        .subscribe(response => {
+          this.rawProjectsResponse = response;
+          this.setProjectsPage(page);
+        });
+    }
   }
 
   refreshUsers(page: number = 1) {
-    this.warn++;
-    setTimeout(() => {
-      if (this.warn < 8) {
-        this.warn--;
-      } else {
-        setTimeout(() => {
-          this.warn = 0;
-        }, 10000);
-      }
-    }, 1000);
-    this.userService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawUsersResponse = response;
-        this.setUsersPage(page);
-      });
+    if (this.pagerService.canChangePage(this.userPager, page)) {
+      this.warn++;
+      setTimeout(() => {
+        if (this.warn < 8) {
+          this.warn--;
+        } else {
+          setTimeout(() => {
+            this.warn = 0;
+          }, 10000);
+        }
+      }, 1000);
+      this.userService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
+        .subscribe(response => {
+          this.rawUsersResponse = response;
+          this.setUsersPage(page);
+        });
+    }
   }
 
   setProjectsPage(page: number) {

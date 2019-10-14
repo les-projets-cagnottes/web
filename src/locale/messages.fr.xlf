@@ -7,6 +7,10 @@
         <source>Budget</source>
         <target>Budget</target>
       </trans-unit>
+      <trans-unit id="budgetUsage" datatype="html">
+        <source>Usage overview</source>
+        <target>Utilisation</target>
+      </trans-unit>
       <trans-unit id="createdAt" datatype="html">
         <source>Created At</source>
         <target>Créé le</target>
@@ -14,6 +18,14 @@
       <trans-unit id="donationAmount" datatype="html">
         <source>Amount (in €)</source>
         <target>Montant (en €)</target>
+      </trans-unit>
+      <trans-unit id="donationContributor" datatype="html">
+        <source>Contributor</source>
+        <target>Contributeur</target>
+      </trans-unit>
+      <trans-unit id="donationDate" datatype="html">
+        <source>Date</source>
+        <target>Date</target>
       </trans-unit>
       <trans-unit id="donationsPanelTitle" datatype="html">
         <source>Donations</source>
@@ -23,9 +35,21 @@
         <source>Submit</source>
         <target>Envoyer</target>
       </trans-unit>
+      <trans-unit id="organizationName" datatype="html">
+        <source>Organization</source>
+        <target>Organisation</target>
+      </trans-unit>
       <trans-unit id="projectContributeFinanciallyAppButton" datatype="html">
         <source>Contribute financially</source>
         <target>Contribuer financièrement</target>
+      </trans-unit>
+      <trans-unit id="projectDonationsOnAllBudgets" datatype="html">
+        <source>Donations on all budgets</source>
+        <target>Total des dons</target>
+      </trans-unit>
+      <trans-unit id="projectDonationsOnThisBudget" datatype="html">
+        <source>Donations on this budget</source>
+        <target>Dons imputés sur ce budget</target>
       </trans-unit>
       <trans-unit id="projectEditAppButton" datatype="html">
         <source>Edit</source>
@@ -55,9 +79,49 @@
         <source>People needed</source>
         <target>Constitution de l'équipe</target>
       </trans-unit>
+      <trans-unit id="projectsBoxTitle" datatype="html">
+        <source>Projects</source>
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="projectShortDescription" datatype="html">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
       <trans-unit id="projectStatus" datatype="html">
         <source>Status</source>
         <target>Etat</target>
+      </trans-unit>
+      <trans-unit id="projectStatusAvorted" datatype="html">
+        <source>Avorted</source>
+        <target>Abandonné</target>
+      </trans-unit>
+      <trans-unit id="projectStatusInProgress" datatype="html">
+        <source>In Progress</source>
+        <target>En cours</target>
+      </trans-unit>
+      <trans-unit id="projectStatusReady" datatype="html">
+        <source>Ready</source>
+        <target>Prêt</target>
+      </trans-unit>
+      <trans-unit id="projectTeamBoxTitle" datatype="html">
+        <source>Team</source>
+        <target>Equipe</target>
+      </trans-unit>
+      <trans-unit id="projectTitle" datatype="html">
+        <source>Title</source>
+        <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="usersBoxTitle" datatype="html">
+        <source>Users</source>
+        <target>Utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="userBudgetUsage" datatype="html">
+        <source>Usage</source>
+        <target>Utilisation</target>
+      </trans-unit>
+      <trans-unit id="userUsageName" datatype="html">
+        <source>Name</source>
+        <target>Nom</target>
       </trans-unit>
       <trans-unit id="menu_CategoryName_Projects" datatype="html">
         <source>PROJECTS
@@ -339,17 +403,6 @@
         </context-group>
         <note priority="1" from="description">Label for title field</note>
         <note priority="1" from="meaning">Label for title field</note>
-      </trans-unit>
-      <trans-unit id="newProject_ShortDescription_Label" datatype="html">
-        <source>Short
-                            Description</source>
-        <target>Description courte</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <note priority="1" from="description">Label for short description field</note>
-        <note priority="1" from="meaning">Label for short description field</note>
       </trans-unit>
       <trans-unit id="fundingDeadline_Label" datatype="html">
         <source>Funding Deadline</source>

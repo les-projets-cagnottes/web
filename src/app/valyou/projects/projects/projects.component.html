@@ -1,15 +1,21 @@
 <div class="row action-bar">
     <div class="col-xs-6">
-        <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fa fa-refresh"></i> <span i18n="Refresh Button|Refresh Button@@refresh_Button">Refresh</span>
-                                </button>
+        <button type="button" class="btn btn-flat btn-default"
+            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
+            (click)="refresh()"><i class="fa fa-refresh"></i> <span
+                i18n="Refresh Button|Refresh Button@@refresh_Button">Refresh</span>
+        </button>
     </div>
     <div class="col-xs-6">
-        <div class="dataTables_length text-right"><label for="pageSize" i18n="Number of entries|Number of entries@@pagination_nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select></div>
+        <div class="dataTables_length text-right"><label for="pageSize"
+                i18n="Number of entries|Number of entries@@pagination_nbEntries">Nb entries</label><select id="pageSize"
+                name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize"
+                (ngModelChange)="refresh()">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select></div>
     </div>
 </div>
 <div class="row">
@@ -27,27 +33,32 @@
                             <span class="progress-number"><b>{{ item.fundingDeadline | date:'medium' }}</b></span>
 
                             <div class="progress sm" title="{{ item.fundingDeadlinePercent }}">
-                                <div class="progress-bar progress-bar-red" [ngStyle]="{'width': item.fundingDeadlinePercent }"></div>
+                                <div class="progress-bar progress-bar-red"
+                                    [ngStyle]="{'width': item.fundingDeadlinePercent }"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="progress-group">
                             <span class="progress-text" i18n="@@peopleNeeded_Label">People needed</span>
-                            <span class="progress-number"><b>{{ item.peopleGivingTime.length }}</b> / {{ item.peopleRequired }}</span>
+                            <span class="progress-number"><b>{{ item.peopleGivingTime.length }}</b> /
+                                {{ item.peopleRequired }}</span>
 
                             <div class="progress sm" title="{{ item.peopleRequiredPercent }}">
-                                <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
+                                <div class="progress-bar progress-bar-aqua"
+                                    [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="progress-group" title="{{ item.donationsRequiredPercent }}">
                             <span class="progress-text" i18n="@@moneyNeeded_Label">Money needed</span>
-                            <span class="progress-number"><b>{{ item.totalDonations }} €</b>/ {{ item.donationsRequired }} €</span>
+                            <span class="progress-number"><b>{{ item.totalDonations }} €</b>/
+                                {{ item.donationsRequired }} €</span>
 
                             <div class="progress sm">
-                                <div class="progress-bar progress-bar-green" [ngStyle]="{'width': item.donationsRequiredPercent }"></div>
+                                <div class="progress-bar progress-bar-green"
+                                    [ngStyle]="{'width': item.donationsRequiredPercent }"></div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +71,10 @@
 </div>
 <div class="row">
     <div class="col-sm-5 dataTables_info_container">
-        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@pagination_start">Showing </span>{{ pager.startIndex + 1 }}<span i18n="@@pagination_end"> to </span>{{ pager.endIndex + 1 }}<span i18n="@@pagination_total"> of </span>{{ pager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
+        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span
+                i18n="@@pagination_start">Showing </span>{{ pager.startIndex + 1 }}<span i18n="@@pagination_end"> to
+            </span>{{ pager.endIndex + 1 }}<span i18n="@@pagination_total"> of </span>{{ pager.totalItems }}<span
+                i18n="@@pagination_entries"> entries</span></div>
     </div>
     <div class="col-sm-7">
         <div class="dataTables_paginate paging_simple_numbers text-right">
@@ -71,7 +85,8 @@
                 <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
                     <a (click)="refresh(pager.currentPage - 1)">&#8249;</a>
                 </li>
-                <li class="paginate_button" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <li class="paginate_button" *ngFor="let page of pager.pages"
+                    [ngClass]="{active:pager.currentPage === page}">
                     <a (click)="refresh(page)">{{page}}</a>
                 </li>
                 <li class="paginate_button next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">

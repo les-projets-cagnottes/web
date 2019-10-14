@@ -1,7 +1,7 @@
 <div class="row action-bar" [formGroup]="selectBudgetForm">
     <div class="col-md-2 col-xs-6">
         <div class="form-group">
-            <label for="amount">Organization</label>
+            <label for="amount" i18n="@@organizationName">Organization</label>
             <select class="form-control select2" style="width: 100%;" formControlName="organization">
                 <option *ngFor="let organization of organizations; index as i" value="{{ organization.id }}">
                     {{ organization.name }}</option>
@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-2 col-xs-6">
         <div class="form-group">
-            <label for="amount">Budget</label>
+            <label for="amount" i18n="@@budgetName">Budget</label>
             <select class="form-control select2" style="width: 100%;" formControlName="budget">
                 <option *ngFor="let budget of budgets; index as i" value="{{ budget.id }}">{{ budget.name }}</option>
             </select>
@@ -18,8 +18,9 @@
     </div>
     <div class="col-md-8 col-xs-12">
         <div class="progress-group">
-            <span class="progress-text">Usage overview</span>
-            <div class="progress" style="margin-top: 1em; border-color: gray; border-style: dotted;" title="{{ budget.usage }}">
+            <span class="progress-text" i18n="@@budgetUsage">Usage overview</span>
+            <div class="progress" style="margin-top: 1em; border-color: gray; border-style: dotted;"
+                title="{{ budget.usage }}">
                 <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': budget.usage }">
                 </div>
             </div>
@@ -30,32 +31,35 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Projects</h3>
+                <h3 class="box-title" i18n="@@projectsBoxTitle">Projects</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Teammates</th>
-                            <th>Donations on this budget</th>
-                            <th>Donations on all budgets</th>
-                            <th>Donations required</th>
-                            <th>Status</th>
+                            <th i18n="@@projectTitle">Title</th>
+                            <th i18n="@@projectShortDescription">Description</th>
+                            <th i18n="@@projectPeopleNeededProgress">Teammates</th>
+                            <th i18n="@@projectDonationsOnThisBudget">Donations on this budget</th>
+                            <th i18n="@@projectDonationsOnAllBudgets">Donations on all budgets</th>
+                            <th i18n="@@moneyNeeded_Label">Donations required</th>
+                            <th i18n="@@projectStatus">Status</th>
                         </tr>
                         <tr *ngFor="let project of pagedProjects">
                             <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
                             <td>{{ project.shortDescription }}</td>
-                            <td>{{ project.peopleGivingTime.length + 1 }}</td>
+                            <td>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</td>
                             <td>{{ totalDonations[project.id] }} €</td>
                             <td>{{ project.totalDonations }} €</td>
                             <td>{{ project.donationsRequired }} €</td>
                             <td>
-                                <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow">In Progress</span>
-                                <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey">Avorted</span>
-                                <span *ngIf="project.status == 'READY'" class="badge bg-green">Ready</span>
+                                <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow"
+                                    i18n="@@projectStatusInProgress">In Progress</span>
+                                <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey"
+                                    i18n="@@projectStatusAvorted">Avorted</span>
+                                <span *ngIf="project.status == 'READY'" class="badge bg-green"
+                                    i18n="@@projectStatusReady">Ready</span>
                             </td>
                         </tr>
                     </tbody>
@@ -65,24 +69,30 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ projectPager.startIndex + 1 }} to {{ projectPager.endIndex + 1 }} of {{ projectPager.totalItems }} entries</div>
+                        <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info"
+                            role="status" aria-live="polite"><span i18n="@@pagination_start">Showing
+                            </span>{{ projectPager.startIndex + 1 }}<span i18n="@@pagination_end"> to
+                            </span>{{ projectPager.endIndex + 1 }}<span i18n="@@pagination_total"> of
+                            </span>{{ projectPager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="projectPager.pages && projectPager.pages.length" class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="projectPager.pages && projectPager.pages.length"
+                            class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:projectPager.currentPage === 1}">
-                                <a (click)="refreshProjects(1)">First</a>
+                                <a (click)="refreshProjects(1)">&#171;</a>
                             </li>
                             <li [ngClass]="{disabled:projectPager.currentPage === 1}">
-                                <a (click)="refreshProjects(projectPager.currentPage - 1)">Previous</a>
+                                <a (click)="refreshProjects(projectPager.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li *ngFor="let page of projectPager.pages" [ngClass]="{active:projectPager.currentPage === page}">
+                            <li *ngFor="let page of projectPager.pages"
+                                [ngClass]="{active:projectPager.currentPage === page}">
                                 <a (click)="refreshProjects(page)">{{page}}</a>
                             </li>
                             <li [ngClass]="{disabled:projectPager.currentPage === projectPager.totalPages}">
-                                <a (click)="refreshProjects(projectPager.currentPage + 1)">Next</a>
+                                <a (click)="refreshProjects(projectPager.currentPage + 1)">&#8250;</a>
                             </li>
                             <li [ngClass]="{disabled:projectPager.currentPage === projectPager.totalPages}">
-                                <a (click)="refreshProjects(projectPager.totalPages)">Last</a>
+                                <a (click)="refreshProjects(projectPager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
@@ -95,22 +105,23 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Users</h3>
+                <h3 class="box-title" i18n="@@usersBoxTitle">Users</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Name</th>
-                            <th>Usage</th>
+                            <th i18n="@@userUsageName">Name</th>
+                            <th i18n="@@userBudgetUsage">Usage</th>
                         </tr>
                         <tr *ngFor="let user of pagedUsers">
                             <td>{{ user.firstname }} {{ user.lastname }}</td>
                             <td>
                                 <div class="progress-group">
                                     <div class="progress sm" title="{{ user.budgetUsage }}">
-                                        <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': user.budgetUsage }"></div>
+                                        <div class="progress-bar progress-bar-striped"
+                                            [ngStyle]="{'width': user.budgetUsage }"></div>
                                     </div>
                                 </div>
                             </td>
@@ -122,24 +133,30 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="userPager.pages && userPager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ userPager.startIndex + 1 }} to {{ userPager.endIndex + 1 }} of {{ userPager.totalItems }} entries</div>
+                        <div *ngIf="userPager.pages && userPager.pages.length" class="dataTables_info" role="status"
+                            aria-live="polite"><span i18n="@@pagination_start">Showing
+                            </span>{{ userPager.startIndex + 1 }}<span i18n="@@pagination_end"> to
+                            </span>{{ userPager.endIndex + 1 }}<span i18n="@@pagination_total"> of
+                            </span>{{ userPager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="userPager.pages && userPager.pages.length" class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="userPager.pages && userPager.pages.length"
+                            class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:userPager.currentPage === 1}">
-                                <a (click)="refreshUsers(1)">First</a>
+                                <a (click)="refreshUsers(1)">&#171;</a>
                             </li>
                             <li [ngClass]="{disabled:userPager.currentPage === 1}">
-                                <a (click)="refreshUsers(userPager.currentPage - 1)">Previous</a>
+                                <a (click)="refreshUsers(userPager.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li *ngFor="let page of userPager.pages" [ngClass]="{active:userPager.currentPage === page}">
+                            <li *ngFor="let page of userPager.pages"
+                                [ngClass]="{active:userPager.currentPage === page}">
                                 <a (click)="refreshUsers(page)">{{page}}</a>
                             </li>
                             <li [ngClass]="{disabled:userPager.currentPage === userPager.totalPages}">
-                                <a (click)="refreshUsers(userPager.currentPage + 1)">Next</a>
+                                <a (click)="refreshUsers(userPager.currentPage + 1)">&#8250;</a>
                             </li>
                             <li [ngClass]="{disabled:userPager.currentPage === userPager.totalPages}">
-                                <a (click)="refreshUsers(userPager.totalPages)">Last</a>
+                                <a (click)="refreshUsers(userPager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>

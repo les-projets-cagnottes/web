@@ -22,22 +22,24 @@ export class ProjectsComponent implements OnInit {
   constructor(
     private pagerService: PagerService,
     private projectService: ProjectService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.refresh();
   }
 
   refresh(page: number = 1): void {
-    this.projectService.getAll(page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawResponse = response;
-        this.setPage(page);
-        this.refreshStatus = 'success';
-        setTimeout(() => {
-          this.refreshStatus = 'no-refresh';
-        }, 2000);
-      });
+    if (this.pagerService.canChangePage(this.pager, page)) {
+      this.projectService.getAll(page - 1, this.pageSize)
+        .subscribe(response => {
+          this.rawResponse = response;
+          this.setPage(page);
+          this.refreshStatus = 'success';
+          setTimeout(() => {
+            this.refreshStatus = 'no-refresh';
+          }, 2000);
+        });
+    }
   }
 
   setPage(page: number) {
@@ -59,9 +61,9 @@ export class ProjectsComponent implements OnInit {
   }
 
   computeNumberPercent(number: number, max: number) {
-    if(max == 0) {
+    if (max == 0) {
       return "100";
-    } else if(max < 0) {
+    } else if (max < 0) {
       return "100";
     }
     return 100 * number / max;

@@ -44,15 +44,17 @@ export class UsersComponent implements OnInit {
 
 
   refresh(page: number = 1): void {
-    this.userService.getAll(page - 1, this.pageSize)
-      .subscribe(response => {
-        this.rawResponse = response;
-        this.setPage(page);
-        this.refreshStatus = 'success';
-        setTimeout(() => {
-          this.refreshStatus = 'no-refresh';
-        }, 2000);
-      });
+    if (this.pagerService.canChangePage(this.pager, page)) {
+      this.userService.getAll(page - 1, this.pageSize)
+        .subscribe(response => {
+          this.rawResponse = response;
+          this.setPage(page);
+          this.refreshStatus = 'success';
+          setTimeout(() => {
+            this.refreshStatus = 'no-refresh';
+          }, 2000);
+        });
+    }
   }
 
   openModalCreateUser(): void {
