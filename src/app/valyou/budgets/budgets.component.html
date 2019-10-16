@@ -14,8 +14,8 @@
                 <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error' }" (click)="add(organization.id)" style="margin-left: 15px"><i class="fa fa-plus"></i>
                     Add</button>
             </div>
-            <div class="box-body">
-                <table class="table table-bordered table-responsive">
+            <div class="box-body table-responsive no-padding">
+                <table class="table">
                     <tbody>
                         <tr>
                             <th style="width: 15%">Name</th>
@@ -24,7 +24,7 @@
                             <th style="width: 8%">End Date</th>
                             <th>Usage</th>
                             <th style="width: 10%">Terms of Use</th>
-                            <th style="width: 14%">Actions</th>
+                            <th style="width: 15%">Actions</th>
                         </tr>
                         <tr *ngFor="let budget of mainForms[i].controls.budgets['controls']; let j = index" [formGroup]="budget">
                             <td><input class="form-control" type="text" formControlName="name" /></td>

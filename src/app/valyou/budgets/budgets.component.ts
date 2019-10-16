@@ -58,11 +58,7 @@ export class BudgetsComponent implements OnInit {
               that.deleteStatus[index] = [];
               that.distributeStatus[index] = [];
               organization.budgets.forEach((budget, indexBudget) => {
-                var totalDonations = 0;
-                budget.donations.forEach(element => {
-                  totalDonations += element.amount;
-                });;
-                budget.usage = that.computeNumberPercent(totalDonations, organization.members.length * budget.amountPerMember) + "%";
+                budget.usage = that.computeNumberPercent(budget.totalDonations, organization.members.length * budget.amountPerMember) + "%";
                 var rulesNumber;
                 if(budget.rules == null) {
                   rulesNumber = 0;
@@ -140,13 +136,15 @@ export class BudgetsComponent implements OnInit {
     budget.endDate = new Date();
     budget.endDate.setFullYear(budget.startDate.getFullYear() + 1);
 
-    var org = new Organization();
+    var org: any = {};
     org.id = idOrganization;
     budget.organization = org;
 
-    var user = new User();
+    var user: any = {};
     user.id = this.authenticationService.currentUserValue.id;
     budget.sponsor = user;
+
+    budget.rules = null;
 
     this.budgetService.create(budget)
       .subscribe(
