@@ -406,7 +406,7 @@
       </trans-unit>
       <trans-unit id="fundingDeadline_Label" datatype="html">
         <source>Funding Deadline</source>
-        <target>Date limite pour consituer l'équipe et financer le projet</target>
+        <target>Date limite pour constituer l'équipe et financer le projet</target>
       </trans-unit>
       <trans-unit id="moneyNeeded_Label" datatype="html">
         <source>Money needed (in €)</source>
@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="newProject_RulesCompliant_Label" datatype="html">
         <source>This project is compliant with the rules of</source>
-        <target>The projet respecte les règles : </target>
+        <target>Le projet respecte les règles : </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
           <context context-type="linenumber">92</context>

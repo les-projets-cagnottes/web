@@ -61,8 +61,7 @@ export class PagerService {
     canChangePage(pager, newPage): boolean {
         return pager.currentPage == undefined || (
             newPage >= pager.startPage
-            && newPage <= pager.endPage
-            && newPage != pager.currentPage);
+            && newPage <= pager.endPage);
     }
 
 }

@@ -90,7 +90,7 @@ export class ViewProjectComponent implements OnInit {
                   budget.totalUserDonations += donation.amount;
                 });
                 this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
-                  this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations))]);
+                  +(this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);
               });
           });
         });

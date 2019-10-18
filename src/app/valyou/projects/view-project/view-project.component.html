@@ -31,31 +31,27 @@
                     <dt i18n="@@projectPeopleNeededProgress">People needed</dt>
                     <dd>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</dd>
                     <dt i18n="@@projectMoneyNeededProgress">Budget</dt>
-                    <dd>{{ project.totalDonations }} € / {{ project.donationsRequired }} €</dd>
+                    <dd>{{ project.totalDonations.toFixed(2) }} € / {{ project.donationsRequired.toFixed(2) }} €</dd>
                 </dl>
             </div>
             <div class="box-footer text-center">
-                <a class="btn btn-app btn-money" routerLink="/projects/{{ id }}/edit"
-                    *ngIf="project.leader.id === userLoggedIn.id">
+                <a class="btn btn-app btn-money" routerLink="/projects/{{ id }}/edit" *ngIf="project.leader.id === userLoggedIn.id">
                     <i class="fa fa-pencil-square-o"></i><span i18n="@@projectEditAppButton">Edit</span>
                 </a>
-                <a class="btn btn-app btn-money" (click)="join()"
-                    *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
+                <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-pencil"></i><span i18n="@@projectJoinTeamAppButton">Join the team</span>
                 </a>
-                <a class="btn btn-app btn-team" (click)="join()"
-                    *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
+                <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && project.leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-close"></i><span i18n="@@projectLeaveTeamAppButton">Leave the team</span>
                 </a>
-                <a class="btn btn-app btn-money" (click)="openModal(template)"
-                    *ngIf="budgets.length > 0 && project.status == 'IN_PROGRESS'">
+                <a class="btn btn-app btn-money" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.status == 'IN_PROGRESS'">
                     <i class="fa fa-money"></i><span i18n="@@projectContributeFinanciallyAppButton">Contribute
                         financially</span>
                 </a>
                 <ng-template #template>
                     <div class="modal-header">
-                        <h4 class="modal-title pull-left" i18n="@@projectContributeFinanciallyAppButton">Contribute
-                            financially</h4>
+                        <h4 class="modal-title pull-left" i18n="@@projectContributeFinanciallyAppButton">Contribute financially
+                        </h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -71,20 +67,17 @@
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
                                 <label for="amount" i18n="@@donationAmount">Amount (in €)</label>
-                                <input type="number" formControlName="amount" class="form-control" id="amount"
-                                    min="0.00" step="0.01"
-                                    max="{{ min(budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations, project.donationsRequired - project.totalDonations) }}">
+                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations, project.donationsRequired - project.totalDonations)).toFixed(2) }}">
                             </div>
                             <div>
                                 It will remains
-                                <b>{{ budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value }}
+                                <b>{{ (budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value).toFixed(2) }}
                                     €</b> on your pot for this budget afterwards.
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()"
-                            i18n="@@donationSubmit">Submit</button>
+                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()" i18n="@@donationSubmit">Submit</button>
                     </div>
                 </ng-template>
             </div>
@@ -100,12 +93,12 @@
                         <tr>
                             <th i18n="@@donationContributor">Contributor</th>
                             <th i18n="@@donationDate">Date</th>
-                            <th i18n="@@donationAmount">Amount</th>
+                            <th i18n="@@donationAmount" width="22%">Amount</th>
                         </tr>
                         <tr *ngFor="let donation of pagedItems">
                             <td>{{ donation.contributor.firstname }} {{ donation.contributor.lastname }}</td>
                             <td>{{ donation.createdAt | date:'medium' }}</td>
-                            <td>{{ donation.amount }}</td>
+                            <td class="text-right">{{ donation.amount.toFixed(2) }} €</td>
                         </tr>
                     </tbody>
                 </table>
@@ -114,15 +107,13 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status"
-                            aria-live="polite"><span i18n="@@pagination_start">Showing
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@pagination_start">Showing
                             </span>{{ pager.startIndex + 1 }}<span i18n="@@pagination_end"> to
                             </span>{{ pager.endIndex + 1 }}<span i18n="@@pagination_total"> of
                             </span>{{ pager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="pager.pages && pager.pages.length"
-                            class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:pager.currentPage === 1}">
                                 <a (click)="refreshDonations(1)">&#171;</a>
                             </li>
@@ -150,14 +141,12 @@
             <div class="box-body no-padding">
                 <ul class="users-list clearfix">
                     <li>
-                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image"
-                            style="height: 90px;">
+                        <img [src]="project.leader.avatarUrl || project.leader.getDefaultAvatarUrl()" alt="User Image" style="height: 90px;">
                         <a class="users-list-name">{{ project.leader.firstname }}
                             {{ project.leader.lastname }}</a>
                     </li>
                     <li *ngFor="let user of project.peopleGivingTime">
-                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image"
-                            style="height: 90px;">
+                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image" style="height: 90px;">
                         <a class="users-list-name">{{ user.firstname }} {{ user.lastname }}</a>
                     </li>
                 </ul>

@@ -156,7 +156,7 @@ export class NewProjectComponent implements OnInit {
             this.submitting = false;
           });
     } else {
-      this.project.fundingDeadline = this.fundingDeadlineValue;
+      this.project.fundingDeadline = new Date(this.f.fundingDeadline.value);
       this.projectService.create(this.project)
         .subscribe(
           response => {
