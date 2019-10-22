@@ -3,168 +3,164 @@
   xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="actionDelete" datatype="html">
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="actionSubmit" datatype="html">
+        <target>Soumettre</target>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="budget" datatype="html">
+        <target>Budget</target>
+      </trans-unit>
       <trans-unit id="budgetName" datatype="html">
-        <source>Budget</source>
         <target>Budget</target>
       </trans-unit>
       <trans-unit id="budgetUsage" datatype="html">
-        <source>Usage overview</source>
         <target>Utilisation</target>
       </trans-unit>
+      <trans-unit id="contributions" datatype="html">
+        <target>Contributions</target>
+      </trans-unit>
       <trans-unit id="createdAt" datatype="html">
-        <source>Created At</source>
         <target>Créé le</target>
       </trans-unit>
       <trans-unit id="donationAmount" datatype="html">
-        <source>Amount (in €)</source>
         <target>Montant (en €)</target>
       </trans-unit>
       <trans-unit id="donationContributor" datatype="html">
-        <source>Contributor</source>
         <target>Contributeur</target>
       </trans-unit>
       <trans-unit id="donationDate" datatype="html">
-        <source>Date</source>
         <target>Date</target>
       </trans-unit>
       <trans-unit id="donationsPanelTitle" datatype="html">
-        <source>Donations</source>
         <target>Liste des dons</target>
       </trans-unit>
       <trans-unit id="donationSubmit" datatype="html">
-        <source>Submit</source>
         <target>Envoyer</target>
       </trans-unit>
-      <trans-unit id="organizationName" datatype="html">
-        <source>Organization</source>
+      <trans-unit id="myBudgets" datatype="html">
+        <target>Mes cagnottes</target>
+      </trans-unit>
+      <trans-unit id="organization" datatype="html">
         <target>Organisation</target>
       </trans-unit>
+      <trans-unit id="organizationName" datatype="html">
+        <target>Organisation</target>
+      </trans-unit>
+      <trans-unit id="project" datatype="html">
+        <target>Projet</target>
+      </trans-unit>
       <trans-unit id="projectContributeFinanciallyAppButton" datatype="html">
-        <source>Contribute financially</source>
         <target>Contribuer financièrement</target>
       </trans-unit>
       <trans-unit id="projectDonationsOnAllBudgets" datatype="html">
-        <source>Donations on all budgets</source>
         <target>Total des dons</target>
       </trans-unit>
       <trans-unit id="projectDonationsOnThisBudget" datatype="html">
-        <source>Donations on this budget</source>
         <target>Dons imputés sur ce budget</target>
       </trans-unit>
       <trans-unit id="projectEditAppButton" datatype="html">
-        <source>Edit</source>
         <target>Editer</target>
       </trans-unit>
+      <trans-unit id="projectFundingDeadline" datatype="html">
+        <target>Date limite</target>
+      </trans-unit>
       <trans-unit id="projectFundingDeadlineProgress" datatype="html">
-        <source>Remaining days</source>
         <target>Jour(s) restant(s)</target>
       </trans-unit>
       <trans-unit id="projectInformationsTitle" datatype="html">
-        <source>Infos</source>
         <target>Informations</target>
       </trans-unit>
       <trans-unit id="projectJoinTeamAppButton" datatype="html">
-        <source>Join the team</source>
         <target>Rejoindre l'équipe</target>
       </trans-unit>
       <trans-unit id="projectLeaveTeamAppButton" datatype="html">
-        <source>Leave the team</source>
         <target>Quitter l'équipe</target>
       </trans-unit>
-      <trans-unit id="projectMoneyNeededProgress" datatype="html">
-        <source>Budget</source>
+      <trans-unit id="projectMoneyNeeded" datatype="html">
         <target>Budget</target>
       </trans-unit>
+      <trans-unit id="projectMoneyNeededProgress" datatype="html">
+        <target>Budget</target>
+      </trans-unit>
+      <trans-unit id="projectPeopleNeeded" datatype="html">
+        <target>Equipiers</target>
+      </trans-unit>
       <trans-unit id="projectPeopleNeededProgress" datatype="html">
-        <source>People needed</source>
         <target>Constitution de l'équipe</target>
       </trans-unit>
-      <trans-unit id="projectsBoxTitle" datatype="html">
-        <source>Projects</source>
-        <target>Projets</target>
-      </trans-unit>
       <trans-unit id="projectShortDescription" datatype="html">
-        <source>Description</source>
         <target>Description</target>
       </trans-unit>
       <trans-unit id="projectStatus" datatype="html">
-        <source>Status</source>
         <target>Etat</target>
       </trans-unit>
       <trans-unit id="projectStatusAvorted" datatype="html">
-        <source>Avorted</source>
         <target>Abandonné</target>
       </trans-unit>
       <trans-unit id="projectStatusInProgress" datatype="html">
-        <source>In Progress</source>
         <target>En cours</target>
       </trans-unit>
       <trans-unit id="projectStatusReady" datatype="html">
-        <source>Ready</source>
         <target>Prêt</target>
       </trans-unit>
       <trans-unit id="projectTeamBoxTitle" datatype="html">
-        <source>Team</source>
         <target>Equipe</target>
       </trans-unit>
       <trans-unit id="projectTitle" datatype="html">
-        <source>Title</source>
         <target>Titre</target>
       </trans-unit>
-      <trans-unit id="usersBoxTitle" datatype="html">
-        <source>Users</source>
-        <target>Utilisateurs</target>
+      <trans-unit id="projects" datatype="html">
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="projectsBoxTitle" datatype="html">
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="projectsMenu" datatype="html">
+        <target>PROJETS</target>
+      </trans-unit>
+      <trans-unit id="projectsDiscoverMenu" datatype="html">
+        <target>Découvrir les projets</target>
+      </trans-unit>
+      <trans-unit id="projectsSubmitMenu" datatype="html">
+        <target>Soumettre mon projet</target>
+      </trans-unit>
+      <trans-unit id="reportingMenu" datatype="html">
+        <target>Où est l'argent ?</target>
+      </trans-unit>
+      <trans-unit id="settings" datatype="html">
+        <target>Mon compte</target>
+      </trans-unit>
+      <trans-unit id="userAvatarUrl" datatype="html">
+        <target>URL Photo de profil</target>
       </trans-unit>
       <trans-unit id="userBudgetUsage" datatype="html">
-        <source>Usage</source>
         <target>Utilisation</target>
       </trans-unit>
+      <trans-unit id="userEmail" datatype="html">
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="userFirstname" datatype="html">
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="userLastname" datatype="html">
+        <target>Nom de famille</target>
+      </trans-unit>
+      <trans-unit id="userPassword" datatype="html">
+        <target>Mot de passe</target>
+      </trans-unit>
+      <trans-unit id="userPasswordUpdatePlaceholder" datatype="html">
+        <target>Mot de passe - Garder vide pour laisser inchangé</target>
+      </trans-unit>
       <trans-unit id="userUsageName" datatype="html">
-        <source>Name</source>
         <target>Nom</target>
       </trans-unit>
-      <trans-unit id="menu_CategoryName_Projects" datatype="html">
-        <source>PROJECTS
-        </source>
-        <target>PROJETS</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <note priority="1" from="description">Menu Category Name Projects</note>
-        <note priority="1" from="meaning">Menu Category Name Projects</note>
-      </trans-unit>
-      <trans-unit id="menuName_SubmitProject" datatype="html">
-        <source>Submit my
-                            project</source>
-        <target>Soumettre mon projet</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Submit Project</note>
-        <note priority="1" from="meaning">Menu Name Submit Project</note>
-      </trans-unit>
-      <trans-unit id="menuName_DiscoverProject" datatype="html">
-        <source>Discover
-                            projects</source>
-        <target>Découvrir les projets</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Discover Projects</note>
-        <note priority="1" from="meaning">Menu Name Discover Projects</note>
-      </trans-unit>
-      <trans-unit id="menuName_Reporting" datatype="html">
-        <source>Reporting</source>
-        <target>Où est l'argent ?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Reporting</note>
-        <note priority="1" from="meaning">Menu Name Reporting</note>
+      <trans-unit id="usersBoxTitle" datatype="html">
+        <target>Utilisateurs</target>
       </trans-unit>
       <trans-unit id="menu_CategoryName_Sponsoring" datatype="html">
         <source>
