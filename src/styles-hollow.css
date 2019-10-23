@@ -1,0 +1,398 @@
+/*
+ * Skin: Hollow
+ * -----------
+ */
+
+
+/* CUSTOM COLORS */
+
+.skin-hollow.login-page,
+.skin-hollow .content-wrapper,
+.skin-hollow .progress {
+    background-color: #121212;
+}
+
+.skin-hollow .main-footer,
+.skin-hollow .box,
+.skin-hollow .progress,
+.skin-hollow select,
+.skin-hollow button {
+    border-color: #1d1d1d;
+}
+
+.skin-hollow .login-box-body,
+.skin-hollow .main-header .navbar,
+.skin-hollow .main-header .logo,
+.skin-hollow .main-footer,
+.skin-hollow .modal-content,
+.skin-hollow .wrapper,
+.skin-hollow .main-sidebar,
+.skin-hollow .left-side,
+.skin-hollow .sidebar-menu>li.header,
+.skin-hollow .navbar-nav>.user-menu>.dropdown-menu>.user-footer,
+.skin-hollow .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default,
+.skin-hollow .box,
+.skin-hollow .box-footer,
+.skin-hollow button,
+.skin-hollow select,
+.skin-hollow input,
+.skin-hollow .btn-money,
+.skin-hollow .btn-money:hover,
+.skin-hollow .btn-team,
+.skin-hollow .btn-team:hover,
+.skin-hollow .input-group .input-group-addon,
+.skin-hollow .form-control[disabled],
+.skin-hollow .form-control[readonly],
+.skin-hollow fieldset[disabled] .form-control,
+.skin-hollow .pagination>.disabled>a,
+.skin-hollow .pagination>.disabled>a:focus,
+.skin-hollow .pagination>.disabled>a:hover,
+.skin-hollow .pagination>.disabled>span,
+.skin-hollow .pagination>.disabled>span:focus,
+.skin-hollow .pagination>.disabled>span:hover,
+.skin-hollow .nav-tabs-custom,
+.skin-hollow .nav-tabs-custom>.tab-content,
+.skin-hollow .nav-tabs-custom>.nav-tabs>li.active>a,
+.skin-hollow .nav-tabs-custom>.nav-tabs>li.active:hover>a,
+.skin-hollow .CodeMirror {
+    background-color: #1d1d1d;
+}
+
+.skin-hollow .btn-border,
+.skin-hollow .select-border {
+    border-color: #e2e2e2;
+}
+
+.skin-hollow,
+.skin-hollow .sidebar a,
+.skin-hollow .main-footer,
+.skin-hollow .box-header,
+.skin-hollow button,
+.skin-hollow select,
+.skin-hollow input,
+.skin-hollow .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default,
+.skin-hollow .btn-money,
+.skin-hollow .btn-money:hover,
+.skin-hollow .btn-team,
+.skin-hollow .btn-team:hover,
+.skin-hollow .nav-tabs-custom>.nav-tabs>li>a,
+.skin-hollow .nav-tabs-custom>.nav-tabs>li.active>a,
+.skin-hollow .nav-tabs-custom>.nav-tabs>li.active:hover>a,
+.skin-hollow .CodeMirror {
+    color: #e2e2e2;
+}
+
+.skin-hollow .table>thead>tr>th,
+.skin-hollow .table>tbody>tr>th,
+.skin-hollow .table>tfoot>tr>th,
+.skin-hollow .table>thead>tr>td,
+.skin-hollow .table>tbody>tr>td,
+.skin-hollow .table>tfoot>tr>td,
+.skin-hollow .box-footer {
+    border-top-color: #6d6d6d;
+}
+
+.skin-hollow .sidebar-menu>li.header {
+    color: #b2b2b2;
+}
+
+.skin-hollow .pagination>.active>a,
+.skin-hollow .pagination>.active>a:focus,
+.skin-hollow .pagination>.active>a:hover,
+.skin-hollow .pagination>.active>span,
+.skin-hollow .pagination>.active>span:focus,
+.skin-hollow .pagination>.active>span:hover,
+.skin-hollow .btn-default.focus,
+.skin-hollow .btn-default:hover,
+.skin-hollow .form-control:focus {
+    border-color: #fb8c00;
+}
+
+.skin-hollow .progress-bar,
+.skin-hollow .sidebar-menu>li:hover>a,
+.skin-hollow .sidebar-menu>li.active>a,
+.skin-hollow .pagination>.active>a,
+.skin-hollow .pagination>.active>a:focus,
+.skin-hollow .pagination>.active>a:hover,
+.skin-hollow .pagination>.active>span,
+.skin-hollow .pagination>.active>span:focus,
+.skin-hollow .pagination>.active>span:hover,
+.skin-hollow .btn-default.focus,
+.skin-hollow .btn-default:hover {
+    background: #fb8c00;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+    background-color: #eee;
+    opacity: 1;
+}
+
+.skin-hollow a {
+    color: #fb8c00;
+}
+
+.skin-hollow .editor-toolbar a {
+    color: #fb8c00 !important;
+}
+
+.skin-hollow .nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #fb8c00;
+}
+
+.skin-hollow .form-group.has-error label,
+.skin-hollow .has-error .checkbox,
+.skin-hollow .has-error .checkbox-inline,
+.skin-hollow .has-error .control-label,
+.skin-hollow .has-error .help-block,
+.skin-hollow .has-error .radio,
+.skin-hollow .has-error .radio-inline,
+.skin-hollow .has-error.checkbox label,
+.skin-hollow .has-error.checkbox-inline label,
+.skin-hollow .has-error.radio label,
+.skin-hollow .has-error.radio-inline label {
+    color: #ff0400;
+}
+
+.skin-hollow .main-sidebar {
+    border-right-color: #00111f;
+}
+
+.skin-hollow .btn-success {
+    background-color: #7CB342;
+}
+
+
+/* CUSTOM ITEMS */
+
+#spider-web {
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+app-*>div {
+    margin-bottom: 5em;
+}
+
+.fa {
+    margin-right: 0.2em;
+}
+
+.action-bar {
+    margin-bottom: 15px;
+}
+
+.action-bar .btn {
+    margin-right: 15px;
+}
+
+.datatable-nb-entries {
+    display: inline-block;
+    width: auto;
+    margin-left: .5em;
+}
+
+.dataTables_info_container {
+    line-height: 39px;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.item-clickable {
+    cursor: pointer;
+}
+
+.skin-hollow .content-wrapper {
+    position: relative;
+}
+
+.skin-hollow .progress {
+    border-style: dashed;
+    border-width: 0.1em;
+}
+
+.skin-hollow .table>thead>tr>th,
+.skin-hollow .table>tbody>tr>th,
+.skin-hollow .table>tfoot>tr>th,
+.skin-hollow .table>thead>tr>td,
+.skin-hollow .table>tbody>tr>td,
+.skin-hollow .table>tfoot>tr>td,
+.skin-hollow .box-footer {
+    border-top-width: 1px;
+    border-top-style: solid;
+    vertical-align: middle;
+}
+
+
+/* TAKEN FROM ADMIN-LTE */
+
+.skin-hollow .main-header .navbar .nav>li>a {
+    color: #ffffff;
+}
+
+.skin-hollow .main-header .navbar .nav>li>a:hover,
+.skin-hollow .main-header .navbar .nav>li>a:active,
+.skin-hollow .main-header .navbar .nav>li>a:focus,
+.skin-hollow .main-header .navbar .nav .open>a,
+.skin-hollow .main-header .navbar .nav .open>a:hover,
+.skin-hollow .main-header .navbar .nav .open>a:focus,
+.skin-hollow .main-header .navbar .nav>.active>a {
+    background: rgba(0, 0, 0, 0.1);
+    color: #f6f6f6;
+}
+
+.skin-hollow .main-header .navbar .sidebar-toggle {
+    color: #ffffff;
+}
+
+.skin-hollow .main-header .navbar .sidebar-toggle:hover {
+    color: #f6f6f6;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.skin-hollow .main-header .navbar .sidebar-toggle {
+    color: #fff;
+}
+
+.skin-hollow .main-header .navbar .sidebar-toggle:hover {
+    background-color: black;
+}
+
+@media (max-width: 767px) {
+    .skin-hollow .main-header .navbar .dropdown-menu li.divider {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .skin-hollow .main-header .navbar .dropdown-menu li a {
+        color: #fff;
+    }
+    .skin-hollow .main-header .navbar .dropdown-menu li a:hover {
+        background: black;
+    }
+}
+
+.skin-hollow .main-header .logo {
+    color: #ffffff;
+    border-bottom: 0 solid transparent;
+}
+
+.skin-hollow .main-header .logo:hover {
+    background-color: black;
+}
+
+.skin-hollow .main-header li.user-header {
+    background-color: black;
+}
+
+.skin-hollow .content-header {
+    background: transparent;
+}
+
+.skin-hollow .main-sidebar {
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.skin-hollow .user-panel>.info,
+.skin-hollow .user-panel>.info>a {
+    color: white;
+}
+
+.skin-hollow .sidebar-menu>li {
+    -webkit-transition: border-left-color 0.3s ease;
+    -o-transition: border-left-color 0.3s ease;
+    transition: border-left-color 0.3s ease;
+}
+
+.skin-hollow .sidebar-menu>li>a {
+    border-left: 3px solid transparent;
+    font-weight: 600;
+}
+
+.skin-hollow .sidebar-menu>li.active {
+    border-left-color: black;
+}
+
+.skin-hollow .sidebar-menu>li.active>a {
+    font-weight: 600;
+}
+
+.skin-hollow .sidebar-menu>li>.treeview-menu {
+    background: #f4f4f5;
+}
+
+.skin-hollow .sidebar a:hover {
+    text-decoration: none;
+}
+
+.skin-hollow .sidebar-menu .treeview-menu>li>a {
+    color: #777777;
+}
+
+.skin-hollow .sidebar-menu .treeview-menu>li.active>a,
+.skin-hollow .sidebar-menu .treeview-menu>li>a:hover {
+    color: #000000;
+}
+
+.skin-hollow .sidebar-menu .treeview-menu>li.active>a {
+    font-weight: 600;
+}
+
+.skin-hollow .sidebar-form {
+    border-radius: 3px;
+    border: 1px solid #00111f;
+    margin: 10px 10px;
+}
+
+.skin-hollow .sidebar-form input[type="text"],
+.skin-hollow .sidebar-form .btn {
+    box-shadow: none;
+    background-color: #fff;
+    border: 1px solid transparent;
+    height: 35px;
+}
+
+.skin-hollow .sidebar-form input[type="text"] {
+    color: #666;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+}
+
+.skin-hollow .sidebar-form input[type="text"]:focus,
+.skin-hollow .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
+    background-color: #fff;
+    color: #666;
+}
+
+.skin-hollow .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
+    border-left-color: #fff;
+}
+
+.skin-hollow .sidebar-form .btn {
+    color: #999;
+    border-top-left-radius: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 0;
+}
+
+.skin-hollow .progress-bar-striped,
+.skin-hollow .progress-striped .progress-bar {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+
+@media (min-width: 768px) {
+    .skin-hollow.sidebar-mini.sidebar-collapse .sidebar-menu>li>.treeview-menu {
+        border-left: 1px solid #00111f;
+    }
+}

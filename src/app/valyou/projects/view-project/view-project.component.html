@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-8">
         <div class="box box-default">
-            <div class="box-header with-border">
+            <div class="box-header">
                 <h3 class="box-title">{{ project.title }}</h3>
             </div>
             <div class="box-body">
@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-4">
         <div class="box box-default">
-            <div class="box-header with-border">
+            <div class="box-header">
                 <h3 class="box-title" i18n="@@projectInformationsTitle">Informations</h3>
             </div>
             <div class="box-body">
@@ -60,7 +60,7 @@
                         <form [formGroup]="donationForm">
                             <div class="form-group">
                                 <label for="amount" i18n="@@budgetName">Budget</label>
-                                <select class="form-control select2" style="width: 100%;" formControlName="budget">
+                                <select class="form-control select2 select-border" style="width: 100%;" formControlName="budget">
                                     <option *ngFor="let budget of budgets; index as i" value="{{ i }}">
                                         {{ budget.organization.name }} - {{ budget.name }}</option>
                                 </select>
@@ -77,7 +77,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary btn-flat" (click)="onSubmitDonation()" i18n="@@donationSubmit">Submit</button>
+                        <button class="btn btn-default btn-flat btn-border" (click)="onSubmitDonation()" i18n="@@donationSubmit">Submit</button>
                     </div>
                 </ng-template>
             </div>
@@ -135,7 +135,7 @@
             </div>
         </div>
         <div class="box box-default">
-            <div class="box-header with-border">
+            <div class="box-header">
                 <h3 class="box-title" i18n="@@projectTeamBoxTitle">Team</h3>
             </div>
             <div class="box-body no-padding">

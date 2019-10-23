@@ -11,7 +11,7 @@
         <div class="box" *ngFor="let organization of organizations; let i = index">
             <div class="box-header">
                 <h3 class="box-title">Budgets of {{ organization.name }}</h3>
-                <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error' }" (click)="add(organization.id)" style="margin-left: 15px"><i class="fa fa-plus"></i>
+                <button type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error' }" (click)="add(organization.id)" style="margin-left: 15px"><i class="fa fa-plus"></i>
                     Add</button>
             </div>
             <div class="box-body table-responsive no-padding">

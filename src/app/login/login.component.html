@@ -9,36 +9,30 @@
 
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="form-group has-feedback">
-                <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@placeholder_email"
-                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@placeholder_email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required"
-                        i18n="Login Email Error Message|Login Email Error Message@@login_Email_ErrorMessage">Email is
-                        required</div>
+                    <div *ngIf="f.email.errors.required" i18n="Login Email Error Message|Login Email Error Message@@login_Email_ErrorMessage">Email is required
+                    </div>
                 </div>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder="@@placeholder_password"
-                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder="@@placeholder_password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required"
-                        i18n="Login Password Error Message|Login Password Error Message@@login_Password_ErrorMessage">
+                    <div *ngIf="f.password.errors.required" i18n="Login Password Error Message|Login Password Error Message@@login_Password_ErrorMessage">
                         Password is required</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12" data-toggle="buttons">
-                    <button [disabled]="loading" class="btn btn-primary btn-block btn-flat"
-                        i18n="Login Button|Login Button@@login_Button" (click)="onSubmit()">Login</button>
+                    <button [disabled]="loading" class="btn btn-default btn-block btn-flat btn-border" i18n="Login Button|Login Button@@login_Button" (click)="onSubmit()">Login</button>
                 </div>
             </div>
         </form>
         <div class="social-auth-links text-center">
             <p i18n="Login Or Separator|Login Or Separator@@login_Or_Separator">- OR -</p>
-            <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}"
-                class="btn btn-block btn-social bg-maroon btn-flat"><i class="fa fa-slack"></i><span
+            <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block btn-social bg-maroon btn-flat"><i class="fa fa-slack"></i><span
                     i18n="Login Slack Button|Login Slack Button@@login_Slack_Button">Sign in using
                     Slack</span></a>
         </div>

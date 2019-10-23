@@ -1,19 +1,11 @@
 /*
- * Skin: Main
+ * Skin: Valyou
  * -----------
  */
 
-/* Custom items */
-
-#spider-web {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
- .fa {
+.fa {
     margin-right: 0.2em;
- }
+}
 
 .action-bar {
     margin-bottom: 15px;
@@ -37,15 +29,8 @@
     margin: 0;
 }
 
-.box, .box-footer {
-    background-color: grey;
-}
-
 .content-wrapper {
-    position: relative;
-    background-color: #242424;
-    background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
-    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    background-color: #EFF1F4;
 }
 
 .item-clickable {
@@ -62,14 +47,8 @@
     background-color: #F2A397;
 }
 
-.progress-bar {
-    background-color: rgb(50, 60, 94);
-}
-
-/* Taken from admin-lte */
-
 .skin-valyou .main-header .navbar {
-    background-color: black;
+    background-color: #222E4D;
 }
 
 .skin-valyou .main-header .navbar .nav>li>a {
@@ -101,7 +80,7 @@
 }
 
 .skin-valyou .main-header .navbar .sidebar-toggle:hover {
-    background-color: black;
+    background-color: #6CBFBB;
 }
 
 @media (max-width: 767px) {
@@ -112,22 +91,22 @@
         color: #fff;
     }
     .skin-valyou .main-header .navbar .dropdown-menu li a:hover {
-        background: black;
+        background: #6CBFBB;
     }
 }
 
 .skin-valyou .main-header .logo {
-    background-color: black;
+    background-color: #222E4D;
     color: #ffffff;
     border-bottom: 0 solid transparent;
 }
 
 .skin-valyou .main-header .logo:hover {
-    background-color: black;
+    background-color: #6CBFBB;
 }
 
 .skin-valyou .main-header li.user-header {
-    background-color: black;
+    background-color: #222E4D;
 }
 
 .skin-valyou .content-header {
@@ -137,16 +116,16 @@
 .skin-valyou .wrapper,
 .skin-valyou .main-sidebar,
 .skin-valyou .left-side {
-    background-color: #00111f;
+    background-color: #f9fafc;
 }
 
 .skin-valyou .main-sidebar {
-    border-right: 1px solid #00111f;
+    border-right: 1px solid #d2d6de;
 }
 
 .skin-valyou .user-panel>.info,
 .skin-valyou .user-panel>.info>a {
-    color: white;
+    color: #444444;
 }
 
 .skin-valyou .sidebar-menu>li {
@@ -157,7 +136,7 @@
 
 .skin-valyou .sidebar-menu>li.header {
     color: #848484;
-    background: #00111f;
+    background: #f9fafc;
 }
 
 .skin-valyou .sidebar-menu>li>a {
@@ -172,7 +151,7 @@
 }
 
 .skin-valyou .sidebar-menu>li.active {
-    border-left-color: black;
+    border-left-color: #222E4D;
 }
 
 .skin-valyou .sidebar-menu>li.active>a {
@@ -184,7 +163,7 @@
 }
 
 .skin-valyou .sidebar a {
-    color: white;
+    color: #444444;
 }
 
 .skin-valyou .sidebar a:hover {
@@ -206,7 +185,7 @@
 
 .skin-valyou .sidebar-form {
     border-radius: 3px;
-    border: 1px solid #00111f;
+    border: 1px solid #d2d6de;
     margin: 10px 10px;
 }
 
@@ -246,6 +225,6 @@
 
 @media (min-width: 768px) {
     .skin-valyou.sidebar-mini.sidebar-collapse .sidebar-menu>li>.treeview-menu {
-        border-left: 1px solid #00111f;
+        border-left: 1px solid #d2d6de;
     }
 }

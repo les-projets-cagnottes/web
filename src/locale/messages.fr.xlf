@@ -416,7 +416,7 @@
       </trans-unit>
       <trans-unit id="peopleNeeded_Label" datatype="html">
         <source>People needed in addition of the project leader</source>
-        <target>Equipiers requis en plus du porteur de projet</target>
+        <target>Equipiers requis hors porteur de projet</target>
       </trans-unit>
       <trans-unit id="pagination_start" datatype="html">
         <source>Showing </source>
