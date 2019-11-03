@@ -22,6 +22,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'projects', pathMatch: 'full' },
       { path: 'organizations/new', redirectTo: 'organizations/edit/0' },
       { path: 'organizations/edit/:id', component: EditOrganizationComponent },
+      { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: NewProjectComponent },
       { path: 'projects/:id/edit', component: NewProjectComponent },

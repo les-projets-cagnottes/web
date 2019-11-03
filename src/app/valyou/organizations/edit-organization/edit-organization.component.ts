@@ -5,7 +5,9 @@ import { Organization, User, Content } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { environment } from '../../../../environments/environment';
 import { ContentService } from 'src/app/_services/content.service';
 
 declare function startSimpleMDE(): any;
@@ -55,8 +57,14 @@ export class EditOrganizationComponent implements OnInit {
   pagedItemsContents: any[];
   pageSizeContents: number = 10;
 
+  // Slack oauth
+  slackClientId: string;
+  redirectUrlOAuth: string;
+  code: string;
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
     private contentService: ContentService,
@@ -65,6 +73,19 @@ export class EditOrganizationComponent implements OnInit {
     private modalService: BsModalService
   ) {
     this.route.params.subscribe(params => this.id = <number>params.id);
+    var endPointEdit = '/organizations/edit/' + this.id;
+    var slackEndPoint = '/organizations/edit/slack/' + this.id
+    if (this.router.url.startsWith(endPointEdit)
+      && !this.router.url.startsWith(slackEndPoint)) {
+      this.redirectUrlOAuth = location.href.replace(endPointEdit, slackEndPoint);
+    }
+    if(this.router.url.startsWith(slackEndPoint)) {
+      this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
+      this.code = this.route.snapshot.queryParams['code'];
+      console.log(this.code);
+      // API Call here to validate code
+    }
+    this.slackClientId = environment.slackClientId;
   }
 
   ngOnInit() {
