@@ -25,7 +25,7 @@
                     <div class="col-md-4">
                         <div class="progress-group">
                             <span class="progress-text" i18n="@@fundingDeadline_Label">Funding & Team-up Deadline</span>
-                            <span class="progress-number"><b>{{ item.fundingDeadline | date:'medium' }}</b></span>
+                            <span class="progress-number"><b>{{ item.fundingDeadline | date:'mediumDate' }}</b></span>
 
                             <div class="progress sm" title="{{ item.fundingDeadlinePercent }}">
                                 <div class="progress-bar progress-bar-red" [ngStyle]="{'width': item.fundingDeadlinePercent }"></div>

@@ -156,7 +156,11 @@ export class NewProjectComponent implements OnInit {
             this.submitting = false;
           });
     } else {
-      this.project.fundingDeadline = new Date(this.f.fundingDeadline.value);
+      if(this.form.controls['fundingDeadline'].value == "NaN-aN-aN") {
+        this.project.fundingDeadline = this.fundingDeadlineValue;
+      } else {
+        this.project.fundingDeadline = this.form.controls['fundingDeadline'].value;
+      }
       this.projectService.create(this.project)
         .subscribe(
           response => {
