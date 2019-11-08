@@ -82,8 +82,7 @@ export class EditOrganizationComponent implements OnInit {
     if(this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
       this.code = this.route.snapshot.queryParams['code'];
-      console.log(this.code);
-      // API Call here to validate code
+      this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth);
     }
     this.slackClientId = environment.slackClientId;
   }

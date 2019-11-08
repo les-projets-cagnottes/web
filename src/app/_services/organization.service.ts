@@ -20,8 +20,8 @@ export class OrganizationService {
 
   getByOwner(owner: User, offset, limit) {
     const params = new HttpParams()
-        .set('offset', offset)
-        .set('limit', limit);
+      .set('offset', offset)
+      .set('limit', limit);
     return this.http.get<User[]>(`${environment.apiUrl}/organization?owner_id=${owner.id}`, { params });
   }
 
@@ -32,21 +32,21 @@ export class OrganizationService {
   update(organization: Organization) {
     return this.http.put(`${environment.apiUrl}/organization/${organization.id}`, organization);
   }
-  
+
   delete(id: number) {
-      return this.http.delete(`${environment.apiUrl}/organization/${id}`);
+    return this.http.delete(`${environment.apiUrl}/organization/${id}`);
   }
-  
+
   getBudgets(organizationsId: Number[]) {
     const params = new HttpParams()
-        .set('organizations_id', organizationsId.toLocaleString());
+      .set('organizations_id', organizationsId.toLocaleString());
     return this.http.get<User[]>(`${environment.apiUrl}/organization/budget`, { params });
   }
 
   getMembers(organizationId: Number, offset, limit) {
     const params = new HttpParams()
-        .set('offset', offset)
-        .set('limit', limit);
+      .set('offset', offset)
+      .set('limit', limit);
     return this.http.get<User[]>(`${environment.apiUrl}/organization/${organizationId}/members`, { params });
   }
 
@@ -56,5 +56,9 @@ export class OrganizationService {
 
   removeMember(organizationId: number, userId: number) {
     return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/members?userId=${userId}`);
+  }
+  
+  slack(organizationId: number, code: string, redirect_uri) {
+    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack?code=${code}&redirect_uri=${redirect_uri}`, {});
   }
 }
