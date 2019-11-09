@@ -25,8 +25,7 @@ export class EditOrganizationComponent implements OnInit {
 
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
-    name: [this.organization.name, Validators.required],
-    slackTeamId: [this.organization.slackTeamId]
+    name: [this.organization.name, Validators.required]
   });;
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
@@ -79,10 +78,11 @@ export class EditOrganizationComponent implements OnInit {
       && !this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlOAuth = location.href.replace(endPointEdit, slackEndPoint);
     }
-    if(this.router.url.startsWith(slackEndPoint)) {
+    if (this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
       this.code = this.route.snapshot.queryParams['code'];
-      this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth);
+      this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth)
+        .subscribe(() => { });
     }
     this.slackClientId = environment.slackClientId;
   }
@@ -261,7 +261,6 @@ export class EditOrganizationComponent implements OnInit {
 
     var organization2save = new Organization();
     organization2save.name = this.f.name.value;
-    organization2save.slackTeamId = this.f.slackTeamId.value;
     //organization2save.members = this.organization.members;
 
     if (this.id > 0) {
