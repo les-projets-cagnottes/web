@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, OrganizationService, BudgetService, DonationService, ProjectService, UserService } from 'src/app/_services';
-import { User, Organization, Budget, Donation, Project } from 'src/app/_models';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, ProjectService, UserService } from 'src/app/_services';
+import { User, Organization, Budget, Donation, Project, ApiToken } from 'src/app/_models';
 
 @Component({
   selector: 'app-profile',
@@ -13,10 +14,12 @@ export class ProfileComponent implements OnInit {
   budgets: Budget[] = [];
   budgetsSorted: Budget[] = [];
   donations: Donation[] = [];
+  apiTokens: ApiToken[] = [];
   private organizations: Organization[] = [];
   projects: Project[] = [];
   user: User = new User();
   deleteDonationsStatus: string[] = [];
+  deleteApiTokenStatus: string[] = [];
 
   // Settings tab
   editUserForm = this.fb.group({
@@ -29,13 +32,22 @@ export class ProfileComponent implements OnInit {
   submitStatus = 'idle';
   submitting = false;
 
+  // Developer tab
+  generateApiTokenStatus = 'idle';
+  generatedApiToken: ApiToken = new ApiToken();
+
+  // TermsOfUse modal
+  modalRef: BsModalRef;
+
   constructor(
+    private apiTokenService: ApiTokenService,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
     private donationService: DonationService,
     private organizationService: OrganizationService,
     private projectService: ProjectService,
     private userService: UserService,
+    private modalService: BsModalService,
     private fb: FormBuilder) {
     this.user.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
@@ -80,6 +92,10 @@ export class ProfileComponent implements OnInit {
               value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
             });
           });
+        this.apiTokenService.getAll()
+          .subscribe(apitokens => {
+            this.apiTokens = apitokens;
+          })
       });
   }
 
@@ -112,6 +128,30 @@ export class ProfileComponent implements OnInit {
           console.log(error);
           this.deleteDonationsStatus[donation.id] = 'error';
         });
+  }
+
+  generateApiToken(template: TemplateRef<any>) {
+    this.apiTokenService.generateApiToken()
+      .subscribe((apiToken) => {
+        this.generatedApiToken = apiToken; 
+        this.modalRef = this.modalService.show(template);
+        this.refresh();
+      },
+        error => {
+          console.log(error);
+          this.generateApiTokenStatus = 'error';
+        });
+  }
+
+  deleteApiToken(apiToken: ApiToken) {
+    this.apiTokenService.delete(apiToken.id)
+      .subscribe(() => {
+        this.refresh();
+      },
+      error => {
+        console.log(error);
+        this.deleteApiTokenStatus[apiToken.id] = 'error';
+      });
   }
 
   submit() {

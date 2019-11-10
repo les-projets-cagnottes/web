@@ -1,5 +1,6 @@
 ﻿import { Authority } from './authority';
 import { Organization } from './organization';
+import { ApiToken } from './apitoken';
 
 export class User {
     id: number;
@@ -14,6 +15,7 @@ export class User {
     token: string;
     userAuthorities: Authority[];
     organizations: Organization[];
+    apitokens: ApiToken[];
     totalBudgetDonations: number;
 
     // Only in Valyou-Web
