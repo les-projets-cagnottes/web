@@ -90,8 +90,7 @@
                         ],
                         "styles": [
                             "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
-                            "src/styles.css",
-                            "src/styles-hollow.css"
+                            "src/styles-christmas.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",
@@ -189,8 +188,7 @@
                         ],
                         "styles": [
                             "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-                            "src/styles.css",
-                            "src/styles-hollow.css"
+                            "src/styles-christmas.css"
                         ],
                         "scripts": []
                     }

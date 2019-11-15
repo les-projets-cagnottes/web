@@ -1,0 +1,397 @@
+/*
+ * Skin: Hollow
+ * -----------
+ */
+
+
+/* CUSTOM COLORS */
+
+.skin-christmas.login-page,
+.skin-christmas .content-wrapper,
+.skin-christmas .progress {
+    background-color: #e1e2e1;
+}
+
+.skin-christmas .main-footer,
+.skin-christmas .box,
+.skin-christmas .progress,
+.skin-christmas select,
+.skin-christmas button {
+    border-color: #262455;
+}
+
+.skin-christmas .login-box-body,
+.skin-christmas .main-header .navbar,
+.skin-christmas .main-header .logo,
+.skin-christmas .main-footer,
+.skin-christmas .modal-content,
+.skin-christmas .wrapper,
+.skin-christmas .main-sidebar,
+.skin-christmas .left-side,
+.skin-christmas .sidebar-menu>li.header,
+.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer,
+.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default,
+.skin-christmas .box,
+.skin-christmas .box-footer,
+.skin-christmas button,
+.skin-christmas select,
+.skin-christmas input,
+.skin-christmas .btn-money,
+.skin-christmas .btn-money:hover,
+.skin-christmas .btn-team,
+.skin-christmas .btn-team:hover,
+.skin-christmas .input-group .input-group-addon,
+.skin-christmas .main-header li.user-header,
+.skin-christmas .form-control[disabled],
+.skin-christmas .form-control[readonly],
+.skin-christmas fieldset[disabled] .form-control,
+.skin-christmas .pagination>.disabled>a,
+.skin-christmas .pagination>.disabled>a:focus,
+.skin-christmas .pagination>.disabled>a:hover,
+.skin-christmas .pagination>.disabled>span,
+.skin-christmas .pagination>.disabled>span:focus,
+.skin-christmas .pagination>.disabled>span:hover,
+.skin-christmas .nav-tabs-custom,
+.skin-christmas .nav-tabs-custom>.tab-content,
+.skin-christmas .nav-tabs-custom>.nav-tabs>li.active>a,
+.skin-christmas .nav-tabs-custom>.nav-tabs>li.active:hover>a,
+.skin-christmas .CodeMirror {
+    background-color: #262455;
+}
+
+.skin-christmas .main-header .logo:hover,
+.skin-christmas .sidebar-menu>li:hover>a,
+.skin-christmas .sidebar-menu>li.active>a {
+    color: #262455;
+}
+
+.skin-christmas .btn-border,
+.skin-christmas .select-border {
+    border-color: #e2e2e2;
+}
+
+.skin-christmas,
+.skin-christmas .sidebar a,
+.skin-christmas .main-footer,
+.skin-christmas .box-header,
+.skin-christmas button,
+.skin-christmas select,
+.skin-christmas input,
+.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default,
+.skin-christmas .btn-money,
+.skin-christmas .btn-money:hover,
+.skin-christmas .btn-team,
+.skin-christmas .btn-team:hover,
+.skin-christmas .nav-tabs-custom>.nav-tabs>li>a,
+.skin-christmas .nav-tabs-custom>.nav-tabs>li.active>a,
+.skin-christmas .nav-tabs-custom>.nav-tabs>li.active:hover>a,
+.skin-christmas .CodeMirror {
+    color: #e2e2e2;
+}
+
+.skin-christmas .table>thead>tr>th,
+.skin-christmas .table>tbody>tr>th,
+.skin-christmas .table>tfoot>tr>th,
+.skin-christmas .table>thead>tr>td,
+.skin-christmas .table>tbody>tr>td,
+.skin-christmas .table>tfoot>tr>td,
+.skin-christmas .box-footer {
+    border-top-color: #6d6d6d;
+}
+
+.skin-christmas .sidebar-menu>li.header {
+    color: #b2b2b2;
+}
+
+.skin-christmas .main-header .logo:hover,
+.skin-christmas .pagination>.active>a,
+.skin-christmas .pagination>.active>a:focus,
+.skin-christmas .pagination>.active>a:hover,
+.skin-christmas .pagination>.active>span,
+.skin-christmas .pagination>.active>span:focus,
+.skin-christmas .pagination>.active>span:hover,
+.skin-christmas .btn-default.focus,
+.skin-christmas .btn-default:hover,
+.skin-christmas .form-control:focus {
+    border-color: #fcef62;
+}
+
+.skin-christmas .main-header .navbar .sidebar-toggle:hover,
+.skin-christmas .main-header .logo:hover,
+.skin-christmas .progress-bar,
+.skin-christmas .sidebar-menu>li:hover>a,
+.skin-christmas .sidebar-menu>li.active>a,
+.skin-christmas .pagination>.active>a,
+.skin-christmas .pagination>.active>a:focus,
+.skin-christmas .pagination>.active>a:hover,
+.skin-christmas .pagination>.active>span,
+.skin-christmas .pagination>.active>span:focus,
+.skin-christmas .pagination>.active>span:hover,
+.skin-christmas .btn-default.focus,
+.skin-christmas .btn-default:hover {
+    background: #fcef62;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+    background-color: #eee;
+    opacity: 1;
+}
+
+.skin-christmas a {
+    color: #fcef62;
+}
+
+.skin-christmas .editor-toolbar a {
+    color: #fcef62 !important;
+}
+
+.skin-christmas .nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #fcef62;
+}
+
+.skin-christmas .form-group.has-error label,
+.skin-christmas .has-error .checkbox,
+.skin-christmas .has-error .checkbox-inline,
+.skin-christmas .has-error .control-label,
+.skin-christmas .has-error .help-block,
+.skin-christmas .has-error .radio,
+.skin-christmas .has-error .radio-inline,
+.skin-christmas .has-error.checkbox label,
+.skin-christmas .has-error.checkbox-inline label,
+.skin-christmas .has-error.radio label,
+.skin-christmas .has-error.radio-inline label {
+    color: #ff0400;
+}
+
+.skin-christmas .main-sidebar {
+    border-right-color: #00111f;
+}
+
+.skin-christmas .btn-success {
+    background-color: #7CB342;
+}
+
+
+/* CUSTOM ITEMS */
+
+#spider-web {
+    display: none;
+    z-index: -1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+app-*>div {
+    margin-bottom: 5em;
+}
+
+.fa {
+    margin-right: 0.2em;
+}
+
+.action-bar {
+    margin-bottom: 15px;
+}
+
+.action-bar .btn {
+    margin-right: 15px;
+}
+
+.datatable-nb-entries {
+    display: inline-block;
+    width: auto;
+    margin-left: .5em;
+}
+
+.dataTables_info_container {
+    line-height: 39px;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.item-clickable {
+    cursor: pointer;
+}
+
+.skin-christmas .content-wrapper {
+    position: relative;
+}
+
+.skin-christmas .progress {
+    border-style: dashed;
+    border-width: 0.1em;
+}
+
+.skin-christmas .table>thead>tr>th,
+.skin-christmas .table>tbody>tr>th,
+.skin-christmas .table>tfoot>tr>th,
+.skin-christmas .table>thead>tr>td,
+.skin-christmas .table>tbody>tr>td,
+.skin-christmas .table>tfoot>tr>td,
+.skin-christmas .box-footer {
+    border-top-width: 1px;
+    border-top-style: solid;
+    vertical-align: middle;
+}
+
+
+/* TAKEN FROM ADMIN-LTE */
+
+.skin-christmas .main-header .navbar .nav>li>a {
+    color: #ffffff;
+}
+
+.skin-christmas .main-header .navbar .nav>li>a:hover,
+.skin-christmas .main-header .navbar .nav>li>a:active,
+.skin-christmas .main-header .navbar .nav>li>a:focus,
+.skin-christmas .main-header .navbar .nav .open>a,
+.skin-christmas .main-header .navbar .nav .open>a:hover,
+.skin-christmas .main-header .navbar .nav .open>a:focus,
+.skin-christmas .main-header .navbar .nav>.active>a {
+    background: rgba(0, 0, 0, 0.1);
+    color: #f6f6f6;
+}
+
+.skin-christmas .main-header .navbar .sidebar-toggle {
+    color: #ffffff;
+}
+
+.skin-christmas .main-header .navbar .sidebar-toggle:hover {
+    color: #f6f6f6;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.skin-christmas .main-header .navbar .sidebar-toggle {
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    .skin-christmas .main-header .navbar .dropdown-menu li.divider {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .skin-christmas .main-header .navbar .dropdown-menu li a {
+        color: #fff;
+    }
+    .skin-christmas .main-header .navbar .dropdown-menu li a:hover {
+        background: #262455;
+    }
+}
+
+.skin-christmas .main-header .logo {
+    color: #ffffff;
+    border-bottom: 0 solid transparent;
+}
+
+.skin-christmas .content-header {
+    background: transparent;
+}
+
+.skin-christmas .main-sidebar {
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.skin-christmas .user-panel>.info,
+.skin-christmas .user-panel>.info>a {
+    color: white;
+}
+
+.skin-christmas .sidebar-menu>li {
+    -webkit-transition: border-left-color 0.3s ease;
+    -o-transition: border-left-color 0.3s ease;
+    transition: border-left-color 0.3s ease;
+}
+
+.skin-christmas .sidebar-menu>li>a {
+    border-left: 3px solid transparent;
+    font-weight: 600;
+}
+
+.skin-christmas .sidebar-menu>li.active {
+    border-left-color: black;
+}
+
+.skin-christmas .sidebar-menu>li.active>a {
+    font-weight: 600;
+}
+
+.skin-christmas .sidebar-menu>li>.treeview-menu {
+    background: #f4f4f5;
+}
+
+.skin-christmas .sidebar a:hover {
+    text-decoration: none;
+}
+
+.skin-christmas .sidebar-menu .treeview-menu>li>a {
+    color: #777777;
+}
+
+.skin-christmas .sidebar-menu .treeview-menu>li.active>a,
+.skin-christmas .sidebar-menu .treeview-menu>li>a:hover {
+    color: #000000;
+}
+
+.skin-christmas .sidebar-menu .treeview-menu>li.active>a {
+    font-weight: 600;
+}
+
+.skin-christmas .sidebar-form {
+    border-radius: 3px;
+    border: 1px solid #00111f;
+    margin: 10px 10px;
+}
+
+.skin-christmas .sidebar-form input[type="text"],
+.skin-christmas .sidebar-form .btn {
+    box-shadow: none;
+    background-color: #fff;
+    border: 1px solid transparent;
+    height: 35px;
+}
+
+.skin-christmas .sidebar-form input[type="text"] {
+    color: #666;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+}
+
+.skin-christmas .sidebar-form input[type="text"]:focus,
+.skin-christmas .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
+    background-color: #fff;
+    color: #666;
+}
+
+.skin-christmas .sidebar-form input[type="text"]:focus+.input-group-btn .btn {
+    border-left-color: #fff;
+}
+
+.skin-christmas .sidebar-form .btn {
+    color: #999;
+    border-top-left-radius: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 0;
+}
+
+.skin-christmas .progress-bar-striped,
+.skin-christmas .progress-striped .progress-bar {
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+    -webkit-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+
+@media (min-width: 768px) {
+    .skin-christmas.sidebar-mini.sidebar-collapse .sidebar-menu>li>.treeview-menu {
+        border-left: 1px solid #00111f;
+    }
+}
