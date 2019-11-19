@@ -97,7 +97,8 @@
                             "node_modules/datatables.net/js/jquery.dataTables.js",
                             "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
                             "node_modules/marked/lib/marked.js",
-                            "src/assets/plugins/simplemde/simplemde.start.js"
+                            "src/assets/plugins/simplemde/simplemde.start.js",
+                            "src/assets/snow.js"
                         ]
                     },
                     "configurations": {

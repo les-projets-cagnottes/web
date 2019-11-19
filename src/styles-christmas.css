@@ -9,30 +9,29 @@
 .skin-christmas.login-page,
 .skin-christmas .content-wrapper,
 .skin-christmas .progress {
-    background-color: #e1e2e1;
+    background-color: #1e2040;
 }
 
-.skin-christmas .main-footer,
 .skin-christmas .box,
 .skin-christmas .progress,
 .skin-christmas select,
 .skin-christmas button {
-    border-color: #262455;
+    border-color: #252850;
 }
 
-.skin-christmas .login-box-body,
 .skin-christmas .main-header .navbar,
-.skin-christmas .main-header .logo,
 .skin-christmas .main-footer,
-.skin-christmas .modal-content,
-.skin-christmas .wrapper,
 .skin-christmas .main-sidebar,
-.skin-christmas .left-side,
+.skin-christmas .main-header .logo,
 .skin-christmas .sidebar-menu>li.header,
-.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer,
-.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default,
+.skin-christmas .left-side,
 .skin-christmas .box,
 .skin-christmas .box-footer,
+.skin-christmas .login-box-body,
+.skin-christmas .modal-content,
+.skin-christmas .wrapper,
+.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer,
+.skin-christmas .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default,
 .skin-christmas button,
 .skin-christmas select,
 .skin-christmas input,
@@ -56,13 +55,13 @@
 .skin-christmas .nav-tabs-custom>.nav-tabs>li.active>a,
 .skin-christmas .nav-tabs-custom>.nav-tabs>li.active:hover>a,
 .skin-christmas .CodeMirror {
-    background-color: #262455;
+    background-color: #252850;
 }
 
 .skin-christmas .main-header .logo:hover,
 .skin-christmas .sidebar-menu>li:hover>a,
 .skin-christmas .sidebar-menu>li.active>a {
-    color: #262455;
+    color: #252850;
 }
 
 .skin-christmas .btn-border,
@@ -99,8 +98,10 @@
     border-top-color: #6d6d6d;
 }
 
+.skin-christmas .item-clickable,
+.skin-christmas .main-header .logo,
 .skin-christmas .sidebar-menu>li.header {
-    color: #b2b2b2;
+    color: #fcef62;
 }
 
 .skin-christmas .main-header .logo:hover,
@@ -165,16 +166,19 @@ fieldset[disabled] .form-control {
     color: #ff0400;
 }
 
-.skin-christmas .main-sidebar {
-    border-right-color: #00111f;
-}
-
 .skin-christmas .btn-success {
     background-color: #7CB342;
 }
 
 
 /* CUSTOM ITEMS */
+
+#santa-penguin {
+    z-index: -1;
+    position: absolute;
+    right: 0.5em;
+    bottom: 0;
+}
 
 #spider-web {
     display: none;
@@ -278,7 +282,7 @@ app-*>div {
         color: #fff;
     }
     .skin-christmas .main-header .navbar .dropdown-menu li a:hover {
-        background: #262455;
+        background: #235E6F;
     }
 }
 
@@ -289,11 +293,6 @@ app-*>div {
 
 .skin-christmas .content-header {
     background: transparent;
-}
-
-.skin-christmas .main-sidebar {
-    border-right-width: 1px;
-    border-right-style: solid;
 }
 
 .skin-christmas .user-panel>.info,
