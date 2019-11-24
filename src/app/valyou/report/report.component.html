@@ -38,6 +38,7 @@
                     <tbody>
                         <tr>
                             <th i18n="@@projectTitle">Title</th>
+                            <th i18n="@@createdAt">Created at</th>
                             <th i18n="@@projectShortDescription">Description</th>
                             <th i18n="@@projectPeopleNeededProgress">Teammates</th>
                             <th i18n="@@projectDonationsOnThisBudget">Donations on this budget</th>
@@ -47,6 +48,7 @@
                         </tr>
                         <tr *ngFor="let project of pagedProjects">
                             <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
+                            <td>{{ project.createdAt |date:'medium' }}</td>
                             <td>{{ project.shortDescription }}</td>
                             <td>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</td>
                             <td>{{ totalDonations[project.id].toFixed(2) }} €</td>

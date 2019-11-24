@@ -14,6 +14,7 @@ import { ProfileComponent } from './valyou/profile/profile.component';
 import { ReportComponent } from './valyou/report/report.component';
 import { GettingStartedComponent } from './valyou/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
+import { ManagerComponent } from './valyou/manager/manager.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'manager', component: ManagerComponent },
       { path: 'doc/getting-started', component: GettingStartedComponent },
       { path: 'about', component: AboutComponent }
     ]

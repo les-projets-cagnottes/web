@@ -1,0 +1,5 @@
+<button type="button" class="btn btn-flat btn-default"
+[ngClass]="{ 'btn-success': validateStatus == 'success', 'btn-danger': validateStatus == 'error', 'btn-default': validateStatus == 'idle' }"
+    (click)="validateProjects()"><i class="fa fa-check-circle"></i> <span
+        i18n="@@validateProjects">Validate</span>
+</button>

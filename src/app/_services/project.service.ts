@@ -45,6 +45,10 @@ export class ProjectService {
     return this.http.put<Project>(`${environment.apiUrl}/project`, project);
   }
 
+  validate() {
+    return this.http.post(`${environment.apiUrl}/project/validate`, {});
+  }
+
   createOrganizations(id: number, organizations: Organization[]) {
     return this.http.post(`${environment.apiUrl}/project/${id}/organizations`, organizations);
   }

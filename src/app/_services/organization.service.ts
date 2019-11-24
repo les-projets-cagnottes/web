@@ -61,4 +61,8 @@ export class OrganizationService {
   slack(organizationId: number, code: string, redirect_uri) {
     return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack?code=${code}&redirect_uri=${redirect_uri}`, {});
   }
+
+  slackSync(organizationId: number) {
+    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack/sync`, {});
+  }
 }

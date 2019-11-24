@@ -20,21 +20,26 @@
                             <td>
                                 <form [formGroup]="addMemberOrgForm">
                                     <div class="form-group has-feedback">
-                                        <input type="email" class="form-control" formControlName="email" placeholder="Enter user email" />
+                                        <input type="email" class="form-control" formControlName="email"
+                                            placeholder="Enter user email" />
                                     </div>
                                 </form>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-flat" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i> Add</button>
+                                <button type="button" class="btn btn-flat btn-default"
+                                    [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }"
+                                    (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
+                                    Add</button>
                             </td>
                         </tr>
                         <tr *ngFor="let user of pagedItemsMembers">
-                            <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
+                            <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture"
+                                    height="24px" /></td>
                             <td>{{ user.firstname }} {{ user.lastname }}</td>
                             <td>{{ user.email }}</td>
                             <td>
                                 <button type="button" class="btn btn-default btn-flat" (click)="onRemoveMember(user)"><i
-                                            class="fa fa-trash"></i> Remove</button></td>
+                                        class="fa fa-trash"></i> Remove</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -43,24 +48,28 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pagerMembers.startIndex + 1 }} to {{ pagerMembers.endIndex + 1 }} of {{ pagerMembers.totalItems }} entries</div>
+                        <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info"
+                            role="status" aria-live="polite">Showing {{ pagerMembers.startIndex + 1 }} to
+                            {{ pagerMembers.endIndex + 1 }} of {{ pagerMembers.totalItems }} entries</div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="pagination pagination-sm no-margin pull-right">
+                        <ul *ngIf="pagerMembers.pages && pagerMembers.pages.length"
+                            class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:pagerMembers.currentPage === 1}">
-                                <a (click)="refreshMembers(1)">First</a>
+                                <a (click)="refreshMembers(1)">&#171;</a>
                             </li>
                             <li [ngClass]="{disabled:pagerMembers.currentPage === 1}">
-                                <a (click)="refreshMembers(pagerMembers.currentPage - 1)">Previous</a>
+                                <a (click)="refreshMembers(pagerMembers.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li *ngFor="let page of pagerMembers.pages" [ngClass]="{active:pagerMembers.currentPage === page}">
+                            <li *ngFor="let page of pagerMembers.pages"
+                                [ngClass]="{active:pagerMembers.currentPage === page}">
                                 <a (click)="refreshMembers(page)">{{page}}</a>
                             </li>
                             <li [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
-                                <a (click)="refreshMembers(pagerMembers.currentPage + 1)">Next</a>
+                                <a (click)="refreshMembers(pagerMembers.currentPage + 1)">&#8250;</a>
                             </li>
                             <li [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
-                                <a (click)="refreshMembers(pagerMembers.totalPages)">Last</a>
+                                <a (click)="refreshMembers(pagerMembers.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
@@ -80,26 +89,54 @@
                     <div class="box-body">
                         <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
                             <label for="name">Name</label>
-                            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
+                            <input type="text" formControlName="name" class="form-control" id="name"
+                                placeholder="Enter organization name">
                         </div>
                         <div class="form-group action-bar">
                             <label>Messenging Apps</label>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a *ngIf="organization.slackTeam === null" href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-social bg-maroon btn-flat">
-                                        <i class="fa fa-slack"></i>
-                                        <span i18n="@@addToSlack">Add to Slack</span></a>
-                                    <div *ngIf="organization.slackTeam !== null" >
-                                        <span i18n="@@slackConnected">Connected with Slack Team : </span>
-                                        <span>{{ organization.slackTeam.teamId }}</span>
+                                    <div>
+                                        <table class="table">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>App</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Slack</td>
+                                                    <td *ngIf="organization.slackTeam === undefined"><span
+                                                            i18n="@@slackNotConnected">Not connected Yet </span></td>
+                                                    <td *ngIf="organization.slackTeam !== undefined"><span
+                                                            i18n="@@slackConnected">Connected with Slack Team : </span>
+                                                        <span>{{ organization.slackTeam.teamId }}</span></td>
+                                                    <td>
+                                                        <div *ngIf="organization.slackTeam === undefined">
+                                                            <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlOAuth }}"
+                                                                class="btn btn-social bg-maroon btn-flat">
+                                                                <i class="fa fa-slack"></i>
+                                                                <span i18n="@@addToSlack">Add to Slack</span></a>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-flat"
+                                                            [ngClass]="{ 'btn-success': slackSyncStatus == 'success', 'btn-danger': slackSyncStatus == 'error', 'btn-default': slackSyncStatus == 'idle' }"
+                                                            (click)="onSlackSync()" [disabled]="slackSyncStatus == 'running'"><i
+                                                                class="fa fa-refresh"></i> Sync users</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <span *ngIf="organization.slackTeam === null" i18n="@@slackNotConnected">Not connected</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="box-footer" style="text-align: center">
-                        <button type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }" (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> Submit</button>
+                        <button type="submit" class="btn btn-flat"
+                            [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }"
+                            (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> Submit</button>
                     </div>
                 </form>
             </div>
@@ -107,8 +144,9 @@
                 <div class="box-header">
                     <h3 class="box-title">Documents</h3>
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" (click)="openContentModal(template, 0)"><i class="fa fa-plus"></i> Add
-                            </button>
+                        <button type="button" class="btn btn-box-tool" (click)="openContentModal(template, 0)"><i
+                                class="fa fa-plus"></i> Add
+                        </button>
                     </div>
                 </div>
                 <div class="box-body no-padding">
@@ -121,11 +159,12 @@
                             <tr *ngFor="let content of pagedItemsContents">
                                 <td>{{ content.name }}</td>
                                 <td class="action-bar">
-                                    <button type="button" class="btn btn-default btn-flat" (click)="openContentModal(template, content)"><i
-                                    class="fa fa-pencil"></i> Edit</button>
-                                    <button type="button" class="btn btn-default btn-flat" (click)="onRemoveContent(content)"><i
-                                                class="fa fa-trash"></i> Remove</button>
-                                            </td>
+                                    <button type="button" class="btn btn-default btn-flat"
+                                        (click)="openContentModal(template, content)"><i class="fa fa-pencil"></i>
+                                        Edit</button>
+                                    <button type="button" class="btn btn-default btn-flat"
+                                        (click)="onRemoveContent(content)"><i class="fa fa-trash"></i> Remove</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -133,26 +172,30 @@
                 <div class="box-footer">
                     <div class="row">
                         <div class="col-sm-5 dataTables_info_container">
-                            <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pagerContents.startIndex + 1 }} to {{ pagerContents.endIndex + 1 }} of {{ pagerContents.totalItems }} entries</div>
+                            <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info"
+                                role="status" aria-live="polite">Showing {{ pagerContents.startIndex + 1 }} to
+                                {{ pagerContents.endIndex + 1 }} of {{ pagerContents.totalItems }} entries</div>
                         </div>
                         <div class="col-md-7">
-                                <ul *ngIf="pagerContents.pages && pagerContents.pages.length" class="pagination pagination-sm no-margin pull-right">
-                                    <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
-                                        <a (click)="refreshContents(1)">First</a>
-                                    </li>
-                                    <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
-                                        <a (click)="refreshContents(pagerContents.currentPage - 1)">Previous</a>
-                                    </li>
-                                    <li *ngFor="let page of pagerContents.pages" [ngClass]="{active:pagerContents.currentPage === page}">
-                                        <a (click)="refreshContents(page)">{{page}}</a>
-                                    </li>
-                                    <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
-                                        <a (click)="refreshContents(pagerContents.currentPage + 1)">Next</a>
-                                    </li>
-                                    <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
-                                        <a (click)="refreshContents(pagerContents.totalPages)">Last</a>
-                                    </li>
-                                </ul>
+                            <ul *ngIf="pagerContents.pages && pagerContents.pages.length"
+                                class="pagination pagination-sm no-margin pull-right">
+                                <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
+                                    <a (click)="refreshContents(1)">First</a>
+                                </li>
+                                <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
+                                    <a (click)="refreshContents(pagerContents.currentPage - 1)">Previous</a>
+                                </li>
+                                <li *ngFor="let page of pagerContents.pages"
+                                    [ngClass]="{active:pagerContents.currentPage === page}">
+                                    <a (click)="refreshContents(page)">{{page}}</a>
+                                </li>
+                                <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
+                                    <a (click)="refreshContents(pagerContents.currentPage + 1)">Next</a>
+                                </li>
+                                <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
+                                    <a (click)="refreshContents(pagerContents.totalPages)">Last</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -161,18 +204,22 @@
                 <div class="modal-header">
                     <h4 class="modal-title pull-left">Edit content</h4>
                     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form [formGroup]="contentForm">
-                        <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.name.errors }">
+                        <div class="form-group has-feedback"
+                            [ngClass]="{ 'has-error': contentForm.controls.name.errors }">
                             <label for="name">Name</label>
-                            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter content name">
+                            <input type="text" formControlName="name" class="form-control" id="name"
+                                placeholder="Enter content name">
                         </div>
-                        <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
+                        <div class="form-group has-feedback"
+                            [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
                             <label for="value">Content</label>
-                            <textarea id="value" formControlName="value" class="form-control" rows="3" placeholder="Put your content here"></textarea>
+                            <textarea id="value" formControlName="value" class="form-control" rows="3"
+                                placeholder="Put your content here"></textarea>
                         </div>
                     </form>
                 </div>

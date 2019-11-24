@@ -57,6 +57,7 @@ export class EditOrganizationComponent implements OnInit {
   pageSizeContents: number = 10;
 
   // Slack oauth
+  slackSyncStatus: string = 'idle';
   slackClientId: string;
   redirectUrlOAuth: string;
   code: string;
@@ -107,7 +108,6 @@ export class EditOrganizationComponent implements OnInit {
 
   refreshForm() {
     this.editOrgForm.controls.name.setValue(this.organization.name);
-    this.editOrgForm.controls.slackTeamId.setValue(this.organization.slackTeamId);
     if (!(this.id > 0)) {
       this.organization.members = [];
       var user = JSON.parse(localStorage.getItem('currentUser'));
@@ -158,6 +158,28 @@ export class EditOrganizationComponent implements OnInit {
     if (typeof startSimpleMDE === 'function') {
       this.simplemde = startSimpleMDE();
       this.simplemde.value(content.value);
+    }
+  }
+
+  onSlackSync() {
+    this.slackSyncStatus = 'running';
+    if (this.id > 0) {
+      this.organizationService.slackSync(this.id)
+        .subscribe(
+          () => {
+            this.slackSyncStatus = 'success';
+            this.refreshMembers();
+            setTimeout(() => {
+              this.slackSyncStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            this.slackSyncStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.slackSyncStatus = 'idle';
+            }, 2000);
+          });
     }
   }
 
