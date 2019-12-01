@@ -70,9 +70,9 @@
                                 <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations, project.donationsRequired - project.totalDonations)).toFixed(2) }}">
                             </div>
                             <div>
-                                It will remains
-                                <b>{{ (budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value).toFixed(2) }}
-                                    €</b> on your pot for this budget afterwards.
+                                <span i18n="@@budgetRemainingBegin">You will have </span>
+                                <b>{{ (budgets[f.budget.value].amountPerMember - budgets[f.budget.value].totalUserDonations - f.amount.value).toFixed(2) }} €</b>
+                                <span i18n="@@budgetRemainingEnd"> left to finance other projects.</span>
                             </div>
                         </form>
                     </div>
@@ -107,10 +107,10 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@pagination_start">Showing
-                            </span>{{ pager.startIndex + 1 }}<span i18n="@@pagination_end"> to
-                            </span>{{ pager.endIndex + 1 }}<span i18n="@@pagination_total"> of
-                            </span>{{ pager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing
+                            </span>{{ pager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+                            </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
+                            </span>{{ pager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">

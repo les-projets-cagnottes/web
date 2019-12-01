@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Project, Organization, Budget } from 'src/app/_models';
+import { Project, Organization, Budget, User } from 'src/app/_models';
 import { AuthenticationService, OrganizationService, ProjectService, BudgetService } from 'src/app/_services';
 
 declare function startSimpleMDE(): any;
@@ -140,6 +140,8 @@ export class NewProjectComponent implements OnInit {
     this.project.donationsRequired = this.f.donationsRequired.value;
     this.project.peopleRequired = this.f.peopleRequired.value;
     this.project.longDescription = this.simplemde.value();
+    
+    this.project.leader = new User();
     this.project.leader.id = this.authenticationService.currentUserValue.id;
 
     // Submit item to backend

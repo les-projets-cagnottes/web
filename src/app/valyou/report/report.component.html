@@ -43,7 +43,7 @@
                             <th i18n="@@projectPeopleNeededProgress">Teammates</th>
                             <th i18n="@@projectDonationsOnThisBudget">Donations on this budget</th>
                             <th i18n="@@projectDonationsOnAllBudgets">Donations on all budgets</th>
-                            <th i18n="@@moneyNeeded_Label">Donations required</th>
+                            <th i18n="@@projectMoneyNeeded">Donations required</th>
                             <th i18n="@@projectStatus">Status</th>
                         </tr>
                         <tr *ngFor="let project of pagedProjects">
@@ -67,10 +67,10 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@pagination_start">Showing
-                            </span>{{ projectPager.startIndex + 1 }}<span i18n="@@pagination_end"> to
-                            </span>{{ projectPager.endIndex + 1 }}<span i18n="@@pagination_total"> of
-                            </span>{{ projectPager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
+                        <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing
+                            </span>{{ projectPager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+                            </span>{{ projectPager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
+                            </span>{{ projectPager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="projectPager.pages && projectPager.pages.length" class="pagination pagination-sm no-margin pull-right">
@@ -127,10 +127,10 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="userPager.pages && userPager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@pagination_start">Showing
-                            </span>{{ userPager.startIndex + 1 }}<span i18n="@@pagination_end"> to
-                            </span>{{ userPager.endIndex + 1 }}<span i18n="@@pagination_total"> of
-                            </span>{{ userPager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
+                        <div *ngIf="userPager.pages && userPager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing
+                            </span>{{ userPager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+                            </span>{{ userPager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
+                            </span>{{ userPager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="userPager.pages && userPager.pages.length" class="pagination pagination-sm no-margin pull-right">

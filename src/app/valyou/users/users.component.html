@@ -55,7 +55,7 @@
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editUserModal" (click)="openModalCreateUser()"><i class="fa fa-plus"></i> Add</button>
                     </div>
                     <div class="col-xs-6">
-                        <div class="dataTables_length text-right"><label for="pageSize" i18n="Number of entries|Number of entries@@pagination_nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
+                        <div class="dataTables_length text-right"><label for="pageSize" i18n="@@nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
@@ -65,16 +65,14 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 table-responsive">
-                        <table class="table table-sm">
-                            <thead>
+                        <table class="table">
+                            <tbody>
                                 <tr>
                                     <th>ID</th>
                                     <th>Email</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
-                            </thead>
-                            <tbody>
                                 <tr *ngFor="let user of pagedItems">
                                     <td>{{user.id}}</td>
                                     <td>{{user.email}}</td>
@@ -100,25 +98,34 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries</div>
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">
+                            Showing {{ pager.startIndex + 1 }} to {{ pager.endIndex + 1 }} of {{ pager.totalItems }} entries
+                            <span i18n="@@paginationStart">Showing </span>
+                            {{ pager.startIndex + 1 }}
+                            <span i18n="@@paginationEnd"> to</span>
+                            {{ pager.endIndex + 1 }}
+                            <span i18n="@@paginationTotal"> of </span>
+                            {{ pager.totalItems }}
+                            <span i18n="@@paginationEntries"> entries</span>
+                        </div>
                     </div>
                     <div class="col-sm-7">
                         <div class="dataTables_paginate paging_simple_numbers text-right">
                             <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                                 <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
-                                    <a (click)="refresh(1)">First</a>
+                                    <a (click)="refresh(1)">&#171;</a>
                                 </li>
                                 <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
-                                    <a (click)="refresh(pager.currentPage - 1)">Previous</a>
+                                    <a (click)="refresh(pager.currentPage - 1)">&#8249;</a>
                                 </li>
                                 <li class="paginate_button" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                                     <a (click)="refresh(page)">{{page}}</a>
                                 </li>
                                 <li class="paginate_button next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                    <a (click)="refresh(pager.currentPage + 1)">Next</a>
+                                    <a (click)="refresh(pager.currentPage + 1)">&#8250;</a>
                                 </li>
                                 <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                    <a (click)="refresh(pager.totalPages)">Last</a>
+                                    <a (click)="refresh(pager.totalPages)">&#187;</a>
                                 </li>
                             </ul>
                         </div>

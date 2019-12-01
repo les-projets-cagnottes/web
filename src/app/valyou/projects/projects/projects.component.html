@@ -1,11 +1,11 @@
 <div class="row action-bar">
     <div class="col-xs-6">
         <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fa fa-refresh"></i> <span
-                i18n="Refresh Button|Refresh Button@@refresh_Button">Refresh</span>
+                i18n="Refresh Button|Refresh Button@@refresh">Refresh</span>
         </button>
     </div>
     <div class="col-xs-6">
-        <div class="dataTables_length text-right"><label for="pageSize" i18n="Number of entries|Number of entries@@pagination_nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
+        <div class="dataTables_length text-right"><label for="pageSize" i18n="Number of entries|Number of entries@@nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="progress-group">
-                            <span class="progress-text" i18n="@@fundingDeadline_Label">Funding & Team-up Deadline</span>
+                            <span class="progress-text" i18n="@@projectFundingDeadlineDetailedLabel">Funding & Team-up Deadline</span>
                             <span class="progress-number"><b>{{ item.fundingDeadline | date:'mediumDate' }}</b></span>
 
                             <div class="progress sm" title="{{ item.fundingDeadlinePercent }}">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="progress-group">
-                            <span class="progress-text" i18n="@@peopleNeeded_Label">People needed</span>
+                            <span class="progress-text" i18n="@@projectPeopleNeededDetailedLabel">People needed</span>
                             <span class="progress-number"><b>{{ item.peopleGivingTime.length }}</b> /
                                 {{ item.peopleRequired }}</span>
 
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="progress-group" title="{{ item.donationsRequiredPercent }}">
-                            <span class="progress-text" i18n="@@moneyNeeded_Label">Money needed</span>
+                            <span class="progress-text" i18n="@@projectMoneyNeeded">Money needed</span>
                             <span class="progress-number"><b>{{ item.totalDonations.toFixed(2) }} €</b>/
                                 {{ item.donationsRequired.toFixed(2) }} €</span>
 
@@ -63,8 +63,8 @@
 </div>
 <div class="row">
     <div class="col-sm-5 dataTables_info_container">
-        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@pagination_start">Showing </span>{{ pager.startIndex + 1 }}<span i18n="@@pagination_end"> to
-            </span>{{ pager.endIndex + 1 }}<span i18n="@@pagination_total"> of </span>{{ pager.totalItems }}<span i18n="@@pagination_entries"> entries</span></div>
+        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing </span>{{ pager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+            </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
     </div>
     <div class="col-sm-7">
         <div class="dataTables_paginate paging_simple_numbers text-right">

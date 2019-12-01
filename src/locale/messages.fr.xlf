@@ -12,20 +12,38 @@
       <trans-unit id="actions" datatype="html">
         <target>Actions</target>
       </trans-unit>
+      <trans-unit id="administrationMenu" datatype="html">
+        <target>ADMINISTRATION</target>
+      </trans-unit>
       <trans-unit id="budget" datatype="html">
         <target>Budget</target>
       </trans-unit>
       <trans-unit id="budgetName" datatype="html">
         <target>Budget</target>
       </trans-unit>
+      <trans-unit id="budgetRemainingBegin" datatype="html">
+        <target>Il vous restera </target>
+      </trans-unit>
+      <trans-unit id="budgetRemainingEnd" datatype="html">
+        <target> pour financer d'autres projets.</target>
+      </trans-unit>
       <trans-unit id="budgetUsage" datatype="html">
         <target>Utilisation</target>
+      </trans-unit>
+      <trans-unit id="budgetsMenu" datatype="html">
+        <target>Budgets</target>
       </trans-unit>
       <trans-unit id="contributions" datatype="html">
         <target>Contributions</target>
       </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <target>Fermer</target>
+      </trans-unit>
       <trans-unit id="createdAt" datatype="html">
         <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="documentationMenu" datatype="html">
+        <target>DOCUMENTATION</target>
       </trans-unit>
       <trans-unit id="donationAmount" datatype="html">
         <target>Montant (en €)</target>
@@ -42,8 +60,26 @@
       <trans-unit id="donationSubmit" datatype="html">
         <target>Envoyer</target>
       </trans-unit>
+      <trans-unit id="emailRequired" datatype="html">
+        <target>Email requis</target>
+      </trans-unit>
+      <trans-unit id="gettingStartedMenu" datatype="html">
+        <target>Bien démarrer</target>
+      </trans-unit>
+      <trans-unit id="helpUseMarkdown" datatype="html">
+        <target>Pour mettre en forme votre présentation, vous pouvez utiliser la syntaxe Markdown.</target>
+      </trans-unit>
+      <trans-unit id="loginButton" datatype="html">
+        <target>Se connecter</target>
+      </trans-unit>
+      <trans-unit id="moreInfosHere" datatype="html">
+        <target>Plus d'infos ici</target>
+      </trans-unit>
       <trans-unit id="myBudgets" datatype="html">
         <target>Mes cagnottes</target>
+      </trans-unit>
+      <trans-unit id="nbEntries" datatype="html">
+        <target>Nombre d'entrées</target>
       </trans-unit>
       <trans-unit id="organization" datatype="html">
         <target>Organisation</target>
@@ -51,11 +87,38 @@
       <trans-unit id="organizationName" datatype="html">
         <target>Organisation</target>
       </trans-unit>
+      <trans-unit id="organizationsMenu" datatype="html">
+        <target>Organisations</target>
+      </trans-unit>
+      <trans-unit id="orSeparator" datatype="html">
+        <target>- OU -</target>
+      </trans-unit>
+      <trans-unit id="paginationEnd" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="paginationEntries" datatype="html">
+        <target></target>
+      </trans-unit>
+      <trans-unit id="paginationStart" datatype="html">
+        <target>Affichage des entrées </target>
+      </trans-unit>
+      <trans-unit id="paginationTotal" datatype="html">
+        <target> sur </target>
+      </trans-unit>
+      <trans-unit id="passwordRequired" datatype="html">
+        <target>Mot de passe requis</target>
+      </trans-unit>
       <trans-unit id="project" datatype="html">
         <target>Projet</target>
       </trans-unit>
       <trans-unit id="projectContributeFinanciallyAppButton" datatype="html">
         <target>Contribuer financièrement</target>
+      </trans-unit>
+      <trans-unit id="projectDetailedPresentation" datatype="html">
+        <target>Présentation Détaillée</target>
+      </trans-unit>
+      <trans-unit id="projectDetailedPresentationPlaceholder" datatype="html">
+        <target>Entrez votre présentation détaillée ici</target>
       </trans-unit>
       <trans-unit id="projectDonationsOnAllBudgets" datatype="html">
         <target>Total des dons</target>
@@ -69,14 +132,23 @@
       <trans-unit id="projectFundingDeadline" datatype="html">
         <target>Date limite</target>
       </trans-unit>
+      <trans-unit id="projectFundingDeadlineDetailedLabel" datatype="html">
+        <target>Date limite pour constituer l'équipe et financer le projet</target>
+      </trans-unit>
       <trans-unit id="projectFundingDeadlineProgress" datatype="html">
         <target>Jour(s) restant(s)</target>
       </trans-unit>
       <trans-unit id="projectInformationsTitle" datatype="html">
         <target>Informations</target>
       </trans-unit>
+      <trans-unit id="projectIsRulesCompliant" datatype="html">
+        <target>Le projet respecte les règles : </target>
+      </trans-unit>
       <trans-unit id="projectJoinTeamAppButton" datatype="html">
         <target>Rejoindre l'équipe</target>
+      </trans-unit>
+      <trans-unit id="projectLeader" datatype="html">
+        <target>Porteur du projet</target>
       </trans-unit>
       <trans-unit id="projectLeaveTeamAppButton" datatype="html">
         <target>Quitter l'équipe</target>
@@ -89,6 +161,9 @@
       </trans-unit>
       <trans-unit id="projectPeopleNeeded" datatype="html">
         <target>Equipiers</target>
+      </trans-unit>
+      <trans-unit id="projectPeopleNeededDetailedLabel" datatype="html">
+        <target>Equipiers requis hors porteur de projet</target>
       </trans-unit>
       <trans-unit id="projectPeopleNeededProgress" datatype="html">
         <target>Constitution de l'équipe</target>
@@ -129,11 +204,26 @@
       <trans-unit id="projectsSubmitMenu" datatype="html">
         <target>Soumettre mon projet</target>
       </trans-unit>
+      <trans-unit id="refresh" datatype="html">
+        <target>Rafraîchir</target>
+      </trans-unit>
       <trans-unit id="reportingMenu" datatype="html">
         <target>Où est l'argent ?</target>
       </trans-unit>
+      <trans-unit id="save" datatype="html">
+        <target>Sauvegarder</target>
+      </trans-unit>
       <trans-unit id="settings" datatype="html">
         <target>Mon compte</target>
+      </trans-unit>
+      <trans-unit id="signInBoxHeader" datatype="html">
+        <target>Connectez-vous pour démarrer votre session</target>
+      </trans-unit>
+      <trans-unit id="slackLoginButton" datatype="html">
+        <target>Se connecter avec Slack</target>
+      </trans-unit>
+      <trans-unit id="sponsoringMenu" datatype="html">
+        <target>SPONSORING</target>
       </trans-unit>
       <trans-unit id="userAvatarUrl" datatype="html">
         <target>URL Photo de profil</target>
@@ -162,311 +252,8 @@
       <trans-unit id="usersBoxTitle" datatype="html">
         <target>Utilisateurs</target>
       </trans-unit>
-      <trans-unit id="menu_CategoryName_Sponsoring" datatype="html">
-        <source>
-                    SPONSORING</source>
-        <target>SPONSORING</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="description">Menu Category Sponsoring</note>
-        <note priority="1" from="meaning">Menu Category Name Sponsoring</note>
-      </trans-unit>
-      <trans-unit id="menuName_Budgets" datatype="html">
-        <source>Budgets</source>
-        <target>Budgets</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Budgets</note>
-        <note priority="1" from="meaning">Menu Name Budgets</note>
-      </trans-unit>
-      <trans-unit id="menu_CategoryName_Administration" datatype="html">
-        <source>
-                    ADMINISTRATION</source>
-        <target>ADMINISTRATION</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <note priority="1" from="description">Menu Category Administration</note>
-        <note priority="1" from="meaning">Menu Category Name Administration</note>
-      </trans-unit>
-      <trans-unit id="menuName_Users" datatype="html">
-        <source>Users</source>
+      <trans-unit id="usersMenu" datatype="html">
         <target>Utilisateurs</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Users</note>
-        <note priority="1" from="meaning">Menu Name Users</note>
-      </trans-unit>
-      <trans-unit id="menuName_Organizations" datatype="html">
-        <source>Organizations</source>
-        <target>Organisations</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Organizations</note>
-        <note priority="1" from="meaning">Menu Name Organizations</note>
-      </trans-unit>
-      <trans-unit id="menu_CategoryName_Documentation" datatype="html">
-        <source>
-                    DOCUMENTATION</source>
-        <target>DOCUMENTATION</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <note priority="1" from="description">Menu Category Documentation</note>
-        <note priority="1" from="meaning">Menu Category Name Documentation</note>
-      </trans-unit>
-      <trans-unit id="menuName_GettingStarted" datatype="html">
-        <source>Getting
-                            Started</source>
-        <target>Bien démarrer</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-        <note priority="1" from="description">Menu Name Getting Started</note>
-        <note priority="1" from="meaning">Menu Name Getting Started</note>
-      </trans-unit>
-      <trans-unit id="login_BoxHeader" datatype="html">
-        <source>Sign in to start your session
-        </source>
-        <target>Connectez-vous pour démarrer votre session</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="description">Title login box</note>
-        <note priority="1" from="meaning">Login Box Header</note>
-      </trans-unit>
-      <trans-unit id="login_Email_ErrorMessage" datatype="html">
-        <source>Email is
-                        required</source>
-        <target>Email requis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="description">Login Email Error Message</note>
-        <note priority="1" from="meaning">Login Email Error Message</note>
-      </trans-unit>
-      <trans-unit id="login_Password_ErrorMessage" datatype="html">
-        <source>
-                        Password is required</source>
-        <target>Mot de passe requis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <note priority="1" from="description">Login Password Error Message</note>
-        <note priority="1" from="meaning">Login Password Error Message</note>
-      </trans-unit>
-      <trans-unit id="login_Button" datatype="html">
-        <source>Login</source>
-        <target>Se connecter</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="description">Login Button</note>
-        <note priority="1" from="meaning">Login Button</note>
-      </trans-unit>
-      <trans-unit id="login_Or_Separator" datatype="html">
-        <source>- OR -</source>
-        <target>- OU -</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <note priority="1" from="description">Login Or Separator</note>
-        <note priority="1" from="meaning">Login Or Separator</note>
-      </trans-unit>
-      <trans-unit id="login_Slack_Button" datatype="html">
-        <source>Sign in using
-                    Slack</source>
-        <target>Se connecter avec Slack</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-        <note priority="1" from="description">Login Slack Button</note>
-        <note priority="1" from="meaning">Login Slack Button</note>
-      </trans-unit>
-      <trans-unit id="placeholder_email" datatype="html">
-        <source>Email</source>
-        <target>Email</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="placeholder_password" datatype="html">
-        <source>Password</source>
-        <target>Mot de passe</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="newProject_DetailedPresentation_BoxHeader" datatype="html">
-        <source>Detailed Presentation</source>
-        <target>Présentation Détaillée</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="description">Title for detailed presentation box</note>
-        <note priority="1" from="meaning">Box Header</note>
-      </trans-unit>
-      <trans-unit id="newProject_useMarkdown_Help" datatype="html">
-        <source>
-                                To format your presentation, you can use the Markdown syntax.</source>
-        <target>Pour mettre en forme votre présentation, vous pouvez utiliser la syntaxe Markdown.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <note priority="1" from="description">Use Markdown Help</note>
-        <note priority="1" from="meaning">Use Markdown Help</note>
-      </trans-unit>
-      <trans-unit id="newProject_moreInfosHere" datatype="html">
-        <source>More info
-                                here</source>
-        <target>Plus d'infos ici</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <note priority="1" from="description">More info here</note>
-        <note priority="1" from="meaning">More info here</note>
-      </trans-unit>
-      <trans-unit id="placeholder_longDescription" datatype="html">
-        <source>Put your detailed presentation here</source>
-        <target>Entrez votre présentation détaillée ici</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="pagination_nbEntries" datatype="html">
-        <source>Nb entries</source>
-        <target>Nombre d'entrées</target>
-      </trans-unit>
-      <trans-unit id="refresh_Button" datatype="html">
-        <source>Refresh</source>
-        <target>Rafraîchir</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/projects/projects.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="description">Refresh Button</note>
-        <note priority="1" from="meaning">Refresh Button</note>
-      </trans-unit>
-      <trans-unit id="newProject_Organization_Label" datatype="html">
-        <source>Organization</source>
-        <target>Organisation</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <note priority="1" from="description">Label for organization field</note>
-        <note priority="1" from="meaning">Label for organization field</note>
-      </trans-unit>
-      <trans-unit id="newProject_Budget_Label" datatype="html">
-        <source>Budget</source>
-        <target>Budget</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <note priority="1" from="description">Label for budget field</note>
-        <note priority="1" from="meaning">Label for budget field</note>
-      </trans-unit>
-      <trans-unit id="newProject_Title_Label" datatype="html">
-        <source>Title</source>
-        <target>Titre</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="description">Label for title field</note>
-        <note priority="1" from="meaning">Label for title field</note>
-      </trans-unit>
-      <trans-unit id="fundingDeadline_Label" datatype="html">
-        <source>Funding Deadline</source>
-        <target>Date limite pour constituer l'équipe et financer le projet</target>
-      </trans-unit>
-      <trans-unit id="moneyNeeded_Label" datatype="html">
-        <source>Money needed (in €)</source>
-        <target>Montant requis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">71</context>
-        </context-group>
-        <note priority="1" from="description">Label for money needed field</note>
-        <note priority="1" from="meaning">Label for money needed field</note>
-      </trans-unit>
-      <trans-unit id="peopleNeeded_Label" datatype="html">
-        <source>People needed in addition of the project leader</source>
-        <target>Equipiers requis hors porteur de projet</target>
-      </trans-unit>
-      <trans-unit id="pagination_start" datatype="html">
-        <source>Showing </source>
-        <target>Affichage des entrées </target>
-      </trans-unit>
-      <trans-unit id="pagination_end" datatype="html">
-        <source> to </source>
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="pagination_total" datatype="html">
-        <source> of </source>
-        <target> sur </target>
-      </trans-unit>
-      <trans-unit id="pagination_entries" datatype="html">
-        <source> entries</source>
-        <target></target>
-      </trans-unit>
-      <trans-unit id="newProject_RulesCompliant_Label" datatype="html">
-        <source>This project is compliant with the rules of</source>
-        <target>Le projet respecte les règles : </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-        <note priority="1" from="description">Label for rules compliant checkbox</note>
-        <note priority="1" from="meaning">Label for rules compliant checkbox</note>
-      </trans-unit>
-      <trans-unit id="newProject_Close_BudgetRulesModal_Button" datatype="html">
-        <source>Close</source>
-        <target>Fermer</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">110</context>
-        </context-group>
-        <note priority="1" from="description">Budget Rules Close Modal Button</note>
-        <note priority="1" from="meaning">Budget Rules Close Modal Button</note>
-      </trans-unit>
-      <trans-unit id="newProject_Save_Button" datatype="html">
-        <source>Save</source>
-        <target>Sauvegarder</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
-          <context context-type="linenumber">117</context>
-        </context-group>
-        <note priority="1" from="description">Save Edited Project Button</note>
-        <note priority="1" from="meaning">Save Edited Project Button</note>
-      </trans-unit>
-      <trans-unit id="projectLeader" datatype="html">
-        <source>Project Leader</source>
-        <target>Porteur du projet</target>
       </trans-unit>
     </body>
   </file>
