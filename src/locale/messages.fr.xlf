@@ -3,14 +3,23 @@
   xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="actionClose" datatype="html">
+        <target>Fermer</target>
+      </trans-unit>
       <trans-unit id="actionDelete" datatype="html">
         <target>Supprimer</target>
       </trans-unit>
       <trans-unit id="actionSubmit" datatype="html">
         <target>Soumettre</target>
       </trans-unit>
+      <trans-unit id="actionValidateProjects" datatype="html">
+        <target>Valider les projets</target>
+      </trans-unit>
       <trans-unit id="actions" datatype="html">
         <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="addToSlack" datatype="html">
+        <target>Ajouter à Slack</target>
       </trans-unit>
       <trans-unit id="administrationMenu" datatype="html">
         <target>ADMINISTRATION</target>
@@ -36,11 +45,11 @@
       <trans-unit id="contributions" datatype="html">
         <target>Contributions</target>
       </trans-unit>
-      <trans-unit id="close" datatype="html">
-        <target>Fermer</target>
-      </trans-unit>
       <trans-unit id="createdAt" datatype="html">
         <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="developerMenu" datatype="html">
+        <target>Espace Développeur</target>
       </trans-unit>
       <trans-unit id="documentationMenu" datatype="html">
         <target>DOCUMENTATION</target>
@@ -69,8 +78,14 @@
       <trans-unit id="helpUseMarkdown" datatype="html">
         <target>Pour mettre en forme votre présentation, vous pouvez utiliser la syntaxe Markdown.</target>
       </trans-unit>
+      <trans-unit id="id" datatype="html">
+        <target>ID</target>
+      </trans-unit>
       <trans-unit id="loginButton" datatype="html">
         <target>Se connecter</target>
+      </trans-unit>
+      <trans-unit id="managerMenu" datatype="html">
+        <target>Configuration</target>
       </trans-unit>
       <trans-unit id="moreInfosHere" datatype="html">
         <target>Plus d'infos ici</target>
@@ -221,6 +236,12 @@
       </trans-unit>
       <trans-unit id="slackLoginButton" datatype="html">
         <target>Se connecter avec Slack</target>
+      </trans-unit>
+      <trans-unit id="slackNotConnected" datatype="html">
+        <target>Pas encore connecté</target>
+      </trans-unit>
+      <trans-unit id="slackConnected" datatype="html">
+        <target>Connecté avec le workspace : </target>
       </trans-unit>
       <trans-unit id="sponsoringMenu" datatype="html">
         <target>SPONSORING</target>
