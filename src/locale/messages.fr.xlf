@@ -9,6 +9,9 @@
       <trans-unit id="actionDelete" datatype="html">
         <target>Supprimer</target>
       </trans-unit>
+      <trans-unit id="actionGenerate" datatype="html">
+        <target>Générer</target>
+      </trans-unit>
       <trans-unit id="actionSubmit" datatype="html">
         <target>Soumettre</target>
       </trans-unit>
@@ -275,6 +278,9 @@
       </trans-unit>
       <trans-unit id="usersMenu" datatype="html">
         <target>Utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="yourNewAPIToken" datatype="html">
+        <target>Votre nouveau token API</target>
       </trans-unit>
     </body>
   </file>

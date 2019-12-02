@@ -167,7 +167,7 @@
                             <tr>
                                 <td colspan="3">
                                     <button type="button" class="btn btn-default btn-flat" (click)="generateApiToken(template)" [ngClass]="{ 'btn-success': generateApiTokenStatus == 'success', 'btn-danger': generateApiTokenStatus == 'error' }">
-                                        <i class="fa fa-plus"></i> <span>Generate</span>
+                                        <i class="fa fa-plus"></i> <span i18n="@@actionGenerate">Generate</span>
                                     </button>
                                 </td>
                             </tr>
@@ -175,7 +175,7 @@
                     </table>
                     <ng-template #template>
                         <div class="modal-header">
-                            <h4 class="modal-title pull-left">Your new API Token</h4>
+                            <h4 class="modal-title pull-left" i18n="@@yourNewAPIToken">Your new API Token</h4>
                             <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                                 <span aria-hidden="true">&times;</span>
                             </button>

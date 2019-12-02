@@ -801,6 +801,20 @@
           <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="actionGenerate" datatype="html">
+        <source>Generate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="yourNewAPIToken" datatype="html">
+        <source>Your new API Token</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
+          <context context-type="linenumber">178</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="actionClose" datatype="html">
         <source>Close</source>
         <context-group purpose="location">
