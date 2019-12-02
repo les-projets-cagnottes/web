@@ -1,4 +1,5 @@
-code {
+#generatedApiToken {
     display: block;
-    white-space: pre-wrap   
-  }
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
