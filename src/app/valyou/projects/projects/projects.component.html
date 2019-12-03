@@ -1,11 +1,11 @@
 <div class="row action-bar">
     <div class="col-xs-6">
         <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fa fa-refresh"></i> <span
-                i18n="Refresh Button|Refresh Button@@refresh">Refresh</span>
+                i18n="@@refresh">Refresh</span>
         </button>
     </div>
     <div class="col-xs-6">
-        <div class="dataTables_length text-right"><label for="pageSize" i18n="Number of entries|Number of entries@@nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
+        <div class="dataTables_length text-right"><label for="pageSize" i18n="@@nbEntries">Nb entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-10">
         <div class="box item-clickable" *ngFor="let item of pagedItems" routerLink="/projects/{{ item.id }}">
             <div class="box-header">
                 <h3 class="box-title">{{ item.title }}</h3> - {{ item.shortDescription }}
@@ -22,17 +22,10 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="progress-group">
-                            <span class="progress-text" i18n="@@projectFundingDeadlineDetailedLabel">Funding & Team-up Deadline</span>
-                            <span class="progress-number"><b>{{ item.fundingDeadline | date:'mediumDate' }}</b></span>
-
-                            <div class="progress sm" title="{{ item.fundingDeadlinePercent }}">
-                                <div class="progress-bar progress-bar-red" [ngStyle]="{'width': item.fundingDeadlinePercent }"></div>
-                            </div>
-                        </div>
+                    <div class="col-md-2 projectCountdown">
+                        <span>J  -  {{ item.remainingDays }}</span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="progress-group">
                             <span class="progress-text" i18n="@@projectPeopleNeededDetailedLabel">People needed</span>
                             <span class="progress-number"><b>{{ item.peopleGivingTime.length }}</b> /
@@ -43,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <div class="progress-group" title="{{ item.donationsRequiredPercent }}">
                             <span class="progress-text" i18n="@@projectMoneyNeeded">Money needed</span>
                             <span class="progress-number"><b>{{ item.totalDonations.toFixed(2) }} €</b>/

@@ -47,6 +47,8 @@ export class ProjectsComponent implements OnInit {
     this.pagedItems = this.rawResponse.content;
     var that = this;
     this.pagedItems.forEach(function (value) {
+      var remainingTime = Math.abs(new Date(value.fundingDeadline).getTime() - new Date().getTime());
+      value.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
       value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
       value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
       value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";

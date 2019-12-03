@@ -26,8 +26,8 @@
                         <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
                         <span *ngIf="project.status == 'READY'" class="badge bg-green" i18n="@@projectStatusReady">Ready</span>
                     </dd>
-                    <dt i18n="@@projectFundingDeadlineProgress">Remaining days</dt>
-                    <dd>{{ project.remainingDays }}</dd>
+                    <dt i18n="@@projectFundingDeadlineProgress" *ngIf="project.status == 'IN_PROGRESS'">Remaining days</dt>
+                    <dd *ngIf="project.status == 'IN_PROGRESS'">{{ project.remainingDays }}</dd>
                     <dt i18n="@@projectPeopleNeededProgress">People needed</dt>
                     <dd>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</dd>
                     <dt i18n="@@projectMoneyNeededProgress">Budget</dt>
