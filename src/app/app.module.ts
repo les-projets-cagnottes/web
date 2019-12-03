@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgSelect2Module } from 'ng-select2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import { ManagerComponent } from './valyou/manager/manager.component';
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule,
+    NgSelect2Module,
     MarkdownModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule.forRoot([])

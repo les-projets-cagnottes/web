@@ -10,10 +10,11 @@ export class ProjectService {
   
   constructor(private http: HttpClient) { }
 
-  getAll(offset, limit) {
+  getAll(offset, limit, filter) {
     const params = new HttpParams()
       .set('offset', offset)
-      .set('limit', limit);
+      .set('limit', limit)
+      .set('filter', filter);
     return this.http.get<Project[]>(`${environment.apiUrl}/project`, { params });
   }
 

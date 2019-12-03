@@ -54,13 +54,17 @@
 .skin-christmas .nav-tabs-custom>.tab-content,
 .skin-christmas .nav-tabs-custom>.nav-tabs>li.active>a,
 .skin-christmas .nav-tabs-custom>.nav-tabs>li.active:hover>a,
-.skin-christmas .CodeMirror {
+.skin-christmas .CodeMirror,
+.skin-christmas .select2-selection,
+.skin-christmas .select2-results__option,
+.skin-christmas .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #252850;
 }
 
 .skin-christmas .main-header .logo:hover,
 .skin-christmas .sidebar-menu>li:hover>a,
-.skin-christmas .sidebar-menu>li.active>a {
+.skin-christmas .sidebar-menu>li.active>a,
+.skin-christmas .select2-container--default .select2-results__option--highlighted[aria-selected] {
     color: #252850;
 }
 
@@ -113,7 +117,8 @@
 .skin-christmas .pagination>.active>span:hover,
 .skin-christmas .btn-default.focus,
 .skin-christmas .btn-default:hover,
-.skin-christmas .form-control:focus {
+.skin-christmas .form-control:focus,
+.skin-christmas .select2-selection {
     border-color: #fcef62;
 }
 
@@ -129,8 +134,9 @@
 .skin-christmas .pagination>.active>span:focus,
 .skin-christmas .pagination>.active>span:hover,
 .skin-christmas .btn-default.focus,
-.skin-christmas .btn-default:hover {
-    background: #fcef62;
+.skin-christmas .btn-default:hover,
+.skin-christmas .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #fcef62;
 }
 
 .form-control[disabled],
@@ -200,7 +206,8 @@ app-*>div {
     margin-bottom: 15px;
 }
 
-.action-bar .btn {
+.action-bar .btn,
+.action-bar label {
     margin-right: 15px;
 }
 

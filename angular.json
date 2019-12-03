@@ -90,6 +90,7 @@
                         ],
                         "styles": [
                             "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
+                            "node_modules/select2/dist/css/select2.min.css",
                             "src/styles-christmas.css"
                         ],
                         "scripts": [
@@ -98,6 +99,7 @@
                             "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
                             "node_modules/marked/lib/marked.js",
                             "src/assets/plugins/simplemde/simplemde.start.js",
+                            "node_modules/select2/dist/js/select2.min.js",
                             "src/assets/snow.js"
                         ]
                     },

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Select2OptionData, Options } from 'select2';
+
 import { ProjectService } from 'src/app/_services/project.service';
 import { PagerService } from 'src/app/_services';
 import { Project } from 'src/app/_models';
@@ -24,13 +26,35 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService
   ) { }
 
+  public statusSelectionData: Array<Select2OptionData>;
+  public statusSelectionOptions: Options;
+  public statusSelectionValue: string[] = ['IN_PROGRESS'];
+
   ngOnInit() {
     this.refresh();
+    this.statusSelectionData = [
+      {
+        id: 'IN_PROGRESS',
+        text: 'En cours'
+      },
+      {
+        id: 'READY',
+        text: 'Prêt'
+      },
+      {
+        id: 'AVORTED',
+        text: 'Abandonné'
+      }
+    ];
+    this.statusSelectionOptions = {
+      multiple: true,
+      closeOnSelect: false
+    };
   }
 
   refresh(page: number = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
-      this.projectService.getAll(page - 1, this.pageSize)
+      this.projectService.getAll(page - 1, this.pageSize, this.statusSelectionValue)
         .subscribe(response => {
           this.rawResponse = response;
           this.setPage(page);
@@ -71,4 +95,7 @@ export class ProjectsComponent implements OnInit {
     return 100 * number / max;
   }
 
+  onStatusSelectionChange() {
+  }
+  
 }
