@@ -1,22 +1,17 @@
 <div class="row action-bar">
-    <div class="col-xs-6">
-        <button type="button" class="btn btn-flat btn-default"
-            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
-            (click)="refresh()"><i class="fa fa-refresh"></i> <span i18n="@@refresh">Refresh</span>
-        </button>
-        <label for="statusSelection" i18n="@@projectStatus">Status : </label>
-        <ng-select2
-            id="statusSelection"
-            [data]="statusSelectionData"
-            [width]="300"
-            [(ngModel)]="statusSelectionValue"
-            (valueChanged)="onStatusSelectionChange()"
-            [options]="statusSelectionOptions"></ng-select2>
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()">
+                    <i class="fa fa-refresh"></i>
+                    <span i18n="@@refresh">Refresh</span>
+                </button>
+            <label for="statusSelection" i18n="@@projectStatus">Status : </label>
+            <ng-select2 id="statusSelection" [data]="statusSelectionData" [width]="300" [(ngModel)]="statusSelectionValue" (valueChanged)="onStatusSelectionChange()" [options]="statusSelectionOptions"></ng-select2>
+        </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-md-6">
         <div class="dataTables_length text-right"><label for="pageSize" i18n="@@nbEntries">Nb
-                entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm"
-                [(ngModel)]="pageSize" (ngModelChange)="refresh()">
+                entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                 <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -36,10 +31,8 @@
                     <div class="col-md-1 projectCountdown">
                         <span *ngIf="item.status === 'IN_PROGRESS'" class="badge bg-yellow">J -
                             {{ item.remainingDays }}</span>
-                        <span *ngIf="item.status === 'AVORTED'" class="badge bg-grey"
-                            i18n="@@projectStatusAvorted">Avorted</span>
-                        <span *ngIf="item.status === 'READY'" class="badge bg-green"
-                            i18n="@@projectStatusReady">Ready</span>
+                        <span *ngIf="item.status === 'AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
+                        <span *ngIf="item.status === 'READY'" class="badge bg-green" i18n="@@projectStatusReady">Ready</span>
                     </div>
                     <div class="col-md-5">
                         <div class="progress-group">
@@ -49,8 +42,7 @@
                                 {{ item.peopleRequired }}</span>
 
                             <div class="progress sm" title="{{ item.peopleRequiredPercent }}">
-                                <div class="progress-bar progress-bar-aqua"
-                                    [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
+                                <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
                             </div>
                         </div>
                     </div>
@@ -61,8 +53,7 @@
                                 {{ item.donationsRequired.toFixed(2) }} €</span>
 
                             <div class="progress sm">
-                                <div class="progress-bar progress-bar-green"
-                                    [ngStyle]="{'width': item.donationsRequiredPercent }"></div>
+                                <div class="progress-bar progress-bar-green" [ngStyle]="{'width': item.donationsRequiredPercent }"></div>
                             </div>
                         </div>
                     </div>
@@ -77,8 +68,7 @@
     <div class="col-sm-5 dataTables_info_container">
         <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite">
             <span i18n="@@paginationStart">Showing </span>{{ pager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
-            </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pager.totalItems }}<span
-                i18n="@@paginationEntries"> entries</span></div>
+            </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
     </div>
     <div class="col-sm-7">
         <div class="dataTables_paginate paging_simple_numbers text-right">
@@ -89,8 +79,7 @@
                 <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
                     <a (click)="refresh(pager.currentPage - 1)">&#8249;</a>
                 </li>
-                <li class="paginate_button" *ngFor="let page of pager.pages"
-                    [ngClass]="{active:pager.currentPage === page}">
+                <li class="paginate_button" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
                     <a (click)="refresh(page)">{{page}}</a>
                 </li>
                 <li class="paginate_button next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">

@@ -2,31 +2,31 @@
     <div class="col-md-8">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Members</h3>
+                <h3 class="box-title" i18n="@@organizationMembers">Members</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Actions</th>
+                            <th i18n="@@userAvatar"></th>
+                            <th i18n="@@userFullname">Name</th>
+                            <th i18n="@@userEmail">Email</th>
+                            <th i18n="@@actions">Actions</th>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td>
                                 <form [formGroup]="addMemberOrgForm">
-                                    <div class="form-group has-feedback">
-                                        <input type="email" class="form-control" formControlName="email" placeholder="Enter user email" />
+                                    <div class="has-feedback">
+                                        <input type="email" class="form-control" formControlName="email" i18n-placeholder="@@userEmail" />
                                     </div>
                                 </form>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
-                                    Add</button>
+                                    <span i18n="@@actionAdd">Add</span></button>
                             </td>
                         </tr>
                         <tr *ngFor="let user of pagedItemsMembers">
@@ -35,7 +35,7 @@
                             <td>{{ user.email }}</td>
                             <td>
                                 <button type="button" class="btn btn-default btn-flat" (click)="onRemoveMember(user)"><i
-                                        class="fa fa-trash"></i> Remove</button></td>
+                                        class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -44,7 +44,10 @@
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pagerMembers.startIndex + 1 }} to {{ pagerMembers.endIndex + 1 }} of {{ pagerMembers.totalItems }} entries</div>
+                        <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info" role="status" aria-live="polite">
+                            <span i18n="@@paginationStart">Showing </span>{{ pagerMembers.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+                                </span>{{ pagerMembers.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pagerMembers.totalItems }}<span i18n="@@paginationEntries"> entries</span>
+                        </div>
                     </div>
                     <div class="col-md-7">
                         <ul *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="pagination pagination-sm no-margin pull-right">
@@ -73,18 +76,18 @@
         <div class="row">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Informations</h3>
+                    <h3 class="box-title" i18n="@@Informations">Informations</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form [formGroup]="editOrgForm">
                     <div class="box-body">
                         <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
-                            <label for="name">Name</label>
+                            <label for="name" i18n="@@organizationName">Name</label>
                             <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
                         </div>
                         <div class="form-group action-bar">
-                            <label>Messenging Apps</label>
+                            <label i18n="@@messengingApps">Messenging Apps</label>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div>
@@ -93,9 +96,9 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <th>App</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
+                                                    <th i18n="@@messengingApp">App</th>
+                                                    <th i18n="@@messengingAppStatus">Status</th>
+                                                    <th i18n="@@actions">Actions</th>
                                                 </tr>
                                                 <tr>
                                                     <td>Slack</td>
@@ -121,16 +124,16 @@
                         </div>
                     </div>
                     <div class="box-footer" style="text-align: center">
-                        <button type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }" (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> Submit</button>
+                        <button type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error', 'btn-primary': submitStatus == 'idle' }" (click)="onSubmit()" [disabled]="submitting"><i class="fa fa-floppy-o"></i> <span i18n="@@save">Save</span></button>
                     </div>
                 </form>
             </div>
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Documents</h3>
+                    <h3 class="box-title" i18n="@@organizationContents">Documents</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" (click)="openContentModal(template, 0)"><i
-                                class="fa fa-plus"></i> Add
+                                class="fa fa-plus"></i> <span i18n="@@actionAdd">Add</span>
                         </button>
                     </div>
                 </div>
@@ -138,15 +141,15 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th>Name</th>
-                                <th>Action</th>
+                                <th i18n="@@contentName">Name</th>
+                                <th i18n="@@actions">Actions</th>
                             </tr>
                             <tr *ngFor="let content of pagedItemsContents">
                                 <td>{{ content.name }}</td>
                                 <td class="action-bar">
                                     <button type="button" class="btn btn-default btn-flat" (click)="openContentModal(template, content)"><i class="fa fa-pencil"></i>
-                                        Edit</button>
-                                    <button type="button" class="btn btn-default btn-flat" (click)="onRemoveContent(content)"><i class="fa fa-trash"></i> Remove</button>
+                                        <span i18n="@@actionEdit">Edit</span></button>
+                                    <button type="button" class="btn btn-default btn-flat" (click)="onRemoveContent(content)"><i class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -155,24 +158,27 @@
                 <div class="box-footer">
                     <div class="row">
                         <div class="col-sm-5 dataTables_info_container">
-                            <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info" role="status" aria-live="polite">Showing {{ pagerContents.startIndex + 1 }} to {{ pagerContents.endIndex + 1 }} of {{ pagerContents.totalItems }} entries</div>
+                            <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info" role="status" aria-live="polite">
+                                <span i18n="@@paginationStart">Showing </span>{{ pagerContents.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+                                        </span>{{ pagerContents.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pagerContents.totalItems }}<span i18n="@@paginationEntries"> entries</span>
+                            </div>
                         </div>
                         <div class="col-md-7">
                             <ul *ngIf="pagerContents.pages && pagerContents.pages.length" class="pagination pagination-sm no-margin pull-right">
                                 <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
-                                    <a (click)="refreshContents(1)">First</a>
+                                    <a (click)="refreshContents(1)">&#171;</a>
                                 </li>
                                 <li [ngClass]="{disabled:pagerContents.currentPage === 1}">
-                                    <a (click)="refreshContents(pagerContents.currentPage - 1)">Previous</a>
+                                    <a (click)="refreshContents(pagerContents.currentPage - 1)">&#8249;</a>
                                 </li>
                                 <li *ngFor="let page of pagerContents.pages" [ngClass]="{active:pagerContents.currentPage === page}">
                                     <a (click)="refreshContents(page)">{{page}}</a>
                                 </li>
                                 <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
-                                    <a (click)="refreshContents(pagerContents.currentPage + 1)">Next</a>
+                                    <a (click)="refreshContents(pagerContents.currentPage + 1)">&#8250;</a>
                                 </li>
                                 <li [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
-                                    <a (click)="refreshContents(pagerContents.totalPages)">Last</a>
+                                    <a (click)="refreshContents(pagerContents.totalPages)">&#187;</a>
                                 </li>
                             </ul>
                         </div>
@@ -181,7 +187,7 @@
             </div>
             <ng-template #template>
                 <div class="modal-header">
-                    <h4 class="modal-title pull-left">Edit content</h4>
+                    <h4 class="modal-title pull-left" i18n="@@contentEdit">Edit content</h4>
                     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -189,17 +195,17 @@
                 <div class="modal-body">
                     <form [formGroup]="contentForm">
                         <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.name.errors }">
-                            <label for="name">Name</label>
+                            <label for="name" i18n="@@contentName">Name</label>
                             <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter content name">
                         </div>
                         <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
-                            <label for="value">Content</label>
+                            <label for="value" i18n="@@contentValue">Content</label>
                             <textarea id="value" formControlName="value" class="form-control" rows="3" placeholder="Put your content here"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary btn-flat" (click)="onSubmitContent()">Submit</button>
+                    <button class="btn btn-default btn-flat" (click)="onSubmitContent()" i18n="@@save">Save</button>
                 </div>
             </ng-template>
         </div>
