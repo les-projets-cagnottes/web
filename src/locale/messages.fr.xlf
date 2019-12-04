@@ -3,11 +3,17 @@
   xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="actionAdd" datatype="html">
+        <target>Ajouter</target>
+      </trans-unit>
       <trans-unit id="actionClose" datatype="html">
         <target>Fermer</target>
       </trans-unit>
       <trans-unit id="actionDelete" datatype="html">
         <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="actionDistribute" datatype="html">
+        <target>Distribuer</target>
       </trans-unit>
       <trans-unit id="actionGenerate" datatype="html">
         <target>Générer</target>
@@ -30,6 +36,9 @@
       <trans-unit id="budget" datatype="html">
         <target>Budget</target>
       </trans-unit>
+      <trans-unit id="budgetAmountPerMember" datatype="html">
+        <target>Montant par member</target>
+      </trans-unit>
       <trans-unit id="budgetName" datatype="html">
         <target>Budget</target>
       </trans-unit>
@@ -38,6 +47,15 @@
       </trans-unit>
       <trans-unit id="budgetRemainingEnd" datatype="html">
         <target> pour financer d'autres projets.</target>
+      </trans-unit>
+      <trans-unit id="budgetEndDate" datatype="html">
+        <target>Date de fin</target>
+      </trans-unit>
+      <trans-unit id="budgetStartDate" datatype="html">
+        <target>Date de début</target>
+      </trans-unit>
+      <trans-unit id="budgetTermsOfUse" datatype="html">
+        <target>Règles d'utilisation</target>
       </trans-unit>
       <trans-unit id="budgetUsage" datatype="html">
         <target>Utilisation</target>
