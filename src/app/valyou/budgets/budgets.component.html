@@ -1,30 +1,30 @@
 <div class="row action-bar">
     <div class="col-xs-6">
         <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fa fa-refresh"></i>
-            Refresh</button>
+            <span i18n="@@refresh">Refresh</span></button>
         <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': saveStatus == 'success', 'btn-danger': saveStatus == 'error' }" (click)="save()"><i class="fa fa-floppy-o"></i>
-            Save</button>
+            <span i18n="@@save">Save</span></button>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <div class="box" *ngFor="let organization of organizations; let i = index">
             <div class="box-header">
-                <h3 class="box-title">Budgets of {{ organization.name }}</h3>
+                <h3 class="box-title"><span i18n="@@organization">Organization</span> : {{ organization.name }}</h3>
                 <button type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error' }" (click)="add(organization.id)" style="margin-left: 15px"><i class="fa fa-plus"></i>
-                    Add</button>
+                    <span i18n="@@actionAdd">Add</span></button>
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th style="width: 15%">Name</th>
-                            <th style="width: 10%">Amount by person</th>
-                            <th style="width: 8%">Start Date</th>
-                            <th style="width: 8%">End Date</th>
-                            <th>Usage</th>
-                            <th style="width: 10%">Terms of Use</th>
-                            <th style="width: 15%">Actions</th>
+                            <th style="width: 15%" i18n="@@budgetName">Name</th>
+                            <th style="width: 10%" i18n="@@budgetAmountPerMember">Amount Per Member</th>
+                            <th style="width: 8%" i18n="@@budgetStartDate">Start Date</th>
+                            <th style="width: 8%" i18n="@@budgetEndDate">End Date</th>
+                            <th i18n="@@budgetUsage">Usage</th>
+                            <th style="width: 10%" i18n="@@budgetTermsOfUse">Terms of Use</th>
+                            <th style="width: 15%" i18n="@@actions">Actions</th>
                         </tr>
                         <tr *ngFor="let budget of mainForms[i].controls.budgets['controls']; let j = index" [formGroup]="budget">
                             <td><input class="form-control" type="text" formControlName="name" /></td>
@@ -53,9 +53,9 @@
                             </td>
                             <td class="action-bar">
                                 <button *ngIf="!organizations[i].budgets[j].isDistributed" type="button" class="btn btn-default" [ngClass]="{ 'btn-success': distributeStatus[i][j] == 'success', 'btn-danger': distributeStatus[i][j] == 'error' }" (click)="distribute(organizations[i].budgets[j].id, i, j)"><i class="fa fa-paper-plane"></i>
-                                Distribute</button>
+                                    <span i18n="@@actionDistribute">Distribute</span></button>
                                 <button type="button" class="btn btn-default" [ngClass]="{ 'btn-danger': deleteStatus[i][j] == 'error' }" (click)="delete(organizations[i].budgets[j].id, i, j)"><i class="fa fa-trash"></i>
-                                Delete</button></td>
+                                    <span i18n="@@actionDelete">Delete</span></button></td>
                         </tr>
                     </tbody>
                 </table>
