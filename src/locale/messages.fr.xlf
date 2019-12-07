@@ -36,6 +36,9 @@
       <trans-unit id="administrationMenu" datatype="html">
         <target>ADMINISTRATION</target>
       </trans-unit>
+      <trans-unit id="aLotOfPeople" datatype="html">
+        <target>plein de gens </target>
+      </trans-unit>
       <trans-unit id="budget" datatype="html">
         <target>Budget</target>
       </trans-unit>
@@ -125,6 +128,9 @@
       </trans-unit>
       <trans-unit id="managerMenu" datatype="html">
         <target>Configuration</target>
+      </trans-unit>
+      <trans-unit id="madePossibleBy" datatype="html">
+        <target>Rendu possible par </target>
       </trans-unit>
       <trans-unit id="memberSince" datatype="html">
         <target>Inscrit depuis le </target>

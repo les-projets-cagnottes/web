@@ -114,6 +114,20 @@
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="madePossibleBy" datatype="html">
+        <source>Made possible by </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="aLotOfPeople" datatype="html">
+        <source>a lot of people</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/valyou.component.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="signInBoxHeader" datatype="html">
         <source>Sign in to start your session
         </source>
@@ -139,6 +153,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
           <context context-type="linenumber">124</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
+          <context context-type="linenumber">125</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
@@ -348,7 +366,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="actions" datatype="html">
@@ -580,11 +598,26 @@
           <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="userPasswordUpdatePlaceholder" datatype="html">
+        <source>Password - Keep empty to leave it unchanged</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="userFirstname" datatype="html">
         <source>Firstname</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
           <context context-type="linenumber">133</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
+          <context context-type="linenumber">134</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
@@ -602,6 +635,10 @@
           <context context-type="linenumber">137</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
           <context context-type="linenumber">132</context>
         </context-group>
@@ -615,6 +652,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
           <context context-type="linenumber">141</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/users/users.component.html</context>
+          <context context-type="linenumber">142</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
@@ -837,6 +878,10 @@
           <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
           <context context-type="linenumber">52</context>
         </context-group>
@@ -851,6 +896,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
           <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/projects/new-project/new-project.component.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/report/report.component.html</context>
@@ -1237,13 +1286,6 @@
           <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="userPasswordUpdatePlaceholder" datatype="html">
-        <source>Password - Keep empty to leave it unchanged</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="actionSubmit" datatype="html">
         <source>Submit</source>
         <context-group purpose="location">
@@ -1312,6 +1354,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/documentation/getting-started/getting-started.component.html</context>
           <context context-type="linenumber">64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/about/about.component.html</context>
+          <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="actionValidateProjects" datatype="html">
