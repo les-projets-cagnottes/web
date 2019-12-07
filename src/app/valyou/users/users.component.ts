@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, PagerService } from 'src/app/_services';
-import { User } from 'src/app/_models';
+import { User, Organization, SlackUser } from 'src/app/_models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-users',
@@ -18,6 +19,10 @@ export class UsersComponent implements OnInit {
   submitting: boolean;
   refreshStatus: string = "no-refresh";
 
+  // Modal
+  modalRef: BsModalRef;
+
+  // Pagination
   private rawResponse: any;
   pager: any = {};
   pagedItems: any[];
@@ -26,7 +31,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private modalService: BsModalService) { }
 
   ngOnInit() {
     this.editUserForm = this.formBuilder.group({
@@ -57,7 +63,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  openModalCreateUser(): void {
+  openModalCreateUser(template): void {
     this.userEdited = new User();
     this.editUserModalLabel = "New User";
     this.f.email.setValue("");
@@ -66,16 +72,18 @@ export class UsersComponent implements OnInit {
     this.f.avatarUrl.setValue("");
     this.f.color.setValue("");
     this.f.isActivated.setValue(false);
+    this.modalRef = this.modalService.show(template);
   }
 
-  openModalEditUser(user: User): void {
+  openModalEditUser(template, user: User): void {
     this.editUserModalLabel = user.firstname + " " + user.lastname;
     this.userEdited = user;
     this.f.email.setValue(user.email);
     this.f.firstname.setValue(user.firstname);
     this.f.lastname.setValue(user.lastname);
     this.f.avatarUrl.setValue(user.avatarUrl);
-    this.f.isActivated.setValue(user.isActivated);
+    this.f.isActivated.setValue(user.enabled);
+    this.modalRef = this.modalService.show(template);
   }
 
   delete(user: User): void {
@@ -114,7 +122,19 @@ export class UsersComponent implements OnInit {
     this.userEdited.firstname = this.f.firstname.value;
     this.userEdited.lastname = this.f.lastname.value;
     this.userEdited.avatarUrl = this.f.avatarUrl.value;
-    this.userEdited.isActivated = this.f.isActivated.value;
+    this.userEdited.enabled = this.f.isActivated.value;
+
+    var organizations = [];
+    this.userEdited.organizations.forEach (organization => {
+      var org = new Organization();
+      org.id = organization.id;
+      organizations.push(org);
+    });
+    this.userEdited.organizations = organizations;
+
+    var slackUser = new SlackUser();
+    slackUser.id = this.userEdited.slackUser.id;
+    this.userEdited.slackUser = slackUser;
 
     if (this.userEdited.id === undefined) {
       this.userEdited.password = this.f.password.value;
@@ -122,8 +142,9 @@ export class UsersComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => {
-            this.refresh();
             this.submitting = false;
+            this.modalRef.hide();
+            this.refresh(this.pager.currentPage);
           },
           error => {
             console.log(error);
@@ -137,8 +158,9 @@ export class UsersComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => {
-            this.refresh();
             this.submitting = false;
+            this.modalRef.hide();
+            this.refresh(this.pager.currentPage);
           },
           error => {
             console.log(error);

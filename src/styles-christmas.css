@@ -57,6 +57,8 @@
 .skin-christmas .CodeMirror,
 .skin-christmas .select2-selection,
 .skin-christmas .select2-results__option,
+.skin-christmas .paginate_button a,
+.skin-christmas .pagination li a,
 .skin-christmas .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #252850;
 }
@@ -64,12 +66,15 @@
 .skin-christmas .main-header .logo:hover,
 .skin-christmas .sidebar-menu>li:hover>a,
 .skin-christmas .sidebar-menu>li.active>a,
+.skin-christmas .paginate_button.active a,
+.skin-christmas .pagination .active a,
 .skin-christmas .select2-container--default .select2-results__option--highlighted[aria-selected] {
     color: #252850;
 }
 
 .skin-christmas .btn-border,
-.skin-christmas .select-border {
+.skin-christmas .select-border,
+.skin-christmas .btn-default {
     border-color: #e2e2e2;
 }
 
@@ -92,6 +97,11 @@
     color: #e2e2e2;
 }
 
+.skin-christmas .pagination .disabled a,
+.skin-christmas .paginate_button.disabled a {
+    color: #6d6d6d;
+}
+
 .skin-christmas .table>thead>tr>th,
 .skin-christmas .table>tbody>tr>th,
 .skin-christmas .table>tfoot>tr>th,
@@ -104,7 +114,9 @@
 
 .skin-christmas .item-clickable,
 .skin-christmas .main-header .logo,
-.skin-christmas .sidebar-menu>li.header {
+.skin-christmas .sidebar-menu>li.header,
+.skin-christmas .pagination li a,
+.skin-christmas .paginate_button a {
     color: #fcef62;
 }
 

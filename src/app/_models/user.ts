@@ -1,6 +1,7 @@
 ﻿import { Authority } from './authority';
 import { Organization } from './organization';
 import { ApiToken } from './apitoken';
+import { SlackUser } from './slackUser';
 
 export class User {
     id: number;
@@ -11,12 +12,13 @@ export class User {
     firstname: string;
     lastname: string;
     avatarUrl: string;
-    isActivated: boolean;
+    enabled: boolean;
     token: string;
     userAuthorities: Authority[];
     organizations: Organization[];
     apitokens: ApiToken[];
     totalBudgetDonations: number;
+    slackUser: SlackUser;
 
     // Only in Valyou-Web
     budgetUsage: string;
@@ -30,7 +32,7 @@ export class User {
         this.firstname = user.firstname;
         this.lastname = user.lastname;
         this.avatarUrl = user.avatarUrl;
-        this.isActivated = user.isActivated;
+        this.enabled = user.enabled;
         this.token = user.token;
         this.userAuthorities = user.userAuthorities;
         this.organizations = user.organizations;

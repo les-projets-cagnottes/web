@@ -31,16 +31,16 @@
 
                             <p>
                                 {{ currentUser.firstname }} {{ currentUser.lastname }}
-                                <small>Member since {{ currentUser.createdAt | date:'LLL y' }}</small>
+                                <small><span i18n="@@memberSince">Member since</span> {{ currentUser.createdAt | date:'LLL y' }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a class="btn btn-default btn-flat" routerLink="/profile">Profile</a>
+                                <a class="btn btn-default btn-flat" routerLink="/profile" i18n="@@profile">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a class="btn btn-default btn-flat" (click)="logout()">Sign out</a>
+                                <a class="btn btn-default btn-flat" (click)="logout()" i18n="@@logout">Sign out</a>
                             </div>
                         </li>
                     </ul>
