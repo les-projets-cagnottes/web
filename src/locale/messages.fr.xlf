@@ -3,6 +3,9 @@
   xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="about" datatype="html">
+        <target>A propos</target>
+      </trans-unit>
       <trans-unit id="actionAdd" datatype="html">
         <target>Ajouter</target>
       </trans-unit>
