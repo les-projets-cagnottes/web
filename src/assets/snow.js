@@ -114,5 +114,7 @@ function moveSnow() {
     setTimeout("moveSnow()", snowRefresh);
 }
 
-window.onresize = resize;
-window.onload = stop;
+if(Math.random() > 0.8) {
+    window.onresize = resize;
+    window.onload = stop;
+}
