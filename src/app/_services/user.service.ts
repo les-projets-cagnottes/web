@@ -39,6 +39,10 @@ export class UserService {
         return this.http.put(`${environment.apiUrl}/user/${user.id}`, user);
     }
 
+    updateProfile(user: User) {
+        return this.http.put(`${environment.apiUrl}/user/profile`, user);
+    }
+
     delete(id: number) {
         return this.http.delete(`${environment.apiUrl}/user/${id}`);
     }

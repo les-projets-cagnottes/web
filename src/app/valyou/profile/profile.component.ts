@@ -174,7 +174,7 @@ export class ProfileComponent implements OnInit {
       user.password = this.editUserForm.controls['password'].value;
     }
 
-    this.userService.update(user)
+    this.userService.updateProfile(user)
       .subscribe(
         () => {
           this.submitting = false;
