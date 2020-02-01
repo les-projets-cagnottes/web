@@ -29,10 +29,10 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-1 projectCountdown">
-                        <span *ngIf="item.status === 'IN_PROGRESS'" class="badge bg-yellow">J -
+                        <span *ngIf="item.status === 'A_IN_PROGRESS'" class="badge bg-yellow">J -
                             {{ item.remainingDays }}</span>
-                        <span *ngIf="item.status === 'AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
-                        <span *ngIf="item.status === 'READY'" class="badge bg-green" i18n="@@projectStatusReady">Ready</span>
+                        <span *ngIf="item.status === 'C_AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
+                        <span *ngIf="item.status === 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">B_READY</span>
                     </div>
                     <div class="col-md-5">
                         <div class="progress-group">

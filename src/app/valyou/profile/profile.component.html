@@ -73,9 +73,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
-                                    <span *ngIf="project.status == 'AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
-                                    <span *ngIf="project.status == 'READY'" class="badge bg-green" i18n="@@projectStatusReady">Ready</span>
+                                    <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
+                                    <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
+                                    <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">B_READY</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -99,7 +99,7 @@
                                 <td><a [routerLink]="['/projects/', donation.project.id]">{{ donation.project.title }}</a>
                                 </td>
                                 <td>{{ donation.amount }} €</td>
-                                <td><button *ngIf="donation.project.status == 'IN_PROGRESS'" type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-danger': deleteDonationsStatus[donation.id] == 'error' }" (click)="deleteDonations(donation)"><i class="fa fa-trash"></i>
+                                <td><button *ngIf="donation.project.status == 'A_IN_PROGRESS'" type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-danger': deleteDonationsStatus[donation.id] == 'error' }" (click)="deleteDonations(donation)"><i class="fa fa-trash"></i>
                                         <span i18n="@@actionDelete">Delete</span></button></td>
                             </tr>
                         </tbody>

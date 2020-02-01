@@ -4,7 +4,7 @@ export class Project {
     id: number;
     createdAt: Date;
     title: string = '';
-    status: string = 'IN_PROGRESS';
+    status: string = 'A_IN_PROGRESS';
     shortDescription: string = '';
     longDescription: string = '';
     donationsRequired: number = 0.00;

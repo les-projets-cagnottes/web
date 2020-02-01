@@ -30,7 +30,7 @@ export class NewProjectComponent implements OnInit {
     shortDescription: ['', [Validators.required, Validators.maxLength(255)]],
     fundingDeadline: [''],
     donationsRequired: [0, Validators.required],
-    peopleRequired: [2, Validators.required],
+    peopleRequired: [2, [Validators.required, Validators.min(2)]],
     rulesCompliant: [false, Validators.pattern("true")]
   });
   submitting: boolean;
@@ -122,6 +122,9 @@ export class NewProjectComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    if(this.form.controls['fundingDeadline'].value.getTime() > this.nowPlus3Months.getTime() ) {
+      return;
+    }
 
     // Set submitting state as true
     this.submitting = true;
@@ -158,11 +161,7 @@ export class NewProjectComponent implements OnInit {
             this.submitting = false;
           });
     } else {
-      if(this.form.controls['fundingDeadline'].value == "NaN-aN-aN") {
-        this.project.fundingDeadline = this.fundingDeadlineValue;
-      } else {
-        this.project.fundingDeadline = this.form.controls['fundingDeadline'].value;
-      }
+      this.project.fundingDeadline = this.getFundingDeadlineValue()
       this.projectService.create(this.project)
         .subscribe(
           response => {
@@ -180,6 +179,14 @@ export class NewProjectComponent implements OnInit {
   dateToString(date: Date) {
     var date = new Date(date);
     return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+  }
+
+  getFundingDeadlineValue() {
+    if(this.form.controls['fundingDeadline'].value == "NaN-aN-aN") {
+      return new Date(this.fundingDeadlineValue);
+    } else {
+      return new Date(this.form.controls['fundingDeadline'].value);
+    }
   }
 
 }

@@ -28,21 +28,21 @@ export class ProjectsComponent implements OnInit {
 
   public statusSelectionData: Array<Select2OptionData>;
   public statusSelectionOptions: Options;
-  public statusSelectionValue: string[] = ['IN_PROGRESS'];
+  public statusSelectionValue: string[] = ['A_IN_PROGRESS', 'B_READY', 'C_AVORTED'];
 
   ngOnInit() {
     this.refresh();
     this.statusSelectionData = [
       {
-        id: 'IN_PROGRESS',
+        id: 'A_IN_PROGRESS',
         text: 'En cours'
       },
       {
-        id: 'READY',
+        id: 'B_READY',
         text: 'Prêt'
       },
       {
-        id: 'AVORTED',
+        id: 'C_AVORTED',
         text: 'Abandonné'
       }
     ];
