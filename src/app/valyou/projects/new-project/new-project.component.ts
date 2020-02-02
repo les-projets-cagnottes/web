@@ -122,7 +122,7 @@ export class NewProjectComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    if(this.form.controls['fundingDeadline'].value.getTime() > this.nowPlus3Months.getTime() ) {
+    if(this.getFundingDeadlineValue().getTime() > this.nowPlus3Months.getTime() ) {
       return;
     }
 
