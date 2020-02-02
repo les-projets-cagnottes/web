@@ -16,7 +16,7 @@ declare function startSimpleMDE(): any;
 export class NewProjectComponent implements OnInit {
 
   // Data
-  private id: number = 0;
+  id: number = 0;
   private project: Project = new Project();
   organizations: Organization[] = [];
   budgets: Budget[] = [];
@@ -122,7 +122,7 @@ export class NewProjectComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    if(this.getFundingDeadlineValue().getTime() > this.nowPlus3Months.getTime() ) {
+    if(this.id == 0 && this.getFundingDeadlineValue().getTime() > this.nowPlus3Months.getTime() ) {
       return;
     }
 
