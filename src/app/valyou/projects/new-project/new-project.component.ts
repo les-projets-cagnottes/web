@@ -129,6 +129,9 @@ export class NewProjectComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
+    // Not necessary to send peopleGivingTime for edition of project
+    this.project.peopleGivingTime = [];
+
     // Get data from form
     var selectedOrganization: any = {};
     selectedOrganization.id = this.organizations[this.f.organization.value].id;
@@ -146,6 +149,7 @@ export class NewProjectComponent implements OnInit {
     
     this.project.leader = new User();
     this.project.leader.id = this.authenticationService.currentUserValue.id;
+
 
     // Submit item to backend
     if (this.id > 0) {
