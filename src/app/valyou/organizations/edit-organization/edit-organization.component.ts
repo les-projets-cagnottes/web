@@ -58,10 +58,14 @@ export class EditOrganizationComponent implements OnInit {
 
   // Slack oauth
   slackSyncStatus: string = 'idle';
+  slackDisconnectStatus: string = 'idle';
   slackClientId: string;
   redirectUrlOAuth: string;
   code: string;
 
+  endPointEdit: string = '/organizations/edit/' + this.id;
+  slackEndPoint: string = '/organizations/edit/slack/' + this.id
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -73,23 +77,35 @@ export class EditOrganizationComponent implements OnInit {
     private modalService: BsModalService
   ) {
     this.route.params.subscribe(params => this.id = <number>params.id);
-    var endPointEdit = '/organizations/edit/' + this.id;
-    var slackEndPoint = '/organizations/edit/slack/' + this.id
+    this.ngOnInit();
+  }
+
+  setRedirectUrlOAuth(id: number) {
+    var endPointEdit = '/organizations/edit/' + id;
+    var slackEndPoint = '/organizations/edit/slack/' + id;
+    
     if (this.router.url.startsWith(endPointEdit)
       && !this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlOAuth = location.href.replace(endPointEdit, slackEndPoint);
     }
     if (this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
-      this.code = this.route.snapshot.queryParams['code'];
-      this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth)
-        .subscribe(() => { });
     }
-    this.slackClientId = environment.slackClientId;
   }
 
   ngOnInit() {
     if (this.id > 0) {
+      this.setRedirectUrlOAuth(this.id);
+      var slackEndPoint = '/organizations/edit/slack/' + this.id;
+      if (this.router.url.startsWith(slackEndPoint)) {
+        this.code = this.route.snapshot.queryParams['code'];
+        this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth)
+          .subscribe(() => {
+            this.ngOnInit();
+          });
+      }
+      this.slackClientId = environment.slackClientId;
+
       this.organizationService.getById(this.id)
         .subscribe(
           organization => {
@@ -168,6 +184,7 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           () => {
             this.slackSyncStatus = 'success';
+            this.pagerMembers.currentPage = undefined;
             this.refreshMembers();
             setTimeout(() => {
               this.slackSyncStatus = 'idle';
@@ -178,6 +195,30 @@ export class EditOrganizationComponent implements OnInit {
             console.log(error);
             setTimeout(() => {
               this.slackSyncStatus = 'idle';
+            }, 2000);
+          });
+    }
+  }
+
+  onSlackDisconnect() {
+    this.slackDisconnectStatus = 'running';
+    if (this.id > 0 && this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
+      this.organizationService.slackDisconnect(this.id, this.organization.slackTeam.id)
+        .subscribe(
+          () => {
+            this.slackDisconnectStatus = 'success';
+            this.pagerMembers.currentPage = undefined;
+            this.refreshForm();
+            this.refreshMembers();
+            setTimeout(() => {
+              this.slackDisconnectStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            this.slackDisconnectStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.slackDisconnectStatus = 'idle';
             }, 2000);
           });
     }
@@ -307,9 +348,10 @@ export class EditOrganizationComponent implements OnInit {
     } else {
       this.organizationService.create(organization2save)
         .subscribe(
-          () => {
+          response => {
             this.submitting = false;
             this.submitStatus = 'success';
+            window.location.href = "/organizations/edit/" + response['id']
             setTimeout(() => {
               this.submitStatus = 'idle';
             }, 2000);

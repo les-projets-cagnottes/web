@@ -65,4 +65,8 @@ export class OrganizationService {
   slackSync(organizationId: number) {
     return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack/sync`, {});
   }
+
+  slackDisconnect(organizationId: number, slackTeamId: number) {
+    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/slack/${slackTeamId}`, {});
+  }
 }

@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-8">
-        <div class="box">
+        <div *ngIf="id > 0" class="box">
             <div class="box-header">
                 <h3 class="box-title" i18n="@@organizationMembers">Members</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body no-padding">
+            <div class="box-body no-padding box-solid">
                 <table class="table">
                     <tbody>
                         <tr>
@@ -39,6 +39,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div *ngIf="slackSyncStatus == 'running'" class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
@@ -86,7 +89,7 @@
                             <label for="name" i18n="@@organizationName">Name</label>
                             <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
                         </div>
-                        <div class="form-group action-bar">
+                        <div *ngIf="id > 0" class="form-group action-bar">
                             <label i18n="@@messengingApps">Messenging Apps</label>
                             <div class="row">
                                 <div class="col-md-12">
@@ -112,8 +115,11 @@
                                                                 <span i18n="@@addToSlack">Add to Slack</span></a>
                                                         </div>
                                                         <button *ngIf="organization.slackTeam !== null && organization.slackTeam !== undefined" type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': slackSyncStatus == 'success', 'btn-danger': slackSyncStatus == 'error', 'btn-default': slackSyncStatus == 'idle' }"
-                                                            (click)="onSlackSync()" [disabled]="slackSyncStatus == 'running'"><i
-                                                                class="fa fa-refresh"></i> Sync users</button>
+                                                            (click)="onSlackSync()" [disabled]="slackSyncStatus == 'running' || slackDisconnectStatus == 'running'"><i
+                                                                class="fa fa-refresh"></i> <span i18n="@@slackSyncAction">Sync users</span></button>
+                                                        <button *ngIf="organization.slackTeam !== null && organization.slackTeam !== undefined" type="submit" class="btn btn-flat" [ngClass]="{ 'btn-success': slackDisconnectStatus == 'success', 'btn-danger': slackDisconnectStatus == 'error', 'btn-default': slackDisconnectStatus == 'idle' }"
+                                                            (click)="onSlackDisconnect()" [disabled]="slackSyncStatus == 'running' || slackDisconnectStatus == 'running'"><i
+                                                                class="fa fa-remove"></i> <span i18n="@@slackDisconnectAction">Disconnect</span></button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -128,7 +134,7 @@
                     </div>
                 </form>
             </div>
-            <div class="box">
+            <div *ngIf="id > 0" class="box">
                 <div class="box-header">
                     <h3 class="box-title" i18n="@@organizationContents">Documents</h3>
                     <div class="box-tools pull-right">
