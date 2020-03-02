@@ -132,10 +132,12 @@ export class UsersComponent implements OnInit {
     });
     this.userEdited.organizations = organizations;
 
-    var slackUser = new SlackUser();
-    slackUser.id = this.userEdited.slackUser.id;
-    this.userEdited.slackUser = slackUser;
-
+    if(this.userEdited.slackUser != null) {
+      var slackUser = new SlackUser();
+      slackUser.id = this.userEdited.slackUser.id;
+      this.userEdited.slackUser = slackUser;  
+    }
+    
     if (this.userEdited.id === undefined) {
       this.userEdited.password = this.f.password.value;
       this.userService.create(this.userEdited)

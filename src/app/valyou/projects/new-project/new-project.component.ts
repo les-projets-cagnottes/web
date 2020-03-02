@@ -147,12 +147,12 @@ export class NewProjectComponent implements OnInit {
     this.project.peopleRequired = this.f.peopleRequired.value;
     this.project.longDescription = this.simplemde.value();
     
+    var leaderId = this.project.leader.id;
     this.project.leader = new User();
-    this.project.leader.id = this.authenticationService.currentUserValue.id;
-
 
     // Submit item to backend
     if (this.id > 0) {
+      this.project.leader.id = leaderId;
       this.project.donations = [];
       this.projectService.update(this.project)
         .subscribe(
@@ -165,6 +165,7 @@ export class NewProjectComponent implements OnInit {
             this.submitting = false;
           });
     } else {
+      this.project.leader.id = this.authenticationService.currentUserValue.id;
       this.project.fundingDeadline = this.getFundingDeadlineValue()
       this.projectService.create(this.project)
         .subscribe(
