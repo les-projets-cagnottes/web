@@ -303,6 +303,9 @@
       <trans-unit id="settings" datatype="html">
         <target>Mon compte</target>
       </trans-unit>
+      <trans-unit id="slackDisconnectAction" datatype="html">
+        <target>Déconnecter</target>
+      </trans-unit>
       <trans-unit id="signInBoxHeader" datatype="html">
         <target>Connectez-vous pour démarrer votre session</target>
       </trans-unit>
@@ -314,6 +317,9 @@
       </trans-unit>
       <trans-unit id="slackConnected" datatype="html">
         <target>Connecté avec le workspace : </target>
+      </trans-unit>
+      <trans-unit id="slackSyncAction" datatype="html">
+        <target>Synchroniser les membres</target>
       </trans-unit>
       <trans-unit id="sponsoringMenu" datatype="html">
         <target>SPONSORING</target>
