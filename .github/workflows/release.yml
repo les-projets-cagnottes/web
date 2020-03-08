@@ -88,4 +88,4 @@ jobs:
         username: ${{ secrets.PRODUCTION_USER }}
         key : ${{ secrets.PRODUCTION_KEY }}
         port: ${{ secrets.PRODUCTION_PORT }}
-        script: (sudo chmod 755 /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh) && (nohup /opt/les-projets-cagnottes/core/deployment/bin/deploy.sh ${{ steps.get_version.outputs.VERSION }} &>  /opt/les-projets-cagnottes/core/deployment/bin/console.log < /dev/null &) && exit 0
+        script: (sudo chmod 755 /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh) && (nohup /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh ${{ steps.get_version.outputs.VERSION }} &>  /opt/les-projets-cagnottes/web/deployment/bin/console.log < /dev/null &) && exit 0
