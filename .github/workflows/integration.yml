@@ -1,0 +1,84 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: npm ci
+
+    - run: npm run build --if-present
+
+    - run: npm test
+      env:
+        CI: true
+
+  publish-docker:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v1
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+
+    - name: Login to Registry
+      run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
+
+    - name: Publish to Registry
+      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+
+  deploy-heroku:
+    needs: publish-docker
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - uses: sjdonado/heroku@master
+
+    - name: Login to Registry
+      run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
+
+    - name: Pull Docker Image
+      run: docker pull docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+    
+    - name: Tag the image
+      run: docker tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest registry.heroku.com/les-projets-cagnottes/web
+    
+    - name: Get Heroku Tools
+      run: wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
+    - name: Login to Heroku Registry
+      run: echo "${{secrets.HEROKU_PASSWORD}}" | docker login -u "${{secrets.HEROKU_USERNAME}}" --password-stdin registry.heroku.com
+
+    - name: Login to Heroku API
+      run: heroku container:login
+      env:
+        HEROKU_API_KEY: ${{secrets.HEROKU_PASSWORD}}
+
+    - name: Publish to Heroku Registry
+      run: docker push registry.heroku.com/les-projets-cagnottes/web
+
+    - name: Release Heroku app
+      run: heroku container:release web --app les-projets-cagnottes
+      env:
+        HEROKU_API_KEY: ${{secrets.HEROKU_PASSWORD}}

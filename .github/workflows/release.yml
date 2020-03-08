@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: npm ci
+
+    - run: npm run build --if-present
+
+    - run: npm test
+      env:
+        CI: true
+
+  publish-docker:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v1
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+
+    - name: Login to Registry
+      run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
+
+    - name: Publish to Registry
+      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+
+  deploy-production:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v1
+
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+    - name: Create temp directory to copy files
+      uses: appleboy/ssh-action@v0.0.7
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.PRODUCTION_USER }}
+        key : ${{ secrets.PRODUCTION_KEY }}
+        port: ${{ secrets.PRODUCTION_PORT }}
+        script: mkdir -p /opt/les-projets-cagnottes/web/deployment
+
+    - name: Copy content recursively to production
+      uses: appleboy/scp-action@v0.0.7
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.PRODUCTION_USER }}
+        key : ${{ secrets.PRODUCTION_KEY }}
+        port: ${{ secrets.PRODUCTION_PORT }}
+        source: "dist/*,bin/deploy.sh"
+        target: /opt/les-projets-cagnottes/web/deployment
+        rm: true
+        
+    - name: Execute deployment remotely
+      uses: appleboy/ssh-action@v0.0.7
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.PRODUCTION_USER }}
+        key : ${{ secrets.PRODUCTION_KEY }}
+        port: ${{ secrets.PRODUCTION_PORT }}
+        script: (sudo chmod 755 /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh) && (nohup /opt/les-projets-cagnottes/core/deployment/bin/deploy.sh ${{ steps.get_version.outputs.VERSION }} &>  /opt/les-projets-cagnottes/core/deployment/bin/console.log < /dev/null &) && exit 0
