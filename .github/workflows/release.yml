@@ -53,6 +53,8 @@ jobs:
       with:
         node-version: 10.x
 
+    - run: npm ci
+
     - run: npm run build -- --configuration production-fr --output-path=dist
 
     - name: Get the version
