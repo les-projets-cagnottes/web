@@ -146,7 +146,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/profile/profile.component.html</context>
@@ -248,11 +252,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/budgets/budgets.component.html</context>
@@ -310,7 +314,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="createdAt" datatype="html">
@@ -375,15 +379,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">111</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/budgets/budgets.component.html</context>
@@ -410,7 +414,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">164</context>
         </context-group>
       </trans-unit>
       <trans-unit id="actionDelete" datatype="html">
@@ -425,11 +429,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">165</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/budgets/budgets.component.html</context>
@@ -460,11 +464,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">175</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/projects/view-project/view-project.component.html</context>
@@ -495,11 +499,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">168</context>
+          <context context-type="linenumber">175</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/projects/view-project/view-project.component.html</context>
@@ -530,11 +534,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">176</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/projects/view-project/view-project.component.html</context>
@@ -565,11 +569,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">176</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/projects/view-project/view-project.component.html</context>
@@ -664,11 +668,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">140</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">214</context>
+          <context context-type="linenumber">221</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/budgets/budgets.component.html</context>
@@ -782,7 +786,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/report/report.component.html</context>
@@ -926,99 +930,127 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="addMemberAction" datatype="html">
+        <source>Add member : </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="grantUserSponsor" datatype="html">
+        <source>Is Sponsor ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="grantUserManager" datatype="html">
+        <source>Is Manager ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="grantUserOwner" datatype="html">
+        <source>Is Owner ?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="informations" datatype="html">
         <source>Informations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messengingApps" datatype="html">
         <source>Messenging Apps</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messengingApp" datatype="html">
         <source>App</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="messengingAppStatus" datatype="html">
         <source>Status</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slackNotConnected" datatype="html">
         <source>Not connected Yet </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slackConnected" datatype="html">
         <source>Connected with Slack Team : </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">116</context>
         </context-group>
       </trans-unit>
       <trans-unit id="addToSlack" datatype="html">
         <source>Add to Slack</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slackSyncAction" datatype="html">
         <source>Sync users</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
       <trans-unit id="slackDisconnectAction" datatype="html">
         <source>Disconnect</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="organizationContents" datatype="html">
         <source>Documents</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">146</context>
         </context-group>
       </trans-unit>
       <trans-unit id="contentName" datatype="html">
         <source>Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="contentEdit" datatype="html">
         <source>Edit content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">196</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
       <trans-unit id="contentValue" datatype="html">
         <source>Content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/valyou/organizations/edit-organization/edit-organization.component.html</context>
-          <context context-type="linenumber">208</context>
+          <context context-type="linenumber">215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectLeader" datatype="html">
@@ -1357,7 +1389,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/about/about.component.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">139</context>
         </context-group>
       </trans-unit>
       <trans-unit id="about" datatype="html">

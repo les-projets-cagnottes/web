@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { Organization, User } from '../_models';
+import { OrganizationAuthority } from '../_models/organizationAuthority';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,10 @@ export class OrganizationService {
       .set('offset', offset)
       .set('limit', limit);
     return this.http.get<User[]>(`${environment.apiUrl}/organization/${organizationId}/members`, { params });
+  }
+
+  getOrganizationAuthorities(organizationsId: Number) {
+    return this.http.get<OrganizationAuthority[]>(`${environment.apiUrl}/organization/${organizationsId}/authorities`, {});
   }
 
   addMember(organizationId: number, userId: number) {

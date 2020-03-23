@@ -33,6 +33,9 @@
       <trans-unit id="actions" datatype="html">
         <target>Actions</target>
       </trans-unit>
+      <trans-unit id="addMemberAction" datatype="html">
+        <target>Ajouter un membre : </target>
+      </trans-unit>
       <trans-unit id="addToSlack" datatype="html">
         <target>Ajouter à Slack</target>
       </trans-unit>
@@ -113,6 +116,15 @@
       </trans-unit>
       <trans-unit id="gettingStartedMenu" datatype="html">
         <target>Bien démarrer</target>
+      </trans-unit>
+      <trans-unit id="grantUserSponsor" datatype="html">
+        <target>Sponsor</target>
+      </trans-unit>
+      <trans-unit id="grantUserManager" datatype="html">
+        <target>Gestionnaire</target>
+      </trans-unit>
+      <trans-unit id="grantUserOwner" datatype="html">
+        <target>Propriétaire</target>
       </trans-unit>
       <trans-unit id="helpUseMarkdown" datatype="html">
         <target>Pour mettre en forme votre présentation, vous pouvez utiliser la syntaxe Markdown.</target>

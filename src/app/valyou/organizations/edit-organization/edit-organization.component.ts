@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OrganizationService } from 'src/app/_services/organization.service';
-import { Organization, User, Content } from 'src/app/_models';
+import { Organization, User, Content, Authority } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
@@ -26,9 +26,14 @@ export class EditOrganizationComponent implements OnInit {
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required]
-  });;
+  });
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
+  });
+  editMemberRolesForm: FormGroup = this.formBuilder.group({
+    isUserSponsor: [false, Validators.required],
+    isUserManager: [false, Validators.required],
+    iserUserOwner: [false, Validators.required]
   });
   contentForm: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
@@ -110,6 +115,7 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           organization => {
             this.organization = organization;
+            this.refreshAuthorities();
             this.refreshForm();
             this.refreshMembers();
             this.refreshContents();
@@ -120,6 +126,15 @@ export class EditOrganizationComponent implements OnInit {
     } else {
       this.refreshForm();
     }
+  }
+
+  refreshAuthorities() {
+    this.organizationService.getOrganizationAuthorities(this.id)
+      .subscribe(
+        organizationAuthorities => {
+          this.organization.organizationAuthorities = organizationAuthorities;
+        }
+      )
   }
 
   refreshForm() {
@@ -148,6 +163,9 @@ export class EditOrganizationComponent implements OnInit {
     this.pagedItemsMembers = this.rawResponseMembers.content;
     for (var k = 0; k < this.pagedItemsMembers.length; k++) {
       this.pagedItemsMembers[k] = new User().decode(this.pagedItemsMembers[k]);
+      this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_SPONSOR') !== undefined
+      this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_MANAGER') !== undefined
+      this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_OWNER') !== undefined
     }
   }
 
@@ -311,6 +329,14 @@ export class EditOrganizationComponent implements OnInit {
       .subscribe(() => {
         this.refreshContents(this.pagerContents.page);
       });
+  }
+
+  grant(userId: number, role: string) {
+    var organizationAuthority = this.organization.organizationAuthorities.find(authority => authority.name === role);
+    this.userService.grant(userId, organizationAuthority)
+      .subscribe(() => {
+        this.refreshMembers(this.pagerMembers.currentPage);
+      })
   }
 
   get f() { return this.editOrgForm.controls; }

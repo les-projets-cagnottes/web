@@ -2,6 +2,7 @@
 import { Organization } from './organization';
 import { ApiToken } from './apitoken';
 import { SlackUser } from './slackUser';
+import { OrganizationAuthority } from './organizationAuthority';
 
 export class User {
     id: number;
@@ -15,6 +16,7 @@ export class User {
     enabled: boolean;
     token: string;
     userAuthorities: Authority[];
+    userOrganizationAuthorities: OrganizationAuthority[];
     organizations: Organization[];
     apitokens: ApiToken[];
     totalBudgetDonations: number;
@@ -22,6 +24,9 @@ export class User {
 
     // Only in Valyou-Web
     budgetUsage: string;
+    isUserSponsor: boolean = false;
+    isUserManager: boolean = false;
+    isUserOwner: boolean = false;
 
     decode(user: User) {
         this.id = user.id
@@ -35,6 +40,7 @@ export class User {
         this.enabled = user.enabled;
         this.token = user.token;
         this.userAuthorities = user.userAuthorities;
+        this.userOrganizationAuthorities = user.userOrganizationAuthorities;
         this.organizations = user.organizations;
         return this;
     }

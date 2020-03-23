@@ -6,33 +6,40 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding box-solid">
+                <form class="form-horizontal" [formGroup]="addMemberOrgForm">
+                    <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 control-label" i18n="@@addMemberAction">Add member : </label>
+                        <div class="col-sm-8">
+                            <input formControlName="email" type="email" class="form-control" formControlName="email" placeholder="Email" i18n-placeholder="@@userEmail">
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
+                                <span i18n="@@actionAdd">Add</span></button>
+                        </div>
+                    </div>
+                </form>
+                <hr/>
                 <table class="table">
                     <tbody>
                         <tr>
                             <th i18n="@@userAvatar"></th>
                             <th i18n="@@userFullname">Name</th>
                             <th i18n="@@userEmail">Email</th>
+                            <th i18n="@@grantUserSponsor">Is Sponsor ?</th>
+                            <th i18n="@@grantUserManager">Is Manager ?</th>
+                            <th i18n="@@grantUserOwner">Is Owner ?</th>
                             <th i18n="@@actions">Actions</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <form [formGroup]="addMemberOrgForm">
-                                    <div class="has-feedback">
-                                        <input type="email" class="form-control" formControlName="email" i18n-placeholder="@@userEmail" />
-                                    </div>
-                                </form>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
-                                    <span i18n="@@actionAdd">Add</span></button>
-                            </td>
                         </tr>
                         <tr *ngFor="let user of pagedItemsMembers">
                             <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
                             <td>{{ user.firstname }} {{ user.lastname }}</td>
                             <td>{{ user.email }}</td>
+                            <td *ngIf="user.isUserSponsor" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="fa fa-fw fa-check-square-o"></i></td>
+                            <td *ngIf="!user.isUserSponsor" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="fa fa-square-o"></i></td>
+                            <td *ngIf="user.isUserManager" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="fa fa-fw fa-check-square-o"></i></td>
+                            <td *ngIf="!user.isUserManager" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="fa fa-square-o"></i></td>
+                            <td *ngIf="user.isUserOwner" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_OWNER')"><i class="fa fa-fw fa-check-square-o"></i></td>
+                            <td *ngIf="!user.isUserOwner" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_OWNER')"><i class="fa fa-square-o"></i></td>
                             <td>
                                 <button type="button" class="btn btn-default btn-flat" (click)="onRemoveMember(user)"><i
                                         class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button></td>

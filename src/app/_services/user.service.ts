@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { User } from '../_models';
+import { OrganizationAuthority } from '../_models/organizationAuthority';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -45,6 +46,10 @@ export class UserService {
 
     delete(id: number) {
         return this.http.delete(`${environment.apiUrl}/user/${id}`);
+    }
+
+    grant(id: number, organizationAuthority: OrganizationAuthority) {
+        return this.http.post(`${environment.apiUrl}/user/${id}/roles`, organizationAuthority);
     }
 
 }

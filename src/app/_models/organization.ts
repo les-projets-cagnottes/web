@@ -2,6 +2,7 @@ import { User } from './user';
 import { Budget } from './budget';
 import { Content } from './content';
 import { SlackTeam } from './slackTeam';
+import { OrganizationAuthority } from './organizationAuthority';
 
 export class Organization {
     id: number;
@@ -9,5 +10,6 @@ export class Organization {
     members: User[] = [];
     budgets: Budget[] = [];
     contents: Content[] = [];
+    organizationAuthorities: OrganizationAuthority[] = [];
     slackTeam: SlackTeam;
 }
