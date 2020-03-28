@@ -49,7 +49,7 @@ export class UserService {
     }
 
     grant(id: number, organizationAuthority: OrganizationAuthority) {
-        return this.http.post(`${environment.apiUrl}/user/${id}/roles`, organizationAuthority);
+        return this.http.post(`${environment.apiUrl}/user/${id}/orgauthorities`, organizationAuthority);
     }
 
 }

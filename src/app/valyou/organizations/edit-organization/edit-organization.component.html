@@ -19,33 +19,35 @@
                     </div>
                 </form>
                 <hr/>
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th i18n="@@userAvatar"></th>
-                            <th i18n="@@userFullname">Name</th>
-                            <th i18n="@@userEmail">Email</th>
-                            <th i18n="@@grantUserSponsor">Is Sponsor ?</th>
-                            <th i18n="@@grantUserManager">Is Manager ?</th>
-                            <th i18n="@@grantUserOwner">Is Owner ?</th>
-                            <th i18n="@@actions">Actions</th>
-                        </tr>
-                        <tr *ngFor="let user of pagedItemsMembers">
-                            <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
-                            <td>{{ user.firstname }} {{ user.lastname }}</td>
-                            <td>{{ user.email }}</td>
-                            <td *ngIf="user.isUserSponsor" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="fa fa-fw fa-check-square-o"></i></td>
-                            <td *ngIf="!user.isUserSponsor" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="fa fa-square-o"></i></td>
-                            <td *ngIf="user.isUserManager" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="fa fa-fw fa-check-square-o"></i></td>
-                            <td *ngIf="!user.isUserManager" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="fa fa-square-o"></i></td>
-                            <td *ngIf="user.isUserOwner" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_OWNER')"><i class="fa fa-fw fa-check-square-o"></i></td>
-                            <td *ngIf="!user.isUserOwner" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_OWNER')"><i class="fa fa-square-o"></i></td>
-                            <td>
-                                <button type="button" class="btn btn-default btn-flat" (click)="onRemoveMember(user)"><i
-                                        class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th i18n="@@userAvatar"></th>
+                                <th i18n="@@userFullname">Name</th>
+                                <th i18n="@@userEmail">Email</th>
+                                <th i18n="@@grantUserSponsor">Is Sponsor ?</th>
+                                <th i18n="@@grantUserManager">Is Manager ?</th>
+                                <th i18n="@@grantUserOwner">Is Owner ?</th>
+                                <th i18n="@@actions">Actions</th>
+                            </tr>
+                            <tr *ngFor="let user of pagedItemsMembers">
+                                <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
+                                <td>{{ user.firstname }} {{ user.lastname }}</td>
+                                <td>{{ user.email }}</td>
+                                <td *ngIf="user.isUserSponsor" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="fa fa-fw fa-check-square-o"></i></td>
+                                <td *ngIf="!user.isUserSponsor" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="fa fa-square-o"></i></td>
+                                <td *ngIf="user.isUserManager" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="fa fa-fw fa-check-square-o"></i></td>
+                                <td *ngIf="!user.isUserManager" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="fa fa-square-o"></i></td>
+                                <td *ngIf="user.isUserOwner" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_OWNER')"><i class="fa fa-fw fa-check-square-o"></i></td>
+                                <td *ngIf="!user.isUserOwner" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_OWNER')"><i class="fa fa-square-o"></i></td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-flat" (click)="onRemoveMember(user)"><i
+                                            class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div *ngIf="slackSyncStatus == 'running'" class="overlay">
                 <i class="fa fa-refresh fa-spin"></i>
