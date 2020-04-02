@@ -66,14 +66,22 @@ export class ReportComponent implements OnInit {
       });
     this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
       this.budget = this.budgets.find(budget => budget.id === +val);
-      this.budget.totalDonations = 0;
-      this.budget.donations.forEach(element => {
-        this.budget.totalDonations += element.amount;
-      });;
-      this.budget.usage = this.computeNumberPercent(this.budget.totalDonations, this.organization.members.length * this.budget.amountPerMember) + "%";
-      this.refreshProjects(this.projectPager.page);
-      this.refreshUsers(this.userPager.page);
+      this.refreshDonations(this.budget.id);
     });
+  }
+
+  refreshDonations(budgetId: number) {
+    this.donationService.getbyBudgetId(budgetId)
+      .subscribe(donations => {
+        this.budget.donations = donations;
+        this.budget.totalDonations = 0;
+        this.budget.donations.forEach(element => {
+          this.budget.totalDonations += element.amount;
+        });;
+        this.budget.usage = this.computeNumberPercent(this.budget.totalDonations, this.organization.members.length * this.budget.amountPerMember) + "%";
+        this.refreshProjects(this.projectPager.page);
+        this.refreshUsers(this.userPager.page);
+      });
   }
 
   refreshProjects(page: number = 1) {

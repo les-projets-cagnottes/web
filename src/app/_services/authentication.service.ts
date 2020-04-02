@@ -1,9 +1,10 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { User } from '../_models';
+import { User, Authority } from '../_models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -37,8 +38,12 @@ export class AuthenticationService {
     }
 
     whoami(): Observable<User> {
-        return this.http.get<User>(`${environment.apiUrl}/whoami`)
-            .pipe(map(user => {
+        const principal = this.http.get<User>(`${environment.apiUrl}/whoami`);
+        const authorities = this.http.get<Authority[]>(`${environment.apiUrl}/authority`);
+        return forkJoin([principal, authorities])
+            .pipe(map(responses =>{
+                var user = responses[0];
+                user.userAuthorities = responses[1];
                 user.token = JSON.parse(localStorage.getItem('currentUser')).token;
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);

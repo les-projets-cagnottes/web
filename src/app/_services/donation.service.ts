@@ -13,6 +13,10 @@ export class DonationService {
       return this.http.post(`${environment.apiUrl}/donation`, donation);
   }
 
+  getbyBudgetId(budgetId: number) {
+    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?budgetId=${budgetId}`);
+  }
+
   getByProjectId(projectId: number) {
     return this.http.get<Donation[]>(`${environment.apiUrl}/donation?projectId=${projectId}`);
   }
