@@ -102,9 +102,19 @@ export class BudgetsComponent implements OnInit {
         return;
       }
       (this.mainForms[index].controls.budgets as FormArray).value.forEach(formGroup => {
-        var content = new Content();
+
+        var org: any = {};
+        org.id = organization.id;
+        formGroup.organization = org;
+    
+        var user: any = {};
+        user.id = this.authenticationService.currentUserValue.id;
+        formGroup.sponsor = user;
+
+        var content: any = {};
         content.id = organization.contents[formGroup.rules].id;
         formGroup.rules = content;
+
         budgets.push(formGroup);
       });
     });
@@ -144,7 +154,9 @@ export class BudgetsComponent implements OnInit {
     user.id = this.authenticationService.currentUserValue.id;
     budget.sponsor = user;
 
-    budget.rules = null;
+    var content = new Content();
+    content.id = this.organizations.filter(org => org.id === idOrganization)[0].contents[0].id;
+    budget.rules = content;
 
     this.budgetService.create(budget)
       .subscribe(

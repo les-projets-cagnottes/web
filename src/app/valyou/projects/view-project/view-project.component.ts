@@ -153,6 +153,8 @@ export class ViewProjectComponent implements OnInit {
     donation.project.id = this.project.id;
     donation.budget = {};
     donation.budget.id = this.budgets[this.f.budget.value].id;
+    donation.contributor = {};
+    donation.contributor.id = this.userLoggedIn.id;
 
     this.donationService.create(donation)
       .pipe(first())
