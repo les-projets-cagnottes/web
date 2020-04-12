@@ -57,12 +57,5 @@ export class ProjectService {
   join(id: number) {
     return this.http.get(`${environment.apiUrl}/project/${id}/join`);
   }
-  
-  getDonations(projectId: Number, offset, limit) {
-    const params = new HttpParams()
-        .set('offset', offset)
-        .set('limit', limit);
-    return this.http.get<Donation[]>(`${environment.apiUrl}/project/${projectId}/donations`, { params });
-  }
 
 }

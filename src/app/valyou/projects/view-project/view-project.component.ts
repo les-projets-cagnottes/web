@@ -100,7 +100,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   refreshDonations(page: number = 1) {
-    this.projectService.getDonations(this.id, page - 1, this.pageSize)
+    this.donationService.getByProjectId(this.id, page - 1, this.pageSize)
       .subscribe(response => {
         this.rawResponse = response;
         this.setPage(page);

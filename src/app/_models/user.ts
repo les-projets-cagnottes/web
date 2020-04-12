@@ -15,10 +15,10 @@ export class User {
     avatarUrl: string;
     enabled: boolean;
     token: string;
-    userAuthorities: Authority[];
-    userOrganizationAuthorities: OrganizationAuthority[];
-    organizations: Organization[];
-    apitokens: ApiToken[];
+    userAuthorities: Authority[] = [];
+    userOrganizationAuthorities: OrganizationAuthority[] = [];
+    organizations: Organization[] = [];
+    apitokens: ApiToken[] = [];
     totalBudgetDonations: number;
     slackUser: SlackUser;
 
