@@ -71,7 +71,7 @@ export class ReportComponent implements OnInit {
   }
 
   refreshDonations(budgetId: number) {
-    this.donationService.getbyBudgetId(budgetId)
+    this.budgetService.getDonations(budgetId)
       .subscribe(donations => {
         this.budget.donations = donations;
         this.budget.totalDonations = 0;

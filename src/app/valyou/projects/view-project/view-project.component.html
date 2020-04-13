@@ -85,6 +85,10 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title" i18n="@@donationsPanelTitle">Donations</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" (click)="refreshDonations(pager.currentPage)" [ngClass]="{ 'btn-success': donationsSyncStatus == 'success'}"><i class="fa fa-refresh"></i>
+                    </button>
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
@@ -102,6 +106,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div *ngIf="donationsSyncStatus == 'running'" class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">

@@ -68,19 +68,25 @@ export class ProfileComponent implements OnInit {
           .subscribe(organizations => {
             this.organizations = organizations;
             var nbBudgetOrgsRetreived = 0;
-            for (var i = 0; i < this.organizations.length; i++) {
-              this.budgetService.getByOrganizationId(this.organizations[i].id)
-                .subscribe(budgets => {
-                  for (var j = 0; j < budgets.length; j++) {
-                    budgets[j].totalDonations = 0;
-                    this.budgetsSorted[budgets[j].id] = budgets[j];
-                  }
-                  nbBudgetOrgsRetreived++;
-                  if (nbBudgetOrgsRetreived === this.organizations.length) {
-                    this.refreshDonations();
-                  }
+            this.organizations.forEach(organizationModel => {
+              this.organizationService.getById(organizationModel.id)
+                .subscribe(organization => {
+                  var i = this.organizations.findIndex(org => org.id === organization.id);
+                  this.organizations[i] = Organization.decode(organization);
+                  this.budgetService.getByOrganizationId(this.organizations[i].id)
+                    .subscribe(budgets => {
+                      for (var j = 0; j < budgets.length; j++) {
+                        budgets[j].totalDonations = 0;
+                        budgets[j].organization = this.organizations.find(org => org.id === organization.id);
+                        this.budgetsSorted[budgets[j].id] = Budget.decode(budgets[j]);
+                      }
+                      nbBudgetOrgsRetreived++;
+                      if (nbBudgetOrgsRetreived === this.organizations.length) {
+                        this.refreshDonations();
+                      }
+                    });
                 });
-            }
+            })
           });
         this.projectService.getByMemberId(this.user.id)
           .subscribe(projects => {
@@ -100,10 +106,13 @@ export class ProfileComponent implements OnInit {
   }
 
   refreshDonations() {
-    this.donationService.getByContributorId(this.user.id)
+    this.userService.getDonations(this.user.id)
       .subscribe(donations => {
         this.donations = donations;
-        this.donations.forEach(donation => { this.deleteDonationsStatus[donation.id] = 'idle' });
+        this.donations.forEach(donation => { 
+          this.deleteDonationsStatus[donation.id] = 'idle'
+        });
+        this.getProjectForDonations(this.donations, 0);
         for (var k = 0; k < donations.length; k++) {
           var budgetId = donations[k].budget.id;
           this.budgetsSorted[budgetId].donations.push(donations[k]);
@@ -117,6 +126,16 @@ export class ProfileComponent implements OnInit {
           }
         }
       });
+  }
+
+  getProjectForDonations(donations, index) {
+    this.projectService.getById(donations[index].project.id)
+    .subscribe(response => {
+      this.donations[index].project = response;
+      if(index < donations.length) {
+        this.getProjectForDonations(donations, index + 1);
+      }
+    });
   }
 
   deleteDonations(donation: Donation) {

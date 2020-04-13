@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project, User, Donation, Budget } from 'src/app/_models';
-import { AuthenticationService, ProjectService, DonationService, BudgetService, OrganizationService, PagerService } from 'src/app/_services';
+import { AuthenticationService, ProjectService, DonationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -24,22 +24,24 @@ export class ViewProjectComponent implements OnInit {
   isUserInTeam: boolean = false;
   donationForm: FormGroup;
 
-  // Pagination
+  // Donations
   private rawResponse: any;
   pager: any = {};
   pagedItems: any[];
   pageSize: number = 10;
+  donationsSyncStatus: string = 'idle';
   
   constructor(
     private route: ActivatedRoute,
+    private modalService: BsModalService,
+    private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
-    private organizationService: OrganizationService,
-    private projectService: ProjectService,
     private donationService: DonationService,
-    private formBuilder: FormBuilder,
+    private organizationService: OrganizationService,
     private pagerService: PagerService,
-    private modalService: BsModalService) {
+    private projectService: ProjectService,
+    private userService: UserService) {
 
     this.route.params.subscribe(params => this.id = params.id);
     this.project.leader = new User();
@@ -84,7 +86,7 @@ export class ViewProjectComponent implements OnInit {
             });
           });
           this.budgets.forEach(budget => {
-            this.donationService.getByContributorIdAndBudgetId(this.userLoggedIn.id, budget.id)
+            this.budgetService.getDonationsByContributorId(this.userLoggedIn.id, budget.id)
               .subscribe(donations => {
                 donations.forEach(donation => {
                   budget.totalUserDonations += donation.amount;
@@ -100,10 +102,30 @@ export class ViewProjectComponent implements OnInit {
   }
 
   refreshDonations(page: number = 1) {
-    this.donationService.getByProjectId(this.id, page - 1, this.pageSize)
+    this.donationsSyncStatus = 'running';
+    this.projectService.getDonations(this.id, page - 1, this.pageSize)
       .subscribe(response => {
         this.rawResponse = response;
         this.setPage(page);
+        this.pagedItems.forEach(donation => {
+          this.donationsSyncStatus = 'running';
+          this.userService.getById(donation.contributor.id)
+            .subscribe(response => {
+              this.donationsSyncStatus = 'success';
+              donation.contributor = new User().decode(response);
+              setTimeout(() => {
+                this.donationsSyncStatus = 'idle';
+              }, 1000);
+            }
+            , error => {
+              this.donationsSyncStatus = 'error';
+              console.log(error);
+              setTimeout(() => {
+                this.donationsSyncStatus = 'idle';
+              }, 1000);
+            }
+            );
+        })
       });
   }
 

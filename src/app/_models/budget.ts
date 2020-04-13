@@ -12,8 +12,8 @@ export class Budget {
     endDate: Date;
     organization: Organization;
     sponsor: User;
-    donations: Donation[] = [];
     rules: Content;
+    donations: Donation[] = [];
     
     // Only in Valyou-Web
     usage: string;
@@ -21,4 +21,19 @@ export class Budget {
     totalDonationsPercent: string;
     remaining: string;
     totalUserDonations: number = 0;
+
+    static decode(obj?: any): Budget {
+        var budget = new Budget();
+        budget.id = obj.id;
+        budget.name = obj.name;
+        budget.amountPerMember = obj.amountPerMember;
+        budget.isDistributed = obj.isDistributed;
+        budget.startDate = obj.startDate;
+        budget.endDate = obj.endDate;
+        budget.organization = obj.organization !== undefined ? obj.organization : undefined;
+        budget.sponsor = obj.sponsor !== undefined ? obj.sponsor : undefined;
+        budget.rules = obj.rules !== undefined ? obj.rules : undefined;
+        budget.donations = obj.donations !== undefined ? obj.donations : [];
+        return budget;
+    }
 }

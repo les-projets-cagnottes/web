@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Budget } from '../_models';
+import { Budget, Donation } from '../_models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BudgetService {
+
   constructor(private http: HttpClient) { }
 
   getByIsActive(isActive: boolean) {
@@ -15,6 +16,14 @@ export class BudgetService {
 
   getByOrganizationId(organizationId: number) {
     return this.http.get<Budget[]>(`${environment.apiUrl}/budget?organizationId=${organizationId}`);
+  }
+
+  getDonations(budgetId: number) {
+    return this.http.get<Donation[]>(`${environment.apiUrl}/budget/${budgetId}/donations`);
+  }
+  
+  getDonationsByContributorId(contributorId: number, budgetId: number) {
+    return this.http.get<Donation[]>(`${environment.apiUrl}/budget/${budgetId}/donations?contributorId=${contributorId}`);
   }
 
   create(budget: Budget) {

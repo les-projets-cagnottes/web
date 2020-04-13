@@ -2,11 +2,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { User } from '../_models';
+import { User, Donation } from '../_models';
 import { OrganizationAuthority } from '../_models/organizationAuthority';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+
     constructor(private http: HttpClient) { }
 
     getAll(offset, limit) {
@@ -17,7 +18,7 @@ export class UserService {
     }
 
     getById(id: number) {
-        return this.http.get(`${environment.apiUrl}/user/${id}`);
+        return this.http.get<User>(`${environment.apiUrl}/user/${id}`);
     }
 
     getByEmail(email: string) {
@@ -30,6 +31,10 @@ export class UserService {
             .set('offset', offset)
             .set('limit', limit);
         return this.http.get<User[]>(`${environment.apiUrl}/user`, { params });
+    }
+
+    getDonations(id: number) {
+        return this.http.get<Donation[]>(`${environment.apiUrl}/user/${id}/donations`);
     }
 
     create(user: User) {

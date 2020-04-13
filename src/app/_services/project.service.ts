@@ -38,6 +38,13 @@ export class ProjectService {
     return this.http.get<Project[]>(`${environment.apiUrl}/project`, { params });
   }
 
+  getDonations(projectId: number, offset: number, limit: number) {
+    const params = new HttpParams()
+        .set('offset', offset.toString())
+        .set('limit', limit.toString());
+    return this.http.get<Donation[]>(`${environment.apiUrl}/project/${projectId}/donations`, {params});
+  }
+
   create(project: Project) {
     return this.http.post<Project>(`${environment.apiUrl}/project`, project);
   }

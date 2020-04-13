@@ -17,20 +17,8 @@ export class DonationService {
     return this.http.get<Donation[]>(`${environment.apiUrl}/donation?budgetId=${budgetId}`);
   }
 
-  getByProjectId(projectId: number, offset: number, limit: number) {
-    const params = new HttpParams()
-        .set('projectId', projectId.toString())
-        .set('offset', offset.toString())
-        .set('limit', limit.toString());
-    return this.http.get<Donation[]>(`${environment.apiUrl}/donation`, {params});
-  }
-
   getByContributorId(contributorId: number) {
     return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}`);
-  }
-
-  getByContributorIdAndBudgetId(contributorId: number, budgetId: number) {
-    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}&budgetId=${budgetId}`);
   }
 
   delete(id: number) {
