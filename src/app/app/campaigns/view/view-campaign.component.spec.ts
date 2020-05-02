@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewProjectComponent } from './view-project.component';
+import { ViewCampaignComponent } from './view-campaign.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-describe('ViewProjectComponent', () => {
-  let component: ViewProjectComponent;
-  let fixture: ComponentFixture<ViewProjectComponent>;
+describe('ViewCampaignComponent', () => {
+  let component: ViewCampaignComponent;
+  let fixture: ComponentFixture<ViewCampaignComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewProjectComponent],
+      declarations: [ViewCampaignComponent],
       imports: [
         HttpClientModule,
         FormsModule,
@@ -26,7 +26,7 @@ describe('ViewProjectComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewProjectComponent);
+    fixture = TestBed.createComponent(ViewCampaignComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

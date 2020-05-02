@@ -6,11 +6,11 @@ import { AuthenticationService } from '../_services';
 import { Role } from '../_models/role';
 
 @Component({
-  selector: 'app-valyou',
-  templateUrl: './valyou.component.html',
-  styleUrls: ['./valyou.component.css']
+  selector: 'app-lesprojetscagnottes',
+  templateUrl: './lesprojetscagnottes.component.html',
+  styleUrls: ['./lesprojetscagnottes.component.css']
 })
-export class ValyouComponent implements OnInit, OnDestroy {
+export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   currentUser: User;
   currentUserSubscription: Subscription;

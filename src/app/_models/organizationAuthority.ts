@@ -1,5 +1,5 @@
 import { User } from './user';
-import { Project } from './project';
+import { Campaign } from './campaign';
 import { Organization } from './organization';
 
 export class OrganizationAuthority {

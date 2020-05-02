@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Select2OptionData, Options } from 'select2';
 
-import { ProjectService } from 'src/app/_services/project.service';
+import { CampaignService } from 'src/app/_services/campaign.service';
 import { PagerService } from 'src/app/_services';
-import { Project } from 'src/app/_models';
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css']
+  selector: 'app-list-campaigns',
+  templateUrl: './list-campaigns.component.html',
+  styleUrls: ['./list-campaigns.component.css']
 })
-export class ProjectsComponent implements OnInit {
+export class ListCampaignsComponent implements OnInit {
 
   // Refreshing state
   refreshStatus: string = "no-refresh";
@@ -23,7 +22,7 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private pagerService: PagerService,
-    private projectService: ProjectService
+    private campaignService: CampaignService
   ) { }
 
   public statusSelectionData: Array<Select2OptionData>;
@@ -54,7 +53,7 @@ export class ProjectsComponent implements OnInit {
 
   refresh(page: number = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
-      this.projectService.getAll(page - 1, this.pageSize, this.statusSelectionValue)
+      this.campaignService.getAll(page - 1, this.pageSize, this.statusSelectionValue)
         .subscribe(response => {
           this.rawResponse = response;
           this.setPage(page);
@@ -74,7 +73,7 @@ export class ProjectsComponent implements OnInit {
       var remainingTime = Math.abs(new Date(value.fundingDeadline).getTime() - new Date().getTime());
       value.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
       value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
-      value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
+      value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTimeRef.length, value.peopleRequired) + "%";
       value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
     });
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from 'src/app/_services';
+import { CampaignService } from 'src/app/_services';
 
 @Component({
   selector: 'app-manager',
@@ -10,14 +10,14 @@ export class ManagerComponent implements OnInit {
 
   validateStatus: string = 'idle';
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private campaignService: CampaignService) { }
 
   ngOnInit() {
   }
 
   validateProjects() {
     this.validateStatus = 'running';
-    this.projectService.validate()
+    this.campaignService.validate()
       .subscribe(
         () => {
           this.validateStatus = 'success';

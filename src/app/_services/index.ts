@@ -5,5 +5,5 @@ export * from './budget.service';
 export * from './donation.service';
 export * from './organization.service';
 export * from './pager.service';
-export * from './project.service';
+export * from './campaign.service';
 export * from './user.service';

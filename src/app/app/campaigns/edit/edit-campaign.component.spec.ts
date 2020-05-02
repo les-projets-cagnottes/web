@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewProjectComponent } from './new-project.component';
+import { EditCampaignComponent } from './edit-campaign.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-describe('NewProjectComponent', () => {
-  let component: NewProjectComponent;
-  let fixture: ComponentFixture<NewProjectComponent>;
+describe('EditCampaignComponent', () => {
+  let component: EditCampaignComponent;
+  let fixture: ComponentFixture<EditCampaignComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewProjectComponent ],
+      declarations: [ EditCampaignComponent ],
       imports: [
         HttpClientModule,
         ReactiveFormsModule,
@@ -21,7 +21,7 @@ describe('NewProjectComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewProjectComponent);
+    fixture = TestBed.createComponent(EditCampaignComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

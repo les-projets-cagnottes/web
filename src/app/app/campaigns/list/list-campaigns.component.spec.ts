@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectsComponent } from './projects.component';
+import { ListCampaignsComponent } from './list-campaigns.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('ProjectsComponent', () => {
-  let component: ProjectsComponent;
-  let fixture: ComponentFixture<ProjectsComponent>;
+describe('ListCampaignsComponent', () => {
+  let component: ListCampaignsComponent;
+  let fixture: ComponentFixture<ListCampaignsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectsComponent ],
+      declarations: [ ListCampaignsComponent ],
       imports: [
         HttpClientModule,
         FormsModule,
@@ -21,7 +21,7 @@ describe('ProjectsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectsComponent);
+    fixture = TestBed.createComponent(ListCampaignsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

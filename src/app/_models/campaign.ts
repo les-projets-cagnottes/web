@@ -1,6 +1,6 @@
 ﻿import { User } from './user';
 
-export class Project {
+export class Campaign {
     id: number;
     createdAt: Date;
     title: string = '';

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValyouComponent } from './valyou.component';
+import { LesProjetsCagnottesComponent } from './lesprojetscagnottes.component';
 import { AppNavbarComponent } from './navbar/navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('ValyouComponent', () => {
-  let component: ValyouComponent;
-  let fixture: ComponentFixture<ValyouComponent>;
+describe('AppComponent', () => {
+  let component: LesProjetsCagnottesComponent;
+  let fixture: ComponentFixture<LesProjetsCagnottesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ 
         AppNavbarComponent,
-        ValyouComponent 
+        LesProjetsCagnottesComponent 
       ],
       imports: [
         HttpClientModule,
@@ -24,7 +24,7 @@ describe('ValyouComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ValyouComponent);
+    fixture = TestBed.createComponent(LesProjetsCagnottesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

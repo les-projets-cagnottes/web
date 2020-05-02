@@ -3,21 +3,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Project, Organization, Budget, User } from 'src/app/_models';
-import { AuthenticationService, OrganizationService, ProjectService, BudgetService } from 'src/app/_services';
+import { Campaign, Organization, Budget, User } from 'src/app/_models';
+import { AuthenticationService, OrganizationService, CampaignService, BudgetService } from 'src/app/_services';
 
 declare function startSimpleMDE(): any;
 
 @Component({
-  selector: 'app-new-project',
-  templateUrl: './new-project.component.html',
-  styleUrls: ['./new-project.component.css']
+  selector: 'app-edit-campaign',
+  templateUrl: './edit-campaign.component.html',
+  styleUrls: ['./edit-campaign.component.css']
 })
-export class NewProjectComponent implements OnInit {
+export class EditCampaignComponent implements OnInit {
 
   // Data
   id: number = 0;
-  private project: Project = new Project();
+  private project: Campaign = new Campaign();
   organizations: Organization[] = [];
   budgets: Budget[] = [];
   minDonations: string = "0.00";
@@ -54,14 +54,14 @@ export class NewProjectComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
     private organizationService: OrganizationService,
-    private projectService: ProjectService
+    private campaignService: CampaignService
   ) {
     this.route.params.subscribe(params => this.id = params.id);
   }
 
   ngOnInit() {
     if (this.id > 0) {
-      this.projectService.getById(this.id)
+      this.campaignService.getById(this.id)
         .subscribe(response => {
           this.project = response;
           this.refresh();
@@ -154,7 +154,7 @@ export class NewProjectComponent implements OnInit {
     if (this.id > 0) {
       this.project.leader.id = leaderId;
       this.project.donations = [];
-      this.projectService.update(this.project)
+      this.campaignService.update(this.project)
         .subscribe(
           response => {
             this.submitting = false;
@@ -167,7 +167,7 @@ export class NewProjectComponent implements OnInit {
     } else {
       this.project.leader.id = this.authenticationService.currentUserValue.id;
       this.project.fundingDeadline = this.getFundingDeadlineValue()
-      this.projectService.create(this.project)
+      this.campaignService.create(this.project)
         .subscribe(
           response => {
             this.submitting = false;

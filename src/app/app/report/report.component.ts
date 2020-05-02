@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, BudgetService, DonationService, OrganizationService, ProjectService, PagerService, UserService } from 'src/app/_services';
+import { AuthenticationService, BudgetService, DonationService, OrganizationService, CampaignService, PagerService, UserService } from 'src/app/_services';
 import { Organization, Budget, User } from 'src/app/_models';
 import { FormBuilder } from '@angular/forms';
 
@@ -37,7 +37,7 @@ export class ReportComponent implements OnInit {
     private budgetService: BudgetService,
     private donationService: DonationService,
     private organizationService: OrganizationService,
-    private projectService: ProjectService,
+    private campaignService: CampaignService,
     private userService: UserService,
     private pagerService: PagerService,
     private fb: FormBuilder) { }
@@ -96,7 +96,7 @@ export class ReportComponent implements OnInit {
           }, 10000);
         }
       }, 1000);
-      this.projectService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
+      this.campaignService.getByBudgetId(this.selectBudgetForm.controls['budget'].value, page - 1, this.pageSize)
         .subscribe(response => {
           this.rawProjectsResponse = response;
           this.setProjectsPage(page);

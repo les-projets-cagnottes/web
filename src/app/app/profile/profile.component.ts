@@ -1,8 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, ProjectService, UserService } from 'src/app/_services';
-import { User, Organization, Budget, Donation, Project, ApiToken } from 'src/app/_models';
+import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService } from 'src/app/_services';
+import { User, Organization, Budget, Donation, Campaign, ApiToken } from 'src/app/_models';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   donations: Donation[] = [];
   apiTokens: ApiToken[] = [];
   private organizations: Organization[] = [];
-  projects: Project[] = [];
+  projects: Campaign[] = [];
   user: User = new User();
   deleteDonationsStatus: string[] = [];
   deleteApiTokenStatus: string[] = [];
@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     private budgetService: BudgetService,
     private donationService: DonationService,
     private organizationService: OrganizationService,
-    private projectService: ProjectService,
+    private campaignService: CampaignService,
     private userService: UserService,
     private modalService: BsModalService,
     private fb: FormBuilder) {
@@ -88,7 +88,7 @@ export class ProfileComponent implements OnInit {
                 });
             })
           });
-        this.projectService.getByMemberId(this.user.id)
+        this.campaignService.getByMemberId(this.user.id)
           .subscribe(projects => {
             this.projects = projects;
             var that = this;
@@ -129,7 +129,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProjectForDonations(donations, index) {
-    this.projectService.getById(donations[index].project.id)
+    this.campaignService.getById(donations[index].project.id)
     .subscribe(response => {
       this.donations[index].project = response;
       if(index < donations.length) {

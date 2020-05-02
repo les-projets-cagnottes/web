@@ -1,21 +1,21 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Project, User, Donation, Budget } from 'src/app/_models';
-import { AuthenticationService, ProjectService, DonationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
+import { Campaign, User, Donation, Budget } from 'src/app/_models';
+import { AuthenticationService, CampaignService, DonationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-view-project',
-  templateUrl: './view-project.component.html',
-  styleUrls: ['./view-project.component.css']
+  selector: 'app-view-campaign',
+  templateUrl: './view-campaign.component.html',
+  styleUrls: ['./view-campaign.component.css']
 })
-export class ViewProjectComponent implements OnInit {
+export class ViewCampaignComponent implements OnInit {
 
   id: number;
   userLoggedIn: User;
-  project: Project = new Project();
+  project: Campaign = new Campaign();
   budgets: Budget[] = [];
   donations: Donation[] = [];
   private totalDonations: number;
@@ -40,7 +40,7 @@ export class ViewProjectComponent implements OnInit {
     private donationService: DonationService,
     private organizationService: OrganizationService,
     private pagerService: PagerService,
-    private projectService: ProjectService,
+    private campaignService: CampaignService,
     private userService: UserService) {
 
     this.route.params.subscribe(params => this.id = params.id);
@@ -59,7 +59,7 @@ export class ViewProjectComponent implements OnInit {
   refresh() {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     if (this.userLoggedIn !== null) {
-      this.projectService.getById(this.id)
+      this.campaignService.getById(this.id)
         .subscribe(response => {
           this.project = response;
           this.project.leader = new User().decode(this.project.leader);
@@ -103,7 +103,7 @@ export class ViewProjectComponent implements OnInit {
 
   refreshDonations(page: number = 1) {
     this.donationsSyncStatus = 'running';
-    this.projectService.getDonations(this.id, page - 1, this.pageSize)
+    this.campaignService.getDonations(this.id, page - 1, this.pageSize)
       .subscribe(response => {
         this.rawResponse = response;
         this.setPage(page);
@@ -153,7 +153,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   join() {
-    this.projectService.join(this.id)
+    this.campaignService.join(this.id)
       .subscribe(() => {
         this.refresh();
       })
