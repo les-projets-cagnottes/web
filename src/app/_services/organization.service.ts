@@ -15,8 +15,14 @@ export class OrganizationService {
     return this.http.get<Organization>(`${environment.apiUrl}/organization/${id}`);
   }
 
+  getAllByIds(ids: number[]) {
+    const params = new HttpParams()
+        .set('ids', ids.toString());
+    return this.http.get<Organization[]>(`${environment.apiUrl}/organization`, { params });
+}
+
   getByMemberId(memberId: number) {
-    return this.http.get<Organization[]>(`${environment.apiUrl}/organization?member_id=${memberId}`);
+    return this.http.get<Organization[]>(`${environment.apiUrl}/user/${memberId}/organizations`);
   }
 
   getByOwner(owner: User, offset, limit) {

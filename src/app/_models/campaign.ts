@@ -1,4 +1,5 @@
 ﻿import { User } from './user';
+import { Generic } from './generic';
 
 export class Campaign {
     id: number;
@@ -9,10 +10,15 @@ export class Campaign {
     longDescription: string = '';
     donationsRequired: number = 0.00;
     peopleRequired: number = 2;
-    leader: User = new User();
+    leader: Generic = new Generic();
     fundingDeadline: Date;
-    donations: any[] = [];
     totalDonations: number = 0;
+    peopleGivingTimeRef: number[] = [];
+    organizationsRef: number[] = [];
+    budgetsRef: number[] = [];
+
+    // TODO : Remove
+    donations: any[] = [];
     peopleGivingTime: any[] = [];
     organizations: any[] = [];
     budgets: any[] = [];

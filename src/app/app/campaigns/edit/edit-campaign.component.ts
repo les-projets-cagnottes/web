@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Campaign, Organization, Budget, User } from 'src/app/_models';
+import { Campaign, Organization, Budget, User, Content, Generic } from 'src/app/_models';
 import { AuthenticationService, OrganizationService, CampaignService, BudgetService } from 'src/app/_services';
+import { ContentService } from 'src/app/_services/content.service';
 
 declare function startSimpleMDE(): any;
 
@@ -20,6 +21,7 @@ export class EditCampaignComponent implements OnInit {
   private project: Campaign = new Campaign();
   organizations: Organization[] = [];
   budgets: Budget[] = [];
+  rules: Content = new Content();
   minDonations: string = "0.00";
 
   // Form
@@ -53,8 +55,9 @@ export class EditCampaignComponent implements OnInit {
     private modalService: BsModalService,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
-    private organizationService: OrganizationService,
-    private campaignService: CampaignService
+    private campaignService: CampaignService,
+    private contentService: ContentService,
+    private organizationService: OrganizationService
   ) {
     this.route.params.subscribe(params => this.id = params.id);
   }
@@ -111,7 +114,11 @@ export class EditCampaignComponent implements OnInit {
   }
 
   onViewTermsOfUse(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.contentService.getById(this.budgets[this.f.budget.value].rules.id)
+      .subscribe(content => {
+        this.rules = content;
+        this.modalRef = this.modalService.show(template);
+      });
   }
 
   get f() { return this.form.controls; }
@@ -129,36 +136,21 @@ export class EditCampaignComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
-    // Not necessary to send peopleGivingTime for edition of project
-    this.project.peopleGivingTime = [];
-
-    // Get data from form
-    var selectedOrganization: any = {};
-    selectedOrganization.id = this.organizations[this.f.organization.value].id;
-    this.project.organizations = [selectedOrganization];
-
-    var selectedBudget: any = {};
-    selectedBudget.id = this.budgets[this.f.budget.value].id;
-    this.project.budgets = [selectedBudget];
-    
     this.project.title = this.f.title.value;
     this.project.shortDescription = this.f.shortDescription.value;
     this.project.donationsRequired = this.f.donationsRequired.value;
     this.project.peopleRequired = this.f.peopleRequired.value;
     this.project.longDescription = this.simplemde.value();
-    
-    var leaderId = this.project.leader.id;
-    this.project.leader = new User();
+    this.project.organizationsRef = [this.organizations[this.f.organization.value].id];
+    this.project.budgetsRef = [this.budgets[this.f.budget.value].id];
 
     // Submit item to backend
     if (this.id > 0) {
-      this.project.leader.id = leaderId;
-      this.project.donations = [];
       this.campaignService.update(this.project)
         .subscribe(
           response => {
             this.submitting = false;
-            this.router.navigate(['/projects/' + response.id]);
+            this.router.navigate(['/campaigns/' + response.id]);
           },
           error => {
             console.log(error);
@@ -171,7 +163,7 @@ export class EditCampaignComponent implements OnInit {
         .subscribe(
           response => {
             this.submitting = false;
-            this.router.navigate(['/projects/' + response.id]);
+            this.router.navigate(['/campaigns/' + response.id]);
           },
           error => {
             console.log(error);

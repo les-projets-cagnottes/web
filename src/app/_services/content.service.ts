@@ -24,6 +24,10 @@ export class ContentService {
     return this.http.put<Content>(`${environment.apiUrl}/content`, content);
   }
 
+  getById(id) {
+    return this.http.get<Content>(`${environment.apiUrl}/content/${id}`);
+  }
+
   getByOrganizationId(organizationId, offset, limit) {
     const params = new HttpParams()
       .set('offset', offset)
@@ -37,6 +41,7 @@ export class ContentService {
       .set('organizationId', organizationId);
     return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
   }
+
   removeContent(organizationId: number, contentId: number) {
     return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/contents?contentId=${contentId}`);
   }

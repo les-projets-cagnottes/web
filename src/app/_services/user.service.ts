@@ -21,6 +21,12 @@ export class UserService {
         return this.http.get<User>(`${environment.apiUrl}/user/${id}`);
     }
 
+    getAllByIds(ids: number[]) {
+        const params = new HttpParams()
+            .set('ids', ids.toString());
+        return this.http.get<User[]>(`${environment.apiUrl}/user`, { params });
+    }
+
     getByEmail(email: string) {
         return this.http.get<User>(`${environment.apiUrl}/user?email=${email}`);
     }

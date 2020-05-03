@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign, User, Donation, Budget } from 'src/app/_models';
+import { Campaign, User, Donation, Budget, Generic, Organization } from 'src/app/_models';
 import { AuthenticationService, CampaignService, DonationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -16,13 +16,19 @@ export class ViewCampaignComponent implements OnInit {
   id: number;
   userLoggedIn: User;
   project: Campaign = new Campaign();
+  leader: User = new User();
   budgets: Budget[] = [];
+  organizations: Organization[] = [];
   donations: Donation[] = [];
-  private totalDonations: number;
+  members: User[] = [];
+  totalUserDonations: number[] = [];
 
   modalRef: BsModalRef;
   isUserInTeam: boolean = false;
   donationForm: FormGroup;
+
+  // Contribute financially
+  contributeFinanciallyStatus: string = 'get-budgets'
 
   // Donations
   private rawResponse: any;
@@ -44,7 +50,7 @@ export class ViewCampaignComponent implements OnInit {
     private userService: UserService) {
 
     this.route.params.subscribe(params => this.id = params.id);
-    this.project.leader = new User();
+    //this.project.leader = new User();
     this.donationForm = this.formBuilder.group({
       budget: [0],
       amount: [10, [Validators.min(0), Validators.max(0)]]
@@ -53,52 +59,68 @@ export class ViewCampaignComponent implements OnInit {
 
   ngOnInit() {
     this.refresh();
+    this.refreshBudgets();
     this.refreshDonations();
   }
 
   refresh() {
     this.userLoggedIn = this.authenticationService.currentUserValue;
-    if (this.userLoggedIn !== null) {
-      this.campaignService.getById(this.id)
-        .subscribe(response => {
-          this.project = response;
-          this.project.leader = new User().decode(this.project.leader);
-          var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
-          this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
-          this.isUserInTeam = this.project.peopleGivingTime.find(user => {
-            return this.userLoggedIn.id === user.id;
-          }) !== undefined;
-          for(var k = 0 ; k < this.project.peopleGivingTime.length ; k++) {
-            this.project.peopleGivingTime[k] = new User().decode(this.project.peopleGivingTime[k]);
-          }
-        });
-      this.organizationService.getByMemberId(this.userLoggedIn.id)
-        .subscribe(response => {
-          response.forEach(organization => {
-            this.budgets = [];
-            organization.budgets.forEach(budget => {
-              var now = new Date();
-              if (budget.isDistributed && new Date(budget.startDate).getTime() <= now.getTime() && now.getTime() <= new Date(budget.endDate).getTime()) {
-                budget.organization = organization;
-                budget.totalUserDonations = 0;
-                this.budgets.push(budget);
-              }
+    this.campaignService.getById(this.id)
+      .subscribe(response => {
+        this.project = response;
+        this.refreshLeader();
+        this.refreshMembers();
+        var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
+        this.project.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+      });
+  }
+
+  refreshLeader() {
+    this.userService.getById(this.project.leader.id)
+      .subscribe(leader => {
+        this.leader = leader;
+      });
+  }
+
+  refreshMembers() {
+    this.userService.getAllByIds(this.project.peopleGivingTimeRef)
+    .subscribe(members => {
+      this.members = members;
+      this.isUserInTeam = this.members.find(user => {
+        return this.userLoggedIn.id === user.id;
+      }) !== undefined;
+    });
+  }
+
+  refreshBudgets() {
+    this.budgetService.getUsable()
+      .subscribe(budgets => {
+        this.budgets = budgets;
+        this.contributeFinanciallyStatus = 'idle';
+        this.refreshOrganizations();
+        this.budgets.forEach(budget => {
+          this.totalUserDonations[budget.id] = 0
+          this.budgetService.getDonationsByContributorId(this.userLoggedIn.id, budget.id)
+          .subscribe(donations => {
+            donations.forEach(donation => {
+              this.totalUserDonations[donation.budget.id] += donation.amount;
             });
+            this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+              +(this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);
           });
-          this.budgets.forEach(budget => {
-            this.budgetService.getDonationsByContributorId(this.userLoggedIn.id, budget.id)
-              .subscribe(donations => {
-                donations.forEach(donation => {
-                  budget.totalUserDonations += donation.amount;
-                });
-                this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
-                  +(this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);
-              });
-          });
-        });
-    } else {
-      this.userLoggedIn = new User();
-    }
+        })
+      });
+  }
+
+  refreshOrganizations() {
+    var organizationsId = []
+    this.budgets.forEach(budget => organizationsId.push(budget.organization.id));
+    this.organizationService.getAllByIds(organizationsId)
+      .subscribe(organizations => {
+        this.budgets.forEach(budget => {
+          this.organizations[budget.id] = organizations.find(organization => organization.id === budget.organization.id);
+        })
+      });
   }
 
   refreshDonations(page: number = 1) {
@@ -157,6 +179,11 @@ export class ViewCampaignComponent implements OnInit {
       .subscribe(() => {
         this.refresh();
       })
+  }
+
+  onSelectBudgetToContributeFinancially(index) {
+    console.log(index);
+
   }
 
   get f() { return this.donationForm.controls; }

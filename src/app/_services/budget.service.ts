@@ -14,8 +14,8 @@ export class BudgetService {
     return this.http.get<Budget[]>(`${environment.apiUrl}/budget?isActive=${isActive}`);
   }
 
-  getByOrganizationId(organizationId: number) {
-    return this.http.get<Budget[]>(`${environment.apiUrl}/budget?organizationId=${organizationId}`);
+  getUsable() {
+    return this.http.get<Budget[]>(`${environment.apiUrl}/budget/usable`);
   }
 
   getDonations(budgetId: number) {
@@ -24,6 +24,10 @@ export class BudgetService {
   
   getDonationsByContributorId(contributorId: number, budgetId: number) {
     return this.http.get<Donation[]>(`${environment.apiUrl}/budget/${budgetId}/donations?contributorId=${contributorId}`);
+  }
+
+  getByOrganizationId(organizationId: number) {
+    return this.http.get<Budget[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
   }
 
   create(budget: Budget) {
