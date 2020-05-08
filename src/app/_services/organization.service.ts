@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { Organization, User } from '../_models';
+import { User, OrganizationModel, BudgetModel } from '../_models';
 import { OrganizationAuthority } from '../_models/organizationAuthority';
 
 @Injectable({
@@ -12,17 +12,17 @@ export class OrganizationService {
   constructor(private http: HttpClient) { }
 
   getById(id: number) {
-    return this.http.get<Organization>(`${environment.apiUrl}/organization/${id}`);
+    return this.http.get<OrganizationModel>(`${environment.apiUrl}/organization/${id}`);
   }
 
   getAllByIds(ids: number[]) {
     const params = new HttpParams()
         .set('ids', ids.toString());
-    return this.http.get<Organization[]>(`${environment.apiUrl}/organization`, { params });
+    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/organization`, { params });
 }
 
   getByMemberId(memberId: number) {
-    return this.http.get<Organization[]>(`${environment.apiUrl}/user/${memberId}/organizations`);
+    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/user/${memberId}/organizations`);
   }
 
   getByOwner(owner: User, offset, limit) {
@@ -32,22 +32,20 @@ export class OrganizationService {
     return this.http.get<User[]>(`${environment.apiUrl}/organization?owner_id=${owner.id}`, { params });
   }
 
-  create(organization: Organization) {
+  getBudgets(organizationId: number) {
+    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
+  }
+
+  create(organization: OrganizationModel) {
     return this.http.post(`${environment.apiUrl}/organization`, organization);
   }
 
-  update(organization: Organization) {
+  update(organization: OrganizationModel) {
     return this.http.put(`${environment.apiUrl}/organization/${organization.id}`, organization);
   }
 
   delete(id: number) {
     return this.http.delete(`${environment.apiUrl}/organization/${id}`);
-  }
-
-  getBudgets(organizationsId: Number[]) {
-    const params = new HttpParams()
-      .set('organizations_id', organizationsId.toLocaleString());
-    return this.http.get<User[]>(`${environment.apiUrl}/organization/budget`, { params });
   }
 
   getMembers(organizationId: Number, offset, limit) {

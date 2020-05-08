@@ -2,7 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService } from 'src/app/_services';
-import { User, Organization, Budget, Donation, Campaign, ApiToken } from 'src/app/_models';
+import { User, ApiToken, DonationModel } from 'src/app/_models';
+import { Budget, Campaign, Donation, Organization } from 'src/app/_entities';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   budgets: Budget[] = [];
   budgetsSorted: Budget[] = [];
-  donations: Donation[] = [];
+  donations: DonationModel[] = [];
   apiTokens: ApiToken[] = [];
   private organizations: Organization[] = [];
   projects: Campaign[] = [];
@@ -66,19 +67,19 @@ export class ProfileComponent implements OnInit {
         this.editUserForm.controls['avatarUrl'].setValue(this.user.avatarUrl);
         this.organizationService.getByMemberId(this.user.id)
           .subscribe(organizations => {
-            this.organizations = organizations;
+            organizations.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
             var nbBudgetOrgsRetreived = 0;
             this.organizations.forEach(organizationModel => {
               this.organizationService.getById(organizationModel.id)
                 .subscribe(organization => {
                   var i = this.organizations.findIndex(org => org.id === organization.id);
-                  this.organizations[i] = Organization.decode(organization);
-                  this.budgetService.getByOrganizationId(this.organizations[i].id)
+                  this.organizations[i] = Organization.fromModel(organization);
+                  this.organizationService.getBudgets(this.organizations[i].id)
                     .subscribe(budgets => {
                       for (var j = 0; j < budgets.length; j++) {
                         budgets[j].totalDonations = 0;
                         budgets[j].organization = this.organizations.find(org => org.id === organization.id);
-                        this.budgetsSorted[budgets[j].id] = Budget.decode(budgets[j]);
+                        this.budgetsSorted[budgets[j].id] = Budget.fromModel(budgets[j]);
                       }
                       nbBudgetOrgsRetreived++;
                       if (nbBudgetOrgsRetreived === this.organizations.length) {
@@ -90,7 +91,7 @@ export class ProfileComponent implements OnInit {
           });
         this.campaignService.getByMemberId(this.user.id)
           .subscribe(projects => {
-            this.projects = projects;
+            projects.forEach(project => this.projects.push(Campaign.fromModel(project)));
             var that = this;
             this.projects.forEach(function (value) {
               value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
@@ -115,7 +116,7 @@ export class ProfileComponent implements OnInit {
         this.getProjectForDonations(this.donations, 0);
         for (var k = 0; k < donations.length; k++) {
           var budgetId = donations[k].budget.id;
-          this.budgetsSorted[budgetId].donations.push(donations[k]);
+          this.budgetsSorted[budgetId].donations.push(Donation.fromModel(donations[k]));
           this.budgetsSorted[budgetId].totalDonations += donations[k].amount;
         }
         this.budgets = [];
@@ -131,7 +132,7 @@ export class ProfileComponent implements OnInit {
   getProjectForDonations(donations, index) {
     this.campaignService.getById(donations[index].project.id)
     .subscribe(response => {
-      this.donations[index].project = response;
+      this.donations[index].campaign = response;
       if(index < donations.length) {
         this.getProjectForDonations(donations, index + 1);
       }

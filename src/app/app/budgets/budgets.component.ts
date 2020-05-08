@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BudgetService, PagerService, AuthenticationService, OrganizationService } from 'src/app/_services';
-import { Budget, Organization, User, Content } from 'src/app/_models';
+import { BudgetModel, User, Content } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Organization } from 'src/app/_entities';
 
 @Component({
   selector: 'app-budgets',
@@ -48,7 +49,7 @@ export class BudgetsComponent implements OnInit {
       this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
         .subscribe(
           response => {
-            this.organizations = response;
+            response.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
             this.mainForms = [];
             var that = this;
             this.organizations.forEach((organization, index) => {
@@ -94,7 +95,7 @@ export class BudgetsComponent implements OnInit {
   }
 
   save(): void {
-    var budgets: Budget[] = [];
+    var budgets: BudgetModel[] = [];
 
     // stop here if form is invalid
     this.organizations.forEach((organization, index) => {
@@ -140,7 +141,7 @@ export class BudgetsComponent implements OnInit {
 
   add(idOrganization: number) {
 
-    var budget = new Budget();
+    var budget = new BudgetModel();
     budget.name = "Budget " + new Date().getFullYear();
     budget.startDate = new Date();
     budget.endDate = new Date();

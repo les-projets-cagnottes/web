@@ -1,4 +1,4 @@
-import { Organization } from './organization';
+import { Organization } from '../_entities';
 
 export class Content {
     id: number;

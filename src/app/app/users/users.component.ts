@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService, PagerService } from 'src/app/_services';
-import { User, Organization, SlackUser } from 'src/app/_models';
+import { User, SlackUser } from 'src/app/_models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Organization } from 'src/app/_entities';
 
 @Component({
   selector: 'app-users',

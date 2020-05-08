@@ -44,7 +44,7 @@
                 <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
                     <i class="fa fa-close"></i><span i18n="@@projectLeaveTeamAppButton">Leave the team</span>
                 </a>
-                <a class="btn btn-app btn-money" [ngClass]="{ 'disabled': contributeFinanciallyStatus == 'get-budgets'}" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.totalDonations.toFixed(2) != project.donationsRequired.toFixed(2) && project.status == 'A_IN_PROGRESS'">
+                <a class="btn btn-app btn-money" [ngClass]="{ 'disabled': contributeFinanciallyStatus == 'disabled'}" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.totalDonations.toFixed(2) != project.donationsRequired.toFixed(2) && project.status == 'A_IN_PROGRESS'">
                     <i class="fa fa-money"></i><span i18n="@@projectContributeFinanciallyAppButton">Contribute
                         financially</span>
                 </a>
@@ -61,17 +61,17 @@
                             <div class="form-group">
                                 <label for="amount" i18n="@@budgetName">Budget</label>
                                 <select class="form-control select2 select-border" style="width: 100%;" formControlName="budget">
-                                    <option *ngFor="let budget of budgets; index as i" value="{{ i }}">
-                                        {{ organizations[budget.id].name }} - {{ budget.name }}</option>
+                                    <option *ngFor="let account of accounts; index as i" value="{{ i }}">
+                                        {{ account.budget.organization.name }} - {{ account.budget.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
                                 <label for="amount" i18n="@@donationAmount">Amount (in €)</label>
-                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(budgets[f.budget.value].amountPerMember - totalUserDonations[f.budget.value], project.donationsRequired - project.totalDonations)).toFixed(2) }}">
+                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[f.budget.value].amount, project.donationsRequired - project.totalDonations)).toFixed(2) }}">
                             </div>
                             <div>
                                 <span i18n="@@budgetRemainingBegin">You will have </span>
-                                <b>{{ (budgets[f.budget.value].amountPerMember - totalUserDonations[f.budget.value] - f.amount.value).toFixed(2) }} €</b>
+                                <b>{{ (accounts[f.budget.value].amount - f.amount.value).toFixed(2) }} €</b>
                                 <span i18n="@@budgetRemainingEnd"> left to finance other projects.</span>
                             </div>
                         </form>
@@ -98,11 +98,16 @@
                             <th i18n="@@donationContributor">Contributor</th>
                             <th i18n="@@donationDate">Date</th>
                             <th i18n="@@donationAmount" width="22%">Amount</th>
+                            <th i18n="@@actions" width="22%">Actions</th>
                         </tr>
                         <tr *ngFor="let donation of pagedItems">
                             <td>{{ donation.contributor.firstname }} {{ donation.contributor.lastname }}</td>
                             <td>{{ donation.createdAt | date:'medium' }}</td>
                             <td class="text-right">{{ donation.amount.toFixed(2) }} €</td>
+                            <td>
+                                <button *ngIf="project.status == 'A_IN_PROGRESS' && userLoggedIn.id === donation.contributor.id" type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-success': deleteDonationsStatus[donation.id] == 'success', 'btn-danger': deleteDonationsStatus[donation.id] == 'error' }"
+                                    (click)="deleteDonations(donation)">
+                                    <i class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -144,19 +149,21 @@
         <div class="box box-default">
             <div class="box-header">
                 <h3 class="box-title" i18n="@@projectTeamBoxTitle">Team</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" (click)="refreshMembers()" [ngClass]="{ 'btn-success': membersSyncStatus == 'success'}"><i class="fa fa-refresh"></i>
+                    </button>
+                </div>
             </div>
             <div class="box-body no-padding">
                 <ul class="users-list clearfix">
-                    <li>
-                        <img [src]="leader.avatarUrl || leader.getDefaultAvatarUrl()" alt="User Image" style="max-height: 90px;">
-                        <a class="users-list-name">{{ leader.firstname }}
-                            {{ leader.lastname }}</a>
-                    </li>
                     <li *ngFor="let user of members">
                         <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image" style="max-height: 90px;">
                         <a class="users-list-name">{{ user.firstname }} {{ user.lastname }}</a>
                     </li>
                 </ul>
+            </div>
+            <div *ngIf="membersSyncStatus == 'running'" class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
             </div>
         </div>
     </div>

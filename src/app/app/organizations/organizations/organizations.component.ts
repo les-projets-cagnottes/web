@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from 'src/app/_services/organization.service';
 import { PagerService, AuthenticationService } from 'src/app/_services';
-import { Organization } from 'src/app/_models';
+import { OrganizationModel } from 'src/app/_models';
 
 @Component({
   selector: 'app-organizations',
@@ -17,7 +17,7 @@ export class OrganizationsComponent implements OnInit {
 
   private rawResponse: any;
   pager: any = {};
-  pagedItems: any[];
+  pagedItems: OrganizationModel[];
   pageSize: number = 10;
 
   constructor(
@@ -43,7 +43,7 @@ export class OrganizationsComponent implements OnInit {
     }
   }
 
-  delete(org: Organization): void {
+  delete(org: OrganizationModel): void {
     this.organizationService.delete(org.id)
       .subscribe(
         () => {

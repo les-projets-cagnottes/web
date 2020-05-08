@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Campaign, Organization, Budget, User, Content, Generic } from 'src/app/_models';
+import { Content, CampaignModel } from 'src/app/_models';
 import { AuthenticationService, OrganizationService, CampaignService, BudgetService } from 'src/app/_services';
 import { ContentService } from 'src/app/_services/content.service';
+import { Budget, Campaign, Organization } from 'src/app/_entities';
 
 declare function startSimpleMDE(): any;
 
@@ -66,7 +67,7 @@ export class EditCampaignComponent implements OnInit {
     if (this.id > 0) {
       this.campaignService.getById(this.id)
         .subscribe(response => {
-          this.project = response;
+          this.project = Campaign.fromModel(response);
           this.refresh();
         });
     } else {
@@ -96,7 +97,7 @@ export class EditCampaignComponent implements OnInit {
       this.simplemde.value(this.project.longDescription);
       this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
         .subscribe(orgs => {
-          this.organizations = orgs;
+          orgs.forEach(org => this.organizations.push(Organization.fromModel(org)));
           this.form.controls['organization'].setValue(0);
         })
       this.form.controls['organization'].valueChanges.subscribe(val => {
@@ -106,9 +107,9 @@ export class EditCampaignComponent implements OnInit {
   }
 
   refreshBudgets(organizationId: number) {
-    this.budgetService.getByOrganizationId(organizationId)
+    this.organizationService.getBudgets(organizationId)
       .subscribe(budgets => {
-        this.budgets = budgets;
+        this.budgets = Budget.fromModels(budgets);
         this.form.controls['budget'].setValue(0);
       });
   }
@@ -135,6 +136,8 @@ export class EditCampaignComponent implements OnInit {
 
     // Set submitting state as true
     this.submitting = true;
+
+    var campaign = new CampaignModel();
 
     this.project.title = this.f.title.value;
     this.project.shortDescription = this.f.shortDescription.value;

@@ -1,5 +1,4 @@
 import { User } from './user';
-import { Campaign } from './campaign';
 
 export class Authority {
     id: number;

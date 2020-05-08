@@ -19,8 +19,8 @@
     <div class="col-md-8 col-xs-12">
         <div class="progress-group">
             <span class="progress-text" i18n="@@budgetUsage">Usage overview</span>
-            <div class="progress" style="margin-top: 1em; border-color: gray; border-style: dotted;" title="{{ budget.usage }}">
-                <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': budget.usage }">
+            <div class="progress" style="margin-top: 1em; border-color: gray; border-style: dotted;" title="{{ budgetUsage }}">
+                <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': budgetUsage }">
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                             <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
                             <td>{{ project.createdAt |date:'medium' }}</td>
                             <td>{{ project.shortDescription }}</td>
-                            <td>{{ 1 + project.peopleGivingTime.length }} / {{ 1 + project.peopleRequired }}</td>
+                            <td>{{ 1 + project.peopleGivingTimeRef.length }} / {{ 1 + project.peopleRequired }}</td>
                             <td>{{ totalDonations[project.id].toFixed(2) }} €</td>
                             <td>{{ project.totalDonations.toFixed(2) }} €</td>
                             <td>{{ project.donationsRequired.toFixed(2) }} €</td>
@@ -75,19 +75,19 @@
                     <div class="col-md-7">
                         <ul *ngIf="projectPager.pages && projectPager.pages.length" class="pagination pagination-sm no-margin pull-right">
                             <li [ngClass]="{disabled:projectPager.currentPage === 1}">
-                                <a (click)="refreshProjects(1)">&#171;</a>
+                                <a (click)="refreshCampaigns(1)">&#171;</a>
                             </li>
                             <li [ngClass]="{disabled:projectPager.currentPage === 1}">
-                                <a (click)="refreshProjects(projectPager.currentPage - 1)">&#8249;</a>
+                                <a (click)="refreshCampaigns(projectPager.currentPage - 1)">&#8249;</a>
                             </li>
                             <li *ngFor="let page of projectPager.pages" [ngClass]="{active:projectPager.currentPage === page}">
-                                <a (click)="refreshProjects(page)">{{page}}</a>
+                                <a (click)="refreshCampaigns(page)">{{page}}</a>
                             </li>
                             <li [ngClass]="{disabled:projectPager.currentPage === projectPager.totalPages}">
-                                <a (click)="refreshProjects(projectPager.currentPage + 1)">&#8250;</a>
+                                <a (click)="refreshCampaigns(projectPager.currentPage + 1)">&#8250;</a>
                             </li>
                             <li [ngClass]="{disabled:projectPager.currentPage === projectPager.totalPages}">
-                                <a (click)="refreshProjects(projectPager.totalPages)">&#187;</a>
+                                <a (click)="refreshCampaigns(projectPager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
@@ -101,6 +101,10 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title" i18n="@@usersBoxTitle">Users</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" (click)="refreshAccounts(accountsPager.currentPage)" [ngClass]="{ 'btn-success': accountsSyncStatus == 'success'}"><i class="fa fa-refresh"></i>
+                    </button>
+                </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding table-responsive">
@@ -110,12 +114,12 @@
                             <th i18n="@@userUsageName">Name</th>
                             <th i18n="@@userBudgetUsage">Usage</th>
                         </tr>
-                        <tr *ngFor="let user of pagedUsers">
-                            <td>{{ user.firstname }} {{ user.lastname }}</td>
+                        <tr *ngFor="let account of pagedAccounts">
+                            <td>{{ account.owner.firstname }} {{ account.owner.lastname }}</td>
                             <td>
                                 <div class="progress-group">
-                                    <div class="progress sm" title="{{ user.budgetUsage }}">
-                                        <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': user.budgetUsage }"></div>
+                                    <div class="progress sm" title="{{ account.usage }}">
+                                        <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': account.usage }"></div>
                                     </div>
                                 </div>
                             </td>
@@ -123,31 +127,34 @@
                     </tbody>
                 </table>
             </div>
+            <div *ngIf="accountsSyncStatus == 'running'" class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
             <!-- /.box-body -->
             <div class="box-footer">
                 <div class="row">
                     <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="userPager.pages && userPager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing
-                            </span>{{ userPager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
-                            </span>{{ userPager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
-                            </span>{{ userPager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
+                        <div *ngIf="accountsPager.pages && accountsPager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing
+                            </span>{{ accountsPager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
+                            </span>{{ accountsPager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
+                            </span>{{ accountsPager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
                     </div>
                     <div class="col-md-7">
-                        <ul *ngIf="userPager.pages && userPager.pages.length" class="pagination pagination-sm no-margin pull-right">
-                            <li [ngClass]="{disabled:userPager.currentPage === 1}">
-                                <a (click)="refreshUsers(1)">&#171;</a>
+                        <ul *ngIf="accountsPager.pages && accountsPager.pages.length" class="pagination pagination-sm no-margin pull-right">
+                            <li [ngClass]="{disabled:accountsPager.currentPage === 1}">
+                                <a (click)="refreshAccounts(1)">&#171;</a>
                             </li>
-                            <li [ngClass]="{disabled:userPager.currentPage === 1}">
-                                <a (click)="refreshUsers(userPager.currentPage - 1)">&#8249;</a>
+                            <li [ngClass]="{disabled:accountsPager.currentPage === 1}">
+                                <a (click)="refreshAccounts(accountsPager.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li *ngFor="let page of userPager.pages" [ngClass]="{active:userPager.currentPage === page}">
-                                <a (click)="refreshUsers(page)">{{page}}</a>
+                            <li *ngFor="let page of accountsPager.pages" [ngClass]="{active:accountsPager.currentPage === page}">
+                                <a (click)="refreshAccounts(page)">{{page}}</a>
                             </li>
-                            <li [ngClass]="{disabled:userPager.currentPage === userPager.totalPages}">
-                                <a (click)="refreshUsers(userPager.currentPage + 1)">&#8250;</a>
+                            <li [ngClass]="{disabled:accountsPager.currentPage === accountsPager.totalPages}">
+                                <a (click)="refreshAccounts(accountsPager.currentPage + 1)">&#8250;</a>
                             </li>
-                            <li [ngClass]="{disabled:userPager.currentPage === userPager.totalPages}">
-                                <a (click)="refreshUsers(userPager.totalPages)">&#187;</a>
+                            <li [ngClass]="{disabled:accountsPager.currentPage === accountsPager.totalPages}">
+                                <a (click)="refreshAccounts(accountsPager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
@@ -155,8 +162,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<div id="warn" *ngIf="warn >= 8">
-    <img src="assets/images/warn.png" alt="warn" />
 </div>

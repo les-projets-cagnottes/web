@@ -1,8 +1,8 @@
 ﻿import { Authority } from './authority';
-import { Organization } from './organization';
 import { ApiToken } from './apitoken';
 import { SlackUser } from './slackUser';
 import { OrganizationAuthority } from './organizationAuthority';
+import { Organization } from '../_entities';
 
 export class User {
     id: number;

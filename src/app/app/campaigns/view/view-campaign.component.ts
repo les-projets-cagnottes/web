@@ -1,10 +1,12 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign, User, Donation, Budget, Generic, Organization } from 'src/app/_models';
+import { Account, Budget, Donation, Organization } from 'src/app/_entities';
+import { User, DonationModel, GenericModel } from 'src/app/_models';
 import { AuthenticationService, CampaignService, DonationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Campaign } from 'src/app/_entities/campaign';
 
 @Component({
   selector: 'app-view-campaign',
@@ -17,25 +19,29 @@ export class ViewCampaignComponent implements OnInit {
   userLoggedIn: User;
   project: Campaign = new Campaign();
   leader: User = new User();
+  accounts: Account[] = [];
   budgets: Budget[] = [];
   organizations: Organization[] = [];
   donations: Donation[] = [];
   members: User[] = [];
-  totalUserDonations: number[] = [];
 
   modalRef: BsModalRef;
   isUserInTeam: boolean = false;
   donationForm: FormGroup;
 
   // Contribute financially
-  contributeFinanciallyStatus: string = 'get-budgets'
+  contributeFinanciallyStatus: string = 'disabled'
 
-  // Donations
+  // Donations Box
   private rawResponse: any;
   pager: any = {};
-  pagedItems: any[];
+  pagedItems: Donation[] = [];
   pageSize: number = 10;
   donationsSyncStatus: string = 'idle';
+  deleteDonationsStatus: string[] = [];
+
+  // Members Box
+  membersSyncStatus: string = 'idle';
   
   constructor(
     private route: ActivatedRoute,
@@ -50,7 +56,6 @@ export class ViewCampaignComponent implements OnInit {
     private userService: UserService) {
 
     this.route.params.subscribe(params => this.id = params.id);
-    //this.project.leader = new User();
     this.donationForm = this.formBuilder.group({
       budget: [0],
       amount: [10, [Validators.min(0), Validators.max(0)]]
@@ -59,7 +64,7 @@ export class ViewCampaignComponent implements OnInit {
 
   ngOnInit() {
     this.refresh();
-    this.refreshBudgets();
+    this.refreshAccounts();
     this.refreshDonations();
   }
 
@@ -67,7 +72,7 @@ export class ViewCampaignComponent implements OnInit {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     this.campaignService.getById(this.id)
       .subscribe(response => {
-        this.project = response;
+        this.project = Campaign.fromModel(response);
         this.refreshLeader();
         this.refreshMembers();
         var remainingTime = Math.abs(new Date(this.project.fundingDeadline).getTime() - new Date().getTime());
@@ -83,32 +88,38 @@ export class ViewCampaignComponent implements OnInit {
   }
 
   refreshMembers() {
+    this.membersSyncStatus = 'running';
     this.userService.getAllByIds(this.project.peopleGivingTimeRef)
     .subscribe(members => {
+      this.membersSyncStatus = 'success';
       this.members = members;
       this.isUserInTeam = this.members.find(user => {
         return this.userLoggedIn.id === user.id;
       }) !== undefined;
+      setTimeout(() => {
+        this.membersSyncStatus = 'idle';
+      }, 1000);
+    }, error => {
+      this.membersSyncStatus = 'error';
+      setTimeout(() => {
+        this.membersSyncStatus = 'idle';
+      }, 1000);
     });
+  }
+
+  refreshAccounts() {
+    this.userService.getAccounts(this.userLoggedIn.id)
+      .subscribe(accounts => {
+        this.accounts = Account.valuesOf(accounts);
+        this.refreshBudgets();
+      })
   }
 
   refreshBudgets() {
     this.budgetService.getUsable()
       .subscribe(budgets => {
-        this.budgets = budgets;
-        this.contributeFinanciallyStatus = 'idle';
+        this.budgets = Budget.fromModels(budgets);
         this.refreshOrganizations();
-        this.budgets.forEach(budget => {
-          this.totalUserDonations[budget.id] = 0
-          this.budgetService.getDonationsByContributorId(this.userLoggedIn.id, budget.id)
-          .subscribe(donations => {
-            donations.forEach(donation => {
-              this.totalUserDonations[donation.budget.id] += donation.amount;
-            });
-            this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
-              +(this.min(budget.amountPerMember - budget.totalUserDonations, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);
-          });
-        })
       });
   }
 
@@ -117,9 +128,13 @@ export class ViewCampaignComponent implements OnInit {
     this.budgets.forEach(budget => organizationsId.push(budget.organization.id));
     this.organizationService.getAllByIds(organizationsId)
       .subscribe(organizations => {
-        this.budgets.forEach(budget => {
-          this.organizations[budget.id] = organizations.find(organization => organization.id === budget.organization.id);
-        })
+        var tmpOrg = [];
+        organizations.forEach(organization => tmpOrg.push(Organization.fromModel(organization)));
+        this.budgets.forEach(budget => budget.setOrganization(tmpOrg));
+        this.accounts.forEach(account => account.setBudget(this.budgets));
+        this.contributeFinanciallyStatus = 'idle';
+        this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+          +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);  
       });
   }
 
@@ -129,33 +144,52 @@ export class ViewCampaignComponent implements OnInit {
       .subscribe(response => {
         this.rawResponse = response;
         this.setPage(page);
-        this.pagedItems.forEach(donation => {
-          this.donationsSyncStatus = 'running';
-          this.userService.getById(donation.contributor.id)
-            .subscribe(response => {
-              this.donationsSyncStatus = 'success';
-              donation.contributor = new User().decode(response);
-              setTimeout(() => {
-                this.donationsSyncStatus = 'idle';
-              }, 1000);
-            }
-            , error => {
-              this.donationsSyncStatus = 'error';
-              console.log(error);
-              setTimeout(() => {
-                this.donationsSyncStatus = 'idle';
-              }, 1000);
-            }
-            );
-        })
+        if(this.pagedItems.length == 0) {
+          this.donationsSyncStatus = 'success';
+        }
+        var donationUserRef = []
+        this.pagedItems.forEach(donation => donationUserRef.push(donation.contributor.id));
+        this.userService.getAllByIds(donationUserRef)
+        .subscribe(users => {
+          this.pagedItems.forEach(donation => donation.setContributor(users));
+          this.donationsSyncStatus = 'success';
+          setTimeout(() => {
+            this.donationsSyncStatus = 'idle';
+          }, 1000);
+        }, error => {
+          this.donationsSyncStatus = 'error';
+          console.log(error);
+          setTimeout(() => {
+            this.donationsSyncStatus = 'idle';
+          }, 1000);
+        });
       });
   }
 
   setPage(page: number) {
     this.pager = this.pagerService.getPager(this.rawResponse.totalElements, page, this.pageSize);
-    this.pagedItems = this.rawResponse.content;
+    this.pagedItems = [];
+    this.rawResponse.content.forEach(donation => this.pagedItems.push(Donation.fromModel(donation)));
+    this.pagedItems.forEach(donation => { 
+      this.deleteDonationsStatus[donation.id] = 'idle'
+    });
   }
 
+  deleteDonations(donation: Donation) {
+    this.donationService.delete(donation.id)
+      .subscribe(() => {
+        this.deleteDonationsStatus[donation.id] = 'success';
+      },
+      error => {
+        console.log(error);
+        this.deleteDonationsStatus[donation.id] = 'error';
+        console.log(error);
+        setTimeout(() => {
+          this.deleteDonationsStatus[donation.id] = 'idle';
+        }, 1000);
+      });
+  }
+  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
@@ -181,11 +215,6 @@ export class ViewCampaignComponent implements OnInit {
       })
   }
 
-  onSelectBudgetToContributeFinancially(index) {
-    console.log(index);
-
-  }
-
   get f() { return this.donationForm.controls; }
 
   onSubmitDonation() {
@@ -196,21 +225,18 @@ export class ViewCampaignComponent implements OnInit {
 
     this.modalRef.hide();
 
-    var donation = new Donation();
+    var donation = new DonationModel();
     donation.amount = this.f.amount.value;
-    donation.project = {};
-    donation.project.id = this.project.id;
-    donation.budget = {};
-    donation.budget.id = this.budgets[this.f.budget.value].id;
-    donation.contributor = {};
-    donation.contributor.id = this.userLoggedIn.id;
+    donation.account = GenericModel.valueOf(this.accounts[this.f.budget.value].id);
+    donation.campaign = GenericModel.valueOf(this.project.id);
+    donation.budget = GenericModel.valueOf(this.accounts[this.f.budget.value].budget.id);
+    donation.contributor = GenericModel.valueOf(this.userLoggedIn.id);
 
     this.donationService.create(donation)
       .pipe(first())
       .subscribe(
         () => {
-          this.refresh();
-          this.refreshDonations();
+          this.modalRef.hide();
         },
         error => {
           console.log(error);

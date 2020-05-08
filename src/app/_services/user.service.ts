@@ -2,7 +2,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { User, Donation } from '../_models';
+import { User, AccountModel, DonationModel } from '../_models';
 import { OrganizationAuthority } from '../_models/organizationAuthority';
 
 @Injectable({ providedIn: 'root' })
@@ -39,8 +39,12 @@ export class UserService {
         return this.http.get<User[]>(`${environment.apiUrl}/user`, { params });
     }
 
+    getAccounts(id: number) {
+        return this.http.get<AccountModel[]>(`${environment.apiUrl}/user/${id}/accounts`);
+    }
+
     getDonations(id: number) {
-        return this.http.get<Donation[]>(`${environment.apiUrl}/user/${id}/donations`);
+        return this.http.get<DonationModel[]>(`${environment.apiUrl}/user/${id}/donations`);
     }
 
     create(user: User) {

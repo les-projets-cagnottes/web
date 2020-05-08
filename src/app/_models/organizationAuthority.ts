@@ -1,6 +1,4 @@
-import { User } from './user';
-import { Campaign } from './campaign';
-import { Organization } from './organization';
+import { Organization } from '../_entities';
 
 export class OrganizationAuthority {
     id: number;

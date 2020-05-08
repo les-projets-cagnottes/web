@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Donation } from '../_models';
+import { HttpClient } from '@angular/common/http';
+import { DonationModel } from '../_models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,16 +9,16 @@ import { environment } from 'src/environments/environment';
 export class DonationService {
   constructor(private http: HttpClient) { }
 
-  create(donation: Donation) {
+  create(donation: DonationModel) {
       return this.http.post(`${environment.apiUrl}/donation`, donation);
   }
 
   getbyBudgetId(budgetId: number) {
-    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?budgetId=${budgetId}`);
+    return this.http.get<DonationModel[]>(`${environment.apiUrl}/donation?budgetId=${budgetId}`);
   }
 
   getByContributorId(contributorId: number) {
-    return this.http.get<Donation[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}`);
+    return this.http.get<DonationModel[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}`);
   }
 
   delete(id: number) {

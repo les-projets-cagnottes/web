@@ -1,14 +1,14 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OrganizationService } from 'src/app/_services/organization.service';
-import { Organization, User, Content, Authority } from 'src/app/_models';
-import { first } from 'rxjs/operators';
+import { User, Content } from 'src/app/_models';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { ContentService } from 'src/app/_services/content.service';
+import { Organization } from 'src/app/_entities';
 
 declare function startSimpleMDE(): any;
 
@@ -114,7 +114,7 @@ export class EditOrganizationComponent implements OnInit {
       this.organizationService.getById(this.id)
         .subscribe(
           organization => {
-            this.organization = organization;
+            this.organization = Organization.fromModel(organization);
             this.refreshAuthorities();
             this.refreshForm();
             this.refreshMembers();
