@@ -1,7 +1,9 @@
-import { User, CampaignModel } from '../_models';
+import { CampaignModel } from '../_models/campaign.model';
+
 import { Budget } from './budget';
 import { Donation } from './donation';
 import { Organization } from './organization';
+import { User } from './user';
 
 export class Campaign extends CampaignModel {
 

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, BudgetService, DonationService, OrganizationService, CampaignService, PagerService, UserService } from 'src/app/_services';
-import { User } from 'src/app/_models';
 import { FormBuilder } from '@angular/forms';
-import { Budget, Donation, Organization, Campaign, Account } from 'src/app/_entities';
+import { Account, Budget, Campaign, Organization, User } from 'src/app/_entities';
+import { AuthenticationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-report',
@@ -96,7 +95,7 @@ export class ReportComponent implements OnInit {
           this.accountsSyncStatus = 'running';
           this.userService.getAllByIds(accountUserRef)
             .subscribe(users => {
-              this.pagedAccounts.forEach(account => account.setOwner(users));
+              this.pagedAccounts.forEach(account => account.setOwner(User.fromModels(users)));
               this.accountsSyncStatus = 'success';
               setTimeout(() => {
                 this.accountsSyncStatus = 'idle';

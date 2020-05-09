@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router"
 
 import { AuthenticationService } from '../../_services';
-import { User } from 'src/app/_models';
-import { OrganizationService } from 'src/app/_services/organization.service';
+import { User } from 'src/app/_entities/user';
 
 @Component({
   selector: 'app-navbar',
@@ -28,7 +27,7 @@ export class AppNavbarComponent implements OnInit {
   refresh() {
     this.authenticationService.whoami()
       .subscribe(json => {
-        this.currentUser.decode(json);
+        this.currentUser = User.fromModel(json);
       });
   }
 

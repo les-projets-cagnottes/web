@@ -1,13 +1,16 @@
-import { User, BudgetModel, Content, OrganizationModel } from '../_models';
+import { BudgetModel } from '../_models/budget.model';
+import { Content } from '../_models/content';
+
 import { Donation } from './donation';
 import { Account } from './account';
 import { Organization } from './organization';
+import { User } from './user';
 
 export class Budget extends BudgetModel {
-    organization: Organization;
-    budget: Budget;
-    sponsor: User;
-    rules: Content;
+
+    organization: Organization = new Organization();
+    sponsor: User = new User();
+    rules: Content = new Content();
     accounts: Account[];
     donations: Donation[];
 

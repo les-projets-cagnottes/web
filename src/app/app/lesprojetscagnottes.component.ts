@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { User } from '../_models';
+import { Role } from '../_models';
+import { User } from '../_entities';
 import { AuthenticationService } from '../_services';
-import { Role } from '../_models/role';
 
 @Component({
   selector: 'app-lesprojetscagnottes',

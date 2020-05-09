@@ -1,8 +1,14 @@
-import { User, OrganizationModel, SlackTeam, Content, OrganizationAuthority } from '../_models';
+import { Content } from '../_models/content';
+import { OrganizationModel } from '../_models/organization.model';
+import { OrganizationAuthority } from '../_models/organizationAuthority';
+import { SlackTeam } from '../_models/slackTeam';
+
 import { Budget } from './budget';
+import { User } from './user';
 
 export class Organization extends OrganizationModel {
-    slackTeam: SlackTeam;
+
+    slackTeam: SlackTeam = new SlackTeam();
     members: User[] = [];
     budgets: Budget[] = [];
     contents: Content[] = [];

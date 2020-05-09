@@ -1,10 +1,15 @@
-import { User, AccountModel } from '../_models';
+import { AccountModel } from '../_models/account.model';
+
 import { Budget } from './budget';
+import { User } from './user';
 
 export class Account extends AccountModel {
+    
+    owner: User = new User();
+    budget: Budget = new Budget();
+
+    // Front only
     usage: string = "0%";
-    owner: User;
-    budget: Budget;
 
     static fromModel(model: AccountModel): Account {
         var entity = new Account();

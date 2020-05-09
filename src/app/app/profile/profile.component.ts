@@ -2,8 +2,8 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService } from 'src/app/_services';
-import { User, ApiToken, DonationModel } from 'src/app/_models';
-import { Budget, Campaign, Donation, Organization } from 'src/app/_entities';
+import { ApiToken, DonationModel } from 'src/app/_models';
+import { Account, Budget, Campaign, Donation, Organization, User } from 'src/app/_entities';
 
 @Component({
   selector: 'app-profile',
@@ -12,17 +12,19 @@ import { Budget, Campaign, Donation, Organization } from 'src/app/_entities';
 })
 export class ProfileComponent implements OnInit {
 
-  budgets: Budget[] = [];
-  budgetsSorted: Budget[] = [];
-  donations: DonationModel[] = [];
+  accounts: Account[] = [];
+  accountsBudgets: Budget[] = [];
   apiTokens: ApiToken[] = [];
-  private organizations: Organization[] = [];
   projects: Campaign[] = [];
   user: User = new User();
-  deleteDonationsStatus: string[] = [];
-  deleteApiTokenStatus: string[] = [];
 
-  // Settings tab
+  // Contributions Tab
+  donations: Donation[] = [];
+  donationsBudgets: Budget[] = [];
+  donationsCampaigns: Budget[] = [];
+  deleteDonationsStatus: string[] = [];
+
+  // Settings Tab
   editUserForm = this.fb.group({
     email: ['', [Validators.required, Validators.maxLength(255)]],
     password: [''],
@@ -33,9 +35,10 @@ export class ProfileComponent implements OnInit {
   submitStatus = 'idle';
   submitting = false;
 
-  // Developer tab
+  // Developer Tab
   generateApiTokenStatus = 'idle';
   generatedApiToken: ApiToken = new ApiToken();
+  deleteApiTokenStatus: string[] = [];
 
   // TermsOfUse modal
   modalRef: BsModalRef;
@@ -58,85 +61,94 @@ export class ProfileComponent implements OnInit {
   }
 
   refresh() {
-    this.authenticationService.whoami()
-      .subscribe(user => {
-        this.user.decode(user);
-        this.editUserForm.controls['email'].setValue(this.user.email);
-        this.editUserForm.controls['firstname'].setValue(this.user.firstname);
-        this.editUserForm.controls['lastname'].setValue(this.user.lastname);
-        this.editUserForm.controls['avatarUrl'].setValue(this.user.avatarUrl);
-        this.organizationService.getByMemberId(this.user.id)
-          .subscribe(organizations => {
-            organizations.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
-            var nbBudgetOrgsRetreived = 0;
-            this.organizations.forEach(organizationModel => {
-              this.organizationService.getById(organizationModel.id)
-                .subscribe(organization => {
-                  var i = this.organizations.findIndex(org => org.id === organization.id);
-                  this.organizations[i] = Organization.fromModel(organization);
-                  this.organizationService.getBudgets(this.organizations[i].id)
-                    .subscribe(budgets => {
-                      for (var j = 0; j < budgets.length; j++) {
-                        budgets[j].totalDonations = 0;
-                        budgets[j].organization = this.organizations.find(org => org.id === organization.id);
-                        this.budgetsSorted[budgets[j].id] = Budget.fromModel(budgets[j]);
-                      }
-                      nbBudgetOrgsRetreived++;
-                      if (nbBudgetOrgsRetreived === this.organizations.length) {
-                        this.refreshDonations();
-                      }
-                    });
-                });
-            })
+    this.user = User.fromModel(this.authenticationService.currentUserValue);
+    this.editUserForm.controls['email'].setValue(this.user.email);
+    this.editUserForm.controls['firstname'].setValue(this.user.firstname);
+    this.editUserForm.controls['lastname'].setValue(this.user.lastname);
+    this.editUserForm.controls['avatarUrl'].setValue(this.user.avatarUrl);
+    this.refreshAccounts();
+    this.refreshCampaigns();
+    this.refreshDonations();
+    this.refreshTokens();
+  }
+
+  refreshAccounts() {
+    this.accounts = [];
+    this.userService.getAccounts(this.user.id)
+      .subscribe(accounts => {
+        var budgetIds = [];
+        accounts.forEach(model => {
+          var account = Account.fromModel(model);
+          account.usage = this.computeNumberPercent(account.amount, account.initialAmount) + "%";
+          this.accounts.push(account);
+          budgetIds.push(account.budget.id);
+        });
+        this.budgetService.getAllByIds(budgetIds)
+          .subscribe(accountsBudgets => {
+            this.accountsBudgets = Budget.fromModels(accountsBudgets);
+            var organizationsId = []
+            this.accountsBudgets.forEach(budget => organizationsId.push(budget.organization.id));
+            this.organizationService.getAllByIds(organizationsId)
+              .subscribe(organizations => {
+                var tmpOrg = [];
+                organizations.forEach(organization => tmpOrg.push(Organization.fromModel(organization)));
+                this.accountsBudgets.forEach(budget => budget.setOrganization(tmpOrg));
+                this.accounts.forEach(account => account.setBudget(this.accountsBudgets));
+              });
           });
-        this.campaignService.getByMemberId(this.user.id)
-          .subscribe(projects => {
-            projects.forEach(project => this.projects.push(Campaign.fromModel(project)));
-            var that = this;
-            this.projects.forEach(function (value) {
-              value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
-              value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
-              value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
-            });
-          });
-        this.apiTokenService.getAll()
-          .subscribe(apitokens => {
-            this.apiTokens = apitokens;
-          })
+      });
+  }
+
+  refreshCampaigns() {
+    this.userService.getCampaigns(this.user.id)
+      .subscribe(campaigns => {
+        campaigns.forEach(campaign => this.projects.push(Campaign.fromModel(campaign)));
+        var that = this;
+        this.projects.forEach(function (value) {
+          value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
+          value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
+          value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
+        });
       });
   }
 
   refreshDonations() {
+    this.donations = [];
     this.userService.getDonations(this.user.id)
       .subscribe(donations => {
-        this.donations = donations;
-        this.donations.forEach(donation => { 
-          this.deleteDonationsStatus[donation.id] = 'idle'
-        });
-        this.getProjectForDonations(this.donations, 0);
-        for (var k = 0; k < donations.length; k++) {
-          var budgetId = donations[k].budget.id;
-          this.budgetsSorted[budgetId].donations.push(Donation.fromModel(donations[k]));
-          this.budgetsSorted[budgetId].totalDonations += donations[k].amount;
-        }
-        this.budgets = [];
-        for (var k = 0; k < this.budgetsSorted.length; k++) {
-          if (this.budgetsSorted[k] != null) {
-            this.budgetsSorted[k].remaining = (100 - this.computeNumberPercent(this.budgetsSorted[k].totalDonations, this.budgetsSorted[k].amountPerMember)) + "%";
-            this.budgets.push(this.budgetsSorted[k]);
-          }
-        }
+        var budgetIds = [];
+        var campaignsId = [];
+        donations.forEach(donation => {
+          this.donations.push(Donation.fromModel(donation));
+          budgetIds.push(donation.budget.id);
+          campaignsId.push(donation.campaign.id);
+        })
+        this.budgetService.getAllByIds(budgetIds)
+          .subscribe(budgets => {
+            this.donationsBudgets = Budget.fromModels(budgets);
+            var organizationsId = []
+            this.donationsBudgets.forEach(budget => organizationsId.push(budget.organization.id));
+            this.organizationService.getAllByIds(organizationsId)
+              .subscribe(organizations => {
+                var tmpOrg = [];
+                organizations.forEach(organization => tmpOrg.push(Organization.fromModel(organization)));
+                this.donationsBudgets.forEach(budget => budget.setOrganization(tmpOrg));
+                this.donations.forEach(donation => donation.setBudget(this.donationsBudgets));
+              });
+          });
+        this.campaignService.getAllByIds(campaignsId)
+          .subscribe(campaigns => {
+              this.donations.forEach(donation => donation.setCampaign(campaigns));
+          })
       });
   }
 
-  getProjectForDonations(donations, index) {
-    this.campaignService.getById(donations[index].project.id)
-    .subscribe(response => {
-      this.donations[index].campaign = response;
-      if(index < donations.length) {
-        this.getProjectForDonations(donations, index + 1);
-      }
-    });
+  refreshTokens() {
+    this.apiTokens = [];
+    this.apiTokenService.getAll()
+      .subscribe(apitokens => {
+        this.apiTokens = apitokens;
+      })
   }
 
   deleteDonations(donation: Donation) {
@@ -155,7 +167,7 @@ export class ProfileComponent implements OnInit {
       .subscribe((apiToken) => {
         this.generatedApiToken = apiToken; 
         this.modalRef = this.modalService.show(template);
-        this.refresh();
+        this.refreshTokens();
       },
         error => {
           console.log(error);
@@ -166,7 +178,7 @@ export class ProfileComponent implements OnInit {
   deleteApiToken(apiToken: ApiToken) {
     this.apiTokenService.delete(apiToken.id)
       .subscribe(() => {
-        this.refresh();
+        this.refreshTokens();
       },
       error => {
         console.log(error);
@@ -194,7 +206,7 @@ export class ProfileComponent implements OnInit {
       user.password = this.editUserForm.controls['password'].value;
     }
 
-    this.userService.updateProfile(user)
+    this.userService.update(user)
       .subscribe(
         () => {
           this.submitting = false;

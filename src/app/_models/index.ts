@@ -12,4 +12,4 @@ export * from './organizationAuthority';
 export * from './role';
 export * from './slackTeam';
 export * from './slackUser';
-export * from './user';
+export * from './user.model';

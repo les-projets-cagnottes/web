@@ -1,4 +1,4 @@
-import { User } from './user';
+import { User } from '../_entities/user';
 
 export class ApiToken {
     id: number;

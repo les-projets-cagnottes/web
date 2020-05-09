@@ -1,13 +1,19 @@
-import { User, DonationModel } from '../_models';
+
+import { CampaignModel } from '../_models/campaign.model';
+import { DonationModel } from '../_models/donation.model';
+import { UserModel } from '../_models/user.model';
+
 import { Budget } from './budget';
 import { Account } from './account';
 import { Campaign } from './campaign';
+import { User } from './user';
 
 export class Donation extends DonationModel {
-    account: Account;
-    contributor: User;
-    campaign: Campaign;
-    budget: Budget;
+
+    account: Account = new Account();
+    contributor: User = new User();
+    campaign: Campaign = new Campaign();
+    budget: Budget = new Budget();
 
     static fromModel(model: DonationModel): Donation {
         var entity = new Donation();
@@ -28,14 +34,24 @@ export class Donation extends DonationModel {
         return entity;
     }
 
-    static valuesOf(models: DonationModel[]): Donation[] {
+    static fromModels(models: DonationModel[]): Donation[] {
         var entities = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
-    setContributor(users: User[] ) {
+    setBudget(budgets: Budget[] ) {
+        var result = budgets.find(budget => this.budget.id === budget.id);
+        result !== undefined ? this.budget = result : null;
+    }
+
+    setCampaign(campaigns: CampaignModel[] ) {
+        var result = campaigns.find(user => this.campaign.id === user.id);
+        result !== undefined ? this.campaign = Campaign.fromModel(result) : null;
+    }
+
+    setContributor(users: UserModel[] ) {
         var result = users.find(user => this.contributor.id === user.id);
-        result !== undefined ? this.contributor = result : null;
+        result !== undefined ? this.contributor = User.fromModel(result) : null;
     }
 }

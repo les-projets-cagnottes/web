@@ -1,14 +1,14 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OrganizationService } from 'src/app/_services/organization.service';
-import { User, Content } from 'src/app/_models';
+import { Content } from 'src/app/_models';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { ContentService } from 'src/app/_services/content.service';
-import { Organization } from 'src/app/_entities';
+import { Organization, User } from 'src/app/_entities';
 
 declare function startSimpleMDE(): any;
 
@@ -162,7 +162,7 @@ export class EditOrganizationComponent implements OnInit {
     this.pagerMembers = this.pagerService.getPager(this.rawResponseMembers.totalElements, page, this.pageSizeMembers);
     this.pagedItemsMembers = this.rawResponseMembers.content;
     for (var k = 0; k < this.pagedItemsMembers.length; k++) {
-      this.pagedItemsMembers[k] = new User().decode(this.pagedItemsMembers[k]);
+      this.pagedItemsMembers[k] = User.fromModel(this.pagedItemsMembers[k]);
       this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_SPONSOR') !== undefined
       this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_MANAGER') !== undefined
       this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_OWNER') !== undefined
@@ -287,7 +287,7 @@ export class EditOrganizationComponent implements OnInit {
     this.userService.getByEmail(this.addMemberOrgForm.controls.email.value)
       .subscribe(
         response => {
-          var user = new User().decode(response);
+          var user = User.fromModel(response);
           this.organizationService.addMember(this.organization.id, user.id)
             .subscribe(
               () => {

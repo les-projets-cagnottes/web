@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Account, Budget, Donation, Organization } from 'src/app/_entities';
-import { User, DonationModel, GenericModel } from 'src/app/_models';
+import { Account, Budget, Donation, Organization, User } from 'src/app/_entities';
+import { DonationModel, GenericModel } from 'src/app/_models';
 import { AuthenticationService, CampaignService, DonationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -83,7 +83,7 @@ export class ViewCampaignComponent implements OnInit {
   refreshLeader() {
     this.userService.getById(this.project.leader.id)
       .subscribe(leader => {
-        this.leader = leader;
+        this.leader = User.fromModel(leader);
       });
   }
 
@@ -92,7 +92,7 @@ export class ViewCampaignComponent implements OnInit {
     this.userService.getAllByIds(this.project.peopleGivingTimeRef)
     .subscribe(members => {
       this.membersSyncStatus = 'success';
-      this.members = members;
+      this.members = User.fromModels(members);
       this.isUserInTeam = this.members.find(user => {
         return this.userLoggedIn.id === user.id;
       }) !== undefined;

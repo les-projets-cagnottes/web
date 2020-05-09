@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 import { environment } from '../../environments/environment';
-import { User, OrganizationModel, BudgetModel } from '../_models';
+
+import { BudgetModel } from '../_models/budget.model';
+import { OrganizationModel } from '../_models/organization.model';
 import { OrganizationAuthority } from '../_models/organizationAuthority';
+
+import { User } from '../_entities/user';
 
 @Injectable({
   providedIn: 'root'

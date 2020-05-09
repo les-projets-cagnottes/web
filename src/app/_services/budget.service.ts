@@ -14,6 +14,12 @@ export class BudgetService {
     return this.http.get<BudgetModel[]>(`${environment.apiUrl}/budget?isActive=${isActive}`);
   }
 
+  getAllByIds(ids: number[]) {
+    const params = new HttpParams()
+        .set('ids', ids.toString());
+    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/budget`, { params });
+}
+
   getUsable() {
     return this.http.get<BudgetModel[]>(`${environment.apiUrl}/budget/usable`);
   }

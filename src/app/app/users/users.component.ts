@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, PagerService } from 'src/app/_services';
-import { User, SlackUser } from 'src/app/_models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Organization } from 'src/app/_entities';
+
+import { SlackUser } from 'src/app/_models';
+import { Organization, User } from 'src/app/_entities';
+import { UserService, PagerService } from 'src/app/_services';
 
 @Component({
   selector: 'app-users',
@@ -132,12 +133,6 @@ export class UsersComponent implements OnInit {
       organizations.push(org);
     });
     this.userEdited.organizations = organizations;
-
-    if(this.userEdited.slackUser != null) {
-      var slackUser = new SlackUser();
-      slackUser.id = this.userEdited.slackUser.id;
-      this.userEdited.slackUser = slackUser;  
-    }
     
     if (this.userEdited.id === undefined) {
       this.userEdited.password = this.f.password.value;

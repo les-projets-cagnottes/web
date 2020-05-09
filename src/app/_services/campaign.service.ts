@@ -22,12 +22,14 @@ export class CampaignService {
     return this.http.get<CampaignModel>(`${environment.apiUrl}/campaign/${id}`);
   }
 
-  getByIdOrganizations(id: number) {
-    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/campaign/${id}/organizations`);
-  }
+  getAllByIds(ids: number[]) {
+    const params = new HttpParams()
+        .set('ids', ids.toString());
+    return this.http.get<CampaignModel[]>(`${environment.apiUrl}/campaign`, { params });
+}
 
-  getByMemberId(memberId: number) {
-    return this.http.get<CampaignModel[]>(`${environment.apiUrl}/campaign?memberId=${memberId}`);
+  getOrganizations(id: number) {
+    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/campaign/${id}/organizations`);
   }
 
   getDonations(CampaignId: number, offset: number, limit: number) {

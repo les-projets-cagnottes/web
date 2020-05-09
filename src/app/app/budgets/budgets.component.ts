@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetService, PagerService, AuthenticationService, OrganizationService } from 'src/app/_services';
-import { BudgetModel, User, Content } from 'src/app/_models';
+import { BudgetService, AuthenticationService, OrganizationService } from 'src/app/_services';
+import { BudgetModel, Content } from 'src/app/_models';
 import { first } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Organization } from 'src/app/_entities';
 
