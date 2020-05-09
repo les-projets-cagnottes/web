@@ -3,7 +3,15 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "valyou": {
+        "web": {
+            "i18n": {
+                "locales": {
+                    "fr": {
+                        "translation": "src/locale/messages.fr.xlf",
+                        "baseHref": ""
+                    }
+                }
+            },
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,12 +21,12 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/valyou",
+                        "outputPath": "dist/web",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "aot": false,
+                        "aot": true,
                         "assets": [
                             "src/favicon.ico",
                             "src/assets",
@@ -108,10 +116,9 @@
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.prod.ts"
                             }],
-                            "aot": true,
-                            "i18nFile": "src/locale/messages.fr.xlf",
-                            "i18nFormat": "xlf",
-                            "i18nLocale": "fr",
+                            "localize": [
+                                "fr"
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -121,20 +128,24 @@
                             "vendorChunk": false,
                             "buildOptimizer": true,
                             "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "2mb",
-                                "maximumError": "5mb"
-                            }]
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
                         },
                         "heroku-fr": {
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.heroku.ts"
                             }],
-                            "aot": true,
-                            "i18nFile": "src/locale/messages.fr.xlf",
-                            "i18nFormat": "xlf",
-                            "i18nLocale": "fr",
+                            "localize": [
+                                "fr"
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -144,37 +155,41 @@
                             "vendorChunk": false,
                             "buildOptimizer": true,
                             "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "2mb",
-                                "maximumError": "5mb"
-                            }]
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
                         },
                         "dev": {
-                            "aot": true,
-                            "i18nFile": "src/locale/messages.fr.xlf",
-                            "i18nFormat": "xlf",
-                            "i18nLocale": "fr"
+                            "localize": [
+                                "fr"
+                            ]
                         }
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "valyou:build:dev"
+                        "browserTarget": "web:build:dev:fr"
                     },
                     "configurations": {
                         "dev": {
-                            "browserTarget": "valyou:build:dev"
+                            "browserTarget": "web:build:dev:fr"
                         },
                         "heroku-fr": {
-                            "browserTarget": "valyou:build:heroku-fr"
+                            "browserTarget": "web:build:heroku-fr"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "valyou:build"
+                        "browserTarget": "web:build"
                     }
                 },
                 "test": {
@@ -212,16 +227,16 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "valyou:serve"
+                        "devServerTarget": "web:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "valyou:serve:production"
+                            "devServerTarget": "web:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "valyou"
+    "defaultProject": "web"
 }
