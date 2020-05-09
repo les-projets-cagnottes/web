@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { DataTablesModule } from 'angular-datatables';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgSelect2Module } from 'ng-select2';
@@ -57,7 +56,6 @@ import { ManagerComponent } from './app/manager/manager.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DataTablesModule,
     NgSelect2Module,
     MarkdownModule.forRoot(),
     ModalModule.forRoot(),
