@@ -1,6 +1,7 @@
 .projectCountdown {
     text-align: center;
 }
-.projectCountdown > span{
+
+.projectCountdown>span {
     font-size: 1.5em;
 }

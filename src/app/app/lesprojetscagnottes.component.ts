@@ -12,21 +12,30 @@ import { AuthenticationService } from '../_services';
 })
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
-  currentUser: User;
+  currentUser = new User();
   currentUserSubscription: Subscription;
   users: User[] = [];
 
   constructor(
     private authenticationService: AuthenticationService
   ) {
+    this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
   }
 
   ngOnInit() {
+    this.refresh();
   }
 
+  refresh() {
+    this.authenticationService.whoami()
+      .subscribe(json => {
+        this.currentUser = User.fromModel(json);
+      });
+  }
+  
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();

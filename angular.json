@@ -37,23 +37,13 @@
                             },
                             {
                                 "glob": "**/*",
-                                "input": "node_modules/font-awesome/",
+                                "input": "node_modules/@fortawesome/fontawesome-free",
                                 "output": "./assets/lib/font-awesome"
                             },
                             {
                                 "glob": "**/*",
                                 "input": "node_modules/ionicons/dist/",
                                 "output": "./assets/lib/ionicons"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/datatables.net/",
-                                "output": "./assets/lib/datatables.net/"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jvectormap/",
-                                "output": "./assets/lib/jvectormap"
                             },
                             {
                                 "glob": "**/*",
@@ -64,21 +54,6 @@
                                 "glob": "**/*",
                                 "input": "node_modules/jquery/dist/",
                                 "output": "./assets/lib/jquery"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/fastclick/lib/",
-                                "output": "./assets/lib/fastclick"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jquery-sparkline/",
-                                "output": "./assets/lib/jquery-sparkline"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jquery-slimscroll/",
-                                "output": "./assets/lib/jquery-slimscroll"
                             },
                             {
                                 "glob": "**/*",
@@ -97,14 +72,10 @@
                             }
                         ],
                         "styles": [
-                            "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
-                            "node_modules/select2/dist/css/select2.min.css",
-                            "src/styles-default.css"
+                            "src/styles.css",
+                            "node_modules/select2/dist/css/select2.min.css"
                         ],
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.js",
-                            "node_modules/datatables.net/js/jquery.dataTables.js",
-                            "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
                             "node_modules/marked/lib/marked.js",
                             "src/assets/plugins/simplemde/simplemde.start.js",
                             "node_modules/select2/dist/js/select2.min.js"

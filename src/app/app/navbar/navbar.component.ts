@@ -11,24 +11,13 @@ import { User } from 'src/app/_entities/user';
 })
 export class AppNavbarComponent implements OnInit {
 
-  currentUser = new User();
-
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
 
   ngOnInit() {
-    this.refresh();
-  }
-
-  refresh() {
-    this.authenticationService.whoami()
-      .subscribe(json => {
-        this.currentUser = User.fromModel(json);
-      });
   }
 
   logout() {

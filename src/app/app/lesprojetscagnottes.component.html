@@ -1,87 +1,121 @@
 <div class="wrapper">
     <app-navbar></app-navbar>
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            <ul class="sidebar-menu" data-widget="tree">
-                <li class="header" i18n="@@projectsMenu">PROJECTS
-                </li>
-                <li>
-                    <a routerLink="/campaigns/new">
-                        <i class="fa fa-paper-plane-o"></i> <span i18n="@@projectsSubmitMenu">Submit my
-                            project</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/campaigns">
-                        <i class="fa fa-book"></i> <span i18n="@@projectsDiscoverMenu">Discover
-                            projects</span>
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/report">
-                        <i class="fa fa-dashboard"></i> <span i18n="@@reportingMenu">Reporting</span>
-                    </a>
-                </li>
-                <li *ngIf="isSponsor" class="header" i18n="@@sponsoringMenu">
-                    SPONSORING</li>
-                <li *ngIf="isSponsor">
-                    <a routerLink="/budgets">
-                        <i class="fa fa-money"></i> <span i18n="@@budgetsMenu">Budgets</span>
-                    </a>
-                </li>
-                <li *ngIf="isAdmin" class="header" i18n="@@administrationMenu">
-                    ADMINISTRATION</li>
-                <li *ngIf="isAdmin">
-                    <a routerLink="/users">
-                        <i class="fa fa-user"></i> <span i18n="@@usersMenu">Users</span>
-                    </a>
-                </li>
-                <li *ngIf="isAdmin">
-                    <a routerLink="/organizations">
-                        <i class="fa fa-users"></i> <span i18n="@@organizationsMenu">Organizations</span>
-                    </a>
-                </li>
-                <li *ngIf="isAdmin">
-                    <a routerLink="/manager">
-                        <i class="fa fa-cog"></i> <span i18n="@@managerMenu">Manager</span>
-                    </a>
-                </li>
-                <li class="header" i18n="@@documentationMenu">
-                    DOCUMENTATION</li>
-                <li>
-                    <a routerLink="/doc/getting-started">
-                        <i class="fa fa-book"></i> <span i18n="@@gettingStartedMenu">Getting
-                            Started</span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <!-- /.sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+        <!-- Logo -->
+        <a href="" class="brand-link">
+            <img src="assets/images/icon.png" alt="Platform Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Les Projets Cagnottes</span>
+        </a>
+
+        <div class="sidebar">
+
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img [src]="currentUser.avatarUrl" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a routerLink="/profile" class="d-block">{{ currentUser.firstname }} {{ currentUser.lastname }}</a>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-header" i18n="@@projectsMenu">PROJECTS</li>
+                    <li class="nav-item">
+                        <a routerLink="/campaigns/new" class="nav-link">
+                            <i class="nav-icon far fa-paper-plane"></i>
+                            <p i18n="@@projectsSubmitMenu">
+                                Submit my project
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/campaigns" class="nav-link">
+                            <i class="nav-icon fa fa-book"></i>
+                            <p i18n="@@projectsDiscoverMenu">Discover projects
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/report" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard"></i>
+                            <p i18n="@@reportingMenu">Reporting</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isSponsor" class="nav-header" i18n="@@sponsoringMenu">
+                        SPONSORING</li>
+                    <li *ngIf="isSponsor" class="nav-item">
+                        <a routerLink="/budgets" class="nav-link">
+                            <i class="nav-icon fas fa-money-bill"></i>
+                            <p i18n="@@budgetsMenu">Budgets</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
+                        ADMINISTRATION</li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/users" class="nav-link">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p i18n="@@usersMenu">Users</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/organizations" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p i18n="@@organizationsMenu">Organizations</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/manager" class="nav-link">
+                            <i class="nav-icon fa fa-cog"></i>
+                            <p i18n="@@managerMenu">Manager</p>
+                        </a>
+                    </li>
+                    <li class="nav-header" i18n="@@documentationMenu">
+                        DOCUMENTATION</li>
+                    <li class="nav-item">
+                        <a routerLink="/doc/getting-started" class="nav-link">
+                            <i class="nav-icon fa fa-book"></i>
+                            <p i18n="@@gettingStartedMenu">Getting Started
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- /.sidebar-menu -->
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-        </section>
+        <div class="content-header">
+        </div>
 
         <!-- Main content -->
-        <section class="content">
-            <router-outlet></router-outlet>
-        </section>
+        <div class="content">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
         <!-- /.content -->
-        <img id="spider-web" src="assets/images/spider-web.png" alt="Spider Web" />
-        <img id="christmas" src="assets/images/christmas-tree.png" alt="Christmas" />
     </div>
     <!-- /.content-wrapper -->
 
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
     <footer class="main-footer">
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <b>Version </b>
-                <a routerLink="/about"><span class="version">0.5.0-SNAPSHOT</span></a>
-                <a href="https://www.youtube.com/watch?v=LeHEj_sEKnw&list=PLH-huzMEgGWBEUzvuHes3fKA1Ut-nKqCy"><i class="fa fa-cog"></i></a>
-            </div>
+        Source code licensed as <strong><a href="https://github.com/les-projets-cagnottes/">Open Software</a>.</strong>
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 0.5.0-SNAPSHOT
         </div>
     </footer>
 

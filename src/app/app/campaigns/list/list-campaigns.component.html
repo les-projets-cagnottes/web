@@ -21,12 +21,12 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="box item-clickable" *ngFor="let item of pagedItems" routerLink="/campaigns/{{ item.id }}">
-            <div class="box-header">
-                <h3 class="box-title">{{ item.title }}</h3> - {{ item.shortDescription }}
+        <div class="card item-clickable" *ngFor="let item of pagedItems" routerLink="/campaigns/{{ item.id }}">
+            <div class="card-header">
+                <h3 class="card-title">{{ item.title }}</h3> - {{ item.shortDescription }}
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
+            <!-- /.card-header -->
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-1 projectCountdown">
                         <span *ngIf="item.status === 'A_IN_PROGRESS'" class="badge bg-yellow">J -
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <!-- /.box -->
+        <!-- /.card -->
     </div>
     <!-- /.col -->
 </div>
