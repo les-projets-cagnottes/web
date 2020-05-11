@@ -47,7 +47,7 @@
         "@angular/cli": "^8.3.24",
         "@angular/compiler-cli": "^8.2.14",
         "@angular/language-service": "^8.2.14",
-        "@types/datatables.net": "^1.10.18",
+        "@types/datatables.net": "^1.10.19",
         "@types/jasmine": "^3.5.2",
         "@types/jasminewd2": "^2.0.8",
         "@types/jquery": "^3.3.30",
