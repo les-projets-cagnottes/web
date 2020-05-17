@@ -4,5 +4,6 @@ import { AuditModel } from './audit.model';
 export class OrganizationModel extends AuditModel {
     name: string = '';
     slackTeam: GenericModel;
+    contentsRef: number[] = [];
     membersRef: number[] = [];
 }

@@ -45,16 +45,14 @@
                             <p i18n="@@reportingMenu">Reporting</p>
                         </a>
                     </li>
-                    <li *ngIf="isSponsor" class="nav-header" i18n="@@sponsoringMenu">
-                        SPONSORING</li>
+                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
+                        ADMINISTRATION</li>
                     <li *ngIf="isSponsor" class="nav-item">
                         <a routerLink="/budgets" class="nav-link">
                             <i class="nav-icon fas fa-money-bill"></i>
                             <p i18n="@@budgetsMenu">Budgets</p>
                         </a>
                     </li>
-                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
-                        ADMINISTRATION</li>
                     <li *ngIf="isAdmin" class="nav-item">
                         <a routerLink="/users" class="nav-link">
                             <i class="nav-icon fa fa-user"></i>
@@ -79,6 +77,13 @@
                         <a routerLink="/doc/getting-started" class="nav-link">
                             <i class="nav-icon fa fa-book"></i>
                             <p i18n="@@gettingStartedMenu">Getting Started
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/about" class="nav-link">
+                            <i class="nav-icon fas fa-code-branch"></i>
+                            <p i18n="@@aboutMenu">About
                             </p>
                         </a>
                     </li>
@@ -113,7 +118,7 @@
     <!-- /.control-sidebar -->
 
     <footer class="main-footer">
-        Source code licensed as <strong><a href="https://github.com/les-projets-cagnottes/">Open Software</a>.</strong>
+        Wanna improve this app ? Please, <b>join the team <a href="https://github.com/les-projets-cagnottes"> on Github </a> !</b>
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 0.5.0-SNAPSHOT
         </div>

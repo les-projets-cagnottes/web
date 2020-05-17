@@ -49,7 +49,7 @@ export class ReportComponent implements OnInit {
   }
 
   refresh() {
-    this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+    this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
       .subscribe(organizations => {
         organizations.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
         this.selectBudgetForm.controls['organization'].setValue(this.organizations[0].id);

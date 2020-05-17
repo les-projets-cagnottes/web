@@ -1,3 +1,31 @@
+.action-bar {
+    margin-bottom: 1em;
+}
+
+.action-bar .form-horizontal label,
+.action-bar .btn,
+td.action-bar a {
+    margin-right: 1em;
+}
+
+.btn svg {
+    margin-right: .2em;
+}
+
+.btn-app svg {
+    display: block;
+    font-size: 1.8em;
+    margin: auto;
+}
+
+a:not([href]).btn-tool {
+    color: #adb5bd;
+}
+
+a.disabled {
+    pointer-events: none;
+}
+
 .datatable-nb-entries {
     max-width: 5em;
 }
@@ -8,6 +36,15 @@
     margin-left: .5em;
 }
 
-.item-clickable {
+.dataTables_info {
+    line-height: 2.5em;
+}
+
+.editor-toolbar svg {
+    margin-right: .5em;
+}
+
+.item-clickable,
+.page-link {
     cursor: pointer;
 }

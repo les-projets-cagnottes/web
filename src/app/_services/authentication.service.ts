@@ -5,9 +5,9 @@ import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
-import { Authority } from '../_models/authority';
+import { AuthorityModel, OrganizationAuthorityModel, UserModel } from '../_models';
 
-import { User } from '../_entities/user';
+import { Authority, OrganizationAuthority, User } from '../_entities';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -41,12 +41,14 @@ export class AuthenticationService {
     }
 
     whoami(): Observable<User> {
-        const principal = this.http.get<User>(`${environment.apiUrl}/whoami`);
-        const authorities = this.http.get<Authority[]>(`${environment.apiUrl}/authority`);
-        return forkJoin([principal, authorities])
+        const principal = this.http.get<UserModel>(`${environment.apiUrl}/whoami`);
+        const authorities = this.http.get<AuthorityModel[]>(`${environment.apiUrl}/authority`);
+        const orgauthorities = this.http.get<OrganizationAuthorityModel[]>(`${environment.apiUrl}/orgauthorities`);
+        return forkJoin([principal, authorities, orgauthorities])
             .pipe(map(responses =>{
-                var user = responses[0];
-                user.userAuthorities = responses[1];
+                var user = User.fromModel(responses[0]);
+                user.userAuthorities = Authority.fromModels(responses[1]);
+                user.userOrganizationAuthorities = OrganizationAuthority.fromModels(responses[2]);
                 user.token = JSON.parse(localStorage.getItem('currentUser')).token;
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);

@@ -49,7 +49,7 @@
         <target>Budget</target>
       </trans-unit>
       <trans-unit id="budgetAmountPerMember" datatype="html">
-        <target>Montant par member</target>
+        <target>Montant par membre</target>
       </trans-unit>
       <trans-unit id="budgetName" datatype="html">
         <target>Budget</target>
@@ -332,9 +332,6 @@
       </trans-unit>
       <trans-unit id="slackSyncAction" datatype="html">
         <target>Synchroniser les membres</target>
-      </trans-unit>
-      <trans-unit id="sponsoringMenu" datatype="html">
-        <target>SPONSORING</target>
       </trans-unit>
       <trans-unit id="summary" datatype="html">
         <target>Table des matières</target>

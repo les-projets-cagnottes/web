@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { Role } from '../_models';
 import { User } from '../_entities';
-import { AuthenticationService } from '../_services';
+import { AuthenticationService, AuthorityService } from '../_services';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -17,7 +17,8 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private authorityService: AuthorityService
   ) {
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
@@ -31,8 +32,8 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   refresh() {
     this.authenticationService.whoami()
-      .subscribe(json => {
-        this.currentUser = User.fromModel(json);
+      .subscribe(user => {
+        this.currentUser = user;
       });
   }
   

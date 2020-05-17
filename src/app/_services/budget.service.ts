@@ -55,7 +55,7 @@ export class BudgetService {
   }
 
   distribute(id: number) {
-    return this.http.get(`${environment.apiUrl}/budget/${id}/distribute`);
+    return this.http.post(`${environment.apiUrl}/budget/${id}/distribute`, {});
   }
 
   delete(id: number) {

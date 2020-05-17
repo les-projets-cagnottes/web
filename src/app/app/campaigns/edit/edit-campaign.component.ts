@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Content, CampaignModel } from 'src/app/_models';
-import { AuthenticationService, OrganizationService, CampaignService, BudgetService } from 'src/app/_services';
-import { ContentService } from 'src/app/_services/content.service';
-import { Budget, Campaign, Organization } from 'src/app/_entities';
+import { CampaignModel } from 'src/app/_models';
+import { Budget, Campaign, Organization, Content } from 'src/app/_entities';
+import { AuthenticationService, OrganizationService, CampaignService, BudgetService, UserService, ContentService } from 'src/app/_services';
 
 declare function startSimpleMDE(): any;
 
@@ -58,7 +57,8 @@ export class EditCampaignComponent implements OnInit {
     private budgetService: BudgetService,
     private campaignService: CampaignService,
     private contentService: ContentService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private userService: UserService
   ) {
     this.route.params.subscribe(params => this.id = params.id);
   }
@@ -95,7 +95,7 @@ export class EditCampaignComponent implements OnInit {
     if (typeof startSimpleMDE === 'function') {
       this.simplemde = startSimpleMDE();
       this.simplemde.value(this.project.longDescription);
-      this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+      this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
         .subscribe(orgs => {
           orgs.forEach(org => this.organizations.push(Organization.fromModel(org)));
           this.form.controls['organization'].setValue(0);
@@ -117,7 +117,7 @@ export class EditCampaignComponent implements OnInit {
   onViewTermsOfUse(template: TemplateRef<any>) {
     this.contentService.getById(this.budgets[this.f.budget.value].rules.id)
       .subscribe(content => {
-        this.rules = content;
+        this.rules = Content.fromModel(content);
         this.modalRef = this.modalService.show(template);
       });
   }

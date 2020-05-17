@@ -2,196 +2,199 @@
     <div class="col-md-3">
 
         <!-- Profile Image -->
-        <div class="box box-primary">
-            <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" [src]="user.avatarUrl" alt="User profile picture">
+        <div class="card">
+            <div class="card-body box-profile">
 
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" [src]="user.avatarUrl" alt="User profile picture">
+                </div>
                 <h3 class="profile-username text-center">{{ user.firstname }} {{ user.lastname }}</h3>
-
+                <p class="text-muted text-center">
+                    <span>Member since </span>
+                    <span>{{ user.createdAt | date:'shortDate' }}</span>
+                </p>
             </div>
-            <!-- /.box-body -->
+            <!-- /.card-body -->
         </div>
-        <!-- /.box -->
+        <!-- /.card -->
 
         <!-- About Me Box -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title" i18n="@@myBudgets">My pots</h3>
+        <div class="card">
+            <div class="card-header with-border">
+                <h3 class="card-title" i18n="@@myBudgets">My pots</h3>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <div class="progress-group" *ngFor="let account of accounts">
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="project_progress" *ngFor="let account of accounts">
                     <span class="progress-text">{{ account.budget.organization.name }} - {{ account.budget.name }}</span>
-                    <span class="progress-number">{{ account.amount }} € / {{ account.initialAmount }} €</span>
                     <div class="progress sm" title="{{ account.usage }}">
                         <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': account.usage }"></div>
                     </div>
+                    <small>
+                        {{ account.amount }} € / {{ account.initialAmount }} €
+                    </small>
                 </div>
             </div>
-            <!-- /.box-body -->
+            <!-- /.card-body -->
         </div>
-        <!-- /.box -->
+        <!-- /.card -->
     </div>
     <!-- /.col -->
     <div class="col-md-9">
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#projects" data-toggle="tab" aria-expanded="true" i18n="@@projects">Projects</a></li>
-                <li class=""><a href="#contributions" data-toggle="tab" aria-expanded="false" i18n="@@contributions">Contributions</a></li>
-                <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false" i18n="@@settings">Settings</a>
-                </li>
-                <li class=""><a href="#developerMenu" data-toggle="tab" aria-expanded="false" i18n="@@developerMenu">Developper</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane table-responsive active" id="projects">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th i18n="@@projectTitle">Title</th>
-                                <th style="width: 20%" i18n="@@projectFundingDeadline">Funding & teamup deadline</th>
-                                <th style="width: 20%" i18n="@@projectPeopleNeeded">People needed</th>
-                                <th style="width: 20%" i18n="@@projectMoneyNeeded">Money needed</th>
-                                <th style="width: 40px" i18n="@@projectStatus">Status</th>
-                            </tr>
-                            <tr *ngFor="let project of projects">
-                                <td><a [routerLink]="['/campaigns/', project.id]">{{ project.title }}</a></td>
-                                <td>
-                                    <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.fundingDeadlinePercent }}">
-                                        <div class="progress-bar progress-bar-red" [ngStyle]="{'width': project.fundingDeadlinePercent }"></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.peopleRequiredPercent }}">
-                                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': project.peopleRequiredPercent }"></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.donationsRequiredPercent }}">
-                                        <div class="progress-bar progress-bar-green" [ngStyle]="{'width': project.donationsRequiredPercent }"></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
-                                    <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
-                                    <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">B_READY</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane table-responsive" id="contributions">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th i18n="@@organization">Organization</th>
-                                <th i18n="@@budget">Budget</th>
-                                <th i18n="@@donationDate">Date</th>
-                                <th i18n="@@project">Project</th>
-                                <th i18n="@@donationAmount">Amount</th>
-                                <th i18n="@@actions">Actions</th>
-                            </tr>
-                            <tr *ngFor="let donation of donations">
-                                <td>{{ donation.budget.organization.name }}</td>
-                                <td>{{ donation.budget.name }}</td>
-                                <td>{{ donation.createdAt | date:'medium' }}</td>
-                                <td><a [routerLink]="['/campaigns/', donation.campaign.id]">{{ donation.campaign.title }}</a>
-                                </td>
-                                <td>{{ donation.amount }} €</td>
-                                <td><button *ngIf="donation.campaign.status == 'A_IN_PROGRESS'" type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-danger': deleteDonationsStatus[donation.id] == 'error' }" (click)="deleteDonations(donation)"><i class="fa fa-trash"></i>
-                                        <span i18n="@@actionDelete">Delete</span></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane" id="settings">
-                    <form class="form-horizontal" [formGroup]="editUserForm">
-                        <div class="form-group">
-                            <label for="inputEmail" class="col-sm-2 control-label" i18n="@@userEmail">Email</label>
-
-                            <div class="col-sm-10">
+        <div class="card card-primary card-outline card-outline-tabs">
+            <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs" role="profile-tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="profile-projects-tab" data-toggle="pill" href="#projects" role="tab" aria-controls="projects" aria-selected="true" i18n="@@projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-contributions-tab" data-toggle="pill" href="#contributions" role="tab" aria-controls="contributions" aria-selected="false" i18n="@@contributions">Contributions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-settings-tab" data-toggle="pill" href="#settings" role="tab" aria-controls="settings" aria-selected="false" i18n="@@settings">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-developper-tab" data-toggle="pill" href="#developper" role="tab" aria-controls="developper" aria-selected="false" i18n="@@developerMenu">Developper</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="projects" role="tabpanel" aria-labelledby="profile-projects-tab">
+                        <table class="table table-striped table-valign-middle">
+                            <thead>
+                                <tr>
+                                    <th i18n="@@projectTitle">Title</th>
+                                    <th style="width: 20%" i18n="@@projectFundingDeadline">Funding & teamup deadline</th>
+                                    <th style="width: 20%" i18n="@@projectPeopleNeeded">People needed</th>
+                                    <th style="width: 20%" i18n="@@projectMoneyNeeded">Money needed</th>
+                                    <th style="width: 40px" i18n="@@projectStatus">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let project of projects">
+                                    <td><a [routerLink]="['/campaigns/', project.id]">{{ project.title }}</a></td>
+                                    <td>
+                                        <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.fundingDeadlinePercent }}">
+                                            <div class="progress-bar progress-bar-red" [ngStyle]="{'width': project.fundingDeadlinePercent }"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.peopleRequiredPercent }}">
+                                            <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': project.peopleRequiredPercent }"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="progress progress-xs" data-toggle="tooltip" data-placement="bottom" title="{{ project.donationsRequiredPercent }}">
+                                            <div class="progress-bar progress-bar-green" [ngStyle]="{'width': project.donationsRequiredPercent }"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
+                                        <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
+                                        <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">B_READY</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="contributions" role="tabpanel" aria-labelledby="profile-contributions-tab">
+                        <table class="table table-striped table-valign-middle">
+                            <thead>
+                                <tr>
+                                    <th i18n="@@organization">Organization</th>
+                                    <th i18n="@@budget">Budget</th>
+                                    <th i18n="@@donationDate">Date</th>
+                                    <th i18n="@@project">Project</th>
+                                    <th i18n="@@donationAmount">Amount</th>
+                                    <th i18n="@@actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let donation of donations">
+                                    <td>{{ donation.budget.organization.name }}</td>
+                                    <td>{{ donation.budget.name }}</td>
+                                    <td>{{ donation.createdAt | date:'medium' }}</td>
+                                    <td><a [routerLink]="['/campaigns/', donation.campaign.id]">{{ donation.campaign.title }}</a>
+                                    </td>
+                                    <td>{{ donation.amount }} €</td>
+                                    <td>
+                                        <a *ngIf="donation.campaign.status == 'A_IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.id] == 'error' }" (click)="deleteDonations(donation)">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade p-3" id="settings" role="tabpanel" aria-labelledby="profile-settings-tab">
+                        <form class="form-horizontal" [formGroup]="editUserForm">
+                            <div class="form-group">
+                                <label for="inputEmail" class="control-label" i18n="@@userEmail">Email</label>
                                 <input formControlName="email" type="email" class="form-control" id="inputEmail" placeholder="Email" i18n-placeholder="@@userEmail">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword" class="col-sm-2 control-label" placeholder="Email" i18n="@@userPassword">Password</label>
-
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="inputPassword" class="control-label" placeholder="Email" i18n="@@userPassword">Password</label>
                                 <input formControlName="password" type="password" class="form-control" id="inputPassword" placeholder="Password - Keep empty to leave it unchanged" i18n-placeholder="@@userPasswordUpdatePlaceholder">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputFirstname" class="col-sm-2 control-label" i18n="@@userFirstname">Firstname</label>
-
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="inputFirstname" class="control-label" i18n="@@userFirstname">Firstname</label>
                                 <input formControlName="firstname" type="text" class="form-control" id="inputFirstname" placeholder="Firstname" i18n-placeholder="@@userFirstname">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputLastname" class="col-sm-2 control-label" placeholder="Email" i18n="@@userLastname">Lastname</label>
-
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="inputLastname" class="control-label" placeholder="Email" i18n="@@userLastname">Lastname</label>
                                 <input formControlName="lastname" type="text" class="form-control" id="inputLastname" placeholder="Lastname" i18n-placeholder="@@userLastname">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAvatarUrl" class="col-sm-2 control-label" i18n="@@userAvatarUrl">Avatar
-                                URL</label>
-
-                            <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="inputAvatarUrl" class="control-label" i18n="@@userAvatarUrl">Avatar URL</label>
                                 <input formControlName="avatarUrl" type="url" class="form-control" id="inputAvatarUrl" placeholder="Avatar URL" i18n-placeholder="@@userAvatarUrl">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" [disabled]="submitting" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }" (click)="submit()" i18n="@@actionSubmit">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="tab-pane" id="developerMenu">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th i18n="@@id">ID</th>
-                                <th i18n="@@actions">Actions</th>
-                            </tr>
-                            <tr *ngFor="let apiToken of apiTokens">
-                                <td>{{ apiToken.id }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-danger': deleteApiTokenStatus[apiToken.id] == 'error' }" (click)="deleteApiToken(apiToken)"><i class="fa fa-trash"></i>
-                                        <span i18n="@@actionDelete">Delete</span></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <button type="button" class="btn btn-default btn-flat" (click)="generateApiToken(template)" [ngClass]="{ 'btn-success': generateApiTokenStatus == 'success', 'btn-danger': generateApiTokenStatus == 'error' }">
-                                        <i class="fa fa-plus"></i> <span i18n="@@actionGenerate">Generate</span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <ng-template #template>
-                        <div class="modal-header">
-                            <h4 class="modal-title pull-left" i18n="@@yourNewAPIToken">Your new API Token</h4>
-                            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                <span aria-hidden="true">&times;</span>
+                            <button type="submit" [disabled]="submitting" class="btn btn-primary" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }" (click)="submit()" i18n="@@actionSubmit">Submit</button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="developper" role="tabpanel" aria-labelledby="profile-developper-tab">
+                        <table class="table table-striped table-valign-middle">
+                            <thead>
+                                <tr>
+                                    <th i18n="@@id">ID</th>
+                                    <th i18n="@@actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let apiToken of apiTokens">
+                                    <td>{{ apiToken.id }}</td>
+                                    <td>
+                                        <a class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteApiTokenStatus[apiToken.id] == 'error' }" (click)="deleteApiToken(apiToken)">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="bottom-bar">
+                            <button type="button" class="btn btn-primary" (click)="generateApiToken(template)" [ngClass]="{ 'btn-success': generateApiTokenStatus == 'success', 'btn-danger': generateApiTokenStatus == 'error' }">
+                                <i class="fa fa-plus"></i> <span i18n="@@actionGenerate">Generate</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <code id="generatedApiToken">{{ generatedApiToken.token }}</code>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-default btn-flat" (click)="modalRef.hide()" i18n="@@actionClose">Close</button>
-                        </div>
-                    </ng-template>
-
+                        <ng-template #template>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left" i18n="@@yourNewAPIToken">Your new API Token</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <code id="generatedApiToken">{{ generatedApiToken.token }}</code>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" (click)="modalRef.hide()" i18n="@@actionClose">Close</button>
+                            </div>
+                        </ng-template>
+                    </div>
                 </div>
-                <!-- /.tab-pane -->
             </div>
-            <!-- /.tab-content -->
+            <!-- /.card -->
         </div>
-        <!-- /.nav-tabs-custom -->
     </div>
     <!-- /.col -->
 </div>

@@ -1,11 +1,11 @@
 
 import { ApiToken } from '../_models/apitoken';
-import { Authority } from '../_models/authority';
-import { OrganizationAuthority } from '../_models/organizationAuthority';
 import { UserModel } from '../_models/user.model';
 
+import { Authority } from './authority';
 import { Organization } from './organization';
 import { SlackUser } from '../_models/slackUser';
+import { OrganizationAuthority } from './organization.authority';
 
 export class User extends UserModel {
     
@@ -30,6 +30,7 @@ export class User extends UserModel {
         entity.avatarUrl = model.avatarUrl;
         entity.enabled = model.enabled;
         entity.token = model.token;
+        entity.userOrganizationAuthoritiesRef = model.userOrganizationAuthoritiesRef;
         return entity;
     }
 

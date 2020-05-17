@@ -1,24 +1,20 @@
 <div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title" i18n="@@users">Users</h3>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@users">Users</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <div class="row action-bar">
-                    <div class="col-xs-6">
-                        <button type="button" class="btn btn-default"
-                            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
-                            (click)="refresh()"><i class="fa fa-refresh"></i>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh(pager.currentPage)"><i class="fas fa-sync"></i>
                             <span i18n="@@refresh">Refresh</span></button>
                         <button type="button" class="btn btn-default" (click)="openModalCreateUser(template)"><i
-                                class="fa fa-plus"></i> <span i18n="@@actionAdd">Refresh</span></button>
+                                class="fa fa-plus"></i> <span i18n="@@actionAdd">Add</span></button>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <div class="dataTables_length text-right"><label for="pageSize" i18n="@@nbEntries">Nb
-                                entries</label><select id="pageSize" name="pageSize"
-                                class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize"
-                                (ngModelChange)="refresh()">
+                                entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh(pager.currentPage)">
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
@@ -27,9 +23,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 table-responsive">
-                        <table class="table">
-                            <tbody>
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped table-valign-middle">
+                            <thead>
                                 <tr>
                                     <th i18n="@@id">ID</th>
                                     <th i18n="@@userFullname">Name</th>
@@ -38,21 +34,19 @@
                                     <th i18n="@@userEnabled">Enabled</th>
                                     <th i18n="@@actions">Actions</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 <tr *ngFor="let user of pagedItems">
                                     <td>{{ user.id }}</td>
                                     <td>{{ user.firstname }} {{ user.lastname }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.createdAt | date:'medium' }}</td>
-                                    <td *ngIf="user.enabled" class="text-green"><i class="fa fa-fw fa-check-square-o"></i></td>
-                                    <td *ngIf="!user.enabled" class="text-red"><i class="fa fa-close"></i></td>
+                                    <td *ngIf="user.enabled" class="text-green"><i class="far fa-check-square"></i></td>
+                                    <td *ngIf="!user.enabled" class="text-red"><i class="far fa-square"></i></td>
                                     <td class="action-bar">
-                                        <button type="button" class="btn btn-default" data-toggle="modal"
-                                            data-target="#editUserModal" (click)="openModalEditUser(template, user)"><i
-                                                class="fa fa-pencil"></i> <span
-                                                i18n="@@actionEdit">Refresh</span></button>
-                                        <button type="button" class="btn btn-default" (click)="delete(user)"><i
-                                                class="fa fa-trash"></i> <span
-                                                i18n="@@actionDelete">Refresh</span></button>
+                                        <a class="text-muted item-clickable" (click)="openModalEditUser(template, user)">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -70,41 +64,32 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status"
-                            aria-live="polite">
-                            <span i18n="@@paginationStart">Showing </span>
-                            {{ pager.startIndex + 1 }}
-                            <span i18n="@@paginationEnd"> to</span>
-                            {{ pager.endIndex + 1 }}
-                            <span i18n="@@paginationTotal"> of </span>
-                            {{ pager.totalItems }}
+                    <div class="col-5">
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info">
+                            <span i18n="@@paginationStart">Showing </span> {{ pager.startIndex + 1 }}
+                            <span i18n="@@paginationEnd"> to</span> {{ pager.endIndex + 1 }}
+                            <span i18n="@@paginationTotal"> of </span> {{ pager.totalItems }}
                             <span i18n="@@paginationEntries"> entries</span>
                         </div>
                     </div>
-                    <div class="col-sm-7">
-                        <div class="dataTables_paginate paging_simple_numbers text-right">
-                            <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-                                <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
-                                    <a (click)="refresh(1)">&#171;</a>
-                                </li>
-                                <li class="paginate_button" [ngClass]="{disabled:pager.currentPage === 1}">
-                                    <a (click)="refresh(pager.currentPage - 1)">&#8249;</a>
-                                </li>
-                                <li class="paginate_button" *ngFor="let page of pager.pages"
-                                    [ngClass]="{active:pager.currentPage === page}">
-                                    <a (click)="refresh(page)">{{page}}</a>
-                                </li>
-                                <li class="paginate_button next"
-                                    [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                    <a (click)="refresh(pager.currentPage + 1)">&#8250;</a>
-                                </li>
-                                <li class="paginate_button"
-                                    [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                    <a (click)="refresh(pager.totalPages)">&#187;</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="col-7">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="refresh(1)">&#171;</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="refresh(pager.currentPage - 1)">&#8249;</a>
+                            </li>
+                            <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                <a class="page-link" (click)="refresh(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link" (click)="refresh(pager.currentPage + 1)">&#8250;</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link" (click)="refresh(pager.totalPages)">&#187;</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -114,9 +99,10 @@
 
 <ng-template #template>
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="editUserModalLabel">{{ editUserModalLabel }}</h4>
+        <h4 class="modal-title" id="editUserModalLabel">{{ f.firstname.value }} {{ f.lastname.value }}</h4>
+        <button type="button" class="close" (click)="closeModalEditUser()">
+          <span aria-hidden="true">×</span>
+        </button>
     </div>
     <div class="modal-body">
         <form [formGroup]="editUserForm">
@@ -126,8 +112,7 @@
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': userEdited.id === undefined && f.password.value === '' }">
                 <label i18n="@@userPassword">Password</label>
-                <input type="password" formControlName="password" class="form-control"
-                placeholder="Password - Keep empty to leave it unchanged" i18n-placeholder="@@userPasswordUpdatePlaceholder">
+                <input type="password" formControlName="password" class="form-control" placeholder="Password - Keep empty to leave it unchanged" i18n-placeholder="@@userPasswordUpdatePlaceholder">
             </div>
             <div class="form-group">
                 <label i18n="@@userFirstname">Firstname</label>
@@ -142,17 +127,14 @@
                 <input type="url" formControlName="avatarUrl" class="form-control" placeholder="Avatar URL" i18n-placeholder="@@userAvatarUrl">
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label for="isActivated">
-                        <input type="checkbox" formControlName="isActivated" id="isActivated" class="right-input"
-                            [value]="f.isActivated.value" /> <span i18n="@@userEnabled">Is activated</span>
-                    </label>
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="isActivated" formControlName="isActivated">
+                    <label class="custom-control-label" for="isActivated" i18n="@@userEnabled">Is activated</label>
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button [disabled]="submitting" class="btn btn-default btn-flat" (click)="onSubmit()"
-            i18n="@@save">Save</button>
+        <button [disabled]="submitting" class="btn btn-primary" (click)="onSubmit()" i18n="@@save">Save</button>
     </div>
 </ng-template>

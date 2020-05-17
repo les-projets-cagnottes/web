@@ -27,7 +27,7 @@ export class Account extends AccountModel {
         return entity;
     }
 
-    static valuesOf(models: AccountModel[]): Account[] {
+    static fromModels(models: AccountModel[]): Account[] {
         var entities = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;

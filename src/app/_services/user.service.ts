@@ -1,19 +1,20 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 import { environment } from '../../environments/environment';
-import { AccountModel, DonationModel, UserModel, CampaignModel } from '../_models';
-import { OrganizationAuthority } from '../_models/organizationAuthority';
+
+import { AccountModel, DonationModel, UserModel, CampaignModel, OrganizationAuthorityModel, OrganizationModel } from '../_models';
+
+import { OrganizationAuthority } from '../_entities/organization.authority';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getAll(offset, limit) {
+    list(offset: number, limit: number) {
         const params = new HttpParams()
-            .set('offset', offset)
-            .set('limit', limit);
+            .set('offset', offset.toString())
+            .set('limit', limit.toString());
         return this.http.get<UserModel[]>(`${environment.apiUrl}/user`, { params });
     }
 
@@ -49,6 +50,10 @@ export class UserService {
     
     getDonations(id: number) {
         return this.http.get<DonationModel[]>(`${environment.apiUrl}/user/${id}/donations`);
+    }
+    
+    getOrganizations(id: number) {
+        return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/user/${id}/organizations`);
     }
 
     create(user: UserModel) {

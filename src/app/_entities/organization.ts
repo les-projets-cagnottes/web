@@ -1,10 +1,10 @@
-import { Content } from '../_models/content';
 import { OrganizationModel } from '../_models/organization.model';
-import { OrganizationAuthority } from '../_models/organizationAuthority';
-import { SlackTeam } from '../_models/slackTeam';
 
 import { Budget } from './budget';
+import { Content } from './content';
+import { OrganizationAuthority } from './organization.authority';
 import { User } from './user';
+import { SlackTeam } from './slack.team';
 
 export class Organization extends OrganizationModel {
 
@@ -24,6 +24,7 @@ export class Organization extends OrganizationModel {
         entity.name = model.name;
         entity.slackTeam = new SlackTeam();
         entity.slackTeam.id = model.slackTeam.id;
+        entity.contentsRef = model.contentsRef;
         entity.membersRef = model.membersRef;
         return entity;
     }

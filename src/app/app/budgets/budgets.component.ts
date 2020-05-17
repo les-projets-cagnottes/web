@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BudgetService, AuthenticationService, OrganizationService } from 'src/app/_services';
-import { BudgetModel, Content } from 'src/app/_models';
+import { BudgetService, AuthenticationService, OrganizationService, UserService, ContentService } from 'src/app/_services';
+import { BudgetModel, ContentModel } from 'src/app/_models';
 import { first } from 'rxjs/operators';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Organization } from 'src/app/_entities';
+import { Organization, Budget, Content } from 'src/app/_entities';
 
 @Component({
   selector: 'app-budgets',
@@ -13,8 +13,8 @@ import { Organization } from 'src/app/_entities';
 export class BudgetsComponent implements OnInit {
 
   // Data
-  organizations: Organization[];
-  contents: Content[];
+  organizations: Organization[] = [];
+  contents: Content[] = [];
 
   // Form
   mainForms: FormGroup[] = [];
@@ -30,7 +30,9 @@ export class BudgetsComponent implements OnInit {
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
-    private organizationService: OrganizationService
+    private contentService: ContentService,
+    private organizationService: OrganizationService,
+    private userService: UserService
   ) {
     this.fb.group({
       organizations: this.fb.group({
@@ -45,43 +47,13 @@ export class BudgetsComponent implements OnInit {
 
   refresh(): void {
     if (this.authenticationService.currentUserValue !== null) {
-      this.organizationService.getByMemberId(this.authenticationService.currentUserValue.id)
+      this.organizations = [];
+      this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
         .subscribe(
           response => {
             response.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
             this.mainForms = [];
-            var that = this;
-            this.organizations.forEach((organization, index) => {
-              that.mainForms[index] = that.fb.group({
-                budgets: new FormArray([])
-              });
-              that.deleteStatus[index] = [];
-              that.distributeStatus[index] = [];
-              organization.budgets.forEach((budget, indexBudget) => {
-                budget.usage = that.computeNumberPercent(budget.totalDonations, organization.members.length * budget.amountPerMember) + "%";
-                var rulesNumber;
-                if(budget.rules == null) {
-                  rulesNumber = 0;
-                } else {
-                  rulesNumber = organization.contents.findIndex(content => content.id == budget.rules.id);
-                }
-                (that.mainForms[index].controls.budgets as FormArray).push(that.fb.group({
-                  id: [budget.id],
-                  name: [budget.name, Validators.required],
-                  amountPerMember: [{ value: budget.amountPerMember, disabled: budget.isDistributed }, [Validators.required]],
-                  startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.isDistributed }, [Validators.required]],
-                  endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.isDistributed }, [Validators.required]],
-                  rules: [rulesNumber, [Validators.required]],
-                  isDistributed: [budget.isDistributed]
-                }));
-                that.deleteStatus[index][indexBudget] = "no-refresh";
-                that.distributeStatus[index][indexBudget] = "no-refresh";
-              });
-              this.refreshStatus = 'success';
-              setTimeout(() => {
-                this.refreshStatus = 'no-refresh';
-              }, 2000);
-            });
+            this.refreshContents(0);
           },
           error => {
             console.log(error);
@@ -91,6 +63,56 @@ export class BudgetsComponent implements OnInit {
             }, 2000);
           });
     }
+  }
+
+  refreshContents(indexOrg: number) {
+    this.mainForms[indexOrg] = this.fb.group({
+      budgets: new FormArray([])
+    });
+    this.deleteStatus[indexOrg] = [];
+    this.distributeStatus[indexOrg] = [];
+    this.contentService.getAllByIds(this.organizations[indexOrg].contentsRef)
+      .subscribe(contents => {
+        this.organizations[indexOrg].contents = Content.fromModels(contents)
+        this.refreshBudgets(indexOrg)
+      })
+  }
+
+  refreshBudgets(indexOrg: number) {
+    this.organizationService.getBudgets(this.organizations[indexOrg].id)
+      .subscribe(
+        response => {
+          response.forEach((budget, indexBudget) => {
+            var indexOrg = this.organizations.findIndex(organization => organization.id === budget.organization.id);
+            this.organizations[indexOrg].budgets.push(Budget.fromModel(budget));
+            var rulesNumber;
+            if(budget.rules == null) {
+              rulesNumber = 0;
+            } else {
+              rulesNumber = this.organizations[indexOrg].contents.findIndex(content => content.id == budget.rules.id);
+            }
+            (this.mainForms[indexOrg].controls.budgets as FormArray).push(this.fb.group({
+              id: [budget.id],
+              name: [budget.name, Validators.required],
+              amountPerMember: [{ value: budget.amountPerMember, disabled: budget.isDistributed }, [Validators.required]],
+              startDate: [{ value: this.dateToString(budget.startDate), disabled: budget.isDistributed }, [Validators.required]],
+              endDate: [{ value: this.dateToString(budget.endDate), disabled: budget.isDistributed }, [Validators.required]],
+              rules: [rulesNumber, [Validators.required]],
+              isDistributed: [budget.isDistributed]
+            }));
+            this.deleteStatus[indexOrg][indexBudget] = "no-refresh";
+            this.distributeStatus[indexOrg][indexBudget] = "no-refresh";
+            if(indexOrg + 1 < this.organizations.length) {
+              this.refreshContents(indexOrg + 1);
+            } else {
+              this.refreshStatus = 'success';
+              setTimeout(() => {
+                this.refreshStatus = 'no-refresh';
+              }, 2000);
+            }
+          });
+        }
+      );
   }
 
   save(): void {

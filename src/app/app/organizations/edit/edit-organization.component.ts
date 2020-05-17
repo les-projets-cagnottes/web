@@ -1,14 +1,16 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { OrganizationService } from 'src/app/_services/organization.service';
-import { Content } from 'src/app/_models';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { environment } from '../../../../environments/environment';
 import { ContentService } from 'src/app/_services/content.service';
-import { Organization, User } from 'src/app/_entities';
+import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
+import { OrganizationAuthority } from 'src/app/_entities/organization.authority';
+import { ContentModel } from 'src/app/_models';
+import { SlackTeamService } from 'src/app/_services/slack.team.service';
 
 declare function startSimpleMDE(): any;
 
@@ -44,29 +46,31 @@ export class EditOrganizationComponent implements OnInit {
   addStatus: string = 'idle';
   submitStatus: string = 'idle';
 
-  // Content modal
-  modalRef: BsModalRef;
-  private simplemde;
-  contentId: number;
-
-  // Members pagination
-  private rawResponseMembers: any;
-  pagerMembers: any = {};
-  pagedItemsMembers: any[];
-  pageSizeMembers: number = 10;
-
-  // Contents pagination
-  private rawResponseContents: any;
-  pagerContents: any = {};
-  pagedItemsContents: any[];
-  pageSizeContents: number = 10;
-
   // Slack oauth
   slackSyncStatus: string = 'idle';
   slackDisconnectStatus: string = 'idle';
   slackClientId: string;
   redirectUrlOAuth: string;
   code: string;
+
+  // Members card
+  private rawResponseMembers: any;
+  pagerMembers: any = {};
+  pagedItemsMembers: User[];
+  pageSizeMembers: number = 10;
+  refreshMembersStatus: string = 'idle';
+
+  // Contents card
+  private rawResponseContents: any;
+  pagerContents: any = {};
+  pagedItemsContents: any[];
+  pageSizeContents: number = 10;
+  refreshContentStatus: string = 'idle';
+
+  // Content modal
+  modalRef: BsModalRef;
+  private simplemde;
+  contentId: number;
 
   endPointEdit: string = '/organizations/edit/' + this.id;
   slackEndPoint: string = '/organizations/edit/slack/' + this.id
@@ -75,11 +79,12 @@ export class EditOrganizationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
+    private modalService: BsModalService,
     private pagerService: PagerService,
     private contentService: ContentService,
     private userService: UserService,
     private organizationService: OrganizationService,
-    private modalService: BsModalService
+    private slackTeamService: SlackTeamService
   ) {
     this.route.params.subscribe(params => this.id = <number>params.id);
     this.ngOnInit();
@@ -119,6 +124,9 @@ export class EditOrganizationComponent implements OnInit {
             this.refreshForm();
             this.refreshMembers();
             this.refreshContents();
+            if (this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
+              this.refreshSlackTeam();
+            }
           },
           error => {
             console.log(error);
@@ -128,11 +136,27 @@ export class EditOrganizationComponent implements OnInit {
     }
   }
 
+  refreshInformations() {
+    this.organizationService.getById(this.id)
+      .subscribe(
+        organization => {
+          this.organization = Organization.fromModel(organization);
+          this.refreshAuthorities();
+          this.refreshForm();
+          if (this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
+            this.refreshSlackTeam();
+          }
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
   refreshAuthorities() {
     this.organizationService.getOrganizationAuthorities(this.id)
       .subscribe(
         organizationAuthorities => {
-          this.organization.organizationAuthorities = organizationAuthorities;
+          this.organization.organizationAuthorities = OrganizationAuthority.fromModels(organizationAuthorities);
         }
       )
   }
@@ -154,6 +178,16 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(response => {
           this.rawResponseMembers = response;
           this.setMembersPage(page);
+          this.refreshMembersStatus = 'success';
+          setTimeout(() => {
+            this.refreshMembersStatus = 'idle';
+          }, 1000);
+        }, error => {
+          this.refreshMembersStatus = 'error';
+          console.log(error);
+          setTimeout(() => {
+            this.refreshMembersStatus = 'idle';
+          }, 1000);
         });
     }
   }
@@ -163,6 +197,7 @@ export class EditOrganizationComponent implements OnInit {
     this.pagedItemsMembers = this.rawResponseMembers.content;
     for (var k = 0; k < this.pagedItemsMembers.length; k++) {
       this.pagedItemsMembers[k] = User.fromModel(this.pagedItemsMembers[k]);
+      this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => this.pagedItemsMembers[k].userOrganizationAuthorities.push(this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId)));
       this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_SPONSOR') !== undefined
       this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_MANAGER') !== undefined
       this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authority => authority.name === 'ROLE_OWNER') !== undefined
@@ -170,11 +205,23 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshContents(page: number = 1) {
-    this.contentService.getByOrganizationId(this.organization.id, page - 1, this.pageSizeContents)
+    this.refreshContentStatus = 'running';
+    this.organizationService.getContents(this.organization.id, page - 1, this.pageSizeContents)
       .subscribe(contents => {
         this.rawResponseContents = contents;
         this.setContentsPage(page);
-      });
+        this.refreshContentStatus = 'success';
+        setTimeout(() => {
+          this.refreshContentStatus = 'idle';
+        }, 1000);
+      }, error => {
+        this.refreshContentStatus = 'error';
+        console.log(error);
+        setTimeout(() => {
+          this.refreshContentStatus = 'idle';
+        }, 1000);
+      }
+    );
   }
 
   setContentsPage(page: number) {
@@ -183,6 +230,15 @@ export class EditOrganizationComponent implements OnInit {
     for (var k = 0; k < this.pagedItemsContents.length; k++) {
       this.pagedItemsContents[k] = this.pagedItemsContents[k];
     }
+  }
+
+  refreshSlackTeam() {
+    this.slackTeamService.getById(this.organization.slackTeam.id)
+      .subscribe(
+        slackTeam => {
+          this.organization.slackTeam = SlackTeam.fromModel(slackTeam);
+        }
+      )
   }
 
   openContentModal(template: TemplateRef<any>, content) {
@@ -221,13 +277,12 @@ export class EditOrganizationComponent implements OnInit {
   onSlackDisconnect() {
     this.slackDisconnectStatus = 'running';
     if (this.id > 0 && this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-      this.organizationService.slackDisconnect(this.id, this.organization.slackTeam.id)
+      this.organizationService.slackDisconnect(this.id)
         .subscribe(
           () => {
             this.slackDisconnectStatus = 'success';
             this.pagerMembers.currentPage = undefined;
-            this.refreshForm();
-            this.refreshMembers();
+            this.refreshInformations();
             setTimeout(() => {
               this.slackDisconnectStatus = 'idle';
             }, 2000);
@@ -247,13 +302,9 @@ export class EditOrganizationComponent implements OnInit {
       return;
     }
 
-    var content = new Content();
+    var content = new ContentModel();
     content.name = this.contentForm.controls['name'].value;
     content.value = this.simplemde.value();
-
-    var org = new Organization();
-    org.id = this.organization.id;
-    content.organizations = [org];
 
     if (this.contentId > 0) {
       content.id = this.contentId;
@@ -267,7 +318,7 @@ export class EditOrganizationComponent implements OnInit {
             console.log(error);
           });
     } else {
-      this.contentService.create(content)
+      this.organizationService.addContent(this.organization.id, content)
         .subscribe(
           () => {
             this.modalRef.hide();

@@ -1,42 +1,47 @@
-<div class="login-box">
-    <div class="login-logo">
-        <a href="/"><b>Les Projets Cagnottes</b></a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p i18n="@@signInBoxHeader" class="login-box-msg">Sign in to start your session
-        </p>
+<div class="login-page">
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div class="form-group has-feedback">
-                <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@userEmail" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required" i18n="@@emailRequired">Email is required
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/"><b>Les Projets Cagnottes</b></a>
+        </div>
+        <!-- /.login-logo -->
+
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p i18n="@@signInBoxHeader" class="login-box-msg">Sign in to start your session
+                </p>
+
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group mb-3">
+                        <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@userEmail">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="input-group mb-3">
+                        <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder="@@userPassword">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button [disabled]="loading" class="btn btn-primary btn-block" i18n="@@loginButton" (click)="onSubmit()">Login</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="social-auth-links text-center">
+                    <p i18n="@@orSeparator">- OR -</p>
+                    <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block bg-maroon">
+                        <i class="fab fa-slack"></i><span i18n="@@slackLoginButton">Sign in using Slack</span></a>
                 </div>
             </div>
-            <div class="form-group has-feedback">
-                <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder="@@userPassword" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required" i18n="@@passwordRequired">
-                        Password is required</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12" data-toggle="buttons">
-                    <button [disabled]="loading" class="btn btn-default btn-block btn-flat btn-border" i18n="@@loginButton" (click)="onSubmit()">Login</button>
-                </div>
-            </div>
-        </form>
-        <div class="social-auth-links text-center">
-            <p i18n="@@orSeparator">- OR -</p>
-            <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block btn-social bg-maroon btn-flat"><i class="fa fa-slack"></i><span
-                    i18n="@@slackLoginButton">Sign in using
-                    Slack</span></a>
+            <!-- /.login-box-body -->
         </div>
     </div>
-    <!-- /.login-box-body -->
+    <!-- /.login-box -->
 </div>
-<!-- /.login-box -->

@@ -3,3 +3,8 @@
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
+.tab-pane>.bottom-bar {
+    text-align: center;
+    margin: 1em;
+}

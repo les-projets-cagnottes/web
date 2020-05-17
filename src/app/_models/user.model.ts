@@ -9,6 +9,7 @@ export class UserModel extends AuditModel {
     avatarUrl: string;
     enabled: boolean;
     token: string;
+    userOrganizationAuthoritiesRef: number[] = [];
 
     // Only in Valyou-Web
     budgetUsage: string;

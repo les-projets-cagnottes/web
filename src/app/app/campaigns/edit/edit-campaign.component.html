@@ -1,31 +1,31 @@
-<div class="row">
-    <form [formGroup]="form">
-        <div class="col-md-8">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 i18n="@@projectDetailedPresentation" class="box-title">Detailed Presentation</h3>
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header with-border">
+                    <h3 i18n="@@projectDetailedPresentation" class="card-title">Detailed Presentation</h3>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                     <div class="form-group">
-                        <label for="longDescriptionc"><span
+                        <label for="longDescription"><span
                                 i18n="@@helpUseMarkdown">
                                 To format your presentation, you can use the Markdown syntax.</span> <a
                                 href="https://docs.framasoft.org/fr/grav/markdown.html"
                                 i18n="@@moreInfosHere">More info
                                 here</a></label>
-                        <textarea id="longDescriptionc" lass="form-control" rows="3" placeholder="Put your detailed presentation here" i18n-placeholder="@@projectDetailedPresentationPlaceholder"></textarea>
+                        <textarea id="longDescription" lass="form-control" rows="3" placeholder="Put your detailed presentation here" i18n-placeholder="@@projectDetailedPresentationPlaceholder"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4">
             <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title" i18n="@@projectInformationsTitle">
+            <div class="card">
+                <div class="card-header with-border">
+                    <h3 class="card-title" i18n="@@projectInformationsTitle">
                         Infos</h3>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                     <div class="form-group">
                         <label for="amount" i18n="@@organization">Organization</label>
                         <select class="form-control select2 select-border" style="width: 100%;" formControlName="organization">
@@ -39,44 +39,38 @@
                             <option *ngFor="let item of budgets; index as i" value="{{ i }}">{{ item.name }}</option>
                         </select>
                     </div>
-                    <div class="form-group" [ngClass]="{ 'has-error': f.title.errors }">
+                    <div class="form-group">
                         <label for="title" i18n="@@projectTitle">Title</label>
-                        <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title" i18n-placeholder="@@projectTitle">
+                        <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title" i18n-placeholder="@@projectTitle" [ngClass]="{ 'is-invalid': f.title.errors }" />
                     </div>
-                    <div class="form-group" [ngClass]="{ 'has-error': f.shortDescription.errors }">
-                        <label for="shortDescription" i18n="@@projectShortDescription">Short
-                            Description</label>
-                        <input formControlName="shortDescription" type="text" class="form-control" id="shortDescription" placeholder="Short Description" i18n-placeholder="@@projectShortDescription">
+                    <div class="form-group">
+                        <label for="shortDescription" i18n="@@projectShortDescription">Short Description</label>
+                        <input formControlName="shortDescription" type="text" class="form-control" id="shortDescription" placeholder="Short Description" i18n-placeholder="@@projectShortDescription" [ngClass]="{ 'is-invalid': f.shortDescription.errors }" />
                     </div>
-                    <div class="form-group" [ngClass]="{ 'has-error': (f.fundingDeadline.errors || (id == 0 && getFundingDeadlineValue().getTime() > nowPlus3Months.getTime())) }">
-                        <label for="fundingDeadline" i18n="@@projectFundingDeadlineDetailedLabel" style="display: block;">Funding &
-                            Team-up Deadline</label>
-                        <input formControlName="fundingDeadline" type="date" id="fundingDeadline" name="fundingDeadline" value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}" min="{{ now | date:'yyyy-MM-dd' }}" max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}">
+                    <div class="form-group">
+                        <label for="fundingDeadline" i18n="@@projectFundingDeadlineDetailedLabel" style="display: block;">Funding & Team-up Deadline</label>
+                        <input formControlName="fundingDeadline" type="date" id="fundingDeadline" name="fundingDeadline" value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}" min="{{ now | date:'yyyy-MM-dd' }}" max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}" />
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group input-group" [ngClass]="{ 'has-error': f.donationsRequired.errors }">
-                                <label for="donationsRequired" i18n="@@projectMoneyNeeded">Money
-                                    needed (in €)</label>
-                                <input formControlName="donationsRequired" type="number" class="form-control" id="donationsRequired" min="{{ minDonations }}" step="0.01">
+                            <div class="form-group">
+                                <label for="donationsRequired" i18n="@@projectMoneyNeeded">Money needed (in €)</label>
+                                <input formControlName="donationsRequired" type="number" class="form-control" id="donationsRequired" min="{{ minDonations }}" step="0.01" [ngClass]="{ 'is-invalid': f.donationsRequired.errors }" />
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group" [ngClass]="{ 'has-error': f.peopleRequired.errors }">
-                                <label for="peopleRequired" i18n="@@projectPeopleNeededDetailedLabel">People
-                                    needed (in addition of the project leader)</label>
-                                <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired" min="2">
+                            <div class="form-group">
+                                <label for="peopleRequired" i18n="@@projectPeopleNeededDetailedLabel">People needed (in addition of the project leader)</label>
+                                <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired" min="2" [ngClass]="{ 'is-invalid': f.peopleRequired.errors }" />
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="checkbox" [ngClass]="{ 'has-error': f.rulesCompliant.errors }">
-                        <label for="rulesCompliant">
-                            <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant"
-                                name="rulesCompliant" /> <span
-                                i18n="@@projectIsRulesCompliant">
-                                This project is compliant with the rules of</span>
-                        </label> <span class="item-clickable" style="margin-left: 0.2em" (click)="onViewTermsOfUse(template)"><b> <u>{{ budgets[f.budget.value].name }}</u>
-                            </b></span>
+                    <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="custom-control custom-checkbox">
+                        <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant" class="custom-control-input" name="rulesCompliant" [ngClass]="{ 'is-invalid': f.rulesCompliant.errors }" />
+                        <label for="rulesCompliant" class="custom-control-label">
+                            <span i18n="@@projectIsRulesCompliant">This project is compliant with the rules of </span>
+                        </label>
+                        <span class="item-clickable" style="margin-left: 0.2em" (click)="onViewTermsOfUse(template)"><b> <u>{{ budgets[f.budget.value].name }}</u></b></span>
                     </div>
                     <ng-template #template>
                         <div class="modal-header">
@@ -99,5 +93,5 @@
                 </div>
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>

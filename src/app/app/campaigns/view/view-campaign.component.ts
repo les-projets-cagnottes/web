@@ -110,7 +110,7 @@ export class ViewCampaignComponent implements OnInit {
   refreshAccounts() {
     this.userService.getAccounts(this.userLoggedIn.id)
       .subscribe(accounts => {
-        this.accounts = Account.valuesOf(accounts);
+        this.accounts = Account.fromModels(accounts);
         this.refreshBudgets();
       })
   }
@@ -139,6 +139,8 @@ export class ViewCampaignComponent implements OnInit {
   }
 
   refreshDonations(page: number = 1) {
+    if(page <= 0)
+      return
     this.donationsSyncStatus = 'running';
     this.campaignService.getDonations(this.id, page - 1, this.pageSize)
       .subscribe(response => {

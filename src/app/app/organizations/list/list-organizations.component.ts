@@ -5,8 +5,8 @@ import { OrganizationModel } from 'src/app/_models';
 
 @Component({
   selector: 'app-organizations',
-  templateUrl: './organizations.component.html',
-  styleUrls: ['./organizations.component.css']
+  templateUrl: './list-organizations.component.html',
+  styleUrls: ['./list-organizations.component.css']
 })
 export class OrganizationsComponent implements OnInit {
 

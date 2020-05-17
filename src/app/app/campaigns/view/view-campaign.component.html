@@ -1,20 +1,20 @@
 <div class="row">
     <div class="col-md-8">
-        <div class="box box-default">
-            <div class="box-header">
-                <h3 class="box-title">{{ project.title }}</h3>
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">{{ project.title }}</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <markdown [data]="project.longDescription"></markdown>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <div class="box box-default">
-            <div class="box-header">
-                <h3 class="box-title" i18n="@@projectInformationsTitle">Informations</h3>
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@projectInformationsTitle">Informations</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <dl class="dl-horizontal">
                     <dt i18n="@@projectLeader">Project Leader</dt>
                     <dd>{{ leader.firstname }} {{ leader.lastname }}</dd>
@@ -34,19 +34,22 @@
                     <dd>{{ project.totalDonations.toFixed(2) }} € / {{ project.donationsRequired.toFixed(2) }} €</dd>
                 </dl>
             </div>
-            <div class="box-footer text-center">
-                <a class="btn btn-app btn-money" routerLink="/campaigns/{{ id }}/edit" *ngIf="leader.id === userLoggedIn.id">
-                    <i class="fa fa-pencil-square-o"></i><span i18n="@@projectEditAppButton">Edit</span>
+            <div class="card-footer text-center">
+                <a class="btn btn-app" routerLink="/campaigns/{{ id }}/edit" *ngIf="leader.id === userLoggedIn.id">
+                    <i class="fas fa-edit"></i>
+                    <span i18n="@@projectEditAppButton">Edit</span>
                 </a>
-                <a class="btn btn-app btn-money" (click)="join()" *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
-                    <i class="fa fa-pencil"></i><span i18n="@@projectJoinTeamAppButton">Join the team</span>
+                <a class="btn btn-app" (click)="join()" *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
+                    <i class="fas fa-user-plus"></i>
+                    <span i18n="@@projectJoinTeamAppButton">Join the team</span>
                 </a>
-                <a class="btn btn-app btn-team" (click)="join()" *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
-                    <i class="fa fa-close"></i><span i18n="@@projectLeaveTeamAppButton">Leave the team</span>
+                <a class="btn btn-app" (click)="join()" *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
+                    <i class="fas fa-user-minus"></i>
+                    <span i18n="@@projectLeaveTeamAppButton">Leave the team</span>
                 </a>
-                <a class="btn btn-app btn-money" [ngClass]="{ 'disabled': contributeFinanciallyStatus == 'disabled'}" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.totalDonations.toFixed(2) != project.donationsRequired.toFixed(2) && project.status == 'A_IN_PROGRESS'">
-                    <i class="fa fa-money"></i><span i18n="@@projectContributeFinanciallyAppButton">Contribute
-                        financially</span>
+                <a class="btn btn-app" [ngClass]="{ 'disabled': contributeFinanciallyStatus == 'disabled'}" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.totalDonations.toFixed(2) != project.donationsRequired.toFixed(2) && project.status == 'A_IN_PROGRESS'">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <span i18n="@@projectContributeFinanciallyAppButton">Contribute financially</span>
                 </a>
                 <ng-template #template>
                     <div class="modal-header">
@@ -82,79 +85,85 @@
                 </ng-template>
             </div>
         </div>
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title" i18n="@@donationsPanelTitle">Donations</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" (click)="refreshDonations(pager.currentPage)" [ngClass]="{ 'btn-success': donationsSyncStatus == 'success'}"><i class="fa fa-refresh"></i>
-                    </button>
+        <div class="card">
+            <div class="card-header border-0">
+                <h3 class="card-title" i18n="@@donationsPanelTitle">Donations</h3>
+                <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="refreshDonations(pager.currentPage)" [ngClass]="{ 'text-success': donationsSyncStatus == 'success'}">
+                        <i class="fas fa-sync"></i>
+                    </a>
                 </div>
             </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">
-                <table class="table">
-                    <tbody>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-striped table-valign-middle">
+                    <thead>
                         <tr>
                             <th i18n="@@donationContributor">Contributor</th>
                             <th i18n="@@donationDate">Date</th>
                             <th i18n="@@donationAmount" width="22%">Amount</th>
                             <th i18n="@@actions" width="22%">Actions</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <tr *ngFor="let donation of pagedItems">
                             <td>{{ donation.contributor.firstname }} {{ donation.contributor.lastname }}</td>
                             <td>{{ donation.createdAt | date:'medium' }}</td>
                             <td class="text-right">{{ donation.amount.toFixed(2) }} €</td>
                             <td>
-                                <button *ngIf="project.status == 'A_IN_PROGRESS' && userLoggedIn.id === donation.contributor.id" type="button" class="btn btn-default btn-flat btn-border" [ngClass]="{ 'btn-success': deleteDonationsStatus[donation.id] == 'success', 'btn-danger': deleteDonationsStatus[donation.id] == 'error' }"
+                                <a *ngIf="project.status == 'A_IN_PROGRESS' && userLoggedIn.id === donation.contributor.id" class="text-muted item-clickable" [ngClass]="{ 'text-success': deleteDonationsStatus[donation.id] == 'success', 'text-danger': deleteDonationsStatus[donation.id] == 'error' }"
                                     (click)="deleteDonations(donation)">
-                                    <i class="fa fa-trash"></i> <span i18n="@@actionDelete">Delete</span></button></td>
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div *ngIf="donationsSyncStatus == 'running'" class="overlay">
-                <i class="fa fa-refresh fa-spin"></i>
+                <i class="fas fa-sync fa-spin"></i>
             </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
+            <!-- /.card-body -->
+            <div class="card-footer">
                 <div class="row">
-                    <div class="col-sm-5 dataTables_info_container">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info" role="status" aria-live="polite"><span i18n="@@paginationStart">Showing
+                    <div class="col-5">
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info"><span i18n="@@paginationStart">Showing
                             </span>{{ pager.startIndex + 1 }}<span i18n="@@paginationEnd"> to
                             </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
                             </span>{{ pager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
                     </div>
-                    <div class="col-md-7">
-                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm no-margin pull-right">
-                            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshDonations(1)">&#171;</a>
+                    <div class="col-7">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="refreshDonations(1)">&#171;</a>
                             </li>
-                            <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                <a (click)="refreshDonations(pager.currentPage - 1)">&#8249;</a>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="refreshDonations(pager.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                                <a (click)="refreshDonations(page)">{{page}}</a>
+                            <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                <a class="page-link" (click)="refreshDonations(page)">{{page}}</a>
                             </li>
-                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshDonations(pager.currentPage + 1)">&#8250;</a>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link" (click)="refreshDonations(pager.currentPage + 1)">&#8250;</a>
                             </li>
-                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                <a (click)="refreshDonations(pager.totalPages)">&#187;</a>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link" (click)="refreshDonations(pager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="box box-default">
-            <div class="box-header">
-                <h3 class="box-title" i18n="@@projectTeamBoxTitle">Team</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" (click)="refreshMembers()" [ngClass]="{ 'btn-success': membersSyncStatus == 'success'}"><i class="fa fa-refresh"></i>
-                    </button>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@projectTeamBoxTitle">Team</h3>
+                <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="refreshMembers()" [ngClass]="{ 'text-success': membersSyncStatus == 'success'}">
+                        <i class="fas fa-sync"></i>
+                    </a>
                 </div>
             </div>
-            <div class="box-body no-padding">
+            <div class="card-body p-0">
                 <ul class="users-list clearfix">
                     <li *ngFor="let user of members">
                         <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image" style="max-height: 90px;">
@@ -163,7 +172,7 @@
                 </ul>
             </div>
             <div *ngIf="membersSyncStatus == 'running'" class="overlay">
-                <i class="fa fa-refresh fa-spin"></i>
+                <i class="fas fa-sync fa-spin"></i>
             </div>
         </div>
     </div>

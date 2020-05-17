@@ -4,9 +4,10 @@ import { environment } from '../../environments/environment';
 
 import { BudgetModel } from '../_models/budget.model';
 import { OrganizationModel } from '../_models/organization.model';
-import { OrganizationAuthority } from '../_models/organizationAuthority';
+import { OrganizationAuthorityModel } from '../_models/organization.authority.model';
 
 import { User } from '../_entities/user';
+import { ContentModel } from '../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,19 +25,11 @@ export class OrganizationService {
     return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/organization`, { params });
 }
 
-  getByMemberId(memberId: number) {
-    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/user/${memberId}/organizations`);
-  }
-
   getByOwner(owner: User, offset, limit) {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
     return this.http.get<User[]>(`${environment.apiUrl}/organization?owner_id=${owner.id}`, { params });
-  }
-
-  getBudgets(organizationId: number) {
-    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
   }
 
   create(organization: OrganizationModel) {
@@ -51,23 +44,46 @@ export class OrganizationService {
     return this.http.delete(`${environment.apiUrl}/organization/${id}`);
   }
 
-  getMembers(organizationId: Number, offset, limit) {
+  getBudgets(organizationId: number) {
+    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
+  }
+
+  getMembers(organizationId: number, offset, limit) {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
     return this.http.get<User[]>(`${environment.apiUrl}/organization/${organizationId}/members`, { params });
   }
 
+  getAllContents(id: number) {
+    return this.http.get<ContentModel[]>(`${environment.apiUrl}/organization/${id}/contents`);
+  }
+
+  getContents(id: number, offset: number, limit: number) {
+    const params = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+    return this.http.get<ContentModel[]>(`${environment.apiUrl}/organization/${id}/contents`, { params });
+  }
+
+  addContent(id: number, content: ContentModel) {
+    return this.http.post(`${environment.apiUrl}/organization/${id}/contents`, content);
+  }
+
   getOrganizationAuthorities(organizationsId: Number) {
-    return this.http.get<OrganizationAuthority[]>(`${environment.apiUrl}/organization/${organizationsId}/authorities`, {});
+    return this.http.get<OrganizationAuthorityModel[]>(`${environment.apiUrl}/organization/${organizationsId}/authorities`, {});
   }
 
   addMember(organizationId: number, userId: number) {
-    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/members`, userId);
+    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/members/${userId}`, {});
   }
 
   removeMember(organizationId: number, userId: number) {
-    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/members?userId=${userId}`);
+    let httpParams = new HttpParams().set('aaa', '111');
+    httpParams.set('bbb', '222');
+
+    let options = { body: userId };
+    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/members/${userId}`);
   }
   
   slack(organizationId: number, code: string, redirect_uri) {
@@ -78,7 +94,7 @@ export class OrganizationService {
     return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack/sync`, {});
   }
 
-  slackDisconnect(organizationId: number, slackTeamId: number) {
-    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/slack/${slackTeamId}`, {});
+  slackDisconnect(organizationId: number) {
+    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/slack`, {});
   }
 }
