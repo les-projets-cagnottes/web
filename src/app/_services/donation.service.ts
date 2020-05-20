@@ -9,16 +9,12 @@ import { environment } from 'src/environments/environment';
 export class DonationService {
   constructor(private http: HttpClient) { }
 
+  control() {
+    return this.http.get(`${environment.apiUrl}/donation`);
+  }
+
   create(donation: DonationModel) {
       return this.http.post(`${environment.apiUrl}/donation`, donation);
-  }
-
-  getbyBudgetId(budgetId: number) {
-    return this.http.get<DonationModel[]>(`${environment.apiUrl}/donation?budgetId=${budgetId}`);
-  }
-
-  getByContributorId(contributorId: number) {
-    return this.http.get<DonationModel[]>(`${environment.apiUrl}/donation?contributorId=${contributorId}`);
   }
 
   delete(id: number) {

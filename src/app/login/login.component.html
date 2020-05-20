@@ -36,7 +36,7 @@
                 </form>
                 <div class="social-auth-links text-center">
                     <p i18n="@@orSeparator">- OR -</p>
-                    <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block bg-maroon">
+                    <a href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&user_scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block bg-maroon">
                         <i class="fab fa-slack"></i><span i18n="@@slackLoginButton">Sign in using Slack</span></a>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService } from 'src/app/_services';
 import { ApiToken, DonationModel } from 'src/app/_models';
 import { Account, Budget, Campaign, Donation, Organization, User } from 'src/app/_entities';
@@ -23,6 +24,11 @@ export class ProfileComponent implements OnInit {
   donationsBudgets: Budget[] = [];
   donationsCampaigns: Budget[] = [];
   deleteDonationsStatus: string[] = [];
+
+  // Organizations Tab
+  organizations: Organization[] = [];
+  currentOrganization: Organization = new Organization();
+  currentOrganizationSubscription: Subscription;
 
   // Settings Tab
   editUserForm = this.fb.group({
@@ -53,7 +59,6 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private modalService: BsModalService,
     private fb: FormBuilder) {
-    this.user.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   }
 
   ngOnInit() {
@@ -69,6 +74,7 @@ export class ProfileComponent implements OnInit {
     this.refreshAccounts();
     this.refreshCampaigns();
     this.refreshDonations();
+    this.refreshOrganizations();
     this.refreshTokens();
   }
 
@@ -141,6 +147,23 @@ export class ProfileComponent implements OnInit {
               this.donations.forEach(donation => donation.setCampaign(campaigns));
           })
       });
+  }
+
+  refreshOrganizations() {
+    this.userService.getOrganizations(this.user.id)
+      .subscribe(organizations => {
+        this.organizations = Organization.fromModels(organizations);
+        this.currentOrganization = this.authenticationService.currentOrganizationValue;
+        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
+        if(currentOrganizationIndex >= 0) {
+          this.organizations[currentOrganizationIndex].isCurrent = true;
+        }
+      })
+  }
+
+  setCurrentOrganization(organization: Organization) {
+    this.authenticationService.setCurrentOrganization(organization);
+    this.refreshOrganizations();
   }
 
   refreshTokens() {

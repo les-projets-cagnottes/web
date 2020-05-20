@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 import { BudgetModel } from '../_models/budget.model';
@@ -7,13 +8,22 @@ import { OrganizationModel } from '../_models/organization.model';
 import { OrganizationAuthorityModel } from '../_models/organization.authority.model';
 
 import { User } from '../_entities/user';
-import { ContentModel } from '../_models';
+import { ContentModel, CampaignModel } from '../_models';
+import { Organization } from '../_entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
+
+  getCurrentOrganization() {
+    var organization = JSON.parse(localStorage.getItem('currentOrganization'));
+    if(organization !== undefined) {
+      return this.getById(organization.id);
+    }
+  }
 
   getById(id: number) {
     return this.http.get<OrganizationModel>(`${environment.apiUrl}/organization/${id}`);
@@ -37,7 +47,7 @@ export class OrganizationService {
   }
 
   update(organization: OrganizationModel) {
-    return this.http.put(`${environment.apiUrl}/organization/${organization.id}`, organization);
+    return this.http.put(`${environment.apiUrl}/organization`, organization);
   }
 
   delete(id: number) {
@@ -46,6 +56,14 @@ export class OrganizationService {
 
   getBudgets(organizationId: number) {
     return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
+  }
+
+  getCampaigns(id: number, offset: number, limit: number, filter: string[]) {
+    const params = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString())
+      .set('filters', filter.toString());
+    return this.http.get<CampaignModel[]>(`${environment.apiUrl}/organization/${id}/campaigns`, { params });
   }
 
   getMembers(organizationId: number, offset, limit) {

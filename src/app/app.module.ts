@@ -28,7 +28,7 @@ import { ProfileComponent } from './app/profile/profile.component';
 import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { ManagerComponent } from './app/manager/manager.component';
+import { AdminComponent } from './app/admin/admin.component';
 
 
 @NgModule({
@@ -48,7 +48,7 @@ import { ManagerComponent } from './app/manager/manager.component';
     ReportComponent,
     GettingStartedComponent,
     AboutComponent,
-    ManagerComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,

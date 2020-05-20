@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select2OptionData, Options } from 'select2';
 
 import { CampaignService } from 'src/app/_services/campaign.service';
-import { PagerService } from 'src/app/_services';
+import { PagerService, OrganizationService, AuthenticationService } from 'src/app/_services';
 
 @Component({
   selector: 'app-list-campaigns',
@@ -22,7 +22,8 @@ export class ListCampaignsComponent implements OnInit {
 
   constructor(
     private pagerService: PagerService,
-    private campaignService: CampaignService
+    private authenticationService: AuthenticationService,
+    private organizationService: OrganizationService
   ) { }
 
   public statusSelectionData: Array<Select2OptionData>;
@@ -53,7 +54,7 @@ export class ListCampaignsComponent implements OnInit {
 
   refresh(page: number = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
-      this.campaignService.getAll(page - 1, this.pageSize, this.statusSelectionValue)
+      this.organizationService.getCampaigns(this.authenticationService.currentOrganizationValue.id, page - 1, this.pageSize, this.statusSelectionValue)
         .subscribe(response => {
           this.rawResponse = response;
           this.setPage(page);

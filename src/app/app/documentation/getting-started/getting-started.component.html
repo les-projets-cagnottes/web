@@ -1,13 +1,13 @@
 <div class="row">
-    <div class="col-md-9">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title">Documentation : Guide pratique</h3>
+    <div class="col-9">
+        <div class="card card-default">
+            <div class="card-header with-border">
+                <h3 class="card-title">Documentation : Guide pratique</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <h2 id="submit-project">1. Soumettre un projet</h2>
                 <p>
-                    N’importe qui peut proposer un projet à la communauté. Pour cela, rendez-vous une fois identifié sur <b><a href="http://localhost:4200/projects/new">Soumettre mon projet</a></b> et remplissez les champs requis. A noter :
+                    N’importe qui peut proposer un projet à la communauté. Pour cela, rendez-vous une fois identifié sur <b><a [routerLink]="['/campaigns/new']">Soumettre mon projet</a></b> et remplissez les champs requis. A noter :
                 </p>
                 <ul>
                     <li>
@@ -34,7 +34,8 @@
                 </p>
                 <h2 id="contribute-to-a-project">2. Contribuer à un projet</h2>
                 <p>
-                    Chaque membre d'une organisation dispose d’une cagnotte dont le montant s’affiche sur son profil. Pour y accéder, cliquez sur votre photo en haut à gauche puis sur le bouton <b><a href="http://localhost:4200/profile">Mon compte</a></b>. Il est possible de contribuer de 3 façons à un projet :
+                    Chaque membre d'une organisation dispose d’une cagnotte dont le montant s’affiche sur son profil. Pour y accéder, cliquez sur <b><a [routerLink]="['/profile']">ce lien</a> ou sur votre nom en haut à gauche</b>. Il est possible de contribuer
+                    de 3 façons à un projet :
                 </p>
                 <ul>
                     <li>en offrant tout ou partie de sa cagnotte</li>
@@ -43,7 +44,7 @@
                 </ul>
                 <h3 id="give-pot">2.1. Donner tout ou partie de sa cagnotte</h3>
                 <ol>
-                    <li>Dans <b><a href="http://localhost:4200/projects">Découvrir les projets</a></b>, cliquez sur le projet que vous souhaitez soutenir</li>
+                    <li>Dans <b><a [routerLink]="['/campaigns']">Découvrir les projets</a></b>, cliquez sur le projet que vous souhaitez soutenir</li>
                     <li>Cliquez sur le bouton "Contribuer financièrement"</li>
                     <li>Dans le formulaire qui apparaît, vous pouvez choisir le montant que vous souhaitez donner en remplissant le champ "Montant"</li>
                     <li>Valider en cliquant sur "Envoyer"</li>
@@ -51,22 +52,22 @@
                 </ol>
                 <h3 id="give-time">2.2 Donner du temps au projet</h3>
                 <ol>
-                    <li>Dans <b><a href="http://localhost:4200/projects">Découvrir les projets</a></b>, cliquez sur le projet que vous souhaitez soutenir</li>
+                    <li>Dans <b><a [routerLink]="['/campaigns']">Découvrir les projets</a></b>, cliquez sur le projet que vous souhaitez soutenir</li>
                     <li>Cliquez sur le bouton "Rejoindre l'équipe"</li>
                     <li>Votre inscription apparaît dans la liste des équipiers sur la page du projet ainsi que sur votre profil</li>
                 </ol>
                 <p>
-                    Vous pouvez vous retirer de l’équipe à tout moment.en cliquant sur "Quitter l'équipe".
+                    Vous pouvez vous retirer de l’équipe à tout moment en cliquant sur "Quitter l'équipe".
                 </p>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title" i18n="@@summary">Summary</h3>
+    <div class="col-3">
+        <div class="card card-default">
+            <div class="card-header with-border">
+                <h3 class="card-title" i18n="@@summary">Summary</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <ol>
                     <li>
                         <a href="/doc/getting-started#submit-project">Soumettre un projet</a>

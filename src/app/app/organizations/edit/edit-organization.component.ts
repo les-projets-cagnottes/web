@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
 import { ContentService } from 'src/app/_services/content.service';
 import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization.authority';
-import { ContentModel } from 'src/app/_models';
+import { ContentModel, OrganizationModel } from 'src/app/_models';
 import { SlackTeamService } from 'src/app/_services/slack.team.service';
 
 declare function startSimpleMDE(): any;
@@ -27,7 +27,8 @@ export class EditOrganizationComponent implements OnInit {
 
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
-    name: [this.organization.name, Validators.required]
+    name: [this.organization.name, Validators.required],
+    logoUrl: [this.organization.logoUrl]
   });
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
@@ -399,13 +400,16 @@ export class EditOrganizationComponent implements OnInit {
       return;
     }
 
-    var organization2save = new Organization();
-    organization2save.name = this.f.name.value;
-    //organization2save.members = this.organization.members;
+    var organization = new OrganizationModel();
+    organization.name = this.f.name.value;
+    organization.logoUrl = this.f.logoUrl.value;
+    if(organization.logoUrl === "") {
+      organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
+    }
 
     if (this.id > 0) {
-      organization2save.id = this.id;
-      this.organizationService.update(organization2save)
+      organization.id = this.id;
+      this.organizationService.update(organization)
         .subscribe(
           () => {
             this.submitting = false;
@@ -423,7 +427,7 @@ export class EditOrganizationComponent implements OnInit {
             }, 2000);
           });
     } else {
-      this.organizationService.create(organization2save)
+      this.organizationService.create(organization)
         .subscribe(
           response => {
             this.submitting = false;

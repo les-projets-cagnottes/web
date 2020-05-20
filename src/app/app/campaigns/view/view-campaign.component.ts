@@ -139,8 +139,13 @@ export class ViewCampaignComponent implements OnInit {
   }
 
   refreshDonations(page: number = 1) {
-    if(page <= 0)
-      return
+    if(page <= 0) {
+      this.donationsSyncStatus = 'success';
+      setTimeout(() => {
+        this.donationsSyncStatus = 'idle';
+      }, 1000);
+      return;
+    }
     this.donationsSyncStatus = 'running';
     this.campaignService.getDonations(this.id, page - 1, this.pageSize)
       .subscribe(response => {

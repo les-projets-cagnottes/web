@@ -72,15 +72,18 @@
                                 <label for="amount" i18n="@@donationAmount">Amount (in €)</label>
                                 <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[f.budget.value].amount, project.donationsRequired - project.totalDonations)).toFixed(2) }}">
                             </div>
-                            <div>
+                            <div class="callout callout-info">
                                 <span i18n="@@budgetRemainingBegin">You will have </span>
                                 <b>{{ (accounts[f.budget.value].amount - f.amount.value).toFixed(2) }} €</b>
                                 <span i18n="@@budgetRemainingEnd"> left to finance other projects.</span>
                             </div>
+                            <div class="callout callout-warning">
+                                <p>Votre contribution peut prendre quelques secondes à apparaître dans la liste des donations.</p>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-default btn-flat btn-border" (click)="onSubmitDonation()" i18n="@@donationSubmit">Submit</button>
+                        <button class="btn btn-primary" (click)="onSubmitDonation()" i18n="@@donationSubmit">Submit</button>
                     </div>
                 </ng-template>
             </div>

@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Role } from '../_models';
-import { User } from '../_entities';
-import { AuthenticationService, AuthorityService } from '../_services';
+import { Organization, User } from '../_entities';
+import { AuthenticationService, AuthorityService, OrganizationService, UserService } from '../_services';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -12,17 +12,24 @@ import { AuthenticationService, AuthorityService } from '../_services';
 })
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
-  currentUser = new User();
+  currentOrganization: Organization = new Organization();
+  currentOrganizationSubscription: Subscription;
+  currentUser: User = new User();
   currentUserSubscription: Subscription;
   users: User[] = [];
 
   constructor(
     private authenticationService: AuthenticationService,
-    private authorityService: AuthorityService
-  ) {
+    private organizationService: OrganizationService
+  ) { 
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
+    });
+    this.currentOrganizationSubscription = this.authenticationService.currentOrganization.subscribe(organization => {
+      if(organization !== null) {
+        this.currentOrganization = organization;
+      }
     });
   }
 
@@ -32,8 +39,11 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   refresh() {
     this.authenticationService.whoami()
-      .subscribe(user => {
-        this.currentUser = user;
+      .subscribe(() => {
+        this.organizationService.getById(this.currentOrganization.id)
+          .subscribe(organizationModel => {
+            this.authenticationService.setCurrentOrganization(Organization.fromModel(organizationModel));
+          })
       });
   }
   
@@ -43,8 +53,21 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   }
 
   get isSponsor() {
-    var isSponsor = this.currentUser != null && this.currentUser.userAuthorities != null;
-    return isSponsor && this.currentUser.userAuthorities.some(a => a.name === Role.Admin);
+    var isSponsor = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
+    isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor);
+    return isSponsor || this.isAdmin;
+  }
+
+  get isManager() {
+    var isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
+    isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
+    return isManager || this.isAdmin;
+  }
+  
+  get isOwner() {
+    var isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
+    isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);
+    return isOwner || this.isAdmin;
   }
 
   get isAdmin() {

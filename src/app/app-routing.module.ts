@@ -14,7 +14,7 @@ import { ProfileComponent } from './app/profile/profile.component';
 import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { ManagerComponent } from './app/manager/manager.component';
+import { AdminComponent } from './app/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'manager', component: ManagerComponent },
+      { path: 'manager', component: AdminComponent },
       { path: 'doc/getting-started', component: GettingStartedComponent },
       { path: 'about', component: AboutComponent }
     ]

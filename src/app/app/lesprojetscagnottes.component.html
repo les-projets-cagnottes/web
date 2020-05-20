@@ -13,6 +13,17 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
+                    <img [src]="currentOrganization.logoUrl" class="img-circle elevation-2" alt="Organization Image">
+                </div>
+                <div class="info">
+                    <a routerLink="/profile" class="d-block">
+                        {{ currentOrganization.name }}</a>
+                </div>
+            </div>
+
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
                     <img [src]="currentUser.avatarUrl" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
@@ -45,14 +56,22 @@
                             <p i18n="@@reportingMenu">Reporting</p>
                         </a>
                     </li>
-                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
-                        ADMINISTRATION</li>
+                    <li *ngIf="isSponsor || isManager || isOwner" class="nav-header" i18n="@@managementMenu">
+                        MANAGEMENT</li>
                     <li *ngIf="isSponsor" class="nav-item">
                         <a routerLink="/budgets" class="nav-link">
                             <i class="nav-icon fas fa-money-bill"></i>
                             <p i18n="@@budgetsMenu">Budgets</p>
                         </a>
                     </li>
+                    <li *ngIf="isManager || isOwner" class="nav-item">
+                        <a routerLink="/organizations" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p i18n="@@organizationsMenu">Organizations</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
+                        ADMINISTRATION</li>
                     <li *ngIf="isAdmin" class="nav-item">
                         <a routerLink="/users" class="nav-link">
                             <i class="nav-icon fa fa-user"></i>
@@ -60,15 +79,9 @@
                         </a>
                     </li>
                     <li *ngIf="isAdmin" class="nav-item">
-                        <a routerLink="/organizations" class="nav-link">
-                            <i class="nav-icon fa fa-users"></i>
-                            <p i18n="@@organizationsMenu">Organizations</p>
-                        </a>
-                    </li>
-                    <li *ngIf="isAdmin" class="nav-item">
                         <a routerLink="/manager" class="nav-link">
                             <i class="nav-icon fa fa-cog"></i>
-                            <p i18n="@@managerMenu">Manager</p>
+                            <p i18n="@@managerMenu">Toolbox</p>
                         </a>
                     </li>
                     <li class="nav-header" i18n="@@documentationMenu">

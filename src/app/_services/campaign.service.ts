@@ -10,14 +10,6 @@ export class CampaignService {
   
   constructor(private http: HttpClient) { }
 
-  getAll(offset, limit, filter) {
-    const params = new HttpParams()
-      .set('offset', offset)
-      .set('limit', limit)
-      .set('filters', filter);
-    return this.http.get<CampaignModel[]>(`${environment.apiUrl}/campaign`, { params });
-  }
-
   getById(id: number) {
     return this.http.get<CampaignModel>(`${environment.apiUrl}/campaign/${id}`);
   }

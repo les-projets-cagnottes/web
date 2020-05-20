@@ -1,46 +1,36 @@
 <div class="row">
-    <div class="col-md-9">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title" i18n="@@about">About</h3>
+    <div class="col-9">
+        <div class="card card-default">
+            <div class="card-header with-border">
+                <h3 class="card-title" i18n="@@about">About</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <h2 id="version">1. Version actuelle</h2>
-                <p>Plateforme : <b>0.4.3</b></p>
-                <p>Release : <b>Are we alone ?</b></p>
+                <p>Plateforme : <b>0.5.0</b></p>
+                <p>Release : <b>// TODO</b></p>
                 <p>Changelog :</p>
                 <ul>
                     <li>Améliorations</li>
                     <ul>
-                        <li>Thème par défaut</li>
-                        <li>Déconnexion du workspace Slack</li>
-                        <li>Notifications Slack à J-7 et J-1 pour les projets non prêts</li>
+                        <li>// TODO</li>
                     </ul>
                     <li>Correction de bugs</li>
                     <ul>
-                        <li>Blocage des créations de projets si le nombre d'équipiers requis hors porteur de projet est inférieur à 2</li>
-                        <li>Blocage des créations de projets si la date limite pour constituer l'équipe et financer le projet est postérieure à 3 mois</li>
-                        <li>Correction du login par email / mot de passe</li>
-                        <li>Correction de la synchronisation Slack pour les workspaces ayant de nombreux membres</li>
-                        <li>Correction de la notification aux nouveaux Valeurieux sur Slack pour les inviter à rejoindre la plateforme</li>
-                        <li>Gestion correcte des cas de désynchronisation des comptes Slack</li>
-                        <li>Désactivation des comptes désactivés dans Slack</li>
+                        <li>// TODO</li>
                     </ul>
                 </ul>
 
-                <h2 id="credits">2. Credits</h2>
+                <h2 id="credits">2. Crédits</h2>
                 <h3 id="credits-valeuriad">2.1. Création du concept par Valeuriad</h3>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div id="logo-valeuriad" class="col-3">
                         <a href="https://valeuriad.fr">
                             <img src="assets/images/logo-valeuriad.png" alt="Logo Valeuriad" width="100%" />
                         </a>
                     </div>
-                    <div class="col-md-9">
-                        <p>
-                            En 2015, Valeuriad créé le concept des projets cagnottes comme suit :
-                        </p>
+                    <div class="col-9">
                         <blockquote>
+                            <h4>En 2015, Valeuriad créé le concept des projets cagnottes comme suit :</h4>
                             <p>Sur une année, Valeuriad attribue à ses collaborateurs une cagnotte de 150€ par salarié, dans le but de favoriser la cohésion d'équipe et que chaque collaborateur soit acteur au sein de la société.</p>
                             <p>Grace à cette cagnotte, les collaborateurs peuvent mettre en place, s'ils le souhaitent, des projets personnels qui leurs tiennent à coeur, sans forcément de lien avec l'informatique, dans le but de développer l'esprit d'initiative
                                 et l'entente entre collaborateurs.</p>
@@ -56,74 +46,90 @@
 
                 <h2 id="libraries">3. Bibliothèques</h2>
                 <p>"Les Projets Cagnottes" utilise les bibliothèques suivantes. Un immense merci à tous leurs développeurs qui les maintiennent depuis de nombreuses années.</p>
-                <h3 id="libraries-core">3.1 core</h3>
-                <dl class="dl-horizontal">
-                    <dt>Spring Boot</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                    <dt>Postgresql</dt>
-                    <dd><a href="https://opensource.org/licenses/postgresql">The PostgreSQL Licence</a></dd>
-                    <dt>Java JWT</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                    <dt>Jackson Core</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                    <dt>Lombok</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>H2</dt>
-                    <dd><a href="http://www.h2database.com/html/license.html">Mozilla Public License 2.0 and Eclipse Public License</a></dd>
-                </dl>
-                <h3 id="libraries-web">3.2 web</h3>
-                <dl class="dl-horizontal">
-                    <dt>Admin LTE</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Angular</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Angular Datatables</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                    <dt>Bootstrap</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Core JS</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Datatables.net</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>JQuery</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>JQuery Slimscroll</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a> et <a href="https://opensource.org/licenses/gpl-license">The GPL License</a></dd>
-                    <dt>NG Select2</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>NGX Bootstrap</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>NGX Markdown</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>RXJS</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                    <dt>Select2</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>SimpleMDE - Markdown Editor</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Tslib</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                    <dt>Zone.js</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                </dl>
-                <h3 id="libraries-slack-events-catcher">3.3 slack-events-catcher</h3>
-                <dl class="dl-horizontal">
-                    <dt>Node Slack SDK</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Body parser</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Dotenv</dt>
-                    <dd><a href="https://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause "Simplified" License</a></dd>
-                    <dt>Express</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Node Cron</dt>
-                    <dd><a href="https://opensource.org/licenses/ISC">ISC License</a></dd>
-                    <dt>Node Postgres</dt>
-                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
-                    <dt>Request</dt>
-                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
-                </dl>
-                <h2 id="thanks">4. Remerciements spéciaux <i class="fa fa-heart"></i></h2>
+                <div class="row">
+                    <div class="col-5 col-sm-3">
+                        <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link" id="tabs-core" data-toggle="pill" href="#tabs-core" role="tab" aria-controls="tabs-core" aria-selected="false">core</a>
+                            <a class="nav-link" id="tabs-web" data-toggle="pill" href="#tabs-web" role="tab" aria-controls="tabs-web" aria-selected="false">web</a>
+                            <a class="nav-link" id="tabs-slack-events-catcher" data-toggle="pill" href="#tabs-slack-events-catcher" role="tab" aria-controls="tabs-slack-events-catcher" aria-selected="false">slack-events-catcher</a>
+                        </div>
+                    </div>
+                    <div class="col-7 col-sm-9">
+                        <div class="tab-content" id="vert-tabs-tabContent">
+                            <div class="tab-pane text-left fade" id="tabs-core" role="tabpanel" aria-labelledby="tabs-core">
+                                <dl class="dl-horizontal">
+                                    <dt>Spring Boot</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                    <dt>Postgresql</dt>
+                                    <dd><a href="https://opensource.org/licenses/postgresql">The PostgreSQL Licence</a></dd>
+                                    <dt>Java JWT</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                    <dt>Jackson Core</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                    <dt>Lombok</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>H2</dt>
+                                    <dd><a href="http://www.h2database.com/html/license.html">Mozilla Public License 2.0 and Eclipse Public License</a></dd>
+                                </dl>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-web" role="tabpanel" aria-labelledby="tabs-web">
+                                <dl class="dl-horizontal">
+                                    <dt>Admin LTE</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Angular</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Angular Datatables</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                    <dt>Bootstrap</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Core JS</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Datatables.net</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>JQuery</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>JQuery Slimscroll</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a> et <a href="https://opensource.org/licenses/gpl-license">The GPL License</a></dd>
+                                    <dt>NG Select2</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>NGX Bootstrap</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>NGX Markdown</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>RXJS</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                    <dt>Select2</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>SimpleMDE - Markdown Editor</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Tslib</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                    <dt>Zone.js</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                </dl>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-slack-events-catcher" role="tabpanel" aria-labelledby="tabs-slack-events-catcher">
+                                <dl class="dl-horizontal">
+                                    <dt>Node Slack SDK</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Body parser</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Dotenv</dt>
+                                    <dd><a href="https://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause "Simplified" License</a></dd>
+                                    <dt>Express</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Node Cron</dt>
+                                    <dd><a href="https://opensource.org/licenses/ISC">ISC License</a></dd>
+                                    <dt>Node Postgres</dt>
+                                    <dd><a href="https://opensource.org/licenses/MIT">The MIT License</a></dd>
+                                    <dt>Request</dt>
+                                    <dd><a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h2 id="thanks">4. Remerciements spéciaux</h2>
                 <dl class="dl-horizontal">
                     <dt>Valeuriad</dt>
                     <dd>Pour laisser toute son indépendance au projet et financer l'hébergement de celui-ci</dd>
@@ -133,12 +139,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title" i18n="@@summary">Summary</h3>
+    <div class="col-3">
+        <div class="card card-default">
+            <div class="card-header with-border">
+                <h3 class="card-title" i18n="@@summary">Summary</h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <ol>
                     <li>
                         <a href="/about#version">Version actuelle</a>
@@ -157,19 +163,8 @@
                     <li>
                         <a href="/about#libraries">Bibliothèques</a>
                     </li>
-                    <ol>
-                        <li>
-                            <a href="/about#libraries-core">core</a>
-                        </li>
-                        <li>
-                            <a href="/about#libraries-web">web</a>
-                        </li>
-                        <li>
-                            <a href="/about#libraries-slack-events-catcher">slack-events-catcher</a>
-                        </li>
-                    </ol>
                     <li>
-                        <a href="/about#thanks">Credits</a>
+                        <a href="/about#thanks">Crédits</a>
                     </li>
                 </ol>
             </div>

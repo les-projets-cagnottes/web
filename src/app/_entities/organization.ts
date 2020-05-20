@@ -14,6 +14,9 @@ export class Organization extends OrganizationModel {
     contents: Content[] = [];
     organizationAuthorities: OrganizationAuthority[] = [];
 
+    // Defines if this organization is the current one for the logged in user
+    isCurrent: boolean;
+
     static fromModel(model: OrganizationModel): Organization {
         var entity = new Organization();
         entity.id = model.id;
@@ -22,6 +25,7 @@ export class Organization extends OrganizationModel {
         entity.updatedAt = model.updatedAt;
         entity.updatedBy = model.updatedBy;
         entity.name = model.name;
+        entity.logoUrl = model.logoUrl;
         entity.slackTeam = new SlackTeam();
         entity.slackTeam.id = model.slackTeam.id;
         entity.contentsRef = model.contentsRef;

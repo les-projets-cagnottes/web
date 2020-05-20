@@ -31,6 +31,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@projectsBoxTitle">Projects</h3>
+                <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="refreshCampaigns(projectPager.currentPage)" [ngClass]="{ 'text-success': projectsSyncStatus == 'success'}">
+                        <i class="fas fa-sync"></i>
+                    </a>
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -64,6 +69,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div *ngIf="projectsSyncStatus == 'running'" class="overlay">
+                <i class="fas fa-sync fa-spin"></i>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

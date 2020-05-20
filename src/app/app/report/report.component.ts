@@ -28,6 +28,7 @@ export class ReportComponent implements OnInit {
   projectPager: any = {};
   pagedProjects: Campaign[];
   campaignsPageSize: number = 10;
+  projectsSyncStatus: string = 'idle';
 
   // Accounts Box
   private rawAccountsResponse: any;
@@ -69,30 +70,41 @@ export class ReportComponent implements OnInit {
     this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
       this.budget = this.budgets.find(budget => budget.id === +val);
       this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.organization.membersRef.length * this.budget.amountPerMember) + "%";
-      this.refreshCampaigns(this.projectPager.page);
-      this.refreshAccounts(this.accountsPager.page);
+      this.refreshCampaigns(this.projectPager.page, true);
+      this.refreshAccounts(this.accountsPager.page, true);
     });
   }
 
-  refreshCampaigns(page: number = 1) {
-    if (this.pagerService.canChangePage(this.projectPager, page)) {
+  refreshCampaigns(page: number = 1, force: boolean = false) {
+    if (this.pagerService.canChangePage(this.projectPager, page) || force) {
+      this.projectsSyncStatus = 'running';
       this.budgetService.getCampaigns(this.selectBudgetForm.controls['budget'].value, page - 1, this.campaignsPageSize)
         .subscribe(response => {
           this.rawProjectsResponse = response;
           this.setCampaignsPage(page);
+          this.projectsSyncStatus = 'success';
+          setTimeout(() => {
+            this.projectsSyncStatus = 'idle';
+          }, 1000);
+        }, error => {
+          this.projectsSyncStatus = 'error';
+          console.log(error);
+          setTimeout(() => {
+            this.projectsSyncStatus = 'idle';
+          }, 1000);
         });
     }
   }
 
-  refreshAccounts(page: number = 1) {
-    if (this.pagerService.canChangePage(this.accountsPager, page)) {
+  refreshAccounts(page: number = 1, force: boolean = false) {
+    if (this.pagerService.canChangePage(this.accountsPager, page) || force) {
+      this.accountsSyncStatus = 'running';
       this.budgetService.getAccounts(this.selectBudgetForm.controls['budget'].value, page - 1, this.accountsPageSize)
         .subscribe(response => {
           this.rawAccountsResponse = response;
           this.setAccountsPage(page);
           var accountUserRef = []
           this.pagedAccounts.forEach(account => accountUserRef.push(account.owner.id));
-          this.accountsSyncStatus = 'running';
           this.userService.getAllByIds(accountUserRef)
             .subscribe(users => {
               this.pagedAccounts.forEach(account => account.setOwner(User.fromModels(users)));

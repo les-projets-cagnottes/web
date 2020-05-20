@@ -83,12 +83,13 @@
                             <markdown [data]="rules.value"></markdown>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary btn-flat" (click)="modalRef.hide()" i18n="@@actionClose">Close</button>
+                            <button class="btn btn-primary" (click)="modalRef.hide()" i18n="@@actionClose">Close</button>
                         </div>
                     </ng-template>
-
+                </div>
+                <div class="card-footer">
                     <div class="text-center">
-                        <button [disabled]="submitting" type="button" class="btn btn-default btn-lg btn-flat btn-border" (click)="onSubmit()" i18n="@@save">Save</button>
+                        <button [disabled]="submitting" type="button" class="btn btn-primary" (click)="onSubmit()" i18n="@@save">Save</button>
                     </div>
                 </div>
             </div>

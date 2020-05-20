@@ -26,6 +26,10 @@ a.disabled {
     pointer-events: none;
 }
 
+.card-footer .pagination {
+    margin-bottom: 0;
+}
+
 .datatable-nb-entries {
     max-width: 5em;
 }
