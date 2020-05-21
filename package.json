@@ -37,7 +37,7 @@
         "rxjs-compat": "^6.5.5",
         "select2": "^4.0.13",
         "simplemde": "^1.11.2",
-        "tslib": "^1.11.2",
+        "tslib": "^1.13.0",
         "zone.js": "^0.10.3"
     },
     "devDependencies": {
