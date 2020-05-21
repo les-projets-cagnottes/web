@@ -12,6 +12,9 @@
       <trans-unit id="actionClose" datatype="html">
         <target>Fermer</target>
       </trans-unit>
+      <trans-unit id="actionControlDonations" datatype="html">
+        <target>Contrôle donations</target>
+      </trans-unit>
       <trans-unit id="actionDelete" datatype="html">
         <target>Supprimer</target>
       </trans-unit>
@@ -87,6 +90,9 @@
       <trans-unit id="contributions" datatype="html">
         <target>Contributions</target>
       </trans-unit>
+      <trans-unit id="controls" datatype="html">
+        <target>Contrôles</target>
+      </trans-unit>
       <trans-unit id="createdAt" datatype="html">
         <target>Créé le</target>
       </trans-unit>
@@ -141,8 +147,11 @@
       <trans-unit id="logout" datatype="html">
         <target>Se déconnecter</target>
       </trans-unit>
-      <trans-unit id="managerMenu" datatype="html">
-        <target>Configuration</target>
+      <trans-unit id="logs" datatype="html">
+        <target>Logs</target>
+      </trans-unit>
+      <trans-unit id="controlsMenu" datatype="html">
+        <target>Contrôles</target>
       </trans-unit>
       <trans-unit id="madePossibleBy" datatype="html">
         <target>Rendu possible par </target>

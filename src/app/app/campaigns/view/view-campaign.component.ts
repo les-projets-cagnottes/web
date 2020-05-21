@@ -131,7 +131,14 @@ export class ViewCampaignComponent implements OnInit {
         var tmpOrg = [];
         organizations.forEach(organization => tmpOrg.push(Organization.fromModel(organization)));
         this.budgets.forEach(budget => budget.setOrganization(tmpOrg));
-        this.accounts.forEach(account => account.setBudget(this.budgets));
+        var accounts = this.accounts;
+        this.accounts = [];
+        accounts.forEach(account => {
+          account.setBudget(this.budgets);
+          if(account.budget.amountPerMember != 0) {
+            this.accounts.push(account);
+          }
+        });
         this.contributeFinanciallyStatus = 'idle';
         this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
           +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);  

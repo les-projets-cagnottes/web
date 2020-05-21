@@ -20,7 +20,7 @@
                 <h3 class="card-title" i18n="@@controls">Controls</h3>
             </div>
             <div class="card-body">
-                <a class="btn btn-app" (click)="validateProjects()">
+                <a class="btn btn-app" (click)="validateProjects()" [ngClass]="{ 'bg-success': validateStatus == 'success', 'bg-danger': validateStatus == 'error'}">
                     <i class="fa fa-check-circle"></i>
                     <span i18n="@@actionValidateProjects">Edit</span>
                 </a>

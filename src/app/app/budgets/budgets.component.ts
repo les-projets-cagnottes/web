@@ -46,22 +46,10 @@ export class BudgetsComponent implements OnInit {
   }
 
   refresh(): void {
-    if (this.authenticationService.currentUserValue !== null) {
-      this.organizations = [];
-      this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
-        .subscribe(
-          response => {
-            response.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
-            this.mainForms = [];
-            this.refreshContents(0);
-          },
-          error => {
-            console.log(error);
-            this.refreshStatus = 'error';
-            setTimeout(() => {
-              this.refreshStatus = 'no-refresh';
-            }, 2000);
-          });
+    if (this.authenticationService.currentUserValue !== null && this.authenticationService.currentOrganizationValue) {
+      this.organizations = [this.authenticationService.currentOrganizationValue];
+      this.mainForms = [];
+      this.refreshContents(0);
     }
   }
 

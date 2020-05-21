@@ -33,7 +33,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'manager', component: AdminComponent },
+      { path: 'admin', component: AdminComponent },
       { path: 'doc/getting-started', component: GettingStartedComponent },
       { path: 'about', component: AboutComponent }
     ]
