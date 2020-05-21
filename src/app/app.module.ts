@@ -3,53 +3,52 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { DataTablesModule } from 'angular-datatables';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgSelect2Module } from 'ng-select2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AppNavbarComponent } from './valyou/navbar/navbar.component';
-import { ValyouComponent } from './valyou/valyou.component';
+import { AppNavbarComponent } from './app/navbar/navbar.component';
+import { LesProjetsCagnottesComponent } from './app/lesprojetscagnottes.component';
 import { LoginComponent } from './login/login.component';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
-import { UsersComponent } from './valyou/users/users.component';
-import { ProjectsComponent } from './valyou/projects/projects/projects.component';
-import { OrganizationsComponent } from './valyou/organizations/organizations/organizations.component';
-import { EditOrganizationComponent } from './valyou/organizations/edit-organization/edit-organization.component';
-import { NewProjectComponent } from './valyou/projects/new-project/new-project.component';
-import { ViewProjectComponent } from './valyou/projects/view-project/view-project.component';
-import { BudgetsComponent } from './valyou/budgets/budgets.component';
-import { ProfileComponent } from './valyou/profile/profile.component';
-import { ReportComponent } from './valyou/report/report.component';
-import { GettingStartedComponent } from './valyou/documentation/getting-started/getting-started.component';
+import { UsersComponent } from './app/users/users.component';
+import { ListCampaignsComponent } from './app/campaigns/list/list-campaigns.component';
+import { OrganizationsComponent } from './app/organizations/list/list-organizations.component';
+import { EditOrganizationComponent } from './app/organizations/edit/edit-organization.component';
+import { EditCampaignComponent } from './app/campaigns/edit/edit-campaign.component';
+import { ViewCampaignComponent } from './app/campaigns/view/view-campaign.component';
+import { BudgetsComponent } from './app/budgets/budgets.component';
+import { ProfileComponent } from './app/profile/profile.component';
+import { ReportComponent } from './app/report/report.component';
+import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { ManagerComponent } from './valyou/manager/manager.component';
+import { AdminComponent } from './app/admin/admin.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AppNavbarComponent,
-    ValyouComponent,
+    LesProjetsCagnottesComponent,
     LoginComponent,
     UsersComponent,
-    ProjectsComponent,
+    ListCampaignsComponent,
     OrganizationsComponent,
-    NewProjectComponent,
+    EditCampaignComponent,
     EditOrganizationComponent,
-    ViewProjectComponent,
+    ViewCampaignComponent,
     BudgetsComponent,
     ProfileComponent,
     ReportComponent,
     GettingStartedComponent,
     AboutComponent,
-    ManagerComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +56,6 @@ import { ManagerComponent } from './valyou/manager/manager.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DataTablesModule,
     NgSelect2Module,
     MarkdownModule.forRoot(),
     ModalModule.forRoot(),

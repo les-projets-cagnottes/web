@@ -3,7 +3,15 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "valyou": {
+        "web": {
+            "i18n": {
+                "locales": {
+                    "fr": {
+                        "translation": "src/locale/messages.fr.xlf",
+                        "baseHref": ""
+                    }
+                }
+            },
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,12 +21,12 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/valyou",
+                        "outputPath": "dist/web",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "aot": false,
+                        "aot": true,
                         "assets": [
                             "src/favicon.ico",
                             "src/assets",
@@ -29,23 +37,13 @@
                             },
                             {
                                 "glob": "**/*",
-                                "input": "node_modules/font-awesome/",
+                                "input": "node_modules/@fortawesome/fontawesome-free",
                                 "output": "./assets/lib/font-awesome"
                             },
                             {
                                 "glob": "**/*",
                                 "input": "node_modules/ionicons/dist/",
                                 "output": "./assets/lib/ionicons"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/datatables.net/",
-                                "output": "./assets/lib/datatables.net/"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jvectormap/",
-                                "output": "./assets/lib/jvectormap"
                             },
                             {
                                 "glob": "**/*",
@@ -56,21 +54,6 @@
                                 "glob": "**/*",
                                 "input": "node_modules/jquery/dist/",
                                 "output": "./assets/lib/jquery"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/fastclick/lib/",
-                                "output": "./assets/lib/fastclick"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jquery-sparkline/",
-                                "output": "./assets/lib/jquery-sparkline"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jquery-slimscroll/",
-                                "output": "./assets/lib/jquery-slimscroll"
                             },
                             {
                                 "glob": "**/*",
@@ -89,14 +72,10 @@
                             }
                         ],
                         "styles": [
-                            "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
                             "node_modules/select2/dist/css/select2.min.css",
-                            "src/styles-default.css"
+                            "src/styles.css"
                         ],
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.js",
-                            "node_modules/datatables.net/js/jquery.dataTables.js",
-                            "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
                             "node_modules/marked/lib/marked.js",
                             "src/assets/plugins/simplemde/simplemde.start.js",
                             "node_modules/select2/dist/js/select2.min.js"
@@ -108,10 +87,9 @@
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.prod.ts"
                             }],
-                            "aot": true,
-                            "i18nFile": "src/locale/messages.fr.xlf",
-                            "i18nFormat": "xlf",
-                            "i18nLocale": "fr",
+                            "localize": [
+                                "fr"
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -121,20 +99,24 @@
                             "vendorChunk": false,
                             "buildOptimizer": true,
                             "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "2mb",
-                                "maximumError": "5mb"
-                            }]
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
                         },
                         "heroku-fr": {
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.heroku.ts"
                             }],
-                            "aot": true,
-                            "i18nFile": "src/locale/messages.fr.xlf",
-                            "i18nFormat": "xlf",
-                            "i18nLocale": "fr",
+                            "localize": [
+                                "fr"
+                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -144,37 +126,41 @@
                             "vendorChunk": false,
                             "buildOptimizer": true,
                             "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "2mb",
-                                "maximumError": "5mb"
-                            }]
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
+                                }
+                            ]
                         },
                         "dev": {
-                            "aot": true,
-                            "i18nFile": "src/locale/messages.fr.xlf",
-                            "i18nFormat": "xlf",
-                            "i18nLocale": "fr"
+                            "localize": [
+                                "fr"
+                            ]
                         }
                     }
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "valyou:build:dev"
+                        "browserTarget": "web:build:dev:fr"
                     },
                     "configurations": {
                         "dev": {
-                            "browserTarget": "valyou:build:dev"
+                            "browserTarget": "web:build:dev:fr"
                         },
                         "heroku-fr": {
-                            "browserTarget": "valyou:build:heroku-fr"
+                            "browserTarget": "web:build:heroku-fr"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "valyou:build"
+                        "browserTarget": "web:build"
                     }
                 },
                 "test": {
@@ -212,16 +198,16 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "valyou:serve"
+                        "devServerTarget": "web:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "valyou:serve:production"
+                            "devServerTarget": "web:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "valyou"
+    "defaultProject": "web"
 }

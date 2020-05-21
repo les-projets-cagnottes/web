@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Content } from '../_models';
 import { environment } from 'src/environments/environment';
+import { ContentModel } from '../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,30 +13,23 @@ export class ContentService {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
-    return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
+    return this.http.get<ContentModel[]>(`${environment.apiUrl}/content`, { params });
   }
 
-  create(content: Content) {
-    return this.http.post(`${environment.apiUrl}/content`, content);
-  }
-
-  update(content: Content) {
-    return this.http.put<Content>(`${environment.apiUrl}/content`, content);
-  }
-
-  getByOrganizationId(organizationId, offset, limit) {
+  getAllByIds(ids: number[]) {
     const params = new HttpParams()
-      .set('offset', offset)
-      .set('limit', limit)
-      .set('organizationId', organizationId);
-    return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
+        .set('ids', ids.toString());
+    return this.http.get<ContentModel[]>(`${environment.apiUrl}/content`, { params });
+}
+
+  update(content: ContentModel) {
+    return this.http.put<ContentModel>(`${environment.apiUrl}/content`, content);
   }
 
-  getAllByOrganizationId(organizationId) {
-    const params = new HttpParams()
-      .set('organizationId', organizationId);
-    return this.http.get<Content[]>(`${environment.apiUrl}/content`, { params });
+  getById(id) {
+    return this.http.get<ContentModel>(`${environment.apiUrl}/content/${id}`);
   }
+
   removeContent(organizationId: number, contentId: number) {
     return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/contents?contentId=${contentId}`);
   }

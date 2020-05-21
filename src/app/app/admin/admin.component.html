@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-9">
+        <div class="card card-default">
+            <div class="card-header with-border">
+                <h3 class="card-title" i18n="@@logs">Logs</h3>
+                <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="refreshLogs()" [ngClass]="{ 'text-success': getLogsStatus == 'success', 'text-danger': getLogsStatus == 'error'}">
+                        <i class="fas fa-sync"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <pre #scrollMe id="logs">{{ logs }}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card card-default">
+            <div class="card-header with-border">
+                <h3 class="card-title" i18n="@@controls">Controls</h3>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-app" (click)="validateProjects()" [ngClass]="{ 'bg-success': validateStatus == 'success', 'bg-danger': validateStatus == 'error'}">
+                    <i class="fa fa-check-circle"></i>
+                    <span i18n="@@actionValidateProjects">Edit</span>
+                </a>
+                <a class="btn btn-app" (click)="controlDonations()" [ngClass]="{ 'bg-success': controlDonationsStatus == 'success', 'bg-danger': controlDonationsStatus == 'error'}">
+                    <i class="fas fa-funnel-dollar"></i>
+                    <span i18n="@@actionControlDonations">Control donations</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+<div class="wrapper">
+    <app-navbar></app-navbar>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+        <!-- Logo -->
+        <a href="" class="brand-link">
+            <img src="assets/images/icon.png" alt="Platform Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Les Projets Cagnottes</span>
+        </a>
+
+        <div class="sidebar">
+
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img [src]="currentOrganization.logoUrl" class="img-circle elevation-2" alt="Organization Image">
+                </div>
+                <div class="info">
+                    <a routerLink="/profile" class="d-block">
+                        {{ currentOrganization.name }}</a>
+                </div>
+            </div>
+
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img [src]="currentUser.avatarUrl" class="img-circle elevation-2" alt="User Image">
+                </div>
+                <div class="info">
+                    <a routerLink="/profile" class="d-block">{{ currentUser.firstname }} {{ currentUser.lastname }}</a>
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-header" i18n="@@projectsMenu">PROJECTS</li>
+                    <li class="nav-item">
+                        <a routerLink="/campaigns/new" class="nav-link">
+                            <i class="nav-icon far fa-paper-plane"></i>
+                            <p i18n="@@projectsSubmitMenu">
+                                Submit my project
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/campaigns" class="nav-link">
+                            <i class="nav-icon fa fa-book"></i>
+                            <p i18n="@@projectsDiscoverMenu">Discover projects
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/report" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard"></i>
+                            <p i18n="@@reportingMenu">Reporting</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isSponsor || isManager || isOwner" class="nav-header" i18n="@@managementMenu">
+                        MANAGEMENT</li>
+                    <li *ngIf="isSponsor" class="nav-item">
+                        <a routerLink="/budgets" class="nav-link">
+                            <i class="nav-icon fas fa-money-bill"></i>
+                            <p i18n="@@budgetsMenu">Budgets</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isManager || isOwner" class="nav-item">
+                        <a routerLink="/organizations" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p i18n="@@organizationsMenu">Organizations</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
+                        ADMINISTRATION</li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/users" class="nav-link">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p i18n="@@usersMenu">Users</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/admin" class="nav-link">
+                            <i class="nav-icon fas fa-clipboard-list"></i>
+                            <p i18n="@@controlsMenu">Controls</p>
+                        </a>
+                    </li>
+                    <li class="nav-header" i18n="@@documentationMenu">
+                        DOCUMENTATION</li>
+                    <li class="nav-item">
+                        <a routerLink="/doc/getting-started" class="nav-link">
+                            <i class="nav-icon fa fa-book"></i>
+                            <p i18n="@@gettingStartedMenu">Getting Started
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/about" class="nav-link">
+                            <i class="nav-icon fas fa-code-branch"></i>
+                            <p i18n="@@aboutMenu">About
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- /.sidebar-menu -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+        </div>
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <footer class="main-footer">
+        Wanna improve this app ? Please, <b>join the team <a href="https://github.com/les-projets-cagnottes"> on Github </a> !</b>
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 0.5.0-SNAPSHOT
+        </div>
+    </footer>
+
+</div>

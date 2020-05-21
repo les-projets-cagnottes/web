@@ -1,0 +1,15 @@
+#warn {
+    position: absolute;
+    bottom: 0px;
+}
+
+#budgetUsage .progress {
+    height: 1.8rem;
+    margin-top: 1em;
+    border-color: gray;
+    border-style: dotted
+}
+
+#budgetUsage .progress-text {
+    font-weight: 700;
+}
