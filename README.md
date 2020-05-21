@@ -1,6 +1,7 @@
 # Les Projets Cagnottes - web
 
-[![Build Status](https://travis-ci.org/les-projets-cagnottes/web.svg?branch=master)](https://travis-ci.org/les-projets-cagnottes/web) 
+[![Release](https://github.com/les-projets-cagnottes/web/workflows/Release/badge.svg)](https://github.com/les-projets-cagnottes/web/actions?query=workflow%3ARelease)
+[![Integration](https://github.com/les-projets-cagnottes/web/workflows/Integration/badge.svg)](https://github.com/les-projets-cagnottes/web/actions?query=workflow%3AIntegration) 
 
 ## Prerequisites
 
