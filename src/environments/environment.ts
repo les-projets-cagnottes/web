@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'https://valyou.herokuapp.com/api'
   apiUrl: 'http://localhost:8080/api',
   slackClientId: '744027460679.730717520259'
 };
