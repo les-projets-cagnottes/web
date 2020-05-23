@@ -208,6 +208,11 @@ export class ViewCampaignComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  onAccountSelectionChange() {
+    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+      +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, this.project.donationsRequired - this.project.totalDonations)).toFixed(2))]);
+  }
+
   computeDatePercent(start: Date, deadline: Date) {
     var now = new Date();
     var totalDuration = deadline.getTime() - start.getTime();

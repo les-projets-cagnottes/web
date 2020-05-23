@@ -63,14 +63,15 @@
                         <form [formGroup]="donationForm">
                             <div class="form-group">
                                 <label for="amount" i18n="@@budgetName">Budget</label>
-                                <select class="form-control select2 select-border" style="width: 100%;" formControlName="budget">
+                                <select class="form-control select2 select-border" style="width: 100%;" formControlName="budget" (ngModelChange)="onAccountSelectionChange()">
                                     <option *ngFor="let account of accounts; index as i" value="{{ i }}">
                                         {{ account.budget.organization.name }} - {{ account.budget.name }}</option>
                                 </select>
                             </div>
-                            <div class="form-group" [ngClass]="{ 'has-error': f.amount.errors }">
+                            <div class="form-group">
                                 <label for="amount" i18n="@@donationAmount">Amount (in €)</label>
-                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[f.budget.value].amount, project.donationsRequired - project.totalDonations)).toFixed(2) }}">
+                                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[f.budget.value].amount, project.donationsRequired - project.totalDonations)).toFixed(2) }}" [ngClass]="{ 'is-invalid': f.amount.errors }"
+                                />
                             </div>
                             <div class="callout callout-info">
                                 <span i18n="@@budgetRemainingBegin">You will have </span>
