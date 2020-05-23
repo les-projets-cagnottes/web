@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CampaignModel, DonationModel, OrganizationModel } from '../_models';
+import { CampaignModel, DonationModel, OrganizationModel, BudgetModel } from '../_models';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -20,8 +20,8 @@ export class CampaignService {
     return this.http.get<CampaignModel[]>(`${environment.apiUrl}/campaign`, { params });
 }
 
-  getOrganizations(id: number) {
-    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/campaign/${id}/organizations`);
+  getBudgets(id: number) {
+    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/campaign/${id}/budgets`);
   }
 
   getDonations(CampaignId: number, offset: number, limit: number) {
@@ -29,6 +29,10 @@ export class CampaignService {
         .set('offset', offset.toString())
         .set('limit', limit.toString());
     return this.http.get<DonationModel[]>(`${environment.apiUrl}/campaign/${CampaignId}/donations`, {params});
+  }
+
+  getOrganizations(id: number) {
+    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/campaign/${id}/organizations`);
   }
 
   create(Campaign: CampaignModel) {

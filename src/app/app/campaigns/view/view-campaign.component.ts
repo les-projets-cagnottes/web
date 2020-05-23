@@ -116,7 +116,7 @@ export class ViewCampaignComponent implements OnInit {
   }
 
   refreshBudgets() {
-    this.budgetService.getUsable()
+    this.campaignService.getBudgets(this.id)
       .subscribe(budgets => {
         this.budgets = Budget.fromModels(budgets);
         this.refreshOrganizations();
