@@ -6,6 +6,9 @@
       <trans-unit id="about" datatype="html">
         <target>A propos</target>
       </trans-unit>
+      <trans-unit id="aboutMenu" datatype="html">
+        <target>A propos</target>
+      </trans-unit>
       <trans-unit id="actionAdd" datatype="html">
         <target>Ajouter</target>
       </trans-unit>
@@ -156,6 +159,9 @@
       <trans-unit id="madePossibleBy" datatype="html">
         <target>Rendu possible par </target>
       </trans-unit>
+      <trans-unit id="managementMenu" datatype="html">
+        <target>GESTION</target>
+      </trans-unit>
       <trans-unit id="memberSince" datatype="html">
         <target>Inscrit depuis le </target>
       </trans-unit>
@@ -182,6 +188,9 @@
       </trans-unit>
       <trans-unit id="organizationContents" datatype="html">
         <target>Documents</target>
+      </trans-unit>
+      <trans-unit id="organizationLogoUrl" datatype="html">
+        <target>URL Logo</target>
       </trans-unit>
       <trans-unit id="organizationMembers" datatype="html">
         <target>Membres</target>
