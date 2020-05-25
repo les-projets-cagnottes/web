@@ -34,7 +34,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Generate git ref
-      run: "sed -i -E \"s|gitRef:\s'(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
+      run: "sed -i -E \"s|gitRef: '(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
