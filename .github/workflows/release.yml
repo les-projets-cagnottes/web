@@ -47,8 +47,9 @@ jobs:
     - run: git add package.json
     - run: git add package-lock.json
     - run: git commit -m "Release '${{ steps.get_released_version.outputs.VERSION }}'"
+    - run: git push origin
     - run: git tag ${{ steps.get_released_version.outputs.VERSION }}
-    - run: git push origin --follow-tags
+    - run: git push --tags
 
   build:
     needs: prepare-release
