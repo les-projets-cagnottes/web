@@ -36,7 +36,7 @@ jobs:
       id: get_released_version
       run: echo ::set-output name=VERSION::$(sed "s/-SNAPSHOT//g" <<<"${{ steps.get_previous_version.outputs.VERSION }}")
     - name: Replace version without snapshot
-      run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }})\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
+      run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }}\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
