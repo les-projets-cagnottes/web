@@ -1,6 +1,6 @@
 {
     "name": "les-projets-cagnottes",
-    "version": "0.5.0",
+    "version": "0.5.0-SNAPSHOT",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
