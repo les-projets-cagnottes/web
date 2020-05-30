@@ -33,15 +33,10 @@ jobs:
       run: "sed -i 's/\"version\": \"0.5.0-SNAPSHOT\"/\"version\": \"0.5.0\"/g' package.json"
     - name: Get the version
       id: get_version
-      run: echo ::set-output name=VERSION::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-    - name: Push released version
-      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
-    - run: git add pom.xml
-    - run: git commit -m "Release '${{ steps.get_version.outputs.VERSION }}'"
-    - run: git tag ${{ steps.get_version.outputs.VERSION }}
-    - run: git push origin --tags
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
 
   build:
+    needs: prepare-release
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,3 +49,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
+    - name: Get the version
+      id: get_version
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+    - name: Push released version
+      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
+    - run: git add package.json package-lock.json
+    - run: git commit -m "Release '${{ steps.get_version.outputs.VERSION }}'"
+    - run: git tag ${{ steps.get_version.outputs.VERSION }}
+    - run: git push origin --tags
