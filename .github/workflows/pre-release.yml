@@ -34,6 +34,18 @@ jobs:
     - name: Get the version
       id: get_version
       run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - name: Push released version
+      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
+    - run: git add package.json package-lock.json
+    - run: git commit -m "Release '${{ steps.get_version.outputs.VERSION }}'"
+    - run: git tag ${{ steps.get_version.outputs.VERSION }}
+    - run: git push origin --tags
 
   build:
     needs: prepare-release
@@ -49,12 +61,18 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
-    - name: Get the version
-      id: get_version
-      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-    - name: Push released version
-      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
-    - run: git add package.json package-lock.json
-    - run: git commit -m "Release '${{ steps.get_version.outputs.VERSION }}'"
-    - run: git tag ${{ steps.get_version.outputs.VERSION }}
-    - run: git push origin --tags
+
+  release:
+    needs: [prepare-release, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.prepare-release.outputs.version }}
+          release_name: ${{ needs.prepare-release.outputs.version }}
+          draft: false
+          prerelease: false
