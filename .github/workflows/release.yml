@@ -1,66 +1,112 @@
 name: Release
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - master
 
 jobs:
 
-  build:
+  verify-version:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
+    outputs:
+      is_snapshot: ${{ steps.test_version.outputs.IS_SNAPSHOT }}
+      version: ${{ steps.get_version.outputs.VERSION }}
     steps:
-
     - uses: actions/checkout@v2
+    - name: Get the version
+      id: get_version
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+    - name: Test version
+      id: test_version
+      run: echo ::set-output name=IS_SNAPSHOT::$(if [[ "${{ steps.get_version.outputs.VERSION }}" == *"-SNAPSHOT" ]]; then echo "1"; else echo "0"; fi)
 
+  prepare-release:
+    needs: verify-version
+    runs-on: ubuntu-latest
+    if: needs.verify-version.outputs.is_snapshot == 1
+    outputs:
+      version: ${{ steps.get_released_version.outputs.VERSION }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get previous version
+      id: get_previous_version
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+    - name: Get released version
+      id: get_released_version
+      run: echo ::set-output name=VERSION::$(sed "s/-SNAPSHOT//g" <<<"${{ steps.get_previous_version.outputs.VERSION }}")
+    - name: Replace version without snapshot
+      run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }}\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: npm i
+    - name: Push released version
+      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
+    - run: git add package.json
+    - run: git add package-lock.json
+    - run: git commit -m "Release '${{ steps.get_released_version.outputs.VERSION }}'"
+    - run: git push origin
+    - run: git tag ${{ steps.get_released_version.outputs.VERSION }}
+    - run: git push --tags
 
+  build:
+    needs: prepare-release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
     - run: npm ci
-
     - run: npm run build --if-present
 
-  publish-docker:
-    needs: build
+  release:
+    needs: [prepare-release, build]
     runs-on: ubuntu-latest
     steps:
-    
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.prepare-release.outputs.version }}
+          release_name: ${{ needs.prepare-release.outputs.version }}
+          draft: false
+          prerelease: false
 
+  publish-docker:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
-
     - name: Login to Registry
       run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
-
     - name: Publish to Registry
       run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:latest
 
   deploy-production:
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     steps:
-
-    - uses: actions/checkout@v1
-
+    - uses: actions/checkout@v2
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
-
     - run: npm ci
-
     - run: npm run build -- --configuration production-fr --output-path=dist
-
     - name: Get the version
       id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
     - name: Create temp directory to copy files
       uses: appleboy/ssh-action@v0.0.7
       with:
@@ -69,7 +115,6 @@ jobs:
         key : ${{ secrets.PRODUCTION_KEY }}
         port: ${{ secrets.PRODUCTION_PORT }}
         script: mkdir -p /opt/les-projets-cagnottes/web/deployment
-
     - name: Copy content recursively to production
       uses: appleboy/scp-action@v0.0.7
       with:
@@ -80,7 +125,6 @@ jobs:
         source: "dist,bin/deploy.sh"
         target: /opt/les-projets-cagnottes/web/deployment
         rm: true
-        
     - name: Execute deployment remotely
       uses: appleboy/ssh-action@v0.0.7
       with:
@@ -89,3 +133,28 @@ jobs:
         key : ${{ secrets.PRODUCTION_KEY }}
         port: ${{ secrets.PRODUCTION_PORT }}
         script: (sudo chmod 755 /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh) && (nohup /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh ${{ steps.get_version.outputs.VERSION }} &>  /opt/les-projets-cagnottes/web/deployment/bin/console.log < /dev/null &) && exit 0
+
+  prepare-next-version:
+    needs: [publish-docker, deploy-production]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 13
+        server-id: github
+        settings-path: ${{ github.workspace }}
+    - name: Get the version
+      id: get_version
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+    - name: Get next version
+      id: get_next_version
+      run: echo ::set-output name=VERSION::$(bin/increment_version.sh -p ${{ steps.get_version.outputs.VERSION }})
+    - name: Replace version
+      run: "sed -i 's/\"version\": \"${{ steps.get_version.outputs.VERSION }})\"/\"version\": \"${{ steps.get_next_version.outputs.VERSION }}-SNAPSHOT\"/g' package.json"
+    - name: Push next version
+      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
+    - run: git add pom.xml
+    - run: git commit -m "Prepare next version"
+    - run: git push origin
