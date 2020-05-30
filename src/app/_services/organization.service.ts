@@ -58,6 +58,10 @@ export class OrganizationService {
     return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
   }
 
+  getUsableBudgets(organizationId: number) {
+    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets/usable`);
+  }
+
   getCampaigns(id: number, offset: number, limit: number, filter: string[]) {
     const params = new HttpParams()
       .set('offset', offset.toString())

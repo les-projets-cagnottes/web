@@ -107,7 +107,7 @@ export class EditCampaignComponent implements OnInit {
   }
 
   refreshBudgets(organizationId: number) {
-    this.organizationService.getBudgets(organizationId)
+    this.organizationService.getUsableBudgets(organizationId)
       .subscribe(budgets => {
         this.budgets = Budget.fromModels(budgets);
         this.form.controls['budget'].setValue(0);
