@@ -82,10 +82,12 @@ jobs:
           prerelease: false
 
   publish-docker:
-    needs: release
+    needs: [prepare-release, release]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: '${{ needs.prepare-release.outputs.version }}'
     - name: Build the Docker image
       run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
     - name: Login to Registry
@@ -94,10 +96,12 @@ jobs:
       run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:latest
 
   deploy-production:
-    needs: release
+    needs: [prepare-release, release]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: '${{ needs.prepare-release.outputs.version }}'
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
@@ -133,28 +137,3 @@ jobs:
         key : ${{ secrets.PRODUCTION_KEY }}
         port: ${{ secrets.PRODUCTION_PORT }}
         script: (sudo chmod 755 /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh) && (nohup /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh ${{ steps.get_version.outputs.VERSION }} &>  /opt/les-projets-cagnottes/web/deployment/bin/console.log < /dev/null &) && exit 0
-
-  prepare-next-version:
-    needs: [publish-docker, deploy-production]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK
-      uses: actions/setup-java@v1
-      with:
-        java-version: 13
-        server-id: github
-        settings-path: ${{ github.workspace }}
-    - name: Get the version
-      id: get_version
-      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-    - name: Get next version
-      id: get_next_version
-      run: echo ::set-output name=VERSION::$(bin/increment_version.sh -p ${{ steps.get_version.outputs.VERSION }})
-    - name: Replace version
-      run: "sed -i 's/\"version\": \"${{ steps.get_version.outputs.VERSION }})\"/\"version\": \"${{ steps.get_next_version.outputs.VERSION }}-SNAPSHOT\"/g' package.json"
-    - name: Push next version
-      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
-    - run: git add pom.xml
-    - run: git commit -m "Prepare next version"
-    - run: git push origin
