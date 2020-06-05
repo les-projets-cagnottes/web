@@ -15,6 +15,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   gitRef: string = '';
   gitShortRef: string = '';
+  version: string = '';
   currentOrganization: Organization = new Organization();
   currentOrganizationSubscription: Subscription;
   currentUser: User = new User();
@@ -26,6 +27,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     private organizationService: OrganizationService
   ) { 
     this.gitRef = environment.gitRef;
+    this.version = environment.version;
     if(this.gitRef.length === 40) this.gitShortRef = ' @' + this.gitRef.substring(0, 7); 
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {

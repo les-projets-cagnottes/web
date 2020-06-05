@@ -26,14 +26,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Generate git ref
+    - name: Get the version
+      id: get_version
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
+    - name: Generate git ref in environment variables
       run: "sed -i -E \"s|gitRef: '(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
+    - name: Generate version in environment variables
+      run: "sed -i -E \"s|version: '(.*)'|version: '${{ steps.get_version.outputs.VERSION }}'|g\" src/environments/environment.heroku.ts"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ steps.get_version.outputs.VERSION }}
     - name: Login to Registry
       run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
     - name: Publish to Registry
-      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ steps.get_version.outputs.VERSION }}
 
   deploy-heroku:
     needs: publish-docker
@@ -41,12 +46,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: sjdonado/heroku@0f16401029a67519b6547af7247983640996393a
+    - name: Get the version
+      id: get_version
+      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
     - name: Login to Registry
       run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
     - name: Pull Docker Image
-      run: docker pull docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+      run: docker pull docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ steps.get_version.outputs.VERSION }}
     - name: Tag the image
-      run: docker tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest registry.heroku.com/les-projets-cagnottes/web
+      run: docker tag docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ steps.get_version.outputs.VERSION }} registry.heroku.com/les-projets-cagnottes/web
     - name: Get Heroku Tools
       run: wget -qO- https://toolbelt.heroku.com/install.sh | sh
     - name: Login to Heroku Registry
