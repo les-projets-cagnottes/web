@@ -10,49 +10,22 @@ jobs:
   verify-version:
     runs-on: ubuntu-latest
     outputs:
-      is_snapshot: ${{ steps.test_version.outputs.IS_SNAPSHOT }}
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
     - uses: actions/checkout@v2
     - name: Get the version
       id: get_version
       run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-    - name: Test version
-      id: test_version
-      run: echo ::set-output name=IS_SNAPSHOT::$(if [[ "${{ steps.get_version.outputs.VERSION }}" == *"-SNAPSHOT" ]]; then echo "1"; else echo "0"; fi)
-
-  prepare-release:
-    needs: verify-version
-    runs-on: ubuntu-latest
-    if: needs.verify-version.outputs.is_snapshot == 1
-    outputs:
-      version: ${{ steps.get_released_version.outputs.VERSION }}
-    steps:
-    - uses: actions/checkout@v2
-    - name: Get previous version
-      id: get_previous_version
-      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-    - name: Get released version
-      id: get_released_version
-      run: echo ::set-output name=VERSION::$(sed "s/-SNAPSHOT//g" <<<"${{ steps.get_previous_version.outputs.VERSION }}")
-    - name: Replace version without snapshot
-      run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }}\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm i
-    - name: Push released version
-      run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
-    - run: git add package.json
-    - run: git add package-lock.json
-    - run: git commit -m "Release '${{ steps.get_released_version.outputs.VERSION }}'"
-    - run: git push origin
-    - run: git tag ${{ steps.get_released_version.outputs.VERSION }}
-    - run: git push --tags
+    - name: Test snapshot
+      run: if [[ "${{ steps.get_version.outputs.VERSION }}" == *"-SNAPSHOT" ]]; then exit 1; else exit 0; fi
+    - name: Get release
+      id: get_release
+      run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-projets-cagnottes/slack-events-catcher/releases/tag/${{ steps.get_version.outputs.VERSION }};)
+    - name: Test release existence
+      run: if [[ "${{ steps.get_release.outputs.RELEASE_HTTP_CODE }}" -eq "200" ]]; then exit 1; else exit 0; fi
 
   build:
-    needs: prepare-release
+    needs: verify-version
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -67,45 +40,55 @@ jobs:
     - run: npm run build --if-present
 
   release:
-    needs: [prepare-release, build]
+    needs: [verify-version, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Config Git
+        run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
+      - run: git tag ${{ needs.verify-version.outputs.version }}
+      - run: git push origin ${{ needs.verify-version.outputs.version }}
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ needs.prepare-release.outputs.version }}
-          release_name: ${{ needs.prepare-release.outputs.version }}
+          tag_name: ${{ needs.verify-version.outputs.version }}
+          release_name: ${{ needs.verify-version.outputs.version }}
+          body: |
+            Release ${{ needs.verify-version.outputs.version }}
           draft: false
           prerelease: false
 
   publish-docker:
-    needs: [prepare-release, release]
+    needs: [verify-version, release]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: '${{ needs.prepare-release.outputs.version }}'
+        ref: '${{ needs.verify-version.outputs.version }}'
+    - name: Generate git ref in environment variables
+      run: "sed -i -E \"s|gitRef: '(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ needs.verify-version.outputs.version }}
     - name: Login to Registry
       run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
     - name: Publish to Registry
-      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:latest
+      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ needs.verify-version.outputs.version }}
 
   deploy-production:
-    needs: [prepare-release, release]
+    needs: [verify-version, release]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: '${{ needs.prepare-release.outputs.version }}'
+        ref: '${{ needs.verify-version.outputs.version }}'
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
         node-version: 10.x
+    - name: Generate git ref in environment variables
+      run: "sed -i -E \"s|gitRef: '(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
     - run: npm ci
     - run: npm run build -- --configuration production-fr --output-path=dist
     - name: Get the version
