@@ -20,7 +20,11 @@ export class AuthenticationService {
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
-        this.currentOrganizationSubject = new BehaviorSubject<Organization>(JSON.parse(localStorage.getItem('currentOrganization')));
+        if(localStorage.getItem('currentOrganization') != undefined) {
+            this.currentOrganizationSubject = new BehaviorSubject<Organization>(JSON.parse(localStorage.getItem('currentOrganization')));
+        } else {
+            this.currentOrganizationSubject = new BehaviorSubject<Organization>(new Organization());
+        }
         this.currentOrganization = this.currentOrganizationSubject.asObservable();
     }
 
