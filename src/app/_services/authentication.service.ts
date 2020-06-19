@@ -67,7 +67,7 @@ export class AuthenticationService {
                 user.organizations = Organization.fromModels(responses[3]);
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
-                if(this.currentOrganizationValue === null && user.organizations.length >= 0) {
+                if(this.currentOrganizationValue.id <= 0 && user.organizations.length >= 0) {
                     this.setCurrentOrganization(user.organizations[0]);
                 }
                 return user;

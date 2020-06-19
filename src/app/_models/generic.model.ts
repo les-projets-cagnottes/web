@@ -1,6 +1,6 @@
 
 export class GenericModel {
-    id: number;
+    id: number = 0;
     
     static valueOf(id: number): GenericModel {
         var generic = new GenericModel();
