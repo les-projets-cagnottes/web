@@ -72,13 +72,11 @@
                             }
                         ],
                         "styles": [
-                            "node_modules/select2/dist/css/select2.min.css",
                             "src/styles.css"
                         ],
                         "scripts": [
                             "node_modules/marked/lib/marked.js",
-                            "src/assets/plugins/simplemde/simplemde.start.js",
-                            "node_modules/select2/dist/js/select2.min.js"
+                            "src/assets/plugins/simplemde/simplemde.start.js"
                         ]
                     },
                     "configurations": {

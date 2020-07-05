@@ -63,7 +63,7 @@
                         <form [formGroup]="donationForm">
                             <div class="form-group">
                                 <label for="amount" i18n="@@budgetName">Budget</label>
-                                <select class="form-control select2 select-border" style="width: 100%;" formControlName="budget" (ngModelChange)="onAccountSelectionChange()">
+                                <select class="form-control select-border" style="width: 100%;" formControlName="budget" (ngModelChange)="onAccountSelectionChange()">
                                     <option *ngFor="let account of accounts; index as i" value="{{ i }}">
                                         {{ account.budget.organization.name }} - {{ account.budget.name }}</option>
                                 </select>

@@ -5,7 +5,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgSelect2Module } from 'ng-select2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,7 +55,6 @@ import { AdminComponent } from './app/admin/admin.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgSelect2Module,
     MarkdownModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule.forRoot([])

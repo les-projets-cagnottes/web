@@ -48,7 +48,7 @@
                                 <input formControlName="endDate" type="date" id="endDate" name="endDate">
                             </td>
                             <td>
-                                <select class="form-control select2" style="width: 100%;" formControlName="rules">
+                                <select class="form-control" style="width: 100%;" formControlName="rules">
                                     <option *ngFor="let item of organizations[i].contents; index as k" value="{{ k }}">{{ item.name }}</option>
                                 </select>
                             </td>

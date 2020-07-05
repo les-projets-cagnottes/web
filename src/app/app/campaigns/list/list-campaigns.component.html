@@ -2,11 +2,9 @@
     <div class="col-md-6">
         <div class="form-horizontal">
             <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()">
-                    <i class="fas fa-sync"></i>
-                    <span i18n="@@refresh">Refresh</span>
-                </button>
-            <label for="statusSelection" i18n="@@projectStatus">Status : </label>
-            <ng-select2 id="statusSelection" [data]="statusSelectionData" [width]="300" [(ngModel)]="statusSelectionValue" (valueChanged)="onStatusSelectionChange()" [options]="statusSelectionOptions"></ng-select2>
+                <i class="fas fa-sync"></i>
+                <span i18n="@@refresh">Refresh</span>
+            </button>
         </div>
     </div>
     <div class="col-md-6">
@@ -40,7 +38,7 @@
                             <div class="progress sm" title="{{ item.peopleRequiredPercent }}">
                                 <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
                             </div>
-                            <small> {{ item.peopleGivingTimeRef.length }} / {{ item.peopleRequired }} </small>
+                            <small> {{ item.peopleGivingTimeRef.length - 1 }} / {{ item.peopleRequired }} </small>
                         </div>
                     </div>
                     <div class="col-md-5">

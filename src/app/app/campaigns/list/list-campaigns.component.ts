@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Select2OptionData, Options } from 'select2';
 
-import { CampaignService } from 'src/app/_services/campaign.service';
 import { PagerService, OrganizationService, AuthenticationService } from 'src/app/_services';
 
 @Component({
@@ -26,35 +24,13 @@ export class ListCampaignsComponent implements OnInit {
     private organizationService: OrganizationService
   ) { }
 
-  public statusSelectionData: Array<Select2OptionData>;
-  public statusSelectionOptions: Options;
-  public statusSelectionValue: string[] = ['A_IN_PROGRESS', 'B_READY', 'C_AVORTED'];
-
   ngOnInit() {
     this.refresh();
-    this.statusSelectionData = [
-      {
-        id: 'A_IN_PROGRESS',
-        text: 'En cours'
-      },
-      {
-        id: 'B_READY',
-        text: 'Prêt'
-      },
-      {
-        id: 'C_AVORTED',
-        text: 'Abandonné'
-      }
-    ];
-    this.statusSelectionOptions = {
-      multiple: true,
-      closeOnSelect: false
-    };
   }
 
   refresh(page: number = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
-      this.organizationService.getCampaigns(this.authenticationService.currentOrganizationValue.id, page - 1, this.pageSize, this.statusSelectionValue)
+      this.organizationService.getCampaigns(this.authenticationService.currentOrganizationValue.id, page - 1, this.pageSize, ['A_IN_PROGRESS', 'B_READY', 'C_AVORTED'])
         .subscribe(response => {
           this.rawResponse = response;
           this.setPage(page);
@@ -74,7 +50,7 @@ export class ListCampaignsComponent implements OnInit {
       var remainingTime = Math.abs(new Date(value.fundingDeadline).getTime() - new Date().getTime());
       value.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
       value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
-      value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTimeRef.length, value.peopleRequired) + "%";
+      value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTimeRef.length - 1, value.peopleRequired) + "%";
       value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
     });
   }
@@ -93,9 +69,6 @@ export class ListCampaignsComponent implements OnInit {
       return "100";
     }
     return 100 * number / max;
-  }
-
-  onStatusSelectionChange() {
   }
   
 }

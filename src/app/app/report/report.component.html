@@ -2,7 +2,7 @@
     <div class="col-2">
         <div class="form-group">
             <label for="amount" i18n="@@organizationName">Organization</label>
-            <select class="form-control select2" style="width: 100%;" formControlName="organization">
+            <select class="form-control" style="width: 100%;" formControlName="organization">
                 <option *ngFor="let organization of organizations; index as i" value="{{ organization.id }}">
                     {{ organization.name }}</option>
             </select>
@@ -11,7 +11,7 @@
     <div class="col-2">
         <div class="form-group">
             <label for="amount" i18n="@@budgetName">Budget</label>
-            <select class="form-control select2" style="width: 100%;" formControlName="budget">
+            <select class="form-control" style="width: 100%;" formControlName="budget">
                 <option *ngFor="let budget of budgets; index as i" value="{{ budget.id }}">{{ budget.name }}</option>
             </select>
         </div>
