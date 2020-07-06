@@ -32,7 +32,7 @@
     "ngx-bootstrap": "^5.6.1",
     "ngx-markdown": "^9.1.1",
     "rxjs": "^6.6.0",
-    "rxjs-compat": "^6.5.5",
+    "rxjs-compat": "^6.6.0",
     "simplemde": "^1.11.2",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.3"
