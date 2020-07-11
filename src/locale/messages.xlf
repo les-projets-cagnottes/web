@@ -9,13 +9,22 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="suggestionsBox" datatype="html">
+        <source>
+                                Suggestions Box
+                            </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="projectsSubmitMenu" datatype="html">
         <source>
                                 Submit my project
                             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectsDiscoverMenu" datatype="html">
@@ -23,14 +32,14 @@
                             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reportingMenu" datatype="html">
         <source>Reporting</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="managementMenu" datatype="html">
@@ -38,21 +47,21 @@
                         MANAGEMENT</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
       <trans-unit id="budgetsMenu" datatype="html">
         <source>Budgets</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="organizationsMenu" datatype="html">
         <source>Organizations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="administrationMenu" datatype="html">
@@ -60,21 +69,21 @@
                         ADMINISTRATION</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="usersMenu" datatype="html">
         <source>Users</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">86</context>
         </context-group>
       </trans-unit>
       <trans-unit id="controlsMenu" datatype="html">
         <source>Controls</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="documentationMenu" datatype="html">
@@ -82,7 +91,7 @@
                         DOCUMENTATION</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="gettingStartedMenu" datatype="html">
@@ -90,7 +99,7 @@
                             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="aboutMenu" datatype="html">
@@ -98,7 +107,7 @@
                             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="signInBoxHeader" datatype="html">
@@ -209,6 +218,10 @@
           <context context-type="sourcefile">src/app/app/budgets/budgets.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="actionAdd" datatype="html">
         <source>Add</source>
@@ -224,6 +237,10 @@
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
           <context context-type="linenumber">22</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="nbEntries" datatype="html">
         <source>Nb
@@ -234,11 +251,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/list/list-organizations.component.html</context>
           <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="id" datatype="html">
@@ -262,6 +283,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
           <context context-type="linenumber">185</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="userFullname" datatype="html">
@@ -304,6 +333,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="userEnabled" datatype="html">
@@ -367,6 +404,14 @@
           <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
           <context context-type="linenumber">186</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="paginationStart" datatype="html">
         <source>Showing </source>
@@ -376,7 +421,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/list/list-organizations.component.html</context>
@@ -402,6 +447,10 @@
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">153</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="paginationEnd" datatype="html">
         <source> to</source>
@@ -411,7 +460,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/list/list-organizations.component.html</context>
@@ -437,6 +486,10 @@
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">154</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="paginationTotal" datatype="html">
         <source> of </source>
@@ -446,7 +499,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/list/list-organizations.component.html</context>
@@ -472,6 +525,10 @@
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">155</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="paginationEntries" datatype="html">
         <source> entries</source>
@@ -481,7 +538,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/list/list-organizations.component.html</context>
@@ -506,6 +563,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">156</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="userPasswordUpdatePlaceholder" datatype="html">
@@ -598,31 +659,16 @@
           <context context-type="sourcefile">src/app/app/budgets/budgets.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="projectStatus" datatype="html">
-        <source>Status : </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/campaigns/view/view-campaign.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectStatusAvorted" datatype="html">
         <source>Avorted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/view/view-campaign.component.html</context>
@@ -641,7 +687,7 @@
         <source>Ready</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/view/view-campaign.component.html</context>
@@ -660,7 +706,7 @@
         <source>People needed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/edit/edit-campaign.component.html</context>
@@ -671,7 +717,7 @@
         <source>Money needed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/list/list-campaigns.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/edit/edit-campaign.component.html</context>
@@ -979,6 +1025,21 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/campaigns/view/view-campaign.component.html</context>
           <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="projectStatus" datatype="html">
+        <source>Status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/campaigns/view/view-campaign.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/report/report.component.html</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectStatusInProgress" datatype="html">
@@ -1319,7 +1380,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/about/about.component.html</context>
-          <context context-type="linenumber">144</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="about" datatype="html">
@@ -1355,6 +1416,78 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/admin/admin.component.html</context>
           <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ideas" datatype="html">
+        <source>Ideas</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="shortDescription" datatype="html">
+        <source>Short Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="createdBy" datatype="html">
+        <source>Created By</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ideaHasLeaderCreator" datatype="html">
+        <source>Creator wants to lead realization</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ideaShortDesciption" datatype="html">
+        <source>Short Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ideaLongDescription" datatype="html">
+        <source>Long Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ideaHasAnonymousCreator" datatype="html">
+        <source>Publish this idea anonymously</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ideaWantToLead" datatype="html">
+        <source>I want to lead the realization of the idea</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">126</context>
         </context-group>
       </trans-unit>
     </body>

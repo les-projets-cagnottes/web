@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxSummernoteModule } from 'ngx-summernote';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +29,7 @@ import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './app/admin/admin.component';
-
+import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 
 @NgModule({
   declarations: [
@@ -47,12 +48,14 @@ import { AdminComponent } from './app/admin/admin.component';
     ReportComponent,
     GettingStartedComponent,
     AboutComponent,
-    AdminComponent
+    AdminComponent,
+    ListIdeasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    NgxSummernoteModule,
     ReactiveFormsModule,
     HttpClientModule,
     MarkdownModule.forRoot(),

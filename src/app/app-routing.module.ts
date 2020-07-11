@@ -15,6 +15,7 @@ import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './app/admin/admin.component';
+import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,7 @@ const routes: Routes = [
       { path: 'campaigns/:id/edit', component: EditCampaignComponent },
       { path: 'campaigns/:id', component: ViewCampaignComponent },
       { path: 'campaigns', component: ListCampaignsComponent },
+      { path: 'ideas', component: ListIdeasComponent },
       { path: 'budgets', component: BudgetsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },

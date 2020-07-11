@@ -99,6 +99,9 @@
       <trans-unit id="createdAt" datatype="html">
         <target>Créé le</target>
       </trans-unit>
+      <trans-unit id="createdBy" datatype="html">
+        <target>Créé par</target>
+      </trans-unit>
       <trans-unit id="developerMenu" datatype="html">
         <target>Espace Développeur</target>
       </trans-unit>
@@ -140,6 +143,24 @@
       </trans-unit>
       <trans-unit id="id" datatype="html">
         <target>ID</target>
+      </trans-unit>
+      <trans-unit id="ideaHasAnonymousCreator" datatype="html">
+        <target>Publier cette idée anonymement</target>
+      </trans-unit>
+      <trans-unit id="ideaHasLeaderCreator" datatype="html">
+        <target>L'auteur souhaite porter la réalisation</target>
+      </trans-unit>ideaWantToLead
+      <trans-unit id="ideaLongDescription" datatype="html">
+        <target>Description complète</target>
+      </trans-unit>      
+      <trans-unit id="ideas" datatype="html">
+        <target>Idées</target>
+      </trans-unit>
+      <trans-unit id="ideaShortDesciption" datatype="html">
+        <target>Courte description</target>
+      </trans-unit>
+      <trans-unit id="ideaWantToLead" datatype="html">
+        <target>Je souhaite porter la réalisation de l'idée</target>
       </trans-unit>
       <trans-unit id="informations" datatype="html">
         <target>Informations</target>
@@ -336,6 +357,9 @@
       <trans-unit id="slackDisconnectAction" datatype="html">
         <target>Déconnecter</target>
       </trans-unit>
+      <trans-unit id="shortDescription" datatype="html">
+        <target>Courte description</target>
+      </trans-unit>
       <trans-unit id="signInBoxHeader" datatype="html">
         <target>Connectez-vous pour démarrer votre session</target>
       </trans-unit>
@@ -350,6 +374,9 @@
       </trans-unit>
       <trans-unit id="slackSyncAction" datatype="html">
         <target>Synchroniser les membres</target>
+      </trans-unit>
+      <trans-unit id="suggestionsBox" datatype="html">
+        <target>Boîte à idées</target>
       </trans-unit>
       <trans-unit id="summary" datatype="html">
         <target>Table des matières</target>
