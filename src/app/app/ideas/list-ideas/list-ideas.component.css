@@ -1,0 +1,14 @@
+.info-box-text>.short-description {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.info-box-text>.badge {
+    right: 1em;
+    position: absolute;
+    top: 1em;
+}
+
+#editUserModalLabel>span {
+    margin-left: 0.5em;
+}

@@ -17,6 +17,10 @@
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
           <context context-type="linenumber">41</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="projectsSubmitMenu" datatype="html">
         <source>
@@ -284,14 +288,6 @@
           <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
           <context context-type="linenumber">185</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="userFullname" datatype="html">
         <source>Name</source>
@@ -333,14 +329,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">46</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="userEnabled" datatype="html">
@@ -404,14 +392,6 @@
           <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
           <context context-type="linenumber">186</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="paginationStart" datatype="html">
         <source>Showing </source>
@@ -449,7 +429,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="paginationEnd" datatype="html">
@@ -488,7 +468,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="paginationTotal" datatype="html">
@@ -527,7 +507,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
       <trans-unit id="paginationEntries" datatype="html">
@@ -566,7 +546,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="userPasswordUpdatePlaceholder" datatype="html">
@@ -661,7 +641,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectStatusAvorted" datatype="html">
@@ -1418,76 +1398,43 @@
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ideas" datatype="html">
-        <source>Ideas</source>
+      <trans-unit id="icon" datatype="html">
+        <source>Icon</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="shortDescription" datatype="html">
-        <source>Short Description</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="createdBy" datatype="html">
-        <source>Created By</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ideaHasLeaderCreator" datatype="html">
-        <source>Creator wants to lead realization</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ideaShortDesciption" datatype="html">
         <source>Short Description</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">110</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ideaLongDescription" datatype="html">
         <source>Long Description</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ideaHasAnonymousCreator" datatype="html">
         <source>Publish this idea anonymously</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ideaWantToLead" datatype="html">
         <source>I want to lead the realization of the idea</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
     </body>

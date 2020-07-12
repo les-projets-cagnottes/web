@@ -141,6 +141,9 @@
       <trans-unit id="helpUseMarkdown" datatype="html">
         <target>Pour mettre en forme votre présentation, vous pouvez utiliser la syntaxe Markdown.</target>
       </trans-unit>
+      <trans-unit id="icon" datatype="html">
+        <target>Icône</target>
+      </trans-unit>
       <trans-unit id="id" datatype="html">
         <target>ID</target>
       </trans-unit>

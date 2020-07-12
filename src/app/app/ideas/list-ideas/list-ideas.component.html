@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@ideas">Ideas</h3>
+                <h3 class="card-title" i18n="@@suggestionsBox">Suggestion Box</h3>
             </div>
             <div class="card-body">
                 <div class="row action-bar">
@@ -16,51 +16,32 @@
                         <div class="dataTables_length text-right"><label for="pageSize" i18n="@@nbEntries">Nb
                                 entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh(pager.currentPage)">
                                 <option value="10">10</option>
-                                <option value="25">25</option>
+                                <option value="20">20</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </select></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 table-responsive">
-                        <table class="table table-striped table-valign-middle">
-                            <thead>
-                                <tr>
-                                    <th i18n="@@id">ID</th>
-                                    <th i18n="@@shortDescription">Short Description</th>
-                                    <th i18n="@@createdBy">Created By</th>
-                                    <th i18n="@@ideaHasLeaderCreator">Creator wants to lead realization</th>
-                                    <th i18n="@@createdAt">Created At</th>
-                                    <th i18n="@@actions">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let idea of ideas">
-                                    <td>{{ idea.id }}</td>
-                                    <td>{{ idea.shortDescription }}</td>
-                                    <td>{{ idea.createdBy }}</td>
-                                    <td *ngIf="idea.hasLeaderCreator" class="text-indigo"><i class="far fa-check-square"></i></td>
-                                    <td *ngIf="!idea.hasLeaderCreator"><i class="far fa-square"></i></td>
-                                    <td>{{ idea.createdAt | date:'medium' }}</td>
-                                    <td class="action-bar">
-                                        <a class="text-muted item-clickable" (click)="openModalEditIdea(editIdea, idea)">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th i18n="@@id">ID</th>
-                                    <th i18n="@@ideaShortDesciption">Short Description</th>
-                                    <th i18n="@@createdBy">Created By</th>
-                                    <th i18n="@@ideaHasLeaderCreator">Creator wants to lead realization</th>
-                                    <th i18n="@@createdAt">Created At</th>
-                                    <th i18n="@@actions">Actions</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6 col-12" *ngFor="let idea of ideas">
+                                <div class="info-box item-clickable" (click)="openModalEditIdea(editIdea, idea)">
+                                    <span class="info-box-icon bg-info"><i class="{{ idea.icon }}"></i></span>
+
+                                    <div class="info-box-content">
+                                        <div class="info-box-text">
+                                            <span class="short-description">{{ idea.shortDescription }}</span>
+                                            <span *ngIf="idea.submitter.id > 0" class="badge badge-info float-right">{{ idea.submitter.firstname }} {{ idea.submitter.lastname }}</span>
+                                            <span *ngIf="idea.submitter.id <= 0" class="badge badge-warning float-right">Anonymous</span>
+                                        </div>
+                                        <span class="info-box-number">{{ idea.createdAt | date:'medium' }}</span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                                <!-- /.info-box -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -99,13 +80,19 @@
 
 <ng-template #editIdea>
     <div class="modal-header">
-        <h4 class="modal-title" id="editUserModalLabel">{{ form.controls.shortDescription.value }}</h4>
+        <h4 class="modal-title" id="editUserModalLabel"><i class="{{ form.controls.icon.value }}"></i><span>{{ form.controls.shortDescription.value }}</span></h4>
         <button type="button" class="close" (click)="closeModalEditIdea()">
           <span aria-hidden="true">×</span>
         </button>
     </div>
     <div class="modal-body">
         <form [formGroup]="form">
+            <div class="form-group">
+                <label for="amount" i18n="@@icon">Icon</label>
+                <select class="form-control select-border" style="width: 100%;" formControlName="icon">
+                    <option *ngFor="let item of icons; index as i" value="{{ item.id }}">{{ item.text }}</option>
+                </select>
+            </div>
             <div class="form-group" [ngClass]="{ 'has-error': form.controls.shortDescription.errors }">
                 <label for="shortDescription" i18n="@@ideaShortDesciption">Short Description</label>
                 <input id="shortDescription" type="text" formControlName="shortDescription" class="form-control" placeholder="Short Description" i18n-placeholder="@@ideaShortDesciption">

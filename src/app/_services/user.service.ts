@@ -8,7 +8,6 @@ import { OrganizationAuthority } from '../_entities/organization.authority';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-
     constructor(private http: HttpClient) { }
 
     list(offset: number, limit: number) {

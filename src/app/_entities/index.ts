@@ -4,6 +4,7 @@ export * from './budget';
 export * from './campaign';
 export * from './content';
 export * from './donation';
+export * from './idea';
 export * from './organization';
 export * from './organization.authority';
 export * from './slack.team';

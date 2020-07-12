@@ -8,6 +8,10 @@ import { environment } from 'src/environments/environment';
 export class MainService {
   constructor(private http: HttpClient) { }
 
+  getFontAwesomeList() {
+    return this.http.get<any[]>(`${environment.webUrl}/assets/font-awesome.json`);
+  }
+
   getLogs() {
     return this.http.get(`${environment.apiUrl}/logs`, {responseType: 'text'});
   }
