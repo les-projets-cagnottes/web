@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Role } from '../_models';
 import { Organization, User } from '../_entities';
-import { AuthenticationService, AuthorityService, OrganizationService, UserService } from '../_services';
+import { AuthenticationService, OrganizationService } from '../_services';
 
 @Component({
   selector: 'app-lesprojetscagnottes',

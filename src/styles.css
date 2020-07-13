@@ -52,3 +52,7 @@ a.disabled {
 .page-link {
     cursor: pointer;
 }
+
+.note-editable {
+    background-color: white;
+}

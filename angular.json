@@ -69,16 +69,21 @@
                                 "glob": "**/*",
                                 "input": "node_modules/chart.js/dist/",
                                 "output": "./assets/lib/chartjs"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/ace-builds/src-min",
+                                "output": "./assets/ace-builds/"
                             }
                         ],
                         "styles": [
-                            "node_modules/select2/dist/css/select2.min.css",
-                            "src/styles.css"
+                            "src/styles.css",
+                            "node_modules/summernote/dist/summernote-lite.min.css"
                         ],
                         "scripts": [
                             "node_modules/marked/lib/marked.js",
                             "src/assets/plugins/simplemde/simplemde.start.js",
-                            "node_modules/select2/dist/js/select2.min.js"
+                            "node_modules/summernote/dist/summernote-lite.min.js"
                         ]
                     },
                     "configurations": {

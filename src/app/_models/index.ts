@@ -7,6 +7,7 @@ export * from './campaign.model';
 export * from './content.model';
 export * from './donation.model';
 export * from './generic.model';
+export * from './idea.model';
 export * from './organization.model';
 export * from './organization.authority.model';
 export * from './role';

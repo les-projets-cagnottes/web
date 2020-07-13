@@ -20,7 +20,11 @@ export class AuthenticationService {
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
-        this.currentOrganizationSubject = new BehaviorSubject<Organization>(JSON.parse(localStorage.getItem('currentOrganization')));
+        if(localStorage.getItem('currentOrganization') != undefined) {
+            this.currentOrganizationSubject = new BehaviorSubject<Organization>(JSON.parse(localStorage.getItem('currentOrganization')));
+        } else {
+            this.currentOrganizationSubject = new BehaviorSubject<Organization>(new Organization());
+        }
         this.currentOrganization = this.currentOrganizationSubject.asObservable();
     }
 
@@ -63,7 +67,7 @@ export class AuthenticationService {
                 user.organizations = Organization.fromModels(responses[3]);
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
-                if(this.currentOrganizationValue === null && user.organizations.length >= 0) {
+                if(this.currentOrganizationValue.id <= 0 && user.organizations.length >= 0) {
                     this.setCurrentOrganization(user.organizations[0]);
                 }
                 return user;
