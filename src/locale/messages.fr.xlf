@@ -126,6 +126,9 @@
       <trans-unit id="emailRequired" datatype="html">
         <target>Email requis</target>
       </trans-unit>
+      <trans-unit id="findIconCodesAt" datatype="html">
+        <target>Trouvez les codes d'icône sur </target>
+      </trans-unit>
       <trans-unit id="gettingStartedMenu" datatype="html">
         <target>Bien démarrer</target>
       </trans-unit>

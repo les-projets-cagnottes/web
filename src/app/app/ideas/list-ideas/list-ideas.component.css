@@ -12,3 +12,9 @@
 #editUserModalLabel>span {
     margin-left: 0.5em;
 }
+
+.description-field {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+}

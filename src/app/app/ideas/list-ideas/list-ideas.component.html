@@ -87,11 +87,10 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="form">
-            <div class="form-group">
-                <label for="amount" i18n="@@icon">Icon</label>
-                <select class="form-control select-border" style="width: 100%;" formControlName="icon">
-                    <option *ngFor="let item of icons; index as i" value="{{ item.id }}">{{ item.text }}</option>
-                </select>
+            <div class="form-group" [ngClass]="{ 'has-error': form.controls.icon.errors }">
+                <label for="icon" i18n="@@icon">Icon</label>
+                <input id="icon" type="text" formControlName="icon" class="form-control" placeholder="Icon" i18n-placeholder="@@icon">
+                <div class="description-field"><span i18n="@@findIconCodesAt">Find icon codes at </span><a href="https://origin.fontawesome.com/icons?d=gallery&m=free">Font Awesome</a></div>
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': form.controls.shortDescription.errors }">
                 <label for="shortDescription" i18n="@@ideaShortDesciption">Short Description</label>

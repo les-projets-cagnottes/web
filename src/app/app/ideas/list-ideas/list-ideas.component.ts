@@ -6,8 +6,6 @@ import { IdeaModel } from 'src/app/_models';
 import { Organization, User, Idea } from 'src/app/_entities';
 import { MainService } from 'src/app/_services/main.service';
 
-declare function startSimpleMDE(): any;
-
 @Component({
   selector: 'app-list-ideas',
   templateUrl: './list-ideas.component.html',
@@ -20,6 +18,7 @@ export class ListIdeasComponent implements OnInit {
   currentUser: User;
   ideas: Idea[] = [];
   selectedIdea: IdeaModel;
+  selectedIcon: any;
   icons: any[] = []
 
   // Paginations
@@ -62,7 +61,6 @@ export class ListIdeasComponent implements OnInit {
       hasLeaderCreator: [false]
     });
     this.refresh();
-    this.refreshIcons();
   }
 
   refresh(page: number = 1) {
@@ -79,14 +77,8 @@ export class ListIdeasComponent implements OnInit {
     }
   }
 
-  refreshIcons() {
-    this.mainService.getFontAwesomeList()
-    .subscribe(response => {
-      Object.keys(response).forEach(key => this.icons.push({id: key, text: response[key]}));
-    },
-    error => {
-      console.log(error);
-    });
+  onIconPickerSelect(icon: string) {
+    this.form.controls.icon.setValue(icon);
   }
 
   setPage(page: number) {
