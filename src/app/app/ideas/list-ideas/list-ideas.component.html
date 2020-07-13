@@ -96,9 +96,9 @@
                 <label for="shortDescription" i18n="@@ideaShortDesciption">Short Description</label>
                 <input id="shortDescription" type="text" formControlName="shortDescription" class="form-control" placeholder="Short Description" i18n-placeholder="@@ideaShortDesciption">
             </div>
-            <div class="form-group" [ngClass]="{ 'has-error': form.controls.longDescription.errors }">
+            <div class="form-group">
                 <label for="longDescription" i18n="@@ideaLongDescription">Long Description</label>
-                <div [ngxSummernote]="config" [ngxSummernoteView]="selectedIdea.longDescription"></div>
+                <textarea [ngxSummernote]="config" formControlName="longDescription"></textarea>
             </div>
             <div class="form-group" *ngIf="selectedIdea.id <= 0 || currentUser.email === selectedIdea.createdBy">
                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">

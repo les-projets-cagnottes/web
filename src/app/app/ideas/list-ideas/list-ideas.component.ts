@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { PagerService, OrganizationService, AuthenticationService, UserService, IdeaService } from 'src/app/_services';
@@ -18,8 +18,7 @@ export class ListIdeasComponent implements OnInit {
   currentUser: User;
   ideas: Idea[] = [];
   selectedIdea: IdeaModel;
-  selectedIcon: any;
-  icons: any[] = []
+  longDescription: string = "";
 
   // Paginations
   private pagedIdeas: any;
@@ -46,7 +45,6 @@ export class ListIdeasComponent implements OnInit {
     private pagerService: PagerService,
     private authenticationService: AuthenticationService,
     private ideaService: IdeaService,
-    private mainService: MainService,
     private organizationService: OrganizationService,
     private userService: UserService) { }
 
@@ -75,10 +73,6 @@ export class ListIdeasComponent implements OnInit {
           console.log(error);
         });
     }
-  }
-
-  onIconPickerSelect(icon: string) {
-    this.form.controls.icon.setValue(icon);
   }
 
   setPage(page: number) {
@@ -110,9 +104,9 @@ export class ListIdeasComponent implements OnInit {
 
   openModalCreateIdea(template): void {
     this.selectedIdea = new IdeaModel();
+    this.longDescription = "";
     this.form.controls.icon.setValue("far fa-lightbulb");
     this.form.controls.shortDescription.setValue("");
-    this.form.controls.longDescription.setValue("");
     this.form.controls.hasAnonymousCreator.setValue(false);
     this.form.controls.hasLeaderCreator.setValue(false);
     this.modal = this.modalService.show(template);
@@ -120,9 +114,9 @@ export class ListIdeasComponent implements OnInit {
 
   openModalEditIdea(template, idea: IdeaModel): void {
     this.selectedIdea = idea;
+    this.longDescription = idea.longDescription;
     this.form.controls.icon.setValue(idea.icon);
     this.form.controls.shortDescription.setValue(idea.shortDescription);
-    this.form.controls.longDescription.setValue(idea.longDescription);
     this.form.controls.hasAnonymousCreator.setValue(idea.hasAnonymousCreator);
     this.form.controls.hasLeaderCreator.setValue(idea.hasLeaderCreator);
     this.modal = this.modalService.show(template);
