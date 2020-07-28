@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   webUrl: 'http://localhost:4200',
   apiUrl: 'http://localhost:8080/api',
-  slackClientId: '744027460679.730717520259',
+  slackClientId: '1267900044419.1280463132273',
   version: 'head',
   gitRef: 'head'
 };
