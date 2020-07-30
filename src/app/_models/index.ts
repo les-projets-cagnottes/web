@@ -11,6 +11,7 @@ export * from './idea.model';
 export * from './organization.model';
 export * from './organization.authority.model';
 export * from './role';
+export * from './schedule.model';
 export * from './slack.team.model';
 export * from './slackUser';
 export * from './user.model';

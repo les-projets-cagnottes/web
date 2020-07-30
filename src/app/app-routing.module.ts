@@ -16,6 +16,7 @@ import { GettingStartedComponent } from './app/documentation/getting-started/get
 import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './app/admin/admin.component';
 import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
+import { SchedulerComponent } from './app/scheduler/scheduler.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'report', component: ReportComponent },
       { path: 'users', component: UsersComponent },
       { path: 'admin', component: AdminComponent },
+      { path: 'schedules', component: SchedulerComponent },
       { path: 'doc/getting-started', component: GettingStartedComponent },
       { path: 'about', component: AboutComponent }
     ]

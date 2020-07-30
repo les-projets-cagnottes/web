@@ -92,6 +92,12 @@
                             <p i18n="@@controlsMenu">Controls</p>
                         </a>
                     </li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/schedules" class="nav-link">
+                            <i class="nav-icon far fa-clock"></i>
+                            <p i18n="@@schedulesMenu">Schedules</p>
+                        </a>
+                    </li>
                     <li class="nav-header" i18n="@@documentationMenu">
                         DOCUMENTATION</li>
                     <li class="nav-item">
