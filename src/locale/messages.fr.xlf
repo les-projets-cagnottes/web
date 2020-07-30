@@ -357,6 +357,27 @@
       <trans-unit id="save" datatype="html">
         <target>Sauvegarder</target>
       </trans-unit>
+      <trans-unit id="scheduleEnabled" datatype="html">
+        <target>Activé</target>
+      </trans-unit>
+      <trans-unit id="scheduleNextExecution" datatype="html">
+        <target>Prochaine éxécution</target>
+      </trans-unit>
+      <trans-unit id="schedulePlanning" datatype="html">
+        <target>Planification</target>
+      </trans-unit>
+      <trans-unit id="schedules" datatype="html">
+        <target>Programmations</target>
+      </trans-unit>
+      <trans-unit id="schedulesMenu" datatype="html">
+        <target>Programmations</target>
+      </trans-unit>
+      <trans-unit id="scheduleScheduled" datatype="html">
+        <target>Planifié</target>
+      </trans-unit>
+      <trans-unit id="scheduleType" datatype="html">
+        <target>Type</target>
+      </trans-unit>
       <trans-unit id="settings" datatype="html">
         <target>Mon compte</target>
       </trans-unit>

@@ -164,19 +164,19 @@ export class ViewCampaignComponent implements OnInit {
         var donationUserRef = []
         this.pagedItems.forEach(donation => donationUserRef.push(donation.contributor.id));
         this.userService.getAllByIds(donationUserRef)
-        .subscribe(users => {
-          this.pagedItems.forEach(donation => donation.setContributor(users));
-          this.donationsSyncStatus = 'success';
-          setTimeout(() => {
-            this.donationsSyncStatus = 'idle';
-          }, 1000);
-        }, error => {
-          this.donationsSyncStatus = 'error';
-          console.log(error);
-          setTimeout(() => {
-            this.donationsSyncStatus = 'idle';
-          }, 1000);
-        });
+          .subscribe(users => {
+            this.pagedItems.forEach(donation => donation.setContributor(users));
+            this.donationsSyncStatus = 'success';
+            setTimeout(() => {
+              this.donationsSyncStatus = 'idle';
+            }, 1000);
+          }, error => {
+            this.donationsSyncStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.donationsSyncStatus = 'idle';
+            }, 1000);
+          });
       });
   }
 
