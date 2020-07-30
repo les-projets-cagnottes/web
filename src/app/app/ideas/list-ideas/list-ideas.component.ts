@@ -107,6 +107,7 @@ export class ListIdeasComponent implements OnInit {
     this.longDescription = "";
     this.form.controls.icon.setValue("far fa-lightbulb");
     this.form.controls.shortDescription.setValue("");
+    this.form.controls.longDescription.setValue("");
     this.form.controls.hasAnonymousCreator.setValue(false);
     this.form.controls.hasLeaderCreator.setValue(false);
     this.modal = this.modalService.show(template);
@@ -117,6 +118,7 @@ export class ListIdeasComponent implements OnInit {
     this.longDescription = idea.longDescription;
     this.form.controls.icon.setValue(idea.icon);
     this.form.controls.shortDescription.setValue(idea.shortDescription);
+    this.form.controls.longDescription.setValue(idea.longDescription);
     this.form.controls.hasAnonymousCreator.setValue(idea.hasAnonymousCreator);
     this.form.controls.hasLeaderCreator.setValue(idea.hasLeaderCreator);
     this.modal = this.modalService.show(template);
