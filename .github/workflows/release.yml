@@ -70,8 +70,12 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --build-arg configuration=production --tag web:latest
     - name: Tag the image for Docker Hub
-      run: docker tag web:latest lesprojetscagnottes/web:${{ steps.get_version.outputs.VERSION }}
+      run: docker tag web:latest lesprojetscagnottes/web:${{ needs.verify-version.outputs.version }}
+    - name: Tag the latest image for Docker Hub
+      run: docker tag web:latest lesprojetscagnottes/web:latest
     - name: Login to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish to Docker Hub
-      run: docker push lesprojetscagnottes/web:${{ steps.get_version.outputs.VERSION }}
+      run: docker push lesprojetscagnottes/web:${{ needs.verify-version.outputs.version }}
+    - name: Publish latest version to Docker Hub
+      run: docker push lesprojetscagnottes/web:latest
