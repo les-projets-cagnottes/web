@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+
+import { ConfigService } from '../_services/config/config.service';
 
 import { AuthorityModel, OrganizationAuthorityModel, UserModel, OrganizationModel } from '../_models';
 
@@ -17,7 +18,7 @@ export class AuthenticationService {
     private currentOrganizationSubject: BehaviorSubject<Organization>;
     public currentOrganization: Observable<Organization>;
   
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private configService: ConfigService) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
         if(localStorage.getItem('currentOrganization') != undefined) {
@@ -37,7 +38,7 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<any>(`${environment.apiUrl}/auth/login`,
+        return this.http.post<any>(`${this.configService.get('apiUrl')}/auth/login`,
             {
                 email,
                 password
@@ -54,10 +55,10 @@ export class AuthenticationService {
     }
 
     whoami(): Observable<User> {
-        const principal = this.http.get<UserModel>(`${environment.apiUrl}/whoami`);
-        const authorities = this.http.get<AuthorityModel[]>(`${environment.apiUrl}/authority`);
-        const orgauthorities = this.http.get<OrganizationAuthorityModel[]>(`${environment.apiUrl}/orgauthorities`);
-        const organizations = this.http.get<OrganizationModel[]>(`${environment.apiUrl}/organizations`);
+        const principal = this.http.get<UserModel>(`${this.configService.get('apiUrl')}/whoami`);
+        const authorities = this.http.get<AuthorityModel[]>(`${this.configService.get('apiUrl')}/authority`);
+        const orgauthorities = this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/orgauthorities`);
+        const organizations = this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/organizations`);
         return forkJoin([principal, authorities, orgauthorities, organizations])
             .pipe(map(responses =>{
                 var user = User.fromModel(responses[0]);
@@ -80,7 +81,7 @@ export class AuthenticationService {
     }
 
     slack(code: string, redirect_uri) {
-        return this.http.get<any>(`${environment.apiUrl}/auth/login/slack?code=${code}&redirect_uri=${redirect_uri}`)
+        return this.http.get<any>(`${this.configService.get('apiUrl')}/auth/login/slack?code=${code}&redirect_uri=${redirect_uri}`)
         .pipe(map(user => {
             // login successful if there's a jwt token in the response
             if (user && user.token) {

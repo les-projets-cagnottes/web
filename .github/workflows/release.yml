@@ -20,7 +20,7 @@ jobs:
       run: if [[ "${{ steps.get_version.outputs.VERSION }}" == *"-SNAPSHOT" ]]; then exit 1; else exit 0; fi
     - name: Get release
       id: get_release
-      run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-projets-cagnottes/slack-events-catcher/releases/tag/${{ steps.get_version.outputs.VERSION }};)
+      run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-projets-cagnottes/web/releases/tag/${{ steps.get_version.outputs.VERSION }};)
     - name: Test release existence
       run: if [[ "${{ steps.get_release.outputs.RELEASE_HTTP_CODE }}" -eq "200" ]]; then exit 1; else exit 0; fi
 
@@ -67,56 +67,11 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: '${{ needs.verify-version.outputs.version }}'
-    - name: Generate git ref in environment variables
-      run: "sed -i -E \"s|gitRef: '(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --build-arg configuration=heroku-fr --tag docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ needs.verify-version.outputs.version }}
-    - name: Login to Registry
-      run: docker login docker.pkg.github.com -u thomah -p ${{secrets.GITHUB_TOKEN}}
-    - name: Publish to Registry
-      run: docker push docker.pkg.github.com/les-projets-cagnottes/web/web:heroku-${{ needs.verify-version.outputs.version }}
-
-  deploy-production:
-    needs: [verify-version, release]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: '${{ needs.verify-version.outputs.version }}'
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
-    - name: Generate git ref in environment variables
-      run: "sed -i -E \"s|gitRef: '(.*)'|gitRef: '$GITHUB_SHA'|g\" src/environments/environment.heroku.ts"
-    - run: npm ci
-    - run: npm run build -- --configuration production-fr --output-path=dist
-    - name: Get the version
-      id: get_version
-      run: "echo ::set-output name=VERSION::$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]')"
-    - name: Create temp directory to copy files
-      uses: appleboy/ssh-action@v0.0.7
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key : ${{ secrets.PRODUCTION_KEY }}
-        port: ${{ secrets.PRODUCTION_PORT }}
-        script: mkdir -p /opt/les-projets-cagnottes/web/deployment
-    - name: Copy content recursively to production
-      uses: appleboy/scp-action@v0.0.7
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key : ${{ secrets.PRODUCTION_KEY }}
-        port: ${{ secrets.PRODUCTION_PORT }}
-        source: "dist,bin/deploy.sh"
-        target: /opt/les-projets-cagnottes/web/deployment
-        rm: true
-    - name: Execute deployment remotely
-      uses: appleboy/ssh-action@v0.0.7
-      with:
-        host: ${{ secrets.PRODUCTION_HOST }}
-        username: ${{ secrets.PRODUCTION_USER }}
-        key : ${{ secrets.PRODUCTION_KEY }}
-        port: ${{ secrets.PRODUCTION_PORT }}
-        script: (sudo chmod 755 /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh) && (nohup /opt/les-projets-cagnottes/web/deployment/bin/deploy.sh ${{ steps.get_version.outputs.VERSION }} &>  /opt/les-projets-cagnottes/web/deployment/bin/console.log < /dev/null &) && exit 0
+      run: docker build . --file Dockerfile --build-arg configuration=production --tag web:latest
+    - name: Tag the image for Docker Hub
+      run: docker tag web:latest lesprojetscagnottes/web:${{ steps.get_version.outputs.VERSION }}
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish to Docker Hub
+      run: docker push lesprojetscagnottes/web:${{ steps.get_version.outputs.VERSION }}

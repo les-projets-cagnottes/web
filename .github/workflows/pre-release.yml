@@ -42,13 +42,11 @@ jobs:
       run: echo ::set-output name=VERSION::$(sed "s/-SNAPSHOT//g" <<<"${{ steps.get_previous_version.outputs.VERSION }}")
     - name: Get release
       id: get_release
-      run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-projets-cagnottes/slack-events-catcher/releases/tag/${{ steps.get_released_version.outputs.VERSION }};)
+      run: echo ::set-output name=RELEASE_HTTP_CODE::$(curl -s -o out.html -w '%{http_code}'  https://github.com/les-projets-cagnottes/web/releases/tag/${{ steps.get_released_version.outputs.VERSION }};)
     - name: Test release existence
       run: if [[ "${{ steps.get_release.outputs.RELEASE_HTTP_CODE }}" -eq "200" ]]; then exit 1; else exit 0; fi
     - name: Replace version without snapshot
       run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }}\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
-    - name: Generate version in environment variables
-      run: "sed -i -E \"s|version: '(.*)'|version: '${{ steps.get_released_version.outputs.VERSION }}'|g\" src/environments/environment.prod.ts"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:

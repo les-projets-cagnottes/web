@@ -87,7 +87,7 @@
                         ]
                     },
                     "configurations": {
-                        "production-fr": {
+                        "production": {
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.prod.ts"
@@ -113,38 +113,6 @@
                                     "maximumWarning": "6kb"
                                 }
                             ]
-                        },
-                        "heroku-fr": {
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.heroku.ts"
-                            }],
-                            "localize": [
-                                "fr"
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [{
-                                    "type": "initial",
-                                    "maximumWarning": "2mb",
-                                    "maximumError": "5mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb"
-                                }
-                            ]
-                        },
-                        "dev": {
-                            "localize": [
-                                "fr"
-                            ]
                         }
                     }
                 },
@@ -156,9 +124,6 @@
                     "configurations": {
                         "dev": {
                             "browserTarget": "web:build:dev:fr"
-                        },
-                        "heroku-fr": {
-                            "browserTarget": "web:build:heroku-fr"
                         }
                     }
                 },
