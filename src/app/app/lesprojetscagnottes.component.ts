@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { Role } from '../_models';
 import { Organization, User } from '../_entities';
 import { AuthenticationService, OrganizationService } from '../_services';
+import { ConfigService } from '../_services/config/config.service';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -13,9 +13,8 @@ import { AuthenticationService, OrganizationService } from '../_services';
 })
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
-  gitRef: string = '';
-  gitShortRef: string = '';
   version: string = '';
+  versionUrl: string = '';
   currentOrganization: Organization = new Organization();
   currentOrganizationSubscription: Subscription;
   currentUser: User = new User();
@@ -24,17 +23,17 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private organizationService: OrganizationService
-  ) { 
-    this.gitRef = environment.gitRef;
-    this.version = environment.version;
-    if(this.gitRef.length === 40) this.gitShortRef = ' @' + this.gitRef.substring(0, 7); 
+    private organizationService: OrganizationService,
+    private configService: ConfigService
+  ) {
+    this.version = this.configService.get('version');
+    this.versionUrl = this.configService.get('versionUrl');
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
     this.currentOrganizationSubscription = this.authenticationService.currentOrganization.subscribe(organization => {
-      if(organization !== null) {
+      if (organization !== null) {
         this.currentOrganization = organization;
       }
     });
@@ -53,7 +52,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
           })
       });
   }
-  
+
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();
@@ -70,7 +69,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
     return isManager || this.isAdmin;
   }
-  
+
   get isOwner() {
     var isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
     isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);

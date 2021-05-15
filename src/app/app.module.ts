@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -31,6 +31,14 @@ import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './app/admin/admin.component';
 import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 import { SchedulerComponent } from './app/scheduler/scheduler.component';
+
+import { ConfigService } from './_services/config/config.service';
+
+const appConfig = (config: ConfigService) => {
+  return () => {
+    return config.loadConfig();
+  };
+};
 
 @NgModule({
   declarations: [
@@ -66,7 +74,14 @@ import { SchedulerComponent } from './app/scheduler/scheduler.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    ConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appConfig,
+      multi: true,
+      deps: [ConfigService],
+    },
     //fakeBackendProvider
   ],
   bootstrap: [AppComponent]

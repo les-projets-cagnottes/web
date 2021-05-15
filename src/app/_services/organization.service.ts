@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+
+import { ConfigService } from '../_services/config/config.service';
 
 import { BudgetModel } from '../_models/budget.model';
 import { OrganizationModel } from '../_models/organization.model';
@@ -9,13 +9,12 @@ import { OrganizationAuthorityModel } from '../_models/organization.authority.mo
 
 import { User } from '../_entities/user';
 import { ContentModel, CampaignModel, IdeaModel } from '../_models';
-import { Organization } from '../_entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
   }
 
   getCurrentOrganization() {
@@ -26,40 +25,40 @@ export class OrganizationService {
   }
 
   getById(id: number) {
-    return this.http.get<OrganizationModel>(`${environment.apiUrl}/organization/${id}`);
+    return this.http.get<OrganizationModel>(`${this.configService.get('apiUrl')}/organization/${id}`);
   }
 
   getAllByIds(ids: number[]) {
     const params = new HttpParams()
         .set('ids', ids.toString());
-    return this.http.get<OrganizationModel[]>(`${environment.apiUrl}/organization`, { params });
+    return this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/organization`, { params });
 }
 
   getByOwner(owner: User, offset, limit) {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
-    return this.http.get<User[]>(`${environment.apiUrl}/organization?owner_id=${owner.id}`, { params });
+    return this.http.get<User[]>(`${this.configService.get('apiUrl')}/organization?owner_id=${owner.id}`, { params });
   }
 
   create(organization: OrganizationModel) {
-    return this.http.post(`${environment.apiUrl}/organization`, organization);
+    return this.http.post(`${this.configService.get('apiUrl')}/organization`, organization);
   }
 
   update(organization: OrganizationModel) {
-    return this.http.put(`${environment.apiUrl}/organization`, organization);
+    return this.http.put(`${this.configService.get('apiUrl')}/organization`, organization);
   }
 
   delete(id: number) {
-    return this.http.delete(`${environment.apiUrl}/organization/${id}`);
+    return this.http.delete(`${this.configService.get('apiUrl')}/organization/${id}`);
   }
 
   getBudgets(organizationId: number) {
-    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets`);
+    return this.http.get<BudgetModel[]>(`${this.configService.get('apiUrl')}/organization/${organizationId}/budgets`);
   }
 
   getUsableBudgets(organizationId: number) {
-    return this.http.get<BudgetModel[]>(`${environment.apiUrl}/organization/${organizationId}/budgets/usable`);
+    return this.http.get<BudgetModel[]>(`${this.configService.get('apiUrl')}/organization/${organizationId}/budgets/usable`);
   }
 
   getCampaigns(id: number, offset: number, limit: number, filter: string[]) {
@@ -67,44 +66,44 @@ export class OrganizationService {
       .set('offset', offset.toString())
       .set('limit', limit.toString())
       .set('filters', filter.toString());
-    return this.http.get<CampaignModel[]>(`${environment.apiUrl}/organization/${id}/campaigns`, { params });
+    return this.http.get<CampaignModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/campaigns`, { params });
   }
 
   getIdeas(id: number, offset: number, limit: number) {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
-    return this.http.get<IdeaModel[]>(`${environment.apiUrl}/organization/${id}/ideas`, { params });
+    return this.http.get<IdeaModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/ideas`, { params });
   }
 
   getMembers(organizationId: number, offset, limit) {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
-    return this.http.get<User[]>(`${environment.apiUrl}/organization/${organizationId}/members`, { params });
+    return this.http.get<User[]>(`${this.configService.get('apiUrl')}/organization/${organizationId}/members`, { params });
   }
 
   getAllContents(id: number) {
-    return this.http.get<ContentModel[]>(`${environment.apiUrl}/organization/${id}/contents`);
+    return this.http.get<ContentModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/contents`);
   }
 
   getContents(id: number, offset: number, limit: number) {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-    return this.http.get<ContentModel[]>(`${environment.apiUrl}/organization/${id}/contents`, { params });
+    return this.http.get<ContentModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/contents`, { params });
   }
 
   addContent(id: number, content: ContentModel) {
-    return this.http.post(`${environment.apiUrl}/organization/${id}/contents`, content);
+    return this.http.post(`${this.configService.get('apiUrl')}/organization/${id}/contents`, content);
   }
 
   getOrganizationAuthorities(organizationsId: Number) {
-    return this.http.get<OrganizationAuthorityModel[]>(`${environment.apiUrl}/organization/${organizationsId}/authorities`, {});
+    return this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/organization/${organizationsId}/authorities`, {});
   }
 
   addMember(organizationId: number, userId: number) {
-    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/members/${userId}`, {});
+    return this.http.post(`${this.configService.get('apiUrl')}/organization/${organizationId}/members/${userId}`, {});
   }
 
   removeMember(organizationId: number, userId: number) {
@@ -112,18 +111,18 @@ export class OrganizationService {
     httpParams.set('bbb', '222');
 
     let options = { body: userId };
-    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/members/${userId}`);
+    return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/members/${userId}`);
   }
   
   slack(organizationId: number, code: string, redirect_uri) {
-    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack?code=${code}&redirect_uri=${redirect_uri}`, {});
+    return this.http.post(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack?code=${code}&redirect_uri=${redirect_uri}`, {});
   }
 
   slackSync(organizationId: number) {
-    return this.http.post(`${environment.apiUrl}/organization/${organizationId}/slack/sync`, {});
+    return this.http.post(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack/sync`, {});
   }
 
   slackDisconnect(organizationId: number) {
-    return this.http.delete(`${environment.apiUrl}/organization/${organizationId}/slack`, {});
+    return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack`, {});
   }
 }

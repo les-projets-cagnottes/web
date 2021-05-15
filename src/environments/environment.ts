@@ -3,12 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  webUrl: 'http://localhost:4200',
-  apiUrl: 'http://localhost:8080/api',
-  slackClientId: '1267900044419.1280463132273',
-  version: 'head',
-  gitRef: 'head'
+  production: false
 };
 
 /*

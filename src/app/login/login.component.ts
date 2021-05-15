@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
 import { AlertService, AuthenticationService } from '../_services';
+import { ConfigService } from '../_services/config/config.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private configService: ConfigService
   ) {
     // redirect to home if alB_READY logged in
     if (this.authenticationService.currentUserValue) {
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         });
     }
-    this.slackClientId = environment.slackClientId;
+    this.slackClientId = this.configService.get('slackClientId');
   }
 
   ngOnInit() {

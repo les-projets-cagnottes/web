@@ -5,12 +5,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UserService, PagerService } from 'src/app/_services';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { environment } from '../../../../environments/environment';
 import { ContentService } from 'src/app/_services/content.service';
 import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization.authority';
 import { ContentModel, OrganizationModel } from 'src/app/_models';
 import { SlackTeamService } from 'src/app/_services/slack.team.service';
+import { ConfigService } from 'src/app/_services/config/config.service';
 
 declare function startSimpleMDE(): any;
 
@@ -73,8 +73,8 @@ export class EditOrganizationComponent implements OnInit {
   private simplemde;
   contentId: number;
 
-  endPointEdit: string = '/organizations/edit/' + this.id;
-  slackEndPoint: string = '/organizations/edit/slack/' + this.id
+  endPointEdit: string = '';
+  slackEndPoint: string = '';
   
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +82,7 @@ export class EditOrganizationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private pagerService: PagerService,
+    private configService: ConfigService,
     private contentService: ContentService,
     private userService: UserService,
     private organizationService: OrganizationService,
@@ -115,7 +116,7 @@ export class EditOrganizationComponent implements OnInit {
             this.ngOnInit();
           });
       }
-      this.slackClientId = environment.slackClientId;
+      this.slackClientId = this.configService.get('slackClientId');
 
       this.organizationService.getById(this.id)
         .subscribe(
