@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ListCampaignsComponent } from './list-campaigns.component';
 import { FormsModule } from '@angular/forms';
@@ -9,13 +9,13 @@ describe('ListCampaignsComponent', () => {
   let component: ListCampaignsComponent;
   let fixture: ComponentFixture<ListCampaignsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ListCampaignsComponent ],
       imports: [
         HttpClientModule,
         FormsModule,
-        RouterModule.forRoot([])]
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })]
     })
     .compileComponents();
   }));

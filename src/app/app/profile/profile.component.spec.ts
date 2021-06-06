@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,12 +8,12 @@ describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ProfileComponent],
       imports: [
         HttpClientModule,
-        RouterModule.forRoot([])]
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })]
     })
       .compileComponents();
   }));

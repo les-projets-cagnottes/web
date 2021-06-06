@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppNavbarComponent } from './navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -9,13 +9,13 @@ describe('AppNavbarComponent', () => {
   let component: AppNavbarComponent;
   let fixture: ComponentFixture<AppNavbarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AppNavbarComponent],
       imports: [
         HttpClientModule,
         ReactiveFormsModule,
-        RouterModule.forRoot([])]
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })]
     })
       .compileComponents();
   }));
