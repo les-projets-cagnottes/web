@@ -70,7 +70,7 @@ const appConfig = (config: ConfigService) => {
     HttpClientModule,
     MarkdownModule.forRoot(),
     ModalModule.forRoot(),
-    RouterModule.forRoot([])
+    RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
