@@ -47,10 +47,10 @@ jobs:
       run: if [[ "${{ steps.get_release.outputs.RELEASE_HTTP_CODE }}" -eq "200" ]]; then exit 1; else exit 0; fi
     - name: Replace version without snapshot
       run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }}\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 14.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 14.x
     - run: npm i
     - name: Push released version
       run: git config user.email "${{ secrets.GIT_CONFIG_EMAIL }}" && git config user.name "${{ secrets.GIT_CONFIG_NAME }}"
