@@ -1,4 +1,4 @@
-FROM node:12.8.1-stretch as builder
+FROM node:14-stretch as builder
 
 ARG configuration
 
@@ -8,7 +8,7 @@ WORKDIR /ng-app
 COPY . .
 RUN npm run ng build -- --configuration $configuration --output-path=dist
 
-FROM nginx:1.17.3
+FROM nginx:1.21.0
 
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 RUN rm -rf /usr/share/nginx/html/*
