@@ -71,6 +71,11 @@
                             },
                             {
                                 "glob": "**/*",
+                                "input": "node_modules/summernote/dist/",
+                                "output": "./assets/lib/summernote/"
+                            },
+                            {
+                                "glob": "**/*",
                                 "input": "node_modules/ace-builds/src-min",
                                 "output": "./assets/ace-builds/"
                             }

@@ -21,6 +21,7 @@ import { UsersComponent } from './app/users/users.component';
 import { ListCampaignsComponent } from './app/campaigns/list/list-campaigns.component';
 import { OrganizationsComponent } from './app/organizations/list/list-organizations.component';
 import { EditOrganizationComponent } from './app/organizations/edit/edit-organization.component';
+import { EditProjectComponent } from './app/projects/edit/edit-project.component';
 import { EditCampaignComponent } from './app/campaigns/edit/edit-campaign.component';
 import { ViewCampaignComponent } from './app/campaigns/view/view-campaign.component';
 import { BudgetsComponent } from './app/budgets/budgets.component';
@@ -59,7 +60,8 @@ const appConfig = (config: ConfigService) => {
     AboutComponent,
     AdminComponent,
     ListIdeasComponent,
-    SchedulerComponent
+    SchedulerComponent,
+    EditProjectComponent
   ],
   imports: [
     BrowserModule,

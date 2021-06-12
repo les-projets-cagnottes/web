@@ -9,6 +9,7 @@ export * from './donation.service';
 export * from './idea.service';
 export * from './organization.service';
 export * from './pager.service';
+export * from './project/project.service';
 export * from './schedule.service';
 export * from './slack.team.service';
 export * from './user.service';

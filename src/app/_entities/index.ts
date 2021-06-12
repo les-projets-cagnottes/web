@@ -7,6 +7,7 @@ export * from './donation';
 export * from './idea';
 export * from './organization';
 export * from './organization.authority';
+export * from './project/project';
 export * from './schedule';
 export * from './slack.team';
 export * from './user';
