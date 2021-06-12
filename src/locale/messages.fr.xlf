@@ -450,6 +450,9 @@
       <trans-unit id="yourNewAPIToken" datatype="html">
         <target>Votre nouveau token API</target>
       </trans-unit>
+      <trans-unit id="fdf7cbdc140d0aab0f0b6c06065a0fd448ed6a2e" datatype="html">
+        <target>Titre</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

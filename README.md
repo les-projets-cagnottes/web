@@ -41,6 +41,26 @@ ng serve
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+### Debug locally in production mode
+
+#### Create junction to serve images stored in `core` component
+
+```cmd
+mklink /d dist\fr\img <core-directory>\files\img
+```
+
+#### Build in production mode
+
+````cmd
+npm run ng build -- --configuration production --output-path=dist
+```
+
+#### Run a debug HTTP server
+
+````cmd
+angular-http-server -p 4200 --path dist\fr
+```
+
 ### Run with Docker
 
 On your host, create a `config.json` file with the following content :

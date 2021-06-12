@@ -17,6 +17,7 @@ import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './app/admin/admin.component';
 import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 import { SchedulerComponent } from './app/scheduler/scheduler.component';
+import { EditProjectComponent } from './app/projects/edit/edit-project.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
       { path: 'organizations/edit/:id', component: EditOrganizationComponent },
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
-      { path: 'projects/new', component: EditCampaignComponent },
+      { path: 'projects/new', component: EditProjectComponent },
       { path: 'projects/:id/edit', component: EditCampaignComponent },
       { path: 'projects/:id', component: ViewCampaignComponent },
       { path: 'projects', component: ListCampaignsComponent },
