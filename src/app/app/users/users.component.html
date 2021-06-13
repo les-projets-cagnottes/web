@@ -31,7 +31,7 @@
                                     <th i18n="@@userFullname">Name</th>
                                     <th i18n="@@userEmail">Email</th>
                                     <th i18n="@@createdAt">Created At</th>
-                                    <th i18n="@@userEnabled">Enabled</th>
+                                    <th i18n>Enabled</th>
                                     <th i18n="@@actions">Actions</th>
                                 </tr>
                             </thead>
@@ -56,7 +56,7 @@
                                     <th i18n="@@userFullname">Name</th>
                                     <th i18n="@@userEmail">Email</th>
                                     <th i18n="@@createdAt">Created At</th>
-                                    <th i18n="@@userEnabled">Enabled</th>
+                                    <th i18n>Enabled</th>
                                     <th i18n="@@actions">Actions</th>
                                 </tr>
                             </tfoot>
@@ -67,7 +67,7 @@
                     <div class="col-5">
                         <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info">
                             <span i18n="@@paginationStart">Showing </span> {{ pager.startIndex + 1 }}
-                            <span i18n="@@paginationEnd"> to</span> {{ pager.endIndex + 1 }}
+                            <span i18n> to</span> {{ pager.endIndex + 1 }}
                             <span i18n="@@paginationTotal"> of </span> {{ pager.totalItems }}
                             <span i18n="@@paginationEntries"> entries</span>
                         </div>
@@ -129,7 +129,7 @@
             <div class="form-group">
                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                     <input type="checkbox" class="custom-control-input" id="isActivated" formControlName="isActivated">
-                    <label class="custom-control-label" for="isActivated" i18n="@@userEnabled">Is activated</label>
+                    <label class="custom-control-label" for="isActivated" i18n>Enabled</label>
                 </div>
             </div>
         </form>

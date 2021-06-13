@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxSummernoteModule } from 'ngx-summernote';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,10 +21,11 @@ import { fakeBackendProvider } from './_helpers';
 
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { UsersComponent } from './app/users/users.component';
-import { ListCampaignsComponent } from './app/campaigns/list/list-campaigns.component';
 import { OrganizationsComponent } from './app/organizations/list/list-organizations.component';
 import { EditOrganizationComponent } from './app/organizations/edit/edit-organization.component';
+import { ListProjectsComponent } from './app/projects/list/list-projects.component';
 import { EditProjectComponent } from './app/projects/edit/edit-project.component';
+import { ListCampaignsComponent } from './app/campaigns/list/list-campaigns.component';
 import { EditCampaignComponent } from './app/campaigns/edit/edit-campaign.component';
 import { ViewCampaignComponent } from './app/campaigns/view/view-campaign.component';
 import { BudgetsComponent } from './app/budgets/budgets.component';
@@ -34,6 +38,7 @@ import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component'
 import { SchedulerComponent } from './app/scheduler/scheduler.component';
 
 import { ConfigService } from './_services/config/config.service';
+import { ViewProjectComponent } from './app/projects/view/view-project.component';
 
 const appConfig = (config: ConfigService) => {
   return () => {
@@ -61,16 +66,21 @@ const appConfig = (config: ConfigService) => {
     AdminComponent,
     ListIdeasComponent,
     SchedulerComponent,
-    EditProjectComponent
+    EditProjectComponent,
+    ListProjectsComponent,
+    ViewProjectComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     NgxSummernoteModule,
     ReactiveFormsModule,
     HttpClientModule,
     MarkdownModule.forRoot(),
+    CollapseModule.forRoot(),
+    TabsModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
   ],

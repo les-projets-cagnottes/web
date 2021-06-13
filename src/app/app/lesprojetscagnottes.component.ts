@@ -13,6 +13,7 @@ import { ConfigService } from '../_services/config/config.service';
 })
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
+  public isCollapsed = false;
   version: string = '';
   versionUrl: string = '';
   currentOrganization: Organization = new Organization();

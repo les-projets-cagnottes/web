@@ -18,6 +18,8 @@ import { AdminComponent } from './app/admin/admin.component';
 import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 import { SchedulerComponent } from './app/scheduler/scheduler.component';
 import { EditProjectComponent } from './app/projects/edit/edit-project.component';
+import { ListProjectsComponent } from './app/projects/list/list-projects.component';
+import { ViewProjectComponent } from './app/projects/view/view-project.component';
 
 const routes: Routes = [
   {
@@ -29,9 +31,9 @@ const routes: Routes = [
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: EditProjectComponent },
-      { path: 'projects/:id/edit', component: EditCampaignComponent },
-      { path: 'projects/:id', component: ViewCampaignComponent },
-      { path: 'projects', component: ListCampaignsComponent },
+      { path: 'projects/:id/edit', component: EditProjectComponent },
+      { path: 'projects/:id', component: ViewProjectComponent },
+      { path: 'projects', component: ListProjectsComponent },
       { path: 'campaigns/new', component: EditCampaignComponent },
       { path: 'campaigns/:id/edit', component: EditCampaignComponent },
       { path: 'campaigns/:id', component: ViewCampaignComponent },

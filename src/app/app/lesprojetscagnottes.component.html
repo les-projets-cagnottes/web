@@ -4,7 +4,8 @@
 
         <!-- Logo -->
         <a href="" class="brand-link">
-            <img src="assets/images/icon.png" alt="Platform Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="assets/images/icon.png" alt="Platform Logo" class="brand-image img-circle elevation-3"
+                style="opacity: .8">
             <span class="brand-text font-weight-light">Les Projets Cagnottes</span>
         </a>
 
@@ -33,38 +34,52 @@
 
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
                     <li class="nav-header" i18n="@@projectsMenu">PROJECTS</li>
                     <li class="nav-item">
                         <a routerLink="/ideas" class="nav-link">
                             <i class="nav-icon far fa-lightbulb"></i>
-                            <p i18n="@@suggestionsBox">
+                            <p i18n>
                                 Suggestions Box
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a routerLink="/campaigns/new" class="nav-link">
-                            <i class="nav-icon far fa-paper-plane"></i>
-                            <p i18n="@@projectsSubmitMenu">
-                                Submit a campaign
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a routerLink="/projects/new" class="nav-link">
                             <i class="nav-icon far fa-paper-plane"></i>
-                            <p i18n="@@projectsSubmitMenu">
-                                Submit my project
+                            <p i18n>
+                                Start my project
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a routerLink="/campaigns" class="nav-link">
-                            <i class="nav-icon fa fa-book"></i>
-                            <p i18n="@@projectsDiscoverMenu">Discover projects
+                        <a class="nav-link" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                <span i18n>Discover Projects</span>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview" [collapse]="isCollapsed" [isAnimated]="true">
+                            <li class="nav-item nav-subitem">
+                                <a routerLink="/projects" [queryParams]="{ status: 'in_progress'}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p i18n>Projects in progress</p>
+                                </a>
+                            </li>
+                            <li class="nav-item nav-subitem">
+                                <a routerLink="/projects" [queryParams]="{ status: 'finished'}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p i18n>Projects finished</p>
+                                </a>
+                            </li>
+                            <li class="nav-item nav-subitem">
+                                <a routerLink="/profile" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p i18n>My Projects</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a routerLink="/report" class="nav-link">
@@ -153,7 +168,8 @@
     <!-- /.control-sidebar -->
 
     <footer class="main-footer">
-        Wanna improve this app ? Please, <b>join the team <a href="https://github.com/les-projets-cagnottes"> on Github </a> !</b>
+        Wanna improve this app ? Please, <b>join the team <a href="https://github.com/les-projets-cagnottes"> on Github
+            </a> !</b>
         <div class="float-right d-none d-sm-inline-block">
             <b>Version </b><a href="{{ versionUrl }}">{{ version }}</a>
         </div>

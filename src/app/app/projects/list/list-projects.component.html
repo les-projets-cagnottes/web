@@ -1,0 +1,99 @@
+<div class="row action-bar">
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <button type="button" class="btn btn-default"
+                [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
+                (click)="refresh()">
+                <i class="fas fa-sync"></i>
+                <span i18n>Refresh</span>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="text-right">
+            <label for="projectsLength" i18n>Nb entries</label>
+            <select id="projectsLength" name="projectsLength" class="datatable-nb-entries form-control input-sm"
+                [(ngModel)]="projectsLength" (ngModelChange)="refresh()">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 item-clickable" *ngFor="let item of projectsPaged" routerLink="/projects/{{ item.id }}">
+        <div class="card card-widget widget-user-2">
+            <div class="ribbon-wrapper ribbon-lg">
+                <div *ngIf="item.status === 'B_IN_PROGRESS'" class="ribbon bg-yellow text-lg">En cours</div>
+                <div *ngIf="item.status === 'C_FINISHED'" class="ribbon bg-success text-lg">Finished</div>
+              </div>
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header text-center">
+                <!-- /.widget-user-image -->
+                <h3 class="">{{ item.title }}</h3>
+                <h5 class="">{{ item.shortDescription }}</h5>
+            </div>
+            <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <span i18n>Teammates </span>
+                            <span class="float-right">
+                                {{ item.peopleGivingTimeRef.length - 1 }} / {{ item.peopleRequired }}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <span i18n>News </span>
+                            <span class="float-right">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <span i18n>Founding </span>
+                            <span class="float-right">{{ item.campaignsRef.length }} </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+<div class="row">
+    <div class="col-sm-5">
+        <div *ngIf="projectsPager.pages && projectsPager.pages.length" class="dataTables_info">
+            <span i18n>Showing </span>
+            <span>{{ projectsPager.startIndex + 1 }}</span>
+            <span i18n> to </span>
+            <span>{{ projectsPager.endIndex + 1 }}</span>
+            <span i18n> of </span>
+            <span>{{ projectsPager.totalItems }}</span>
+            <span i18n> entries</span>
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <ul *ngIf="projectsPager.pages && projectsPager.pages.length" class="pagination justify-content-end">
+            <li class="page-item" [ngClass]="{disabled:projectsPager.currentPage === 1}">
+                <a class="page-link" (click)="refresh(1)">&#171;</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:projectsPager.currentPage === 1}">
+                <a class="page-link" (click)="refresh(projectsPager.currentPage - 1)">&#8249;</a>
+            </li>
+            <li class="page-item" *ngFor="let page of projectsPager.pages"
+                [ngClass]="{active:projectsPager.currentPage === page}">
+                <a class="page-link" (click)="refresh(page)">{{page}}</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:projectsPager.currentPage === projectsPager.totalPages}">
+                <a class="page-link" (click)="refresh(projectsPager.currentPage + 1)">&#8250;</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:projectsPager.currentPage === projectsPager.totalPages}">
+                <a class="page-link" (click)="refresh(projectsPager.totalPages)">&#187;</a>
+            </li>
+        </ul>
+    </div>
+</div>

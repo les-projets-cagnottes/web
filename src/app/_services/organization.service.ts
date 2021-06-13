@@ -9,6 +9,7 @@ import { OrganizationAuthorityModel } from '../_models/organization.authority.mo
 
 import { User } from '../_entities/user';
 import { ContentModel, CampaignModel, IdeaModel } from '../_models';
+import { ProjectModel } from '../_models/project/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,14 @@ export class OrganizationService {
       .set('limit', limit.toString())
       .set('filters', filter.toString());
     return this.http.get<CampaignModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/campaigns`, { params });
+  }
+
+  getProjects(id: number, offset: number, limit: number, filter: string[]) {
+    const params = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString())
+      .set('filters', filter.toString());
+    return this.http.get<ProjectModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/projects`, { params });
   }
 
   getIdeas(id: number, offset: number, limit: number) {
