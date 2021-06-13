@@ -55,7 +55,7 @@ export class EditProjectComponent implements OnInit {
           this.refresh();
         });
     } else {
-      this.project.longDescription = "# Mon super projet\n## De quoi s'agit-il ?\n## Qui est concerné ?\n## A quoi va servir le budget ?\n## Pourquoi ça me tient à coeur\n"
+      this.project.longDescription = "<p><h1>Mon super projet</h1></p>\n<p><h2>De quoi s'agit-il ?</h2></p>\n<p><h2>Qui est concerné ?</h2></p>\n<p><h2>Pourquoi ça me tient à cœur</h2></p>\n"
       this.refresh();
     }
   }

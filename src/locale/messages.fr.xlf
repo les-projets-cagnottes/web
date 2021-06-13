@@ -234,9 +234,6 @@
       <trans-unit id="orSeparator" datatype="html">
         <target>- OU -</target>
       </trans-unit>
-      <trans-unit id="paginationEnd" datatype="html">
-        <target> à </target>
-      </trans-unit>
       <trans-unit id="paginationEntries" datatype="html">
         <target></target>
       </trans-unit>
@@ -342,12 +339,6 @@
       <trans-unit id="projectsMenu" datatype="html">
         <target>PROJETS</target>
       </trans-unit>
-      <trans-unit id="projectsDiscoverMenu" datatype="html">
-        <target>Découvrir les projets</target>
-      </trans-unit>
-      <trans-unit id="projectsSubmitMenu" datatype="html">
-        <target>Soumettre mon projet</target>
-      </trans-unit>
       <trans-unit id="refresh" datatype="html">
         <target>Rafraîchir</target>
       </trans-unit>
@@ -402,9 +393,6 @@
       <trans-unit id="slackSyncAction" datatype="html">
         <target>Synchroniser les membres</target>
       </trans-unit>
-      <trans-unit id="suggestionsBox" datatype="html">
-        <target>Boîte à idées</target>
-      </trans-unit>
       <trans-unit id="summary" datatype="html">
         <target>Table des matières</target>
       </trans-unit>
@@ -416,9 +404,6 @@
       </trans-unit>
       <trans-unit id="userEmail" datatype="html">
         <target>Email</target>
-      </trans-unit>
-      <trans-unit id="userEnabled" datatype="html">
-        <target>Utilisateur activé ?</target>
       </trans-unit>
       <trans-unit id="userFirstname" datatype="html">
         <target>Prénom</target>
@@ -452,6 +437,72 @@
       </trans-unit>
       <trans-unit id="fdf7cbdc140d0aab0f0b6c06065a0fd448ed6a2e" datatype="html">
         <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="9fdd10c419585216f978e25bd17654aeab14c86e" datatype="html">
+        <target>Découvrir les campagnes</target>
+      </trans-unit>
+      <trans-unit id="b5ad8efc4d2f2695bc4c6f43165588493ec3579c" datatype="html">
+        <target>Démarrer une campagne</target>
+      </trans-unit>
+      <trans-unit id="7454575571a2ca5298c902e25ca3e0d9251d3bed" datatype="html">
+        <target>Lancer mon projet</target>
+      </trans-unit>
+      <trans-unit id="02db1dbcf9cdf15db3202e5ec149f94dd7ec3e3b" datatype="html">
+        <target>Découvrir les projets</target>
+      </trans-unit>
+      <trans-unit id="f50a33d3c339f8f4a465141f8caa5d2d8c005251" datatype="html">
+        <target>Utilisateur activé ?</target>
+      </trans-unit>
+      <trans-unit id="6077409ceec10631c0acb0ea042b84dafe873607" datatype="html">
+        <target>Boîte à idées</target>
+      </trans-unit>
+      <trans-unit id="f4331142b52b54be4f83f5b0976c65bb61ad96f1" datatype="html">
+        <target>Boîte à idées</target>
+      </trans-unit>
+      <trans-unit id="81b1a4de7097512737383e54d2e674be5669ab12" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="0940b2e58b8fbc2d43b2892f01306ebf3074d2f5" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="0caba2e52f453e388dce7f82a724f3cbeafa4bd7" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="b3dcea94803e39a40986c4f9913529855e39388a" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="ea352a1385bffca958e2b480d02697e5878ca448" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="3db0d5f593827233089854f9d3412747016c977c" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="0940b2e58b8fbc2d43b2892f01306ebf3074d2f5" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="0caba2e52f453e388dce7f82a724f3cbeafa4bd7" datatype="html">
+        <target> à </target>
+      </trans-unit>
+      <trans-unit id="6d7752a35339e72ebf721ecbdcaead3ad1fa84e2" datatype="html">
+        <target>Courte description</target>
+      </trans-unit>
+      <trans-unit id="191c251fc6191f828d031695ec209cfc9ea15d0c" datatype="html">
+        <target>Courte description</target>
+      </trans-unit>
+      <trans-unit id="df9eb29f631279e08f154c250dbe97753690baf8" datatype="html">
+        <target>Présentation détaillée</target>
+      </trans-unit>
+      <trans-unit id="da193b77fc90c2d37561f9cb357bd5a1d048bb8a" datatype="html">
+        <target>Informations</target>
+      </trans-unit>
+      <trans-unit id="1fa4cda1c8f0d75d6f3028807c1ff787ba50eac5" datatype="html">
+        <target>Equipiers requis (en plus du porteur de projet)</target>
+      </trans-unit>
+      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
+        <target>Sauvegarder</target>
+      </trans-unit>
+      <trans-unit id="f3a58c8a81b9ffda26a154eae25a422c9f7de37b" datatype="html">
+        <target>Organisation</target>
       </trans-unit>
     </body>
   </file>

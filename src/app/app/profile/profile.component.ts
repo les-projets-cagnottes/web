@@ -3,8 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService } from 'src/app/_services';
-import { ApiToken, DonationModel } from 'src/app/_models';
-import { Account, Budget, Campaign, Donation, Organization, User } from 'src/app/_entities';
+import { ApiToken } from 'src/app/_models';
+import { Account, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   accounts: Account[] = [];
   accountsBudgets: Budget[] = [];
   apiTokens: ApiToken[] = [];
-  projects: Campaign[] = [];
+  projects: Project[] = [];
   user: User = new User();
 
   // Contributions Tab
@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
     this.editUserForm.controls['lastname'].setValue(this.user.lastname);
     this.editUserForm.controls['avatarUrl'].setValue(this.user.avatarUrl);
     this.refreshAccounts();
-    this.refreshCampaigns();
+    this.refreshProjects();
     this.refreshDonations();
     this.refreshOrganizations();
     this.refreshTokens();
@@ -105,16 +105,10 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  refreshCampaigns() {
-    this.userService.getCampaigns(this.user.id)
-      .subscribe(campaigns => {
-        campaigns.forEach(campaign => this.projects.push(Campaign.fromModel(campaign)));
-        var that = this;
-        this.projects.forEach(function (value) {
-          value.fundingDeadlinePercent = that.computeDatePercent(new Date(value.createdAt), new Date(value.fundingDeadline)) + "%";
-          value.peopleRequiredPercent = that.computeNumberPercent(value.peopleGivingTime.length, value.peopleRequired) + "%";
-          value.donationsRequiredPercent = that.computeNumberPercent(value.totalDonations, value.donationsRequired) + "%";
-        });
+  refreshProjects() {
+    this.userService.getProjects(this.user.id)
+      .subscribe(projects => {
+        projects.forEach(project => this.projects.push(Project.fromModel(project)));
       });
   }
 

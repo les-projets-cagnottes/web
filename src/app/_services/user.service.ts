@@ -6,6 +6,7 @@ import { ConfigService } from '../_services/config/config.service';
 import { AccountModel, DonationModel, UserModel, CampaignModel, OrganizationAuthorityModel, OrganizationModel } from '../_models';
 
 import { OrganizationAuthority } from '../_entities/organization.authority';
+import { ProjectModel } from '../_models/project/project.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -44,8 +45,8 @@ export class UserService {
         return this.http.get<AccountModel[]>(`${this.configService.get('apiUrl')}/user/${id}/accounts`);
     }
 
-    getCampaigns(id: number) {
-        return this.http.get<CampaignModel[]>(`${this.configService.get('apiUrl')}/user/${id}/campaigns`);
+    getProjects(id: number) {
+        return this.http.get<ProjectModel[]>(`${this.configService.get('apiUrl')}/user/${id}/projects`);
       }
     
     getDonations(id: number) {
