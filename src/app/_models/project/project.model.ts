@@ -4,7 +4,7 @@ import { GenericModel } from "../generic.model";
 export class ProjectModel extends AuditModel {
     
     title: string = '';
-    status: string = 'A_DRAFT';
+    status: string = 'DRAFT';
     shortDescription: string = '';
     longDescription: string = '';
     peopleRequired: number = 2;

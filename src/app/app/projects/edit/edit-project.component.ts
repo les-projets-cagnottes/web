@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Organization, Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, BudgetService, CampaignService, ContentService, OrganizationService, ProjectService, UserService } from 'src/app/_services';
+import { AuthenticationService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-edit-project',
@@ -55,7 +55,7 @@ export class EditProjectComponent implements OnInit {
           this.refresh();
         });
     } else {
-      this.project.longDescription = "<p><h1>Mon super projet</h1></p>\n<p><h2>De quoi s'agit-il ?</h2></p>\n<p><h2>Qui est concerné ?</h2></p>\n<p><h2>Pourquoi ça me tient à cœur</h2></p>\n"
+      this.project.longDescription = "<blockquote><h1>Ceci est un modèle par défaut. N'hésitez pas à l'embellir pour montrer votre projet sous son meilleur jour ;-)<br></h1></blockquote><h1>Mon super projet</h1>\n<h2>De quoi s'agit-il ?</h2>\n<h2>Qui est concerné ?</h2><h2>A quoi va servir le budget ?<br></h2>\n<h2>Pourquoi ça me tient à cœur</h2><p><br></p><p><br></p>\n"
       this.refresh();
     }
   }
@@ -85,17 +85,18 @@ export class EditProjectComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
-    var project = new ProjectModel();
-
-    this.project.title = this.form.controls.title.value;
-    this.project.shortDescription = this.form.controls.shortDescription.value;
-    this.project.longDescription = this.form.controls.longDescription.value;
-    this.project.peopleRequired = this.form.controls.peopleRequired.value;
-    this.project.organizationsRef = [this.organizations[this.form.controls.organization.value].id];
+    var submittedProject = new ProjectModel();
+    submittedProject.title = this.form.controls.title.value;
+    submittedProject.shortDescription = this.form.controls.shortDescription.value;
+    submittedProject.longDescription = this.form.controls.longDescription.value;
+    submittedProject.peopleRequired = this.form.controls.peopleRequired.value;
+    submittedProject.organizationsRef = [this.organizations[this.form.controls.organization.value].id];
 
     // Submit item to backend
     if (this.id > 0) {
-      this.projectService.update(this.project)
+      submittedProject.id = this.id;
+      submittedProject.leader.id = this.project.leader.id;
+      this.projectService.update(submittedProject)
         .subscribe(
           response => {
             this.submitting = false;
@@ -106,8 +107,8 @@ export class EditProjectComponent implements OnInit {
             this.submitting = false;
           });
     } else {
-      this.project.leader.id = this.authenticationService.currentUserValue.id;
-      this.projectService.create(this.project)
+      submittedProject.leader.id = this.authenticationService.currentUserValue.id;
+      this.projectService.create(submittedProject)
         .subscribe(
           response => {
             this.submitting = false;
@@ -118,7 +119,5 @@ export class EditProjectComponent implements OnInit {
             this.submitting = false;
           });
     }
-
   }
-
 }

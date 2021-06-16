@@ -42,4 +42,10 @@ export class Campaign extends CampaignModel {
         return entities;
     }
 
+    static fromModels(models: CampaignModel[]): Campaign[] {
+        var entities = [];
+        models.forEach(model => entities.push(this.fromModel(model)));
+        return entities;
+    }
+
 }

@@ -34,4 +34,10 @@ export class Project extends ProjectModel {
         return entities;
     }
 
+    static fromModels(models: ProjectModel[]): Project[] {
+        var entities = [];
+        models.forEach(model => entities.push(this.fromModel(model)));
+        return entities;
+    }
+
 }

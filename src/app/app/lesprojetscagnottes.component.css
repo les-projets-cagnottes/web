@@ -2,3 +2,7 @@
     font-size: small;
     margin-left: 1em;
 }
+
+#main-nav {
+    overflow-x: hidden;
+}

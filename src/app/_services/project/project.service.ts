@@ -40,4 +40,8 @@ export class ProjectService {
     return this.http.post(`${this.configService.get('apiUrl')}/project/${id}/join`, {});
   }
 
+  publish(id: number) {
+    return this.http.post(`${this.configService.get('apiUrl')}/project/${id}/publish`, {});
+  }
+
 }
