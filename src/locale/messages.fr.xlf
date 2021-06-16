@@ -504,6 +504,63 @@
       <trans-unit id="f3a58c8a81b9ffda26a154eae25a422c9f7de37b" datatype="html">
         <target>Organisation</target>
       </trans-unit>
+      <trans-unit id="4ba7eb03b854c11f87e6225d36bd91363a991807" datatype="html">
+        <target>Projets terminés</target>
+      </trans-unit>
+      <trans-unit id="36ef1600a183c1f31903d55a27902da7bde5bad8" datatype="html">
+        <target>Projets en cours</target>
+      </trans-unit>
+      <trans-unit id="5dda42411cc1aa71c0cf1184a54af89c5acc1344" datatype="html">
+        <target>Découvrir les projets</target>
+      </trans-unit>
+      <trans-unit id="ad2903b7fc9c1b761d57a2c60444e503bb88ee22" datatype="html">
+        <target>Mes projets</target>
+      </trans-unit>
+      <trans-unit id="edcc19a49c950289ffe5d38be4843cdf194e5622" datatype="html">
+        <target>Terminé</target>
+      </trans-unit>
+      <trans-unit id="5ab9a3c727788f3597870dd7e3546fc0b0624024" datatype="html">
+        <target>En cours</target>
+      </trans-unit>
+      <trans-unit id="86022280b7836d1aff7fdc0182415b041ae3625c" datatype="html">
+        <target>Brouillon</target>
+      </trans-unit>
+      <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
+        <target>Etat</target>
+      </trans-unit>
+      <trans-unit id="c8d1785038d461ec66b5799db21864182b35900a" datatype="html">
+        <target>Rafraîchir</target>
+      </trans-unit>
+      <trans-unit id="f9f3b3e7ea78b0e4219d6ff1f8e649be8e9d03d7" datatype="html">
+        <target>Actualités</target>
+      </trans-unit>
+      <trans-unit id="71f3915f003004b8b1de201134b4b2bed61e21b0" datatype="html">
+        <target>Financement</target>
+      </trans-unit>
+      <trans-unit id="fb7e9087a573109483bd52ecf3aa3e2e4d73fc6a" datatype="html">
+        <target> entrées</target>
+      </trans-unit>
+      <trans-unit id="c61c4f644388e45053457c90fdfc082852f1a252" datatype="html">
+        <target>Nombre d'entrées</target>
+      </trans-unit>
+      <trans-unit id="e9d24812d3e5e964b62a4f0c1d6bfe73c05b7db2" datatype="html">
+        <target>Equipiers</target>
+      </trans-unit>
+      <trans-unit id="f3f13217303d139905eec79a2535af481a906c15" datatype="html">
+        <target>Affichage de </target>
+      </trans-unit>
+      <trans-unit id="34bc4caea13a2b04d17c84b488fab9a733af5ad8" datatype="html">
+        <target>Equipiers</target>
+      </trans-unit>
+      <trans-unit id="1d0974afae70914072a4fbf19e53328e517bae73" datatype="html">
+        <target>Actualités</target>
+      </trans-unit>
+      <trans-unit id="f76d3c98a8fdd31fd116b8306e5e1a8535df8e0e" datatype="html">
+        <target>Financement</target>
+      </trans-unit>
+      <trans-unit id="7824f44811306a9285fdf85af4ce960ed9c761ce" datatype="html">
+        <target> sur </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

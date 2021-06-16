@@ -23,7 +23,7 @@
                     <dt i18n="@@projectStatus">Status</dt>
                     <dd>
                         <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
-                        <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-grey" i18n="@@projectStatusAvorted">Avorted</span>
+                        <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-gray" i18n="@@projectStatusAvorted">Avorted</span>
                         <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">B_READY</span>
                     </dd>
                     <dt i18n="@@projectFundingDeadlineProgress" *ngIf="project.status == 'A_IN_PROGRESS'">Remaining days</dt>

@@ -23,12 +23,11 @@
     </div>
 </div>
 <div class="row">
+    <div *ngIf="projectsPaged.length === 0" class="col-md-12 text-center" i18n>
+        Aucun projet n'a été trouvé
+    </div>
     <div class="col-md-4 item-clickable" *ngFor="let item of projectsPaged" routerLink="/projects/{{ item.id }}">
         <div class="card card-widget widget-user-2">
-            <div class="ribbon-wrapper ribbon-lg">
-                <div *ngIf="item.status === 'B_IN_PROGRESS'" class="ribbon bg-yellow text-lg">En cours</div>
-                <div *ngIf="item.status === 'C_FINISHED'" class="ribbon bg-success text-lg">Finished</div>
-              </div>
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header text-center">
                 <!-- /.widget-user-image -->
@@ -39,21 +38,21 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link">
-                            <span i18n>Teammates </span>
+                            <span i18n>Teammates</span>
                             <span class="float-right">
-                                {{ item.peopleGivingTimeRef.length - 1 }} / {{ item.peopleRequired }}
+                                {{ item.peopleGivingTimeRef.length }} / {{ item.peopleRequired + 1 }}
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">
-                            <span i18n>News </span>
+                            <span i18n>News</span>
                             <span class="float-right">0</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link">
-                            <span i18n>Founding </span>
+                            <span i18n>Founding</span>
                             <span class="float-right">{{ item.campaignsRef.length }} </span>
                         </a>
                     </li>
