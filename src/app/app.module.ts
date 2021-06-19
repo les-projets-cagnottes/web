@@ -39,6 +39,8 @@ import { SchedulerComponent } from './app/scheduler/scheduler.component';
 
 import { ConfigService } from './_services/config/config.service';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
+import { ListNewsComponent } from './app/news/list/list-news.component';
+import { EditNewsComponent } from './app/news/edit/edit-news.component';
 
 const appConfig = (config: ConfigService) => {
   return () => {
@@ -68,7 +70,9 @@ const appConfig = (config: ConfigService) => {
     SchedulerComponent,
     EditProjectComponent,
     ListProjectsComponent,
-    ViewProjectComponent
+    ViewProjectComponent,
+    ListNewsComponent,
+    EditNewsComponent
   ],
   imports: [
     BrowserModule,

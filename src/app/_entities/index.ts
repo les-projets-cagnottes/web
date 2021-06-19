@@ -5,6 +5,7 @@ export * from './campaign';
 export * from './content';
 export * from './donation';
 export * from './idea';
+export * from './news/news';
 export * from './organization';
 export * from './organization.authority';
 export * from './project/project';

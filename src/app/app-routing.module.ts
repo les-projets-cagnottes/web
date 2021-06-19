@@ -20,12 +20,16 @@ import { SchedulerComponent } from './app/scheduler/scheduler.component';
 import { EditProjectComponent } from './app/projects/edit/edit-project.component';
 import { ListProjectsComponent } from './app/projects/list/list-projects.component';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
+import { ListNewsComponent } from './app/news/list/list-news.component';
+import { EditNewsComponent } from './app/news/edit/edit-news.component';
 
 const routes: Routes = [
   {
     path: '', component: LesProjetsCagnottesComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'campaigns', pathMatch: 'full' },
+      { path: 'news/new', component: EditNewsComponent },
+      { path: 'news', component: ListNewsComponent },
       { path: 'organizations/new', redirectTo: 'organizations/edit/0' },
       { path: 'organizations/edit/:id', component: EditOrganizationComponent },
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
