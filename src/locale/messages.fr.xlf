@@ -561,6 +561,48 @@
       <trans-unit id="7824f44811306a9285fdf85af4ce960ed9c761ce" datatype="html">
         <target> sur </target>
       </trans-unit>
+      <trans-unit id="a1f454952d9364b10e1f3c632c321d5c2a387006" datatype="html">
+        <target>Aucune source de financement n'a été définie</target>
+      </trans-unit>
+      <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
+        <target>Editer</target>
+      </trans-unit>
+      <trans-unit id="223aae0477f79f0bc4436c1c57619415f04cbbb3" datatype="html">
+        <target>Publier</target>
+      </trans-unit>
+      <trans-unit id="b1d627be0a3c5f7520930a8c17db1c34eebedf44" datatype="html">
+        <target>Equipiers requis</target>
+      </trans-unit>
+      <trans-unit id="dbb73cfc9375112c8ed02c3925ccee9899cf33d2" datatype="html">
+        <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="dfc2fb58e2a04ed944a4bd80f0a2087775134068" datatype="html">
+        <target>Montant</target>
+      </trans-unit>
+      <trans-unit id="18fc87718788c70f170043236341762f71fab653" datatype="html">
+        <target>Porteur du projet</target>
+      </trans-unit>
+      <trans-unit id="94635ddb8becde2db746a3c6a791b5bddb81c361" datatype="html">
+        <target>Edition d'une actualité</target>
+      </trans-unit>
+      <trans-unit id="c8ac022dae267e926db44cb2a8481e1927af5f74" datatype="html">
+        <target>Projet</target>
+      </trans-unit>
+      <trans-unit id="7a279068c4f3b698735ed5089c73757ea106c255" datatype="html">
+        <target> a publié le message système </target>
+      </trans-unit>
+      <trans-unit id="509a62d72c3904170f8aa1ae1c34dc74b3d01e66" datatype="html">
+        <target>Voir le projet</target>
+      </trans-unit>
+      <trans-unit id="f4bebf3a00df54d105ab618ac897f82c3f624cf1" datatype="html">
+        <target> a publié l'actualité </target>
+      </trans-unit>
+      <trans-unit id="b757c16cb6aff9e0fada08714467c208c10a9025" datatype="html">
+        <target>Modifier l'actualité</target>
+      </trans-unit>
+      <trans-unit id="b757c16cb6aff9e0fada08714467c208c10a9025" datatype="html">
+        <target>Modifier l'actualité</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

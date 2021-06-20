@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Project } from 'src/app/_entities';
+import { Project, User } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, OrganizationService, PagerService } from 'src/app/_services';
 
@@ -20,7 +20,7 @@ export class ListProjectsComponent implements OnInit {
 
   // Pagination
   projectsPager: any = {};
-  projectsPaged: ProjectModel[];
+  projectsPaged: ProjectModel[] = [];
   projectsLength: number = 10;
 
   constructor(
@@ -28,15 +28,18 @@ export class ListProjectsComponent implements OnInit {
     private pagerService: PagerService,
     private authenticationService: AuthenticationService,
     private organizationService: OrganizationService
-  ) { }
-
-  ngOnInit() {
-    this.status = this.route.snapshot.queryParamMap.get('status');
-    this.refresh();
+  ) {
   }
 
-  refresh(page: number = 1): void {
-    if (this.pagerService.canChangePage(this.projectsPager, page)) {
+  ngOnInit() {
+    this.route.queryParamMap.subscribe(params => {
+      this.status = params.get('status');
+      this.refresh(1, true);
+    });
+  }
+
+  refresh(page: number = 1, force: boolean = false): void {
+    if (this.pagerService.canChangePage(this.projectsPager, page) || force) {
       this.organizationService.getProjects(this.authenticationService.currentOrganizationValue.id, page - 1, this.projectsLength, [this.status])
         .subscribe(response => {
           this.projects = response;
@@ -52,22 +55,6 @@ export class ListProjectsComponent implements OnInit {
   setPage(page: number) {
     this.projectsPager = this.pagerService.getPager(this.projects.totalElements, page, this.projectsLength);
     this.projectsPaged = this.projects.content;
-  }
-
-  computeDatePercent(start: Date, deadline: Date) {
-    var now = new Date();
-    var totalDuration = deadline.getTime() - start.getTime();
-    var expiredDuration = now.getTime() - start.getTime();
-    return this.computeNumberPercent(expiredDuration, totalDuration);
-  }
-
-  computeNumberPercent(number: number, max: number) {
-    if (max == 0) {
-      return "100";
-    } else if (max < 0) {
-      return "100";
-    }
-    return 100 * number / max;
   }
 
 }

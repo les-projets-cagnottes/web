@@ -34,7 +34,7 @@
                                 <th i18n="@@grantUserSponsor">Is Sponsor ?</th>
                                 <th i18n="@@grantUserManager">Is Manager ?</th>
                                 <th i18n="@@grantUserOwner">Is Owner ?</th>
-                                <th i18n="@@actions">Actions</th>
+                                <th i18n>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,8 +66,8 @@
                 <div class="row">
                     <div class="col-5">
                         <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info">
-                            <span i18n="@@paginationStart">Showing </span>{{ pagerMembers.startIndex + 1 }}<span i18n> to
-                                </span>{{ pagerMembers.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pagerMembers.totalItems }}<span i18n="@@paginationEntries"> entries</span>
+                            <span i18n>Showing </span>{{ pagerMembers.startIndex + 1 }}<span i18n> to
+                                </span>{{ pagerMembers.endIndex + 1 }}<span i18n> of </span>{{ pagerMembers.totalItems }}<span i18n> entries</span>
                         </div>
                     </div>
                     <div class="col-7">
@@ -105,7 +105,7 @@
                     <form [formGroup]="editOrgForm">
                         <div class="card-body">
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
-                                <label for="name" i18n="@@organizationName">Name</label>
+                                <label for="name" i18n>Name</label>
                                 <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
                             </div>
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.logoUrl.errors }">
@@ -119,7 +119,7 @@
                                         <tr>
                                             <th i18n="@@messengingApp">App</th>
                                             <th i18n="@@messengingAppStatus">Status</th>
-                                            <th i18n="@@actions">Actions</th>
+                                            <th i18n>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -174,7 +174,7 @@
                             <thead>
                                 <tr>
                                     <th i18n="@@contentName">Name</th>
-                                    <th i18n="@@actions">Actions</th>
+                                    <th i18n>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -199,8 +199,8 @@
                         <div class="row">
                             <div class="col-5">
                                 <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info">
-                                    <span i18n="@@paginationStart">Showing </span>{{ pagerContents.startIndex + 1 }}<span i18n> to
-                                            </span>{{ pagerContents.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pagerContents.totalItems }}<span i18n="@@paginationEntries"> entries</span>
+                                    <span i18n>Showing </span>{{ pagerContents.startIndex + 1 }}<span i18n> to
+                                            </span>{{ pagerContents.endIndex + 1 }}<span i18n> of </span>{{ pagerContents.totalItems }}<span i18n> entries</span>
                                 </div>
                             </div>
                             <div class="col-7">

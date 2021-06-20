@@ -1,7 +1,7 @@
 <div class="row action-bar" [formGroup]="selectBudgetForm">
     <div class="col-2">
         <div class="form-group">
-            <label for="amount" i18n="@@organizationName">Organization</label>
+            <label for="amount" i18n>Organization</label>
             <select class="form-control" style="width: 100%;" formControlName="organization">
                 <option *ngFor="let organization of organizations; index as i" value="{{ organization.id }}">
                     {{ organization.name }}</option>
@@ -10,7 +10,7 @@
     </div>
     <div class="col-2">
         <div class="form-group">
-            <label for="amount" i18n="@@budgetName">Budget</label>
+            <label for="amount" i18n>Budget</label>
             <select class="form-control" style="width: 100%;" formControlName="budget">
                 <option *ngFor="let budget of budgets; index as i" value="{{ budget.id }}">{{ budget.name }}</option>
             </select>
@@ -43,14 +43,14 @@
                 <table class="table table-striped table-valign-middle">
                     <thead>
                         <tr>
-                            <th i18n="@@projectTitle">Title</th>
-                            <th i18n="@@createdAt">Created at</th>
-                            <th i18n="@@projectShortDescription">Description</th>
-                            <th i18n="@@projectPeopleNeededProgress">Teammates</th>
-                            <th i18n="@@projectDonationsOnThisBudget">Donations on this budget</th>
-                            <th i18n="@@projectDonationsOnAllBudgets">Donations on all budgets</th>
-                            <th i18n="@@projectMoneyNeeded">Donations required</th>
-                            <th i18n="@@projectStatus">Status</th>
+                            <th i18n>Title</th>
+                            <th i18n>Created at</th>
+                            <th i18n>Description</th>
+                            <th i18n>Teammates</th>
+                            <th i18n>Donations on this budget</th>
+                            <th i18n>Donations on all budgets</th>
+                            <th i18n>Donations required</th>
+                            <th i18n>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,11 +64,11 @@
                             <td>{{ project.donationsRequired.toFixed(2) }} €</td>
                             <td>
                                 <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow"
-                                    i18n="@@projectStatusInProgress">In Progress</span>
+                                    i18n>In Progress</span>
                                 <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-gray"
-                                    i18n="@@projectStatusAvorted">Avorted</span>
+                                    i18n>Avorted</span>
                                 <span *ngIf="project.status == 'B_READY'" class="badge bg-green"
-                                    i18n="@@projectStatusReady">B_READY</span>
+                                    i18n>Ready</span>
                             </td>
                         </tr>
                     </tbody>
@@ -82,10 +82,10 @@
                 <div class="row">
                     <div class="col-5">
                         <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info">
-                            <span i18n="@@paginationStart">Showing </span> {{ projectPager.startIndex + 1 }}
+                            <span i18n>Showing </span> {{ projectPager.startIndex + 1 }}
                             <span i18n> to </span> {{ projectPager.endIndex + 1 }}
-                            <span i18n="@@paginationTotal"> of </span> {{ projectPager.totalItems }}
-                            <span i18n="@@paginationEntries"> entries</span>
+                            <span i18n> of </span> {{ projectPager.totalItems }}
+                            <span i18n> entries</span>
                         </div>
                     </div>
                     <div class="col-7">
@@ -162,10 +162,10 @@
                 <div class="row">
                     <div class="col-sm-5">
                         <div *ngIf="accountsPager.pages && accountsPager.pages.length" class="dataTables_info">
-                            <span i18n="@@paginationStart">Showing
+                            <span i18n>Showing
                             </span>{{ accountsPager.startIndex + 1 }}<span i18n> to
-                            </span>{{ accountsPager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
-                            </span>{{ accountsPager.totalItems }}<span i18n="@@paginationEntries"> entries</span>
+                            </span>{{ accountsPager.endIndex + 1 }}<span i18n> of
+                            </span>{{ accountsPager.totalItems }}<span i18n> entries</span>
                         </div>
                     </div>
                     <div class="col-md-7">

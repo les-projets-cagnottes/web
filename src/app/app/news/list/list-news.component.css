@@ -1,0 +1,66 @@
+.time-label > span {
+    border-radius: 4px;
+    background-color: #fff;
+    display: inline-block;
+    font-weight: 600;
+    padding: 5px;
+}
+
+.time-label, .timeline-item {
+    margin-bottom: 15px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.timeline div::after, .timeline div::before {
+    content: "";
+    display: table;
+}
+
+.timeline-item {
+    box-shadow: 0 0 1px rgba(0,0,0,.125),0 1px 3px rgba(0,0,0,.2);
+    border-radius: .25rem;
+    background-color: #fff;
+    color: #495057;
+    margin-left: 60px;
+    margin-right: 15px;
+    margin-top: 0;
+    padding: 0;
+    position: relative;
+}
+
+.timeline-item > .time {
+    color: #999;
+    float: right;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.timeline-header {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    color: #495057;
+    font-size: 16px;
+    line-height: 1.1;
+    margin: 0;
+    padding: 10px;
+}
+
+.timeline-header > a {
+    font-weight: 600;
+}
+
+.timeline-body, .timeline-footer {
+    padding: 10px;
+}
+
+.news-icon {
+    background-color: #adb5bd;
+    border-radius: 50%;
+    font-size: 16px;
+    height: 30px;
+    left: 18px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    width: 30px;
+}

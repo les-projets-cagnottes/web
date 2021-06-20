@@ -8,7 +8,7 @@
                 <div class="row action-bar">
                     <div class="col-6">
                         <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fas fa-sync"></i>
-                            <span i18n="@@refresh">Refresh</span></button>
+                            <span i18n>Refresh</span></button>
                     </div>
                     <div class="col-6">
                     </div>
@@ -18,13 +18,13 @@
                         <table class="table table-striped table-valign-middle">
                             <thead>
                                 <tr>
-                                    <th i18n="@@id">ID</th>
+                                    <th i18n>ID</th>
                                     <th i18n="@@scheduleType">Type</th>
                                     <th i18n="@@schedulePlanning">Planning</th>
                                     <th i18n="@@scheduleNextExecution">Next execution</th>
                                     <th i18n="@@scheduleEnabled">Enabled</th>
                                     <th i18n="@@scheduleScheduled">Scheduled</th>
-                                    <th i18n="@@actions">Actions</th>
+                                    <th i18n>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,12 +43,12 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th i18n="@@id">ID</th>
+                                    <th i18n>ID</th>
                                     <th i18n="@@scheduleType">Type</th>
                                     <th i18n="@@schedulePlanning">Planning</th>
                                     <th i18n="@@scheduleEnabled">Enabled</th>
                                     <th i18n="@@scheduleScheduled">Scheduled</th>
-                                    <th i18n="@@actions">Actions</th>
+                                    <th i18n>Actions</th>
                                 </tr>
                             </tfoot>
                         </table>
