@@ -23,9 +23,7 @@
     </div>
 </div>
 <div class="row">
-    <div *ngIf="projectsPaged.length === 0" class="col-md-12 text-center" i18n>
-        Aucun projet n'a été trouvé
-    </div>
+    <div *ngIf="projectsPaged.length === 0" class="col-md-12 text-center" i18n>No project was found</div>
     <div class="col-md-4 item-clickable" *ngFor="let item of projectsPaged" routerLink="/projects/{{ item.id }}">
         <div class="card card-widget widget-user-2">
             <!-- Add the bg color to the header using any of the bg-* classes -->

@@ -29,6 +29,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'campaigns', pathMatch: 'full' },
       { path: 'news/new', component: EditNewsComponent },
+      { path: 'news/:id/edit', component: EditNewsComponent },
       { path: 'news', component: ListNewsComponent },
       { path: 'organizations/new', redirectTo: 'organizations/edit/0' },
       { path: 'organizations/edit/:id', component: EditOrganizationComponent },

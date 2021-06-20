@@ -58,6 +58,8 @@ export class EditNewsComponent implements OnInit {
           this.news = News.fromModel(response);
           this.refresh();
         });
+        this.form.controls['organization'].disable();
+        this.form.controls['project'].disable();
     } else {
       this.refresh();
     }
@@ -71,12 +73,21 @@ export class EditNewsComponent implements OnInit {
     this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
       .subscribe(orgs => {
         orgs.forEach(org => this.organizations.push(Organization.fromModel(org)));
-        this.form.controls['organization'].setValue(0);
+        if(this.news.organization.id > 0) {
+          this.form.controls['organization'].setValue(this.organizations.findIndex(org => org.id === this.news.organization.id));
+        } else {
+          this.form.controls['organization'].setValue(0);
+        }
       });
     this.userService.getProjects(this.authenticationService.currentUserValue.id)
       .subscribe(prjs => {
         prjs.forEach(prj => this.projects.push(Project.fromModel(prj)));
-        this.form.controls['project'].setValue(0);
+        if(this.news.project.id > 0) {
+          this.form.controls['project'].setValue(this.projects.findIndex(prj => prj.id === this.news.project.id));
+          this.form.controls['project'].disable();
+        } else {
+          this.form.controls['project'].setValue(0);
+        }
       });
   }
 
@@ -93,6 +104,8 @@ export class EditNewsComponent implements OnInit {
     var submittedNews = new NewsModel();
     submittedNews.title = this.form.controls.title.value;
     submittedNews.content = this.form.controls.content.value;
+    submittedNews.organization.id = this.organizations[this.form.controls.organization.value].id;
+    submittedNews.project.id = this.projects[this.form.controls.project.value].id;
 
     // Submit item to backend
     if (this.id > 0) {
@@ -101,7 +114,7 @@ export class EditNewsComponent implements OnInit {
         .subscribe(
           response => {
             this.submitting = false;
-            this.router.navigate(['/news/' + response.id]);
+            this.router.navigate(['/news/']);
           },
           error => {
             console.log(error);
@@ -112,7 +125,7 @@ export class EditNewsComponent implements OnInit {
         .subscribe(
           response => {
             this.submitting = false;
-            this.router.navigate(['/news/' + response.id]);
+            this.router.navigate(['/news/']);
           },
           error => {
             console.log(error);

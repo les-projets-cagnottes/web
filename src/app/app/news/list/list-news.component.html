@@ -1,98 +1,92 @@
+<div class="row action-bar">
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <button type="button" class="btn btn-default"
+                [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
+                (click)="refresh()">
+                <i class="fas fa-sync"></i>
+                <span i18n>Refresh</span>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="text-right">
+            <label for="newsLength" i18n>Nb entries</label>
+            <select id="newsLength" name="newsLength" class="datatable-nb-entries form-control input-sm"
+                [(ngModel)]="newsLength" (ngModelChange)="refresh()">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
+</div>
 <div class="timeline">
-    <!-- timeline time label -->
-    <div class="time-label">
-        <span class="bg-red">10 Feb. 2014</span>
-    </div>
-    <!-- /.timeline-label -->
-    <!-- timeline item -->
-    <div>
-        <i class="fas fa-envelope bg-blue"></i>
-        <div class="timeline-item">
-            <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-            <div class="timeline-body">
-                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                quora plaxo ideeli hulu weebly balihoo...
-            </div>
-            <div class="timeline-footer">
-                <a class="btn btn-primary btn-sm">Read more</a>
-                <a class="btn btn-danger btn-sm">Delete</a>
-            </div>
+    <div *ngFor="let item of dates">
+        <div class="time-label">
+            <span class="bg-red">{{ item }}</span>
         </div>
-    </div>
-    <!-- END timeline item -->
-    <!-- timeline item -->
-    <div>
-        <i class="fas fa-user bg-green"></i>
-        <div class="timeline-item">
-            <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
-            <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-        </div>
-    </div>
-    <!-- END timeline item -->
-    <!-- timeline item -->
-    <div>
-        <i class="fas fa-comments bg-yellow"></i>
-        <div class="timeline-item">
-            <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
-            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-            <div class="timeline-body">
-                Take me to your leader!
-                Switzerland is small and neutral!
-                We are more like Germany, ambitious and misunderstood!
-            </div>
-            <div class="timeline-footer">
-                <a class="btn btn-warning btn-sm">View comment</a>
-            </div>
-        </div>
-    </div>
-    <!-- END timeline item -->
-    <!-- timeline time label -->
-    <div class="time-label">
-        <span class="bg-green">3 Jan. 2014</span>
-    </div>
-    <!-- /.timeline-label -->
-    <!-- timeline item -->
-    <div>
-        <i class="fa fa-camera bg-purple"></i>
-        <div class="timeline-item">
-            <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
-            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-            <div class="timeline-body">
-                <img src="https://placehold.it/150x100" alt="...">
-                <img src="https://placehold.it/150x100" alt="...">
-                <img src="https://placehold.it/150x100" alt="...">
-                <img src="https://placehold.it/150x100" alt="...">
-                <img src="https://placehold.it/150x100" alt="...">
-            </div>
-        </div>
-    </div>
-    <!-- END timeline item -->
-    <!-- timeline item -->
-    <div>
-        <i class="fas fa-video bg-maroon"></i>
-
-        <div class="timeline-item">
-            <span class="time"><i class="fas fa-clock"></i> 5 days ago</span>
-
-            <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
-
-            <div class="timeline-body">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs"
-                        allowfullscreen=""></iframe>
+        <div *ngFor="let news of data[item]">
+            <i class="news-icon fas fa-envelope bg-blue"></i>
+            <div class="timeline-item">
+                <span class="time"><i class="fas fa-clock"></i> {{ news.createdAt | date:'medium' }}</span>
+                <h3 class="timeline-header">
+                    <a href="#">{{ news.createdBy }}</a> 
+                    <span i18n *ngIf="news.organization.id > 0"> published the news </span>
+                    <span i18n *ngIf="news.organization.id <= 0"> published the system message </span>
+                    <b>{{ news.title }}</b> 
+                    <span *ngIf="news.project.id > 0" i18n> in the project </span>
+                    <b *ngIf="news.project.id > 0">{{ projects[news.project.id].title }}</b>
+                </h3>
+                <div class="timeline-body" [innerHTML]="news.content"></div>
+                <div class="timeline-footer action-bar">
+                    <a *ngIf="news.project.id > 0" class="btn btn-primary btn-sm" routerLink="/news/{{ news.project.id }}">
+                        <i class="fas fa-book-reader"></i>
+                        <span i18n>View Project</span>
+                    </a>
+                    <a *ngIf="news.author.id === userLoggedIn.id" class="btn btn-warning btn-sm" routerLink="/news/{{ news.id }}/edit">
+                        <i class="fas fa-pen"></i>
+                        <span i18n>Edit News</span>
+                    </a>
                 </div>
             </div>
-            <div class="timeline-footer">
-                <a href="#" class="btn btn-sm bg-maroon">See comments</a>
-            </div>
         </div>
     </div>
-    <!-- END timeline item -->
     <div>
-        <i class="fas fa-clock bg-gray"></i>
+        <i class="news-icon fas fa-clock bg-gray"></i>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5">
+        <div *ngIf="newsPager.pages && newsPager.pages.length" class="dataTables_info">
+            <span i18n>Showing </span>
+            <span>{{ newsPager.startIndex + 1 }}</span>
+            <span i18n> to </span>
+            <span>{{ newsPager.endIndex + 1 }}</span>
+            <span i18n> of </span>
+            <span>{{ newsPager.totalItems }}</span>
+            <span i18n> entries</span>
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <ul *ngIf="newsPager.pages && newsPager.pages.length" class="pagination justify-content-end">
+            <li class="page-item" [ngClass]="{disabled:newsPager.currentPage === 1}">
+                <a class="page-link" (click)="refresh(1)">&#171;</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:newsPager.currentPage === 1}">
+                <a class="page-link" (click)="refresh(newsPager.currentPage - 1)">&#8249;</a>
+            </li>
+            <li class="page-item" *ngFor="let page of newsPager.pages"
+                [ngClass]="{active:newsPager.currentPage === page}">
+                <a class="page-link" (click)="refresh(page)">{{page}}</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:newsPager.currentPage === newsPager.totalPages}">
+                <a class="page-link" (click)="refresh(newsPager.currentPage + 1)">&#8250;</a>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:newsPager.currentPage === newsPager.totalPages}">
+                <a class="page-link" (click)="refresh(newsPager.totalPages)">&#187;</a>
+            </li>
+        </ul>
     </div>
 </div>

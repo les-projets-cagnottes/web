@@ -3,12 +3,12 @@
         <div class="form-horizontal">
             <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()">
                 <i class="fas fa-sync"></i>
-                <span i18n="@@refresh">Refresh</span>
+                <span i18n>Refresh</span>
             </button>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="text-right"><label for="pageSize" i18n="@@nbEntries">Nb
+        <div class="text-right"><label for="pageSize" i18n>Nb
                 entries</label><select id="pageSize" name="pageSize" class="datatable-nb-entries form-control input-sm" [(ngModel)]="pageSize" (ngModelChange)="refresh()">
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -29,12 +29,12 @@
                     <div class="col-md-1 projectCountdown">
                         <span *ngIf="item.status === 'A_IN_PROGRESS'" class="badge bg-yellow">J -
                             {{ item.remainingDays }}</span>
-                        <span *ngIf="item.status === 'C_AVORTED'" class="badge bg-gray" i18n="@@projectStatusAvorted">Avorted</span>
-                        <span *ngIf="item.status === 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">Ready</span>
+                        <span *ngIf="item.status === 'C_AVORTED'" class="badge bg-gray" i18n>Avorted</span>
+                        <span *ngIf="item.status === 'B_READY'" class="badge bg-green" i18n>Ready</span>
                     </div>
                     <div class="col-md-5">
                         <div class="project_progress">
-                            <span class="progress-text" i18n="@@projectPeopleNeededDetailedLabel">People needed</span>
+                            <span class="progress-text" i18n>People needed</span>
                             <div class="progress sm" title="{{ item.peopleRequiredPercent }}">
                                 <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': item.peopleRequiredPercent }"></div>
                             </div>
@@ -60,8 +60,8 @@
 <div class="row">
     <div class="col-sm-5">
         <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info">
-            <span i18n="@@paginationStart">Showing </span>{{ pager.startIndex + 1 }}<span i18n> to
-            </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of </span>{{ pager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
+            <span i18n>Showing </span>{{ pager.startIndex + 1 }}<span i18n> to
+            </span>{{ pager.endIndex + 1 }}<span i18n> of </span>{{ pager.totalItems }}<span i18n> entries</span></div>
     </div>
     <div class="col-sm-7">
         <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">

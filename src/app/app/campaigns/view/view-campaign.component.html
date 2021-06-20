@@ -12,48 +12,48 @@
     <div class="col-md-4">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@projectInformationsTitle">Informations</h3>
+                <h3 class="card-title" i18n>Informations</h3>
             </div>
             <div class="card-body">
                 <dl class="dl-horizontal">
-                    <dt i18n="@@projectLeader">Project Leader</dt>
+                    <dt i18n>Project Leader</dt>
                     <dd>{{ leader.firstname }} {{ leader.lastname }}</dd>
-                    <dt i18n="@@createdAt">Created At</dt>
+                    <dt i18n>Created At</dt>
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
-                    <dt i18n="@@projectStatus">Status</dt>
+                    <dt i18n>Status</dt>
                     <dd>
-                        <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n="@@projectStatusInProgress">In Progress</span>
-                        <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-gray" i18n="@@projectStatusAvorted">Avorted</span>
-                        <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n="@@projectStatusReady">B_READY</span>
+                        <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n>In Progress</span>
+                        <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-gray" i18n>Avorted</span>
+                        <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n>B_READY</span>
                     </dd>
-                    <dt i18n="@@projectFundingDeadlineProgress" *ngIf="project.status == 'A_IN_PROGRESS'">Remaining days</dt>
+                    <dt i18n *ngIf="project.status == 'A_IN_PROGRESS'">Remaining days</dt>
                     <dd *ngIf="project.status == 'A_IN_PROGRESS'">{{ project.remainingDays }}</dd>
-                    <dt i18n="@@projectPeopleNeededProgress">People needed</dt>
+                    <dt i18n>People needed</dt>
                     <dd>{{ 1 + members.length }} / {{ 1 + project.peopleRequired }}</dd>
-                    <dt i18n="@@projectMoneyNeededProgress">Budget</dt>
+                    <dt i18n>Budget</dt>
                     <dd>{{ project.totalDonations.toFixed(2) }} € / {{ project.donationsRequired.toFixed(2) }} €</dd>
                 </dl>
             </div>
             <div class="card-footer text-center">
                 <a class="btn btn-app" routerLink="/campaigns/{{ id }}/edit" *ngIf="leader.id === userLoggedIn.id">
                     <i class="fas fa-edit"></i>
-                    <span i18n="@@projectEditAppButton">Edit</span>
+                    <span i18n>Edit</span>
                 </a>
                 <a class="btn btn-app" (click)="join()" *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
                     <i class="fas fa-user-plus"></i>
-                    <span i18n="@@projectJoinTeamAppButton">Join the team</span>
+                    <span i18n>Join the team</span>
                 </a>
                 <a class="btn btn-app" (click)="join()" *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status == 'A_IN_PROGRESS'">
                     <i class="fas fa-user-minus"></i>
-                    <span i18n="@@projectLeaveTeamAppButton">Leave the team</span>
+                    <span i18n>Leave the team</span>
                 </a>
                 <a class="btn btn-app" [ngClass]="{ 'disabled': contributeFinanciallyStatus == 'disabled'}" (click)="openModal(template)" *ngIf="budgets.length > 0 && project.totalDonations.toFixed(2) != project.donationsRequired.toFixed(2) && project.status == 'A_IN_PROGRESS'">
                     <i class="fas fa-hand-holding-usd"></i>
-                    <span i18n="@@projectContributeFinanciallyAppButton">Contribute financially</span>
+                    <span i18n>Contribute financially</span>
                 </a>
                 <ng-template #template>
                     <div class="modal-header">
-                        <h4 class="modal-title pull-left" i18n="@@projectContributeFinanciallyAppButton">Contribute financially
+                        <h4 class="modal-title pull-left" i18n>Contribute financially
                         </h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                             <span aria-hidden="true">&times;</span>
@@ -62,21 +62,21 @@
                     <div class="modal-body">
                         <form [formGroup]="donationForm">
                             <div class="form-group">
-                                <label for="amount" i18n="@@budgetName">Budget</label>
+                                <label for="amount" i18n>Budget</label>
                                 <select class="form-control select-border" style="width: 100%;" formControlName="budget" (ngModelChange)="onAccountSelectionChange()">
                                     <option *ngFor="let account of accounts; index as i" value="{{ i }}">
                                         {{ account.budget.organization.name }} - {{ account.budget.name }}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="amount" i18n="@@donationAmount">Amount (in €)</label>
+                                <label for="amount" i18n>Amount (in €)</label>
                                 <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[f.budget.value].amount, project.donationsRequired - project.totalDonations)).toFixed(2) }}" [ngClass]="{ 'is-invalid': f.amount.errors }"
                                 />
                             </div>
                             <div class="callout callout-info">
-                                <span i18n="@@budgetRemainingBegin">You will have </span>
+                                <span i18n>You will have </span>
                                 <b>{{ (accounts[f.budget.value].amount - f.amount.value).toFixed(2) }} €</b>
-                                <span i18n="@@budgetRemainingEnd"> left to finance other projects.</span>
+                                <span i18n> left to finance other projects.</span>
                             </div>
                             <div class="callout callout-warning">
                                 <p>Votre contribution peut prendre quelques secondes à apparaître dans la liste des donations.</p>
@@ -91,7 +91,7 @@
         </div>
         <div class="card">
             <div class="card-header border-0">
-                <h3 class="card-title" i18n="@@donationsPanelTitle">Donations</h3>
+                <h3 class="card-title" i18n>Donations</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshDonations(pager.currentPage)" [ngClass]="{ 'text-success': donationsSyncStatus == 'success'}">
                         <i class="fas fa-sync"></i>
@@ -103,10 +103,10 @@
                 <table class="table table-striped table-valign-middle">
                     <thead>
                         <tr>
-                            <th i18n="@@donationContributor">Contributor</th>
-                            <th i18n="@@donationDate">Date</th>
-                            <th i18n="@@donationAmount" width="22%">Amount</th>
-                            <th i18n="@@actions" width="22%">Actions</th>
+                            <th i18n>Contributor</th>
+                            <th i18n>Date</th>
+                            <th i18n width="22%">Amount</th>
+                            <th i18n width="22%">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,10 +131,10 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col-5">
-                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info"><span i18n="@@paginationStart">Showing
+                        <div *ngIf="pager.pages && pager.pages.length" class="dataTables_info"><span i18n>Showing
                             </span>{{ pager.startIndex + 1 }}<span i18n> to
-                            </span>{{ pager.endIndex + 1 }}<span i18n="@@paginationTotal"> of
-                            </span>{{ pager.totalItems }}<span i18n="@@paginationEntries"> entries</span></div>
+                            </span>{{ pager.endIndex + 1 }}<span i18n> of
+                            </span>{{ pager.totalItems }}<span i18n> entries</span></div>
                     </div>
                     <div class="col-7">
                         <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
