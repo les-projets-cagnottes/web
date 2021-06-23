@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NewsModel } from 'src/app/_models';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { ConfigService } from '../config/config.service';
 
@@ -22,6 +23,13 @@ export class ProjectService {
 
   getOrganizations(id: number) {
     return this.http.get<ProjectModel[]>(`${this.configService.get('apiUrl')}/project/${id}/organizations`);
+  }
+
+  getNews(id: number, offset: number, limit: number) {
+    const params = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
+    return this.http.get<NewsModel[]>(`${this.configService.get('apiUrl')}/project/${id}/news`, { params });
   }
 
   create(project: ProjectModel) {

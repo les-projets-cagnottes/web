@@ -24,7 +24,7 @@
             <div class="card-body table-responsive p-0">
                 <div *ngIf="campaigns.length === 0" class="text-center m-3">
                     <div i18n>This project has no founding</div>
-                    <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary" (click)="openCampaignModel(0)">
+                    <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary" routerLink="/projects/{{ id }}/campaigns/new" >
                         <i class="fa fa-plus"></i> <span i18n>Create a campaign</span>
                     </button>
                 </div>
@@ -55,72 +55,29 @@
         <div class="card card-default">
             <div class="card-header">
                 <h3 class="card-title" i18n>News</h3>
+                <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="refreshNews()"
+                        [ngClass]="{ 'text-success': newsSyncStatus == 'success'}">
+                        <i class="fas fa-sync"></i>
+                    </a>
+                </div>
             </div>
             <div class="card-body">
-                <div class="post">
+                <div class="post clearfix" *ngFor="let news of newsPaged">
                     <div class="user-block">
                         <img class="img-circle img-bordered-sm"
                             src="https://gravatar.com/avatar/fa46b143207c691b0d6378d4c00fc774?s=400&d=robohash&r=x"
                             alt="user image">
                         <span class="username">
-                            <a href="#">Jonathan Burke Jr.</a>
+                            <b>{{ news.createdBy }}</b><span i18n> published the news </span><span>{{ news.title }}</span>
                         </span>
-                        <span class="description">Shared publicly - 7:45 PM today</span>
+                        <span class="description">{{ news.createdAt | date:'medium' }}</span>
                     </div>
-                    <!-- /.user-block -->
-                    <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore.
-                    </p>
-
-                    <p>
-                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                    </p>
+                    <div [innerHTML]="news.content"></div>
                 </div>
-
-                <div class="post clearfix">
-                    <div class="user-block">
-                        <img class="img-circle img-bordered-sm"
-                            src="https://gravatar.com/avatar/fa46b143207c691b0d6378d4c00fc774?s=400&d=robohash&r=x"
-                            alt="User Image">
-                        <span class="username">
-                            <a href="#">Sarah Ross</a>
-                        </span>
-                        <span class="description">Sent you a message - 3 days ago</span>
-                    </div>
-                    <!-- /.user-block -->
-                    <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore.
-                    </p>
-                    <p>
-                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 2</a>
-                    </p>
-                </div>
-
-                <div class="post">
-                    <div class="user-block">
-                        <img class="img-circle img-bordered-sm"
-                            src="https://gravatar.com/avatar/fa46b143207c691b0d6378d4c00fc774?s=400&d=robohash&r=x"
-                            alt="user image">
-                        <span class="username">
-                            <a href="#">Jonathan Burke Jr.</a>
-                        </span>
-                        <span class="description">Shared publicly - 5 days ago</span>
-                    </div>
-                    <!-- /.user-block -->
-                    <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore.
-                    </p>
-
-                    <p>
-                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v1</a>
-                    </p>
-                </div>
+            </div>
+            <div *ngIf="newsSyncStatus == 'running'" class="overlay">
+                <i class="fas fa-sync fa-spin"></i>
             </div>
         </div>
     </div>

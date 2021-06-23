@@ -36,6 +36,7 @@ const routes: Routes = [
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: EditProjectComponent },
+      { path: 'projects/:id/campaigns/new', component: EditCampaignComponent },
       { path: 'projects/:id/edit', component: EditProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ListProjectsComponent },
