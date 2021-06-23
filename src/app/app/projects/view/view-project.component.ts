@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign, Project, User } from 'src/app/_entities';
-import { AuthenticationService, CampaignService, ProjectService, UserService } from 'src/app/_services';
+import { Campaign, News, Project, User } from 'src/app/_entities';
+import { NewsModel } from 'src/app/_models';
+import { AuthenticationService, CampaignService, PagerService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-view-project',
@@ -14,19 +15,26 @@ export class ViewProjectComponent implements OnInit {
   userLoggedIn: User;
   project: Project = new Project();
   leader: User = new User();
-  members: User[] = [];
-
   isUserInTeam: boolean = false;
 
-  // Donations Box
+  // Campaigns Box
   campaigns: Campaign[] = [];
   campaignsSyncStatus: string = 'idle';
 
   // Members Box
+  members: User[] = [];
   membersSyncStatus: string = 'idle';
   
+  // News Box
+  news: any = {};
+  newsPager: any = {};
+  newsPaged: NewsModel[] = [];
+  newsLength: number = 10;
+  newsSyncStatus: string = 'idle';
+
   constructor(
     private route: ActivatedRoute,
+    private pagerService: PagerService,
     private authenticationService: AuthenticationService,
     private campaignService: CampaignService,
     private projectService: ProjectService,
@@ -46,6 +54,7 @@ export class ViewProjectComponent implements OnInit {
         this.refreshLeader();
         this.refreshMembers();
         this.refreshCampaigns();
+        this.refreshNews();
       });
   }
 
@@ -96,19 +105,32 @@ export class ViewProjectComponent implements OnInit {
     });
   }
 
-  computeDatePercent(start: Date, deadline: Date) {
-    var now = new Date();
-    var totalDuration = deadline.getTime() - start.getTime();
-    var expiredDuration = now.getTime() - start.getTime();
-    return this.computeNumberPercent(expiredDuration, totalDuration);
+  refreshNews(page: number = 1, force: boolean = false): void {
+    this.userLoggedIn = this.authenticationService.currentUserValue;
+    if (this.pagerService.canChangePage(this.newsPager, page) || force) {
+      this.projectService.getNews(this.id, page - 1, this.newsLength)
+        .subscribe(response => {
+          this.news = response;
+          this.setNewsPage(page);
+          this.newsSyncStatus = 'success';
+          setTimeout(() => {
+            this.newsSyncStatus = 'idle';
+          }, 2000);
+        }, error => {
+          this.newsSyncStatus = 'error';
+          console.log(error);
+          setTimeout(() => {
+            this.newsSyncStatus = 'idle';
+          }, 1000)
+        });
+    }
+  }
+  
+  setNewsPage(page: number) {
+    this.newsPager = this.pagerService.getPager(this.news.totalElements, page, this.newsLength);
+    this.newsPaged = this.news.content;
   }
 
-  computeNumberPercent(number: number, max: number) {
-    if (max == 0) {
-      return "100";
-    }
-    return 100 * number / max;
-  }
 
   join() {
     this.projectService.join(this.id)

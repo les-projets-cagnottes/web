@@ -41,7 +41,7 @@
                 </h3>
                 <div class="timeline-body" [innerHTML]="news.content"></div>
                 <div class="timeline-footer action-bar">
-                    <a *ngIf="news.project.id > 0" class="btn btn-primary btn-sm" routerLink="/news/{{ news.project.id }}">
+                    <a *ngIf="news.project.id > 0" class="btn btn-primary btn-sm" routerLink="/projects/{{ news.project.id }}">
                         <i class="fas fa-book-reader"></i>
                         <span i18n>View Project</span>
                     </a>
