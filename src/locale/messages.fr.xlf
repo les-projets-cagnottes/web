@@ -600,8 +600,23 @@
       <trans-unit id="b757c16cb6aff9e0fada08714467c208c10a9025" datatype="html">
         <target>Modifier l'actualité</target>
       </trans-unit>
-      <trans-unit id="b757c16cb6aff9e0fada08714467c208c10a9025" datatype="html">
-        <target>Modifier l'actualité</target>
+      <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
+        <target>Fermer</target>
+      </trans-unit>
+      <trans-unit id="95a7bc17e7b1cd608f95c1860e7ff2dec93e51ed" datatype="html">
+        <target>Budget</target>
+      </trans-unit>
+      <trans-unit id="22cd729d56d38f4c1cf69e9749582120887c52a0" datatype="html">
+        <target>Budget requis (en €)</target>
+      </trans-unit>
+      <trans-unit id="851f66400264fd0c4af33e4350dbe2f100ccfe65" datatype="html">
+        <target>Date limite</target>
+      </trans-unit>
+      <trans-unit id="0b7856c656b9381dcad805ab1e10b36fe9789145" datatype="html">
+        <target>Je certifie que le projet est compatible avec les règles : </target>
+      </trans-unit>
+      <trans-unit id="f8e2d2bbafa226480bd0bd2c091772b03b1c7613" datatype="html">
+        <target>Fil d'actualité</target>
       </trans-unit>
     </body>
   </file>

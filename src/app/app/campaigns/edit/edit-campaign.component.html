@@ -1,75 +1,51 @@
 <form [formGroup]="form">
     <div class="row">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header with-border">
-                    <h3 i18n="@@projectDetailedPresentation" class="card-title">Detailed Presentation</h3>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="longDescription"><span
-                                i18n="@@helpUseMarkdown">
-                                To format your presentation, you can use the Markdown syntax.</span> <a
-                                href="https://docs.framasoft.org/fr/grav/markdown.html"
-                                i18n>More info here</a></label>
-                        <textarea id="longDescription" lass="form-control" rows="3" placeholder="Put your detailed presentation here" i18n-placeholder="@@projectDetailedPresentationPlaceholder"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <!-- general form elements -->
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 class="card-title" i18n>
-                        Infos</h3>
+                    <h3 class="card-title" i18n>Campaign</h3>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="amount" i18n>Organization</label>
-                        <select class="form-control select-border" style="width: 100%;" formControlName="organization">
-                            <option *ngFor="let item of organizations; index as i" value="{{ i }}">{{ item.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="amount" i18n>Budget</label>
-                        <select class="form-control select-border" style="width: 100%;" formControlName="budget">
-                            <option *ngFor="let item of budgets; index as i" value="{{ i }}">{{ item.name }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="title" i18n>Title</label>
-                        <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title" i18n-placeholder="@@projectTitle" [ngClass]="{ 'is-invalid': f.title.errors }" />
-                    </div>
-                    <div class="form-group">
-                        <label for="shortDescription" i18n>Short Description</label>
-                        <input formControlName="shortDescription" type="text" class="form-control" id="shortDescription" placeholder="Short Description" i18n-placeholder="@@projectShortDescription" [ngClass]="{ 'is-invalid': f.shortDescription.errors }" />
-                    </div>
-                    <div class="form-group">
-                        <label for="fundingDeadline" i18n style="display: block;">Funding & Team-up Deadline</label>
-                        <input formControlName="fundingDeadline" type="date" id="fundingDeadline" name="fundingDeadline" value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}" min="{{ now | date:'yyyy-MM-dd' }}" max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}" />
-                    </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="amount" i18n>Budget</label>
+                                <select class="form-control select-border" style="width: 100%;" formControlName="budget">
+                                    <option *ngFor="let item of budgets; index as i" value="{{ i }}">{{ item.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label for="donationsRequired" i18n>Money needed (in €)</label>
-                                <input formControlName="donationsRequired" type="number" class="form-control" id="donationsRequired" min="{{ minDonations }}" step="0.01" [ngClass]="{ 'is-invalid': f.donationsRequired.errors }" />
+                                <div class="input-group">
+                                    <input formControlName="donationsRequired" type="number" class="form-control" id="donationsRequired" min="{{ minDonations }}" step="0.01" [ngClass]="{ 'is-invalid': f.donationsRequired.errors }" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-4">
                             <div class="form-group">
-                                <label for="peopleRequired" i18n>People needed (in addition of the project leader)</label>
-                                <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired" min="2" [ngClass]="{ 'is-invalid': f.peopleRequired.errors }" />
-                            </div>
+                                <label for="fundingDeadline" i18n style="display: block;">Funding Deadline</label>
+                                  <div class="input-group date" id="fundingDeadline">
+                                      <input type="date" class="form-control datetimepicker-input" formControlName="fundingDeadline" value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}" min="{{ now | date:'yyyy-MM-dd' }}" max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}" [ngClass]="{ 'is-invalid': f.fundingDeadline.errors }" />
+                                  </div>
+                              </div>
                         </div>
                     </div>
-                    <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="custom-control custom-checkbox">
-                        <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant" class="custom-control-input" name="rulesCompliant" [ngClass]="{ 'is-invalid': f.rulesCompliant.errors }" />
-                        <label for="rulesCompliant" class="custom-control-label">
-                            <span i18n>This project is compliant with the rules of </span>
-                        </label>
-                        <span class="item-clickable" style="margin-left: 0.2em" (click)="onViewTermsOfUse(template)"><b> <u>{{ budgets[f.budget.value].name }}</u></b></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div *ngIf="this.budgets.length > 0 && f.budget.value !== undefined" class="custom-control custom-checkbox">
+                                <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant" class="custom-control-input" name="rulesCompliant" [ngClass]="{ 'is-invalid': f.rulesCompliant.errors }" />
+                                <label for="rulesCompliant" class="custom-control-label">
+                                    <span i18n>This project is compliant with the rules of </span>
+                                </label>
+                                <span class="item-clickable" style="margin-left: 0.2em" (click)="onViewTermsOfUse(template)"><b> <u>{{ budgets[f.budget.value].name }}</u></b></span>
+                            </div>
+                        </div>
                     </div>
                     <ng-template #template>
                         <div class="modal-header">
@@ -82,7 +58,7 @@
                             <markdown [data]="rules.value"></markdown>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-primary" (click)="modalRef.hide()" i18n="@@actionClose">Close</button>
+                            <button class="btn btn-primary" (click)="modalRef.hide()" i18n>Close</button>
                         </div>
                     </ng-template>
                 </div>

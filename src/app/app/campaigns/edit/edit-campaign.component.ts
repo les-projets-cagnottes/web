@@ -18,21 +18,17 @@ export class EditCampaignComponent implements OnInit {
 
   // Data
   id: number = 0;
-  private project: Campaign = new Campaign();
-  organizations: Organization[] = [];
+  idProject: number = 0;
+  private campaign: Campaign = new Campaign();
   budgets: Budget[] = [];
   rules: Content = new Content();
   minDonations: string = "0.00";
 
   // Form
   form: FormGroup = this.formBuilder.group({
-    organization: [0],
     budget: [0],
-    title: ['', [Validators.required, Validators.maxLength(255)]],
-    shortDescription: ['', [Validators.required, Validators.maxLength(255)]],
-    fundingDeadline: [''],
-    donationsRequired: [0, Validators.required],
-    peopleRequired: [2, [Validators.required, Validators.min(2)]],
+    fundingDeadline: ['', Validators.pattern("\\d{4}-\\d{2}-\\d{2}")],
+    donationsRequired: [0, [Validators.required, Validators.min(0.01)]],
     rulesCompliant: [false, Validators.pattern("true")]
   });
   submitting: boolean;
@@ -41,9 +37,6 @@ export class EditCampaignComponent implements OnInit {
   now: Date = new Date();
   nowPlus3Months = new Date();
   fundingDeadlineValue = new Date();
-
-  // Long description field
-  private simplemde;
 
   // TermsOfUse modal
   modalRef: BsModalRef;
@@ -54,56 +47,41 @@ export class EditCampaignComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private authenticationService: AuthenticationService,
-    private budgetService: BudgetService,
     private campaignService: CampaignService,
     private contentService: ContentService,
-    private organizationService: OrganizationService,
-    private userService: UserService
+    private organizationService: OrganizationService
   ) {
-    this.route.params.subscribe(params => this.id = params.id);
+    this.route.params.subscribe(params => {
+      this.id = params.id;
+      this.idProject = params.idProject;
+    });
   }
 
   ngOnInit() {
     if (this.id > 0) {
       this.campaignService.getById(this.id)
         .subscribe(response => {
-          this.project = Campaign.fromModel(response);
+          this.campaign = Campaign.fromModel(response);
           this.refresh();
         });
     } else {
-      this.project.longDescription = "# Mon super projet\n## De quoi s'agit-il ?\n## Qui est concerné ?\n## A quoi va servir le budget ?\n## Pourquoi ça me tient à coeur\n"
       this.refresh();
     }
   }
 
   refresh() {
-    this.form.controls['organization'].setValue(0);
-    this.form.controls['title'].setValue(this.project.title);
-    this.form.controls['shortDescription'].setValue(this.project.shortDescription);
-    this.form.controls['fundingDeadline'].setValue(this.dateToString(this.project.fundingDeadline));
-    this.form.controls['donationsRequired'].setValue(this.project.donationsRequired);
-    this.form.controls['peopleRequired'].setValue(this.project.peopleRequired);
+    this.form.controls['fundingDeadline'].setValue(this.dateToString(this.campaign.fundingDeadline));
+    this.form.controls['donationsRequired'].setValue(this.campaign.donationsRequired);
 
     if (this.id > 0) {
       this.form.controls['fundingDeadline'].disable();
-      this.form.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.project.donationsRequired)]);
-      this.minDonations = this.project.donationsRequired.toString();
+      this.form.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.campaign.donationsRequired)]);
+      this.minDonations = this.campaign.donationsRequired.toString();
     }
 
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
-    if (typeof startSimpleMDE === 'function') {
-      this.simplemde = startSimpleMDE();
-      this.simplemde.value(this.project.longDescription);
-      this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
-        .subscribe(orgs => {
-          orgs.forEach(org => this.organizations.push(Organization.fromModel(org)));
-          this.form.controls['organization'].setValue(0);
-        })
-      this.form.controls['organization'].valueChanges.subscribe(val => {
-        this.refreshBudgets(this.organizations[val].id);
-      });
-    }
+    this.refreshBudgets(this.authenticationService.currentOrganizationValue.id);
   }
 
   refreshBudgets(organizationId: number) {
@@ -126,6 +104,7 @@ export class EditCampaignComponent implements OnInit {
 
   onSubmit() {
 
+    console.log(this.form.controls['fundingDeadline'].value)
     // If form is invalid, avort
     if (this.form.invalid) {
       return;
@@ -137,36 +116,31 @@ export class EditCampaignComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
-    var campaign = new CampaignModel();
-
-    this.project.title = this.f.title.value;
-    this.project.shortDescription = this.f.shortDescription.value;
-    this.project.donationsRequired = this.f.donationsRequired.value;
-    this.project.peopleRequired = this.f.peopleRequired.value;
-    this.project.longDescription = this.simplemde.value();
-    this.project.organizationsRef = [this.organizations[this.f.organization.value].id];
-    this.project.budgetsRef = [this.budgets[this.f.budget.value].id];
+    var campaignToSave = new CampaignModel();
+    campaignToSave.donationsRequired = this.f.donationsRequired.value;
+    campaignToSave.budgetsRef = [this.budgets[this.f.budget.value].id];
+    campaignToSave.project.id = this.idProject;
 
     // Submit item to backend
     if (this.id > 0) {
-      this.campaignService.update(this.project)
+      campaignToSave.id = this.id
+      this.campaignService.update(campaignToSave)
         .subscribe(
           response => {
             this.submitting = false;
-            this.router.navigate(['/campaigns/' + response.id]);
+            this.router.navigate(['/projects/' + this.idProject]);
           },
           error => {
             console.log(error);
             this.submitting = false;
           });
     } else {
-      this.project.leader.id = this.authenticationService.currentUserValue.id;
-      this.project.fundingDeadline = this.getFundingDeadlineValue()
-      this.campaignService.create(this.project)
+      campaignToSave.fundingDeadline = this.getFundingDeadlineValue()
+      this.campaignService.create(campaignToSave)
         .subscribe(
           response => {
             this.submitting = false;
-            this.router.navigate(['/campaigns/' + response.id]);
+            this.router.navigate(['/projects/' + this.idProject]);
           },
           error => {
             console.log(error);

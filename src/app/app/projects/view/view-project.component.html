@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">{{ project.title }}</h3>
+                <h3 class="card-title" i18n>Description</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -16,6 +16,10 @@
             <div class="card-header">
                 <h3 class="card-title" i18n>Founding</h3>
                 <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="refreshCampaigns()"
+                        [ngClass]="{ 'text-success': campaignsSyncStatus == 'success'}">
+                        <i class="fas fa-sync"></i>
+                    </a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>
@@ -24,9 +28,6 @@
             <div class="card-body table-responsive p-0">
                 <div *ngIf="campaigns.length === 0" class="text-center m-3">
                     <div i18n>This project has no founding</div>
-                    <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary" routerLink="/projects/{{ id }}/campaigns/new" >
-                        <i class="fa fa-plus"></i> <span i18n>Create a campaign</span>
-                    </button>
                 </div>
                 <table *ngIf="campaigns.length > 0" class="table table-striped table-valign-middle">
                     <thead>
@@ -43,10 +44,16 @@
                             <td i18n>Campaign</td>
                             <td>{{ campaign.createdAt | date:'medium' }}</td>
                             <td>{{ campaign.fundingDeadline | date:'medium' }}</td>
-                            <td class="text-right">{{ campaign.totalDonations.toFixed(2) }} €</td>
+                            <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }} €</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="card-footer text-center">
+                <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary" routerLink="/projects/{{ id }}/campaigns/new" >
+                    <i class="fa fa-plus"></i> <span i18n>Create a campaign</span>
+                </button>
             </div>
             <div *ngIf="campaignsSyncStatus == 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
@@ -60,6 +67,9 @@
                         [ngClass]="{ 'text-success': newsSyncStatus == 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
                 </div>
             </div>
             <div class="card-body">

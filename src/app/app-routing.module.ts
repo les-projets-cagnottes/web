@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: '', component: LesProjetsCagnottesComponent, canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'campaigns', pathMatch: 'full' },
+      { path: '', redirectTo: '/projects?status=in_progress', pathMatch: 'full' },
       { path: 'news/new', component: EditNewsComponent },
       { path: 'news/:id/edit', component: EditNewsComponent },
       { path: 'news', component: ListNewsComponent },
@@ -36,7 +36,8 @@ const routes: Routes = [
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: EditProjectComponent },
-      { path: 'projects/:id/campaigns/new', component: EditCampaignComponent },
+      { path: 'projects/:idProject/campaigns/:id/edit', component: EditCampaignComponent },
+      { path: 'projects/:idProject/campaigns/new', component: EditCampaignComponent },
       { path: 'projects/:id/edit', component: EditProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ListProjectsComponent },
