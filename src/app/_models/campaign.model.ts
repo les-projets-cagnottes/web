@@ -12,6 +12,7 @@ export class CampaignModel extends AuditModel {
     fundingDeadline: Date;
     totalDonations: number = 0;
     leader: GenericModel = new GenericModel();
+    project: GenericModel = new GenericModel();
     peopleGivingTimeRef: number[] = [];
     organizationsRef: number[] = [];
     budgetsRef: number[] = [];
