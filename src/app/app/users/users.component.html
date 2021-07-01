@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@users">Users</h3>
+                <h3 class="card-title" i18n>Users</h3>
             </div>
             <div class="card-body">
                 <div class="row action-bar">
@@ -10,7 +10,7 @@
                         <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh(pager.currentPage)"><i class="fas fa-sync"></i>
                             <span i18n>Refresh</span></button>
                         <button type="button" class="btn btn-default" (click)="openModalCreateUser(template)"><i
-                                class="fa fa-plus"></i> <span i18n="@@actionAdd">Add</span></button>
+                                class="fa fa-plus"></i> <span i18n>Add</span></button>
                     </div>
                     <div class="col-6">
                         <div class="dataTables_length text-right"><label for="pageSize" i18n>Nb
@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th i18n>ID</th>
-                                    <th i18n="@@userFullname">Name</th>
-                                    <th i18n="@@userEmail">Email</th>
+                                    <th i18n>Username</th>
+                                    <th i18n>Email</th>
                                     <th i18n>Created At</th>
                                     <th i18n>Enabled</th>
                                     <th i18n>Actions</th>
@@ -53,8 +53,8 @@
                             <tfoot>
                                 <tr>
                                     <th i18n>ID</th>
-                                    <th i18n="@@userFullname">Name</th>
-                                    <th i18n="@@userEmail">Email</th>
+                                    <th i18n>Username</th>
+                                    <th i18n>Email</th>
                                     <th i18n>Created At</th>
                                     <th i18n>Enabled</th>
                                     <th i18n>Actions</th>
@@ -107,24 +107,24 @@
     <div class="modal-body">
         <form [formGroup]="editUserForm">
             <div class="form-group" [ngClass]="{ 'has-error': f.email.errors }">
-                <label i18n="@@userEmail">Email</label>
-                <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@userEmail">
+                <label i18n>Email</label>
+                <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder>
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': userEdited.id === undefined && f.password.value === '' }">
-                <label i18n="@@userPassword">Password</label>
-                <input type="password" formControlName="password" class="form-control" placeholder="Password - Keep empty to leave it unchanged" i18n-placeholder="@@userPasswordUpdatePlaceholder">
+                <label i18n>Password</label>
+                <input type="password" formControlName="password" class="form-control" placeholder="Password - Keep empty to leave it unchanged" i18n-placeholder>
             </div>
             <div class="form-group">
-                <label i18n="@@userFirstname">Firstname</label>
-                <input type="text" formControlName="firstname" class="form-control" placeholder="Firstname" i18n-placeholder="@@userFirstname">
+                <label i18n>Firstname</label>
+                <input type="text" formControlName="firstname" class="form-control" placeholder="Firstname" i18n-placeholder>
             </div>
             <div class="form-group">
-                <label i18n="@@userLastname">Lastname</label>
-                <input type="text" formControlName="lastname" class="form-control" placeholder="Lastname" i18n-placeholder="@@userLastname">
+                <label i18n>Lastname</label>
+                <input type="text" formControlName="lastname" class="form-control" placeholder="Lastname" i18n-placeholder>
             </div>
             <div class="form-group">
-                <label i18n="@@userAvatarUrl">Avatar URL</label>
-                <input type="url" formControlName="avatarUrl" class="form-control" placeholder="Avatar URL" i18n-placeholder="@@userAvatarUrl">
+                <label i18n>Avatar URL</label>
+                <input type="url" formControlName="avatarUrl" class="form-control" placeholder="Avatar URL" i18n-placeholder>
             </div>
             <div class="form-group">
                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -135,6 +135,6 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button [disabled]="submitting" class="btn btn-primary" (click)="onSubmit()" i18n="@@save">Save</button>
+        <button [disabled]="submitting" class="btn btn-primary" (click)="onSubmit()" i18n>Save</button>
     </div>
 </ng-template>

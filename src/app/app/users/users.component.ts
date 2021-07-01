@@ -71,7 +71,7 @@ export class UsersComponent implements OnInit {
     this.f.avatarUrl.setValue("");
     this.f.color.setValue("");
     this.f.isActivated.setValue(false);
-    this.modalRef = this.modalService.show(template);
+    this.openModal(template);
   }
 
   openModalEditUser(template, user: UserModel): void {
@@ -81,7 +81,14 @@ export class UsersComponent implements OnInit {
     this.f.lastname.setValue(user.lastname);
     this.f.avatarUrl.setValue(user.avatarUrl);
     this.f.isActivated.setValue(user.enabled);
-    this.modalRef = this.modalService.show(template);
+    this.openModal(template);
+  }
+
+  openModal(template): void {
+    this.modalRef = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'modal-xl' })
+    );
   }
 
   closeModalEditUser(): void {
@@ -113,7 +120,7 @@ export class UsersComponent implements OnInit {
     this.userEdited.avatarUrl = this.f.avatarUrl.value;
     this.userEdited.enabled = this.f.isActivated.value;
     
-    if (this.userEdited.id === undefined) {
+    if (this.userEdited.id === 0) {
       this.userEdited.password = this.f.password.value;
       this.userService.create(this.userEdited)
         .pipe(first())
