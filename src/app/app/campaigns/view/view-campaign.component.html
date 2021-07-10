@@ -24,7 +24,7 @@
                     <dd>
                         <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n>In Progress</span>
                         <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-gray" i18n>Avorted</span>
-                        <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n>B_READY</span>
+                        <span *ngIf="project.status == 'B_READY'" class="badge bg-green" i18n>Ready</span>
                     </dd>
                     <dt i18n *ngIf="project.status == 'A_IN_PROGRESS'">Remaining days</dt>
                     <dd *ngIf="project.status == 'A_IN_PROGRESS'">{{ project.remainingDays }}</dd>
