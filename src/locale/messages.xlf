@@ -340,7 +340,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">122</context>
         </context-group>
       </trans-unit>
       <trans-unit id="projectMoneyNeeded" datatype="html">
@@ -482,7 +482,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="18fc87718788c70f170043236341762f71fab653" datatype="html">
@@ -493,7 +493,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="dbb73cfc9375112c8ed02c3925ccee9899cf33d2" datatype="html">
@@ -512,7 +512,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/users/users.component.html</context>
@@ -535,7 +535,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">116</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
@@ -554,7 +554,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
@@ -583,7 +583,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="70a11dccae78c0a4ff1629680f4df9ebec2f9dc1" datatype="html">
@@ -594,7 +594,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3f0936244c49b22c13ad0dd41c8116dc79f6360f" datatype="html">
@@ -605,7 +605,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4ee32e63944092077ad45dfd014b7704c3103f78" datatype="html">
@@ -1059,7 +1059,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7a279068c4f3b698735ed5089c73757ea106c255" datatype="html">
@@ -1351,7 +1351,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="edcc19a49c950289ffe5d38be4843cdf194e5622" datatype="html">
@@ -1362,7 +1362,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="organization" datatype="html">
@@ -1530,7 +1530,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f76d3c98a8fdd31fd116b8306e5e1a8535df8e0e" datatype="html">
@@ -1583,8 +1583,8 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="014ab75a225311572ced0bac12f7e18cf062fdad" datatype="html">
-        <source>Create a campaign</source>
+      <trans-unit id="0e063922a6110e6b68acc5d441c563b5e705cab4" datatype="html">
+        <source>Add funding</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
           <context context-type="linenumber">55</context>
@@ -1594,21 +1594,21 @@
         <source>Publish</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a3617197cc480fd174ae5c2c49cf25fb8e4a4d10" datatype="html">
         <source>Create a news</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="764a8a101f8ee5a4b98844e93406182fb078507b" datatype="html">
         <source>Team</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="budgetUsage" datatype="html">

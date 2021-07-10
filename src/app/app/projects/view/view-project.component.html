@@ -32,6 +32,7 @@
                 <table *ngIf="campaigns.length > 0" class="table table-striped table-valign-middle">
                     <thead>
                         <tr>
+                            <th i18n>Status</th>
                             <th i18n>Funding type</th>
                             <th i18n>Starting date</th>
                             <th i18n>Deadline</th>
@@ -41,20 +42,134 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let campaign of campaigns">
+                            <td>
+                                <span *ngIf="campaign.status == 'A_IN_PROGRESS'" class="badge bg-yellow" i18n>In Progress</span>
+                                <span *ngIf="campaign.status == 'C_AVORTED'" class="badge bg-gray" i18n>Avorted</span>
+                                <span *ngIf="campaign.status == 'B_READY'" class="badge bg-green" i18n>Validated</span>
+                            </td>
                             <td i18n>Campaign</td>
                             <td>{{ campaign.createdAt | date:'medium' }}</td>
                             <td>{{ campaign.fundingDeadline | date:'medium' }}</td>
-                            <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }} €</td>
-                            <td></td>
+                            <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }}
+                                €</td>
+                            <td class="action-bar">
+                                <a *ngIf="campaign.status == 'A_IN_PROGRESS'" class="btn btn-default btn-sm">
+                                    <i class="fas fa-hand-holding-usd">
+                                    </i>
+                                    <span i18n>Contribute financially</span>
+                                </a>
+                                <a *ngIf="campaign.status == 'A_IN_PROGRESS'" class="btn btn-default btn-sm" (click)="editFundingModal(addFundingTemplate, campaign.id)">
+                                    <i class="fas fa-edit">
+                                    </i>
+                                    <span i18n>Edit</span>
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="card-footer text-center">
-                <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary" routerLink="/projects/{{ id }}/campaigns/new" >
-                    <i class="fa fa-plus"></i> <span i18n>Create a campaign</span>
+                <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary"
+                    (click)="openAddFundingModal(addFundingTemplate)">
+                    <i class="fa fa-plus"></i> <span i18n>Add funding</span>
                 </button>
             </div>
+            <ng-template #addFundingTemplate>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Modal</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="addFundingModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="formFunding">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="amount" i18n>Budget</label>
+                                            <select class="form-control select-border" style="width: 100%;"
+                                                formControlName="budget">
+                                                <option *ngFor="let item of budgets; index as i"
+                                                    value="{{ i }}">{{ item.name }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="donationsRequired" i18n>Money needed (in €)</label>
+                                            <div class="input-group">
+                                                <input formControlName="donationsRequired" type="number"
+                                                    class="form-control" id="donationsRequired"
+                                                    min="{{ minDonations }}" step="0.01"
+                                                    [ngClass]="{ 'is-invalid': fFunding.donationsRequired.errors }" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">€</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="fundingDeadline" i18n style="display: block;">Funding
+                                                Deadline</label>
+                                            <div class="input-group date" id="fundingDeadline">
+                                                <input type="date" class="form-control datetimepicker-input"
+                                                    formControlName="fundingDeadline"
+                                                    value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}"
+                                                    min="{{ now | date:'yyyy-MM-dd' }}"
+                                                    max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}"
+                                                    [ngClass]="{ 'is-invalid': fFunding.fundingDeadline.errors }" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div *ngIf="this.budgets.length > 0 && fFunding.budget.value !== undefined"
+                                            class="custom-control custom-checkbox">
+                                            <input formControlName="rulesCompliant" type="checkbox"
+                                                id="rulesCompliant" class="custom-control-input"
+                                                name="rulesCompliant"
+                                                [ngClass]="{ 'is-invalid': fFunding.rulesCompliant.errors }" />
+                                            <label for="rulesCompliant" class="custom-control-label">
+                                                <span i18n>This project is compliant with the rules of </span>
+                                            </label>
+                                            <br/>
+                                            <span class="item-clickable" style="margin-left: 0.2em"
+                                                (click)="onViewTermsOfUse(viewRulesModalTemplate)"><b> <u>{{
+                                                        budgets[fFunding.budget.value].name }}</u></b></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #viewRulesModalTemplate>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title pull-left">{{ rules.name }}</h4>
+                                        <button type="button" class="close pull-right" aria-label="Close"
+                                            (click)="viewRulesModal.hide()">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <markdown [data]="rules.value"></markdown>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" (click)="viewRulesModal.hide()"
+                                            i18n>Close</button>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center">
+                        <button [disabled]="submittingFunding" type="button" class="btn btn-primary"
+                            (click)="onSubmitFunding()" i18n>Save</button>
+                    </div>
+                </div>
+            </ng-template>
             <div *ngIf="campaignsSyncStatus == 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
@@ -79,7 +194,8 @@
                             src="https://gravatar.com/avatar/fa46b143207c691b0d6378d4c00fc774?s=400&d=robohash&r=x"
                             alt="user image">
                         <span class="username">
-                            <b>{{ news.createdBy }}</b><span i18n> published the news </span><span>{{ news.title }}</span>
+                            <b>{{ news.createdBy }}</b><span i18n> published the news </span><span>{{ news.title
+                                }}</span>
                         </span>
                         <span class="description">{{ news.createdAt | date:'medium' }}</span>
                     </div>
