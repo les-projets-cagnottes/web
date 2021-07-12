@@ -27,10 +27,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-1 projectCountdown">
-                        <span *ngIf="item.status === 'A_IN_PROGRESS'" class="badge bg-yellow">J -
+                        <span *ngIf="item.status === 'IN_PROGRESS'" class="badge bg-yellow">J -
                             {{ item.remainingDays }}</span>
-                        <span *ngIf="item.status === 'C_AVORTED'" class="badge bg-gray" i18n>Avorted</span>
-                        <span *ngIf="item.status === 'B_READY'" class="badge bg-green" i18n>Ready</span>
+                        <span *ngIf="item.status === 'FAILED'" class="badge bg-gray" i18n>Avorted</span>
+                        <span *ngIf="item.status === 'SUCCESSFUL'" class="badge bg-green" i18n>Ready</span>
                     </div>
                     <div class="col-md-5">
                         <div class="project_progress">

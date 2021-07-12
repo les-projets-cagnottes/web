@@ -8,7 +8,7 @@ td.action-bar a {
     margin-right: 1em;
 }
 
-.btn svg {
+.btn svg, .btn i {
     margin-right: .2em;
 }
 
@@ -51,8 +51,4 @@ a.disabled {
 .item-clickable,
 .page-link {
     cursor: pointer;
-}
-
-.note-editable {
-    background-color: white;
 }

@@ -30,7 +30,7 @@ export class ListCampaignsComponent implements OnInit {
 
   refresh(page: number = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
-      this.organizationService.getCampaigns(this.authenticationService.currentOrganizationValue.id, page - 1, this.pageSize, ['A_IN_PROGRESS', 'B_READY', 'C_AVORTED'])
+      this.organizationService.getCampaigns(this.authenticationService.currentOrganizationValue.id, page - 1, this.pageSize, ['IN_PROGRESS', 'SUCCESSFUL', 'FAILED'])
         .subscribe(response => {
           this.rawResponse = response;
           this.setPage(page);

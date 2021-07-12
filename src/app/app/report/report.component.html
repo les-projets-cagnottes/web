@@ -18,7 +18,7 @@
     </div>
     <div class="col-8">
         <div id="budgetUsage" class="progress-group">
-            <span class="progress-text" i18n="@@budgetUsage">Usage overview</span>
+            <span class="progress-text" i18n>Usage overview</span>
             <div class="progress" title="{{ budgetUsage }}">
                 <div class="progress-bar progress-bar-striped" [ngStyle]="{'width': budgetUsage }">
                 </div>
@@ -30,10 +30,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@projectsBoxTitle">Projects</h3>
+                <h3 class="card-title" i18n>Campaigns</h3>
                 <div class="card-tools">
-                    <a class="btn btn-tool btn-sm" (click)="refreshCampaigns(projectPager.currentPage)"
-                        [ngClass]="{ 'text-success': projectsSyncStatus == 'success'}">
+                    <a class="btn btn-tool btn-sm" (click)="refreshCampaigns(campaignPager.currentPage)"
+                        [ngClass]="{ 'text-success': campaignsSyncStatus == 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
                 </div>
@@ -46,7 +46,7 @@
                             <th i18n>Title</th>
                             <th i18n>Created at</th>
                             <th i18n>Description</th>
-                            <th i18n>Teammates</th>
+                            <th i18n>Teammates on the project</th>
                             <th i18n>Donations on this budget</th>
                             <th i18n>Donations on all budgets</th>
                             <th i18n>Donations required</th>
@@ -54,62 +54,62 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let project of pagedProjects">
-                            <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
-                            <td>{{ project.createdAt |date:'medium' }}</td>
-                            <td>{{ project.shortDescription }}</td>
-                            <td>{{ 1 + project.peopleGivingTimeRef.length }} / {{ 1 + project.peopleRequired }}</td>
-                            <td>{{ totalDonations[project.id].toFixed(2) }} €</td>
-                            <td>{{ project.totalDonations.toFixed(2) }} €</td>
-                            <td>{{ project.donationsRequired.toFixed(2) }} €</td>
+                        <tr *ngFor="let campaign of pagedCampaigns">
+                            <td><a [routerLink]="['/projects/', campaign.project.id]">{{ projects[campaign.project.id].title }}</a></td>
+                            <td>{{ campaign.createdAt |date:'medium' }}</td>
+                            <td>{{ projects[campaign.project.id].shortDescription }}</td>
+                            <td>{{ 1 + campaign.peopleGivingTimeRef.length }} / 3</td>
+                            <td>{{ totalDonations[campaign.id].toFixed(2) }} €</td>
+                            <td>{{ campaign.totalDonations.toFixed(2) }} €</td>
+                            <td>{{ campaign.donationsRequired.toFixed(2) }} €</td>
                             <td>
-                                <span *ngIf="project.status == 'A_IN_PROGRESS'" class="badge bg-yellow"
+                                <span *ngIf="campaign.status == 'IN_PROGRESS'" class="badge bg-yellow"
                                     i18n>In Progress</span>
-                                <span *ngIf="project.status == 'C_AVORTED'" class="badge bg-gray"
+                                <span *ngIf="campaign.status == 'FAILED'" class="badge bg-gray"
                                     i18n>Avorted</span>
-                                <span *ngIf="project.status == 'B_READY'" class="badge bg-green"
+                                <span *ngIf="campaign.status == 'SUCCESSFUL'" class="badge bg-green"
                                     i18n>Ready</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="projectsSyncStatus == 'running'" class="overlay">
+            <div *ngIf="campaignsSyncStatus == 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
                 <div class="row">
                     <div class="col-5">
-                        <div *ngIf="projectPager.pages && projectPager.pages.length" class="dataTables_info">
-                            <span i18n>Showing </span> {{ projectPager.startIndex + 1 }}
-                            <span i18n> to </span> {{ projectPager.endIndex + 1 }}
-                            <span i18n> of </span> {{ projectPager.totalItems }}
+                        <div *ngIf="campaignPager.pages && campaignPager.pages.length" class="dataTables_info">
+                            <span i18n>Showing </span> {{ campaignPager.startIndex + 1 }}
+                            <span i18n> to </span> {{ campaignPager.endIndex + 1 }}
+                            <span i18n> of </span> {{ campaignPager.totalItems }}
                             <span i18n> entries</span>
                         </div>
                     </div>
                     <div class="col-7">
-                        <ul *ngIf="projectPager.pages && projectPager.pages.length"
+                        <ul *ngIf="campaignPager.pages && campaignPager.pages.length"
                             class="pagination justify-content-end">
-                            <li class="page-item" [ngClass]="{disabled:projectPager.currentPage === 1}">
+                            <li class="page-item" [ngClass]="{disabled:campaignPager.currentPage === 1}">
                                 <a class="page-link" (click)="refreshCampaigns(1)">&#171;</a>
                             </li>
-                            <li class="page-item" [ngClass]="{disabled:projectPager.currentPage === 1}">
+                            <li class="page-item" [ngClass]="{disabled:campaignPager.currentPage === 1}">
                                 <a class="page-link"
-                                    (click)="refreshCampaigns(projectPager.currentPage - 1)">&#8249;</a>
+                                    (click)="refreshCampaigns(campaignPager.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li class="page-item" *ngFor="let page of projectPager.pages"
-                                [ngClass]="{active:projectPager.currentPage === page}">
+                            <li class="page-item" *ngFor="let page of campaignPager.pages"
+                                [ngClass]="{active:campaignPager.currentPage === page}">
                                 <a class="page-link" (click)="refreshCampaigns(page)">{{page}}</a>
                             </li>
                             <li class="page-item"
-                                [ngClass]="{disabled:projectPager.currentPage === projectPager.totalPages}">
+                                [ngClass]="{disabled:campaignPager.currentPage === campaignPager.totalPages}">
                                 <a class="page-link"
-                                    (click)="refreshCampaigns(projectPager.currentPage + 1)">&#8250;</a>
+                                    (click)="refreshCampaigns(campaignPager.currentPage + 1)">&#8250;</a>
                             </li>
                             <li class="page-item"
-                                [ngClass]="{disabled:projectPager.currentPage === projectPager.totalPages}">
-                                <a class="page-link" (click)="refreshCampaigns(projectPager.totalPages)">&#187;</a>
+                                [ngClass]="{disabled:campaignPager.currentPage === campaignPager.totalPages}">
+                                <a class="page-link" (click)="refreshCampaigns(campaignPager.totalPages)">&#187;</a>
                             </li>
                         </ul>
                     </div>
@@ -122,7 +122,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@usersBoxTitle">Users</h3>
+                <h3 class="card-title" i18n>Users</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshAccounts(accountsPager.currentPage)"
                         [ngClass]="{ 'text-success': accountsSyncStatus == 'success'}">
@@ -135,8 +135,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th i18n="@@userUsageName">Name</th>
-                            <th i18n="@@userBudgetUsage">Usage</th>
+                            <th i18n>Name</th>
+                            <th i18n>Usage</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService,
     private configService: ConfigService
   ) {
-    // redirect to home if alB_READY logged in
+    // redirect to home if alSUCCESSFUL logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }

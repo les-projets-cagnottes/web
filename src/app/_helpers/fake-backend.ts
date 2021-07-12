@@ -42,7 +42,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = body
 
             if (users.find(x => x.username === user.username)) {
-                return error('Username "' + user.username + '" is alB_READY taken')
+                return error('Username "' + user.username + '" is alSUCCESSFUL taken')
             }
 
             user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;

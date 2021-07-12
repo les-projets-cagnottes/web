@@ -106,6 +106,7 @@ export class EditNewsComponent implements OnInit {
     submittedNews.content = this.form.controls.content.value;
     submittedNews.organization.id = this.organizations[this.form.controls.organization.value].id;
     submittedNews.project.id = this.projects[this.form.controls.project.value].id;
+    submittedNews.type = 'ARTICLE';
 
     // Submit item to backend
     if (this.id > 0) {

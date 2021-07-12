@@ -28,7 +28,7 @@
             <span class="bg-red">{{ item }}</span>
         </div>
         <div *ngFor="let news of data[item]">
-            <i class="news-icon fas fa-envelope bg-blue"></i>
+            <i *ngIf="news.type === 'ARTICLE'" class="news-icon fas fa-newspaper bg-blue"></i>
             <div class="timeline-item">
                 <span class="time"><i class="fas fa-clock"></i> {{ news.createdAt | date:'medium' }}</span>
                 <h3 class="timeline-header">
