@@ -4,7 +4,7 @@ import { GenericModel } from './generic.model';
 export class CampaignModel extends AuditModel {
 
     title: string = '';
-    status: string = 'A_IN_PROGRESS';
+    status: string = 'IN_PROGRESS';
     shortDescription: string = '';
     longDescription: string = '';
     donationsRequired: number = 0.00;

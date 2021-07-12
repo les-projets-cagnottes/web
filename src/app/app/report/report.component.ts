@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Account, Budget, Campaign, Organization, User } from 'src/app/_entities';
-import { AuthenticationService, BudgetService, OrganizationService, PagerService, UserService } from 'src/app/_services';
+import { AuthenticationService, BudgetService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-report',
@@ -25,10 +25,11 @@ export class ReportComponent implements OnInit {
 
   // Campaigns Box
   private rawProjectsResponse: any;
-  projectPager: any = {};
-  pagedProjects: Campaign[];
+  campaignPager: any = {};
+  pagedCampaigns: Campaign[];
+  projects: any = {};
   campaignsPageSize: number = 10;
-  projectsSyncStatus: string = 'idle';
+  campaignsSyncStatus: string = 'idle';
 
   // Accounts Box
   private rawAccountsResponse: any;
@@ -41,6 +42,7 @@ export class ReportComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
     private organizationService: OrganizationService,
+    private projectService: ProjectService,
     private userService: UserService,
     private pagerService: PagerService,
     private fb: FormBuilder) { }
@@ -70,27 +72,40 @@ export class ReportComponent implements OnInit {
     this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
       this.budget = this.budgets.find(budget => budget.id === +val);
       this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.organization.membersRef.length * this.budget.amountPerMember) + "%";
-      this.refreshCampaigns(this.projectPager.page, true);
+      this.refreshCampaigns(this.campaignPager.page, true);
       this.refreshAccounts(this.accountsPager.page, true);
     });
   }
 
   refreshCampaigns(page: number = 1, force: boolean = false) {
-    if (this.pagerService.canChangePage(this.projectPager, page) || force) {
-      this.projectsSyncStatus = 'running';
+    if (this.pagerService.canChangePage(this.campaignPager, page) || force) {
+      this.campaignsSyncStatus = 'running';
       this.budgetService.getCampaigns(this.selectBudgetForm.controls['budget'].value, page - 1, this.campaignsPageSize)
         .subscribe(response => {
           this.rawProjectsResponse = response;
           this.setCampaignsPage(page);
-          this.projectsSyncStatus = 'success';
+          var projectIds = [];
+          this.pagedCampaigns.forEach(campaign => {
+            if(campaign.project.id > 0) {
+              projectIds.push(campaign.project.id);
+            }
+          });
+          this.projectService.getAllByIds(projectIds)
+            .subscribe(response => {
+              response.forEach(prj => this.projects[prj.id] = prj)
+            },
+            error => {
+              console.log(error);
+            });
+          this.campaignsSyncStatus = 'success';
           setTimeout(() => {
-            this.projectsSyncStatus = 'idle';
+            this.campaignsSyncStatus = 'idle';
           }, 1000);
         }, error => {
-          this.projectsSyncStatus = 'error';
+          this.campaignsSyncStatus = 'error';
           console.log(error);
           setTimeout(() => {
-            this.projectsSyncStatus = 'idle';
+            this.campaignsSyncStatus = 'idle';
           }, 1000);
         });
     }
@@ -124,9 +139,9 @@ export class ReportComponent implements OnInit {
   }
 
   setCampaignsPage(page: number) {
-    this.projectPager = this.pagerService.getPager(this.rawProjectsResponse.totalElements, page, this.campaignsPageSize);
-    this.pagedProjects = this.rawProjectsResponse.content;
-    this.pagedProjects.forEach(project => {
+    this.campaignPager = this.pagerService.getPager(this.rawProjectsResponse.totalElements, page, this.campaignsPageSize);
+    this.pagedCampaigns = this.rawProjectsResponse.content;
+    this.pagedCampaigns.forEach(project => {
       this.totalDonations[project.id] = 0;
     })
     this.budget.donations.forEach(donation => {
