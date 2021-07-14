@@ -2,9 +2,9 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Budget, Campaign, Content, News, Project, User } from 'src/app/_entities';
-import { CampaignModel, NewsModel } from 'src/app/_models';
-import { AuthenticationService, CampaignService, ContentService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
+import { Account, Budget, Campaign, Content, News, Project, User } from 'src/app/_entities';
+import { BudgetModel, CampaignModel, DonationModel, GenericModel, NewsModel } from 'src/app/_models';
+import { AuthenticationService, BudgetService, CampaignService, ContentService, DonationService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-view-project',
@@ -22,6 +22,16 @@ export class ViewProjectComponent implements OnInit {
   // Campaigns Box
   campaigns: Campaign[] = [];
   campaignsSyncStatus: string = 'idle';
+  campaignsBudgets: any = {};
+
+  // Contributing Modal
+  selectedCampaign: Campaign = new Campaign();
+  contributeFinanciallyModalRef: BsModalRef;
+  donationForm: FormGroup = this.formBuilder.group({
+    budget: [0],
+    amount: [10, [Validators.min(0), Validators.max(0)]]
+  });
+  accounts: Account[] = [];
 
   // Funding Modal
   private campaign: CampaignModel = new CampaignModel();
@@ -62,8 +72,10 @@ export class ViewProjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
     private authenticationService: AuthenticationService,
+    private budgetService: BudgetService,
     private campaignService: CampaignService,
     private contentService: ContentService,
+    private donationService: DonationService,
     private organizationService: OrganizationService,
     private projectService: ProjectService,
     private userService: UserService) {
@@ -83,6 +95,7 @@ export class ViewProjectComponent implements OnInit {
         this.refreshMembers();
         this.refreshCampaigns();
         this.refreshNews();
+        this.refreshAccounts();
       });
   }
 
@@ -120,11 +133,32 @@ export class ViewProjectComponent implements OnInit {
         this.project = Project.fromModel(response);
         this.campaignService.getAllByIds(this.project.campaignsRef)
         .subscribe(campaignModels => {
-          this.campaignsSyncStatus = 'success';
-          this.campaigns = Campaign.fromModels(campaignModels);
+          this.campaigns = Campaign.fromModels(campaignModels).sort((a, b) => {
+            if(a.createdAt > b.createdAt) {
+              return -1;
+            } else if(a.createdAt < b.createdAt) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          var budgetsId = [];
+          this.campaigns.forEach(campaign => {
+            var remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
+            campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+            budgetsId.push(campaign.budgetsRef);
+          });
+          budgetsId = [... new Set(budgetsId)];
+          this.budgetService.getAllByIds(budgetsId)
+            .subscribe(response => {
+              response.forEach(budget => {
+                this.campaignsBudgets[budget.id] = budget;
+              });
+            });
           this.isUserInTeam = this.members.find(user => {
             return this.userLoggedIn.id === user.id;
           }) !== undefined;
+          this.campaignsSyncStatus = 'success';
           setTimeout(() => {
             this.campaignsSyncStatus = 'idle';
           }, 1000);
@@ -158,6 +192,48 @@ export class ViewProjectComponent implements OnInit {
     }
   }
 
+  refreshAccounts() {
+    this.userService.getAccounts(this.userLoggedIn.id)
+      .subscribe(accounts => {
+        this.accounts = Account.fromModels(accounts);
+      })
+  }
+
+  openContributingModal(template: TemplateRef<any>, campaign: Campaign) {
+    this.selectedCampaign = campaign;
+    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+      +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, campaign.donationsRequired - campaign.totalDonations)).toFixed(2))]);  
+    this.contributeFinanciallyModalRef = this.modalService.show(template);
+  }
+
+  onAccountSelectionChange() {
+    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+      +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, this.selectedCampaign.donationsRequired - this.selectedCampaign.totalDonations)).toFixed(2))]);
+  }
+
+  onSubmitDonation() {
+
+    if (this.donationForm.invalid) {
+      return;
+    }
+    this.contributeFinanciallyModalRef.hide();
+    var donation = new DonationModel();
+    donation.amount = this.donationForm.controls.amount.value;
+    donation.account = GenericModel.valueOf(this.accounts[this.donationForm.controls.budget.value].id);
+    donation.campaign = GenericModel.valueOf(this.selectedCampaign.id);
+    donation.budget = GenericModel.valueOf(this.accounts[this.donationForm.controls.budget.value].budget.id);
+    donation.contributor = GenericModel.valueOf(this.userLoggedIn.id);
+
+    this.donationService.create(donation)
+      .subscribe(
+        () => {
+          this.contributeFinanciallyModalRef.hide();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
   refreshBudgets() {
     this.organizationService.getUsableBudgets(this.authenticationService.currentOrganizationValue.id)
       .subscribe(budgets => {
@@ -180,6 +256,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   editFundingModal(template: TemplateRef<any>, id: number) {
+    this.formFunding.controls['budget'].disable();
     this.formFunding.controls['fundingDeadline'].disable();
     this.formFunding.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.campaign.donationsRequired)]);
     this.minDonations = this.campaign.donationsRequired.toString();
@@ -280,4 +357,11 @@ export class ViewProjectComponent implements OnInit {
       })
   }
 
+  min(val1: number, val2: number): number {
+    if(val1 > val2) {
+      return val2;
+    } else {
+      return val1;
+    }
+  }
 }

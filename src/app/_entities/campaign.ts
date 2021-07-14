@@ -3,11 +3,13 @@ import { CampaignModel } from '../_models/campaign.model';
 import { Budget } from './budget';
 import { Donation } from './donation';
 import { Organization } from './organization';
+import { Project } from './project/project';
 import { User } from './user';
 
 export class Campaign extends CampaignModel {
 
     leader: User = new User();
+    project: Project = new Project();
     donations: Donation[] = [];
     peopleGivingTime: User[] = [];
     organizations: Organization[] = [];
@@ -33,6 +35,8 @@ export class Campaign extends CampaignModel {
         entity.budgetsRef = model.budgetsRef;
         entity.leader = new User();
         entity.leader.id = model.leader.id;
+        entity.project = new Project();
+        entity.project.id = model.project.id;
         return entity;
     }
 
@@ -48,4 +52,8 @@ export class Campaign extends CampaignModel {
         return entities;
     }
 
+    setProject(projects: Project[] ) {
+        var result = projects.find(project => this.project.id === project.id);
+        result !== undefined ? this.project = result : null;
+    }
 }

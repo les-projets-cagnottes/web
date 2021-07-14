@@ -2,7 +2,7 @@
 import { GenericModel } from './generic.model';
 
 export class CampaignModel extends AuditModel {
-
+    
     title: string = '';
     status: string = 'IN_PROGRESS';
     shortDescription: string = '';
@@ -22,5 +22,6 @@ export class CampaignModel extends AuditModel {
     fundingDeadlinePercent: string;
     peopleRequiredPercent: string;
     donationsRequiredPercent: string;
+
 }
 

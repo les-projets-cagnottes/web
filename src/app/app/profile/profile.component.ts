@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService } from 'src/app/_services';
+import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService, ProjectService } from 'src/app/_services';
 import { ApiToken } from 'src/app/_models';
 import { Account, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
 
@@ -56,6 +56,7 @@ export class ProfileComponent implements OnInit {
     private donationService: DonationService,
     private organizationService: OrganizationService,
     private campaignService: CampaignService,
+    private projectService: ProjectService,
     private userService: UserService,
     private modalService: BsModalService,
     private fb: FormBuilder) {
@@ -138,7 +139,16 @@ export class ProfileComponent implements OnInit {
           });
         this.campaignService.getAllByIds(campaignsId)
           .subscribe(campaigns => {
-              this.donations.forEach(donation => donation.setCampaign(campaigns));
+            var projectsId = [];
+            campaigns.forEach(campaign => projectsId.push(campaign.project.id));
+            this.projectService.getAllByIds(projectsId)
+              .subscribe(projects => {
+                var campaignsProjects = Project.fromModels(projects);
+                this.donations.forEach(donation => {
+                  donation.setCampaign(campaigns);
+                  donation.campaign.setProject(campaignsProjects);
+                });
+              });
           })
       });
   }
