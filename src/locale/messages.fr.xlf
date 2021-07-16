@@ -783,6 +783,60 @@
       <trans-unit id="84bdefe355211ad738354220743c30d8c8de1b0e" datatype="html">
         <target>Mot de passe - Garder vide pour laisser inchangé</target>
       </trans-unit>
+      <trans-unit id="71c77bb8cecdf11ec3eead24dd1ba506573fa9cd" datatype="html">
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit id="abd43a5370cf2938ab1347f38c21396dff8e22a3" datatype="html">
+        <target>Inscrit le </target>
+      </trans-unit>
+      <trans-unit id="80fa90ce67552f3f8a824f756a94327e41d3fc49" datatype="html">
+        <target>Membres</target>
+      </trans-unit>
+      <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="2fcb6b8fd02e2d5b02c67bc90fc849a7d69156fd" datatype="html">
+        <target>Mes cagnottes</target>
+      </trans-unit>
+      <trans-unit id="1b258b258b4cc475ceb2871305b61756b0134f4a" datatype="html">
+        <target>Générer</target>
+      </trans-unit>
+      <trans-unit id="b368ae813044edbde2b2e59392ee787aeef2ab50" datatype="html">
+        <target>Développeur</target>
+      </trans-unit>
+      <trans-unit id="36c826975a69439fda148f4154e3a1bd5bdca2b6" datatype="html">
+        <target>Contributions</target>
+      </trans-unit>
+      <trans-unit id="05e37ae6a305d0530ad533fb5c5b9ecdd5734c61" datatype="html">
+        <target>Votre nouvelle clé d'API</target>
+      </trans-unit>
+      <trans-unit id="d2a7deb7096cada2c3177157652680fe7e6de0ed" datatype="html">
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="313b17449cbb602beebac84465b5266c6f078d19" datatype="html">
+        <target>Organisations</target>
+      </trans-unit>
+      <trans-unit id="0314431b7cca7aeb1bddbdff5b5c387ffea8b07c" datatype="html">
+        <target>Contribuer financièrement</target>
+      </trans-unit>
+      <trans-unit id="9cf1bfe29153fd519120476b96095ab359c94872" datatype="html">
+        <target>Campagne de financement</target>
+      </trans-unit>
+      <trans-unit id="be69500b4aa16cf576d85273d8dfb5765f8dc57b" datatype="html">
+        <target>Votre contribution peut mettre quelques instants avant d'être prise en compte.</target>
+      </trans-unit>
+      <trans-unit id="45f210b96a2a6e91f52f153a4f8dc30662629f8e" datatype="html">
+        <target>Utilisation</target>
+      </trans-unit>
+      <trans-unit id="ea304f72008b1e0a174c577262bf83cae277a185" datatype="html">
+        <target>Vue d'ensemble</target>
+      </trans-unit>
+      <trans-unit id="f19ce69a4fd0a576e71b27e67e6528508e3b6569" datatype="html">
+        <target>Equipiers</target>
+      </trans-unit>
+      <trans-unit id="58cdefc1266b9d4378588aea6cfb38053e7dc634" datatype="html">
+        <target>Campagnes</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
