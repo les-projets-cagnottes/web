@@ -201,13 +201,13 @@ export class ViewProjectComponent implements OnInit {
 
   openContributingModal(template: TemplateRef<any>, campaign: Campaign) {
     this.selectedCampaign = campaign;
-    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0.01), Validators.max(
       +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, campaign.donationsRequired - campaign.totalDonations)).toFixed(2))]);  
     this.contributeFinanciallyModalRef = this.modalService.show(template);
   }
 
   onAccountSelectionChange() {
-    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0), Validators.max(
+    this.donationForm.controls.amount.setValidators([Validators.required, Validators.min(0.01), Validators.max(
       +(this.min(this.accounts[this.donationForm.controls.budget.value].amount, this.selectedCampaign.donationsRequired - this.selectedCampaign.totalDonations)).toFixed(2))]);
   }
 
@@ -250,6 +250,10 @@ export class ViewProjectComponent implements OnInit {
   }
 
   openAddFundingModal(template: TemplateRef<any>) {
+    this.campaign = new Campaign();
+    this.formFunding.controls['budget'].enable();
+    this.formFunding.controls['fundingDeadline'].enable();
+    this.formFunding.controls['donationsRequired'].setValidators([Validators.required, Validators.min(0.01)]);
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
     this.openFundingModal(template);
@@ -364,4 +368,9 @@ export class ViewProjectComponent implements OnInit {
       return val1;
     }
   }
+
+  get filterByCampaignBudgets() {
+    return this.accounts.filter( a => this.selectedCampaign.budgetsRef.includes(a.budget.id));
+  }
 }
+ 
