@@ -45,8 +45,8 @@
                         <tr *ngFor="let campaign of campaigns">
                             <td>
                                 <span *ngIf="campaign.status === 'IN_PROGRESS'" class="badge bg-yellow">J - {{ campaign.remainingDays }}</span>
-                                <span *ngIf="campaign.status == 'FAILED'" class="badge bg-gray" i18n>Avorted</span>
-                                <span *ngIf="campaign.status == 'SUCCESSFUL'" class="badge bg-green" i18n>Validated</span>
+                                <span *ngIf="campaign.status === 'FAILED'" class="badge bg-gray" i18n>Avorted</span>
+                                <span *ngIf="campaign.status === 'SUCCESSFUL'" class="badge bg-green" i18n>Validated</span>
                             </td>
                             <td i18n>Campaign</td>
                             <td><span *ngIf="campaignsBudgets[campaign.budgetsRef[0]] !== undefined">{{ campaignsBudgets[campaign.budgetsRef[0]].name }}</span></td>
@@ -55,12 +55,12 @@
                             <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }}
                                 €</td>
                             <td class="action-bar">
-                                <a *ngIf="campaign.status == 'IN_PROGRESS' && userLoggedIn.id === campaign.leader.id" class="btn btn-default btn-sm" (click)="openContributingModal(contributeFinancially, campaign)">
+                                <a *ngIf="campaign.status == 'IN_PROGRESS' && campaign.totalDonations < campaign.donationsRequired" class="btn btn-default btn-sm" (click)="openContributingModal(contributeFinancially, campaign)">
                                     <i class="fas fa-hand-holding-usd">
                                     </i>
                                     <span i18n>Contribute financially</span>
                                 </a>
-                                <a *ngIf="campaign.status == 'IN_PROGRESS' && userLoggedIn.id === campaign.leader.id" class="btn btn-default btn-sm" (click)="editFundingModal(addFundingTemplate, campaign.id)">
+                                <a *ngIf="campaign.status == 'IN_PROGRESS' && userLoggedIn.id === project.leader.id" class="btn btn-default btn-sm" (click)="editFundingModal(addFundingTemplate, campaign.id)">
                                     <i class="fas fa-edit">
                                     </i>
                                     <span i18n>Edit</span>
@@ -89,7 +89,7 @@
                         <div class="form-group">
                             <label for="amount" i18n>Budget</label>
                             <select class="form-control select-border" style="width: 100%;" formControlName="budget" (ngModelChange)="onAccountSelectionChange()">
-                                <option *ngFor="let account of accounts; index as i" value="{{ i }}">
+                                <option *ngFor="let account of filterByCampaignBudgets; index as i" value="{{ i }}">
                                     {{ campaignsBudgets[account.budget.id].name }}</option>
                             </select>
                         </div>
