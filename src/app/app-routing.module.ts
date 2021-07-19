@@ -27,7 +27,7 @@ const routes: Routes = [
   {
     path: '', component: LesProjetsCagnottesComponent, canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/projects%3Fstatus=in_progress', pathMatch: 'full' },
+      { path: '', redirectTo: '/news', pathMatch: 'full' },
       { path: 'news/new', component: EditNewsComponent },
       { path: 'news/:id/edit', component: EditNewsComponent },
       { path: 'news', component: ListNewsComponent },
