@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this.redirectUrlOAuth = location.href.replace("/login", "/login/slack");
     }
     if(this.router.url.startsWith('/login/slack')) {
-      this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
+      this.redirectUrlOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
       this.authenticationService.slack(this.code, this.redirectUrlOAuth)
         .subscribe(() => {
