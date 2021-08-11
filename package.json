@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^12.2.0",
     "@angular/platform-browser-dynamic": "^12.2.0",
     "@angular/router": "^12.2.0",
-    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "admin-lte": "^3.1.0",
     "angular-http-server": "^1.10.0",
     "bootstrap": "^4.6.0",
