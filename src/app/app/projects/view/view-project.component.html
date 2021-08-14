@@ -213,7 +213,7 @@
             <div class="card-header">
                 <h3 class="card-title" i18n>News</h3>
                 <div class="card-tools">
-                    <a class="btn btn-tool btn-sm" routerLink="/news/new" *ngIf="leader.id === userLoggedIn.id">
+                    <a class="btn btn-tool btn-sm" routerLink="/projects/{{ project.id }}/news/new" *ngIf="leader.id === userLoggedIn.id">
                         <i class="fas fa-plus-circle"></i>
                     </a>
                     <a class="btn btn-tool btn-sm" (click)="refreshNews()"

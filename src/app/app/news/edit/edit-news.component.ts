@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { News, Organization, Project } from 'src/app/_entities';
 import { NewsModel, Role } from 'src/app/_models';
+import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, NewsService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
@@ -14,14 +14,12 @@ export class EditNewsComponent implements OnInit {
 
   // Data
   id: number = 0;
-  private news: News = new News();
-  organizations: Organization[] = [];
-  projects: Project[] = [];
+  idProject: number = 0;
+  private news: NewsModel = new NewsModel();
+  project: ProjectModel = new ProjectModel();
 
   // Form
   form: FormGroup = this.formBuilder.group({
-    organization: [0],
-    project: [0],
     title: ['', [Validators.required, Validators.maxLength(255)]],
     content: ['', [Validators.required]]
   });
@@ -39,56 +37,35 @@ export class EditNewsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private newsService: NewsService,
-    private userService: UserService) {
-    this.route.params.subscribe(params => this.id = params.id);
+    private projectService: ProjectService) {
+    this.route.params.subscribe(params => {
+      this.id = params.id;
+      this.idProject = params.idProject;
+    });
   }
 
   ngOnInit(): void {
-    var organizationNewsFakeProject = new Project();
-    organizationNewsFakeProject.title = '---';
-    this.projects.push(organizationNewsFakeProject);
-    if(this.isAdmin) {
-      var systemNewsFakeOrg = new Organization();
-      systemNewsFakeOrg.name = '---';
-      this.organizations.push(systemNewsFakeOrg);
-    }
     if (this.id > 0) {
       this.newsService.getById(this.id)
         .subscribe(response => {
-          this.news = News.fromModel(response);
+          this.news = response;
+          this.idProject = this.news.project.id;
           this.refresh();
         });
-        this.form.controls['organization'].disable();
-        this.form.controls['project'].disable();
     } else {
       this.refresh();
     }
   }
 
   refresh() {
-    this.form.controls['organization'].setValue(0);
-    this.form.controls['project'].setValue(0);
     this.form.controls['title'].setValue(this.news.title);
     this.form.controls['content'].setValue(this.news.content);
-    this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
-      .subscribe(orgs => {
-        orgs.forEach(org => this.organizations.push(Organization.fromModel(org)));
-        if(this.news.organization.id > 0) {
-          this.form.controls['organization'].setValue(this.organizations.findIndex(org => org.id === this.news.organization.id));
-        } else {
-          this.form.controls['organization'].setValue(0);
-        }
-      });
-    this.userService.getProjects(this.authenticationService.currentUserValue.id)
-      .subscribe(prjs => {
-        prjs.forEach(prj => this.projects.push(Project.fromModel(prj)));
-        if(this.news.project.id > 0) {
-          this.form.controls['project'].setValue(this.projects.findIndex(prj => prj.id === this.news.project.id));
-          this.form.controls['project'].disable();
-        } else {
-          this.form.controls['project'].setValue(0);
-        }
-      });
+    if(this.idProject > 0) {
+      this.projectService.getById(this.idProject)
+        .subscribe(project => {
+          this.project = project;
+        })
+    }
   }
 
   onSubmit() {
@@ -104,8 +81,8 @@ export class EditNewsComponent implements OnInit {
     var submittedNews = new NewsModel();
     submittedNews.title = this.form.controls.title.value;
     submittedNews.content = this.form.controls.content.value;
-    submittedNews.organization.id = this.organizations[this.form.controls.organization.value].id;
-    submittedNews.project.id = this.projects[this.form.controls.project.value].id;
+    submittedNews.organization.id = this.authenticationService.currentOrganizationValue.id;
+    submittedNews.project.id = this.project.id;
     submittedNews.type = 'ARTICLE';
 
     // Submit item to backend

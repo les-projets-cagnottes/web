@@ -837,6 +837,9 @@
       <trans-unit id="58cdefc1266b9d4378588aea6cfb38053e7dc634" datatype="html">
         <target>Campagnes</target>
       </trans-unit>
+      <trans-unit id="f7de1214db056d8379a676b4c451084601b022e4" datatype="html">
+        <target>Edition d'une actualité pour le projet </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
