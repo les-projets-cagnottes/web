@@ -4,10 +4,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CampaignModel } from 'src/app/_models';
-import { Budget, Campaign, Organization, Content } from 'src/app/_entities';
+import { Budget, Campaign, Content } from 'src/app/_entities';
 import { AuthenticationService, OrganizationService, CampaignService, BudgetService, UserService, ContentService } from 'src/app/_services';
-
-declare function startSimpleMDE(): any;
 
 @Component({
   selector: 'app-edit-campaign',

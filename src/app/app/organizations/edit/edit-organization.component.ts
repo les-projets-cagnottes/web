@@ -12,8 +12,6 @@ import { ContentModel, OrganizationModel } from 'src/app/_models';
 import { SlackTeamService } from 'src/app/_services/slack.team.service';
 import { ConfigService } from 'src/app/_services/config/config.service';
 
-declare function startSimpleMDE(): any;
-
 @Component({
   selector: 'app-edit-organization',
   templateUrl: './edit-organization.component.html',
@@ -70,8 +68,10 @@ export class EditOrganizationComponent implements OnInit {
 
   // Content modal
   modalRef: BsModalRef;
-  private simplemde;
   contentId: number;
+  contentValueConfig = {
+    height: '600px'
+  }
 
   endPointEdit: string = '';
   slackEndPoint: string = '';
@@ -244,13 +244,13 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   openContentModal(template: TemplateRef<any>, content) {
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'modal-xl' })
+    );
     this.contentForm.controls['name'].setValue(content.name);
+    this.contentForm.controls['value'].setValue(content.value);
     this.contentId = content.id;
-    if (typeof startSimpleMDE === 'function') {
-      this.simplemde = startSimpleMDE();
-      this.simplemde.value(content.value);
-    }
   }
 
   onSlackSync() {
@@ -306,7 +306,7 @@ export class EditOrganizationComponent implements OnInit {
 
     var content = new ContentModel();
     content.name = this.contentForm.controls['name'].value;
-    content.value = this.simplemde.value();
+    content.value = this.contentForm.controls['value'].value;
 
     if (this.contentId > 0) {
       content.id = this.contentId;

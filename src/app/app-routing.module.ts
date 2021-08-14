@@ -38,6 +38,7 @@ const routes: Routes = [
       { path: 'projects/new', component: EditProjectComponent },
       { path: 'projects/:idProject/campaigns/:id/edit', component: EditCampaignComponent },
       { path: 'projects/:idProject/campaigns/new', component: EditCampaignComponent },
+      { path: 'projects/:idProject/news/new', component: EditNewsComponent },
       { path: 'projects/:id/edit', component: EditProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ListProjectsComponent },

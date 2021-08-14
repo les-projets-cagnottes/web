@@ -225,7 +225,7 @@
                         </div>
                     </div>
                 </div>
-                <ng-template #template>
+                <ng-template #template class="modal-lg">
                     <div class="modal-header">
                         <h4 class="modal-title pull-left" i18n="@@contentEdit">Edit content</h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -240,7 +240,7 @@
                             </div>
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
                                 <label for="value" i18n="@@contentValue">Content</label>
-                                <textarea id="value" formControlName="value" class="form-control" rows="3" placeholder="Put your content here"></textarea>
+                                <textarea id="longDescription" [ngxSummernote]="contentValueConfig" formControlName="value"></textarea>
                             </div>
                         </form>
                     </div>
