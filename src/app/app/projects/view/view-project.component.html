@@ -16,6 +16,9 @@
             <div class="card-header">
                 <h3 class="card-title" i18n>Founding</h3>
                 <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" (click)="openAddFundingModal(addFundingTemplate)" *ngIf="leader.id === userLoggedIn.id">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
                     <a class="btn btn-tool btn-sm" (click)="refreshCampaigns()"
                         [ngClass]="{ 'text-success': campaignsSyncStatus == 'success'}">
                         <i class="fas fa-sync"></i>
@@ -69,12 +72,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div class="card-footer text-center">
-                <button *ngIf="leader.id === userLoggedIn.id" type="button" class="btn btn-primary"
-                    (click)="openAddFundingModal(addFundingTemplate)">
-                    <i class="fa fa-plus"></i> <span i18n>Add funding</span>
-                </button>
             </div>
             <ng-template #contributeFinancially>
                 <div class="modal-header">
@@ -216,6 +213,9 @@
             <div class="card-header">
                 <h3 class="card-title" i18n>News</h3>
                 <div class="card-tools">
+                    <a class="btn btn-tool btn-sm" routerLink="/news/new" *ngIf="leader.id === userLoggedIn.id">
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
                     <a class="btn btn-tool btn-sm" (click)="refreshNews()"
                         [ngClass]="{ 'text-success': newsSyncStatus == 'success'}">
                         <i class="fas fa-sync"></i>
@@ -275,10 +275,6 @@
                     *ngIf="leader.id === userLoggedIn.id && project.status == 'DRAFT'">
                     <i class="fas fa-rocket"></i>
                     <span i18n>Publish</span>
-                </a>
-                <a class="btn btn-app" routerLink="/news/new" *ngIf="leader.id === userLoggedIn.id">
-                    <i class="fas fa-newspaper"></i>
-                    <span i18n>Create a news</span>
                 </a>
                 <a class="btn btn-app" (click)="join()"
                     *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
