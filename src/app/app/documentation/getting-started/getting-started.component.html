@@ -5,23 +5,17 @@
                 <h3 class="card-title">Documentation : Guide pratique</h3>
             </div>
             <div class="card-body">
-                <h2 id="submit-project">1. Soumettre un projet</h2>
+                <h2 id="manage-project">1. Gérer un projet</h2>
+                <h3 id="create-project">1.1. Créer un projet</h3>
                 <p>
-                    N’importe qui peut proposer un projet à la communauté. Pour cela, rendez-vous une fois identifié sur <b><a [routerLink]="['/campaigns/new']">Soumettre mon projet</a></b> et remplissez les champs requis. A noter :
+                    N’importe qui peut proposer un projet à l'organisation. Pour cela, rendez-vous une fois identifié
+                    sur <b><a [routerLink]="['/projects/new']">Soumettre mon projet</a></b> et remplissez les champs
+                    requis. A noter qu'il faut au moins 3 personnes dans l'équipe projet (soit 2 en plus du porteur du
+                    projet).
                 </p>
-                <ul>
-                    <li>
-                        Le champ “Budget” défini combien de temps vous vous donner pour réunir votre équipe et votre budget. Passé cette date, 2 possibilités :
-                        <ul>
-                            <li>Soit vous avez suffisamment de membres et de financement dans l’équipe, auquel cas le projet est validé et vous pouvez officiellement vous lancer</li>
-                            <li>Soit il manque des membres ou du financement auquel cas le projet est abandonné</li>
-                        </ul>
-                    </li>
-                    <li>Il faut au moins 3 personnes dans l’équipe projet</li>
-                    <li>Pas de montant minimum ou maximum requis</li>
-                </ul>
                 <p>
-                    Dans l'espace "Présentation Détaillée", veillez à renseigner un maximum d’informations pour convaincre la communauté, notamment :
+                    Dans l'espace "Présentation Détaillée", veillez à renseigner un maximum d’informations pour
+                    convaincre la communauté, notamment :
                 </p>
                 <ul>
                     <li>Qui sont les acteurs ?</li>
@@ -30,11 +24,45 @@
                     <li>A quoi va servir le budget ?</li>
                 </ul>
                 <p>
-                    Cet espace est le vôtre ! N'hésitez pas à changer la mise en forme comme bon vous semble en utilisant <b><a href="https://docs.framasoft.org/fr/grav/markdown.html">la syntaxe Markdown</a></b>.
+                    Cet espace est le vôtre ! N'hésitez pas à changer la mise en forme comme bon vous semble.
                 </p>
+                <p>
+                    Une fois créé, le projet est à l'état <b>Brouillon</b>. Tant qu'il est dans cet état, le projet
+                    n'apparaît pas dans la liste des projets en cours mais est accessible si vous communiquez le lien.
+                    Une fois que vous êtes prêts, pensez à <b>Publier</b> le projet.
+                </p>
+                <h3 id="create-campaign">1.2. Créer une campagne de financement</h3>
+                <p>
+                    Une fois que vous avez identifié un besoin de financement, vous pouvez lancer une campagne pour
+                    votre projet. Pour cela, rendez-vous sur la page du projet et cliquez sur le <i
+                        class="fas fa-plus-circle"></i> en haut à droite de la section "Financement". A noter que :
+                </p>
+                <ul>
+                    <li>
+                        Le champ "Date limite de financement" défini combien de temps vous vous donner pour réunir votre
+                        équipe et votre
+                        budget. Passé cette date, 2 possibilités :
+                        <ul>
+                            <li>Soit vous avez collecté suffisamment d'argent sur la campagne et le nombre d'équipiers
+                                est supérieur à 3
+                                dans ce cas : la campagne est validée</li>
+                            <li>Soit il manque des membres ou du financement auquel cas la campagne est abandonnée</li>
+                        </ul>
+                    </li>
+                    <li>Une fois la campagne lancée, le projet passe automatiquement à l'état <b>En cours</b> et sera
+                        visible de toute l'organisation</li>
+                </ul>
+                <h3 id="create-news">1.3. Publier des actualités</h3>
+                <p>Il est important de donner régulièrement des nouvelles sur son projet. Pour cela, chaque porteur de
+                    projet peut créer des actualités qui seront visibles dans le fil d'actualités.</p>
+                <p>Pour ce faire, rendez-vous sur la page de visualisation d'un projet et cliquez sur le <i
+                        class="fas fa-plus-circle"></i> en haut à droite de la section "Actualités". Il suffira alors de
+                    saisir le contenu de l'article et un titre.</p>
                 <h2 id="contribute-to-a-project">2. Contribuer à un projet</h2>
                 <p>
-                    Chaque membre d'une organisation dispose d’une cagnotte dont le montant s’affiche sur son profil. Pour y accéder, cliquez sur <b><a [routerLink]="['/profile']">ce lien</a> ou sur votre nom en haut à gauche</b>. Il est possible de contribuer
+                    Chaque membre d'une organisation dispose d’une cagnotte dont le montant s’affiche sur son profil.
+                    Pour y accéder, cliquez sur <a [routerLink]="['/profile']">ce lien</a> ou sur votre nom en haut à
+                    gauche. Il est possible de contribuer
                     de 3 façons à un projet :
                 </p>
                 <ul>
@@ -44,17 +72,23 @@
                 </ul>
                 <h3 id="give-pot">2.1. Donner tout ou partie de sa cagnotte</h3>
                 <ol>
-                    <li>Dans <b><a [routerLink]="['/campaigns']">Découvrir les projets</a></b>, cliquez sur le projet que vous souhaitez soutenir</li>
-                    <li>Cliquez sur le bouton "Contribuer financièrement"</li>
-                    <li>Dans le formulaire qui apparaît, vous pouvez choisir le montant que vous souhaitez donner en remplissant le champ "Montant"</li>
+                    <li>Dans <b><a [routerLink]="['/projects']">Découvrir les projets</a></b>, cliquez sur le projet que
+                        vous souhaitez soutenir</li>
+                    <li>Cliquez sur le bouton "Contribuer financièrement" en face d'une campagne dans la section
+                        "Financement"</li>
+                    <li>Dans le formulaire qui apparaît, vous pouvez choisir le montant que vous souhaitez donner en
+                        remplissant le champ "Montant"</li>
                     <li>Valider en cliquant sur "Envoyer"</li>
-                    <li>Votre contribution apparaît dans la liste des donations sur la page du projet ainsi que sur votre profil</li>
+                    <li>Vous pouvez consulter votre contribution et éventuellement la supprimer en vous rendant sur <a
+                            [routerLink]="['/profile']">votre profil.</a></li>
                 </ol>
                 <h3 id="give-time">2.2 Donner du temps au projet</h3>
                 <ol>
-                    <li>Dans <b><a [routerLink]="['/campaigns']">Découvrir les projets</a></b>, cliquez sur le projet que vous souhaitez soutenir</li>
+                    <li>Dans <b><a [routerLink]="['/projects']">Découvrir les projets</a></b>, cliquez sur le projet que
+                        vous souhaitez soutenir</li>
                     <li>Cliquez sur le bouton "Rejoindre l'équipe"</li>
-                    <li>Votre inscription apparaît dans la liste des équipiers sur la page du projet ainsi que sur votre profil</li>
+                    <li>Votre inscription apparaît dans la liste des équipiers sur la page du projet ainsi que sur <a
+                            [routerLink]="['/profile']">votre profil.</a></li>
                 </ol>
                 <p>
                     Vous pouvez vous retirer de l’équipe à tout moment en cliquant sur "Quitter l'équipe".
@@ -70,7 +104,13 @@
             <div class="card-body">
                 <ol>
                     <li>
-                        <a href="/doc/getting-started#submit-project">Soumettre un projet</a>
+                        <a href="/doc/getting-started#manage-project">Gérer un projet</a>
+                        <ol>
+                            <li><a href="/doc/getting-started#create-project">Créer un projet</a></li>
+                            <li><a href="/doc/getting-started#create-campaign">Créer une campagne de financement</a>
+                            </li>
+                            <li><a href="/doc/getting-started#create-news">Publier des actualités</a></li>
+                        </ol>
                     </li>
                     <li>
                         <a href="/doc/getting-started#contribute-to-a-project">Contribuer à un projet</a>
