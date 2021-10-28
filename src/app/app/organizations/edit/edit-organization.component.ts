@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ContentService } from 'src/app/_services/content.service';
 import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization.authority';
-import { ContentModel, OrganizationModel } from 'src/app/_models';
+import {ContentModel, OrganizationModel, SlackTeamModel} from 'src/app/_models';
 import { SlackTeamService } from 'src/app/_services/slack.team.service';
 import { ConfigService } from 'src/app/_services/config/config.service';
 
@@ -22,11 +22,13 @@ export class EditOrganizationComponent implements OnInit {
   // Data
   id: number;
   organization: Organization = new Organization();
+  slackTeam: SlackTeam = new SlackTeam();
 
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
-    logoUrl: [this.organization.logoUrl]
+    logoUrl: [this.organization.logoUrl],
+    slackPublicationChannelId: [this.slackTeam.publicationChannelId]
   });
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
@@ -75,7 +77,7 @@ export class EditOrganizationComponent implements OnInit {
 
   endPointEdit: string = '';
   slackEndPoint: string = '';
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -95,7 +97,7 @@ export class EditOrganizationComponent implements OnInit {
   setRedirectUrlOAuth(id: number) {
     var endPointEdit = '/organizations/edit/' + id;
     var slackEndPoint = '/organizations/edit/slack/' + id;
-    
+
     if (this.router.url.startsWith(endPointEdit)
       && !this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlOAuth = location.href.replace(endPointEdit, slackEndPoint);
@@ -404,6 +406,7 @@ export class EditOrganizationComponent implements OnInit {
     var organization = new OrganizationModel();
     organization.name = this.f.name.value;
     organization.logoUrl = this.f.logoUrl.value;
+
     if(organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
@@ -427,6 +430,30 @@ export class EditOrganizationComponent implements OnInit {
               this.submitStatus = 'idle';
             }, 2000);
           });
+      if (this.organization.slackTeam) {
+        var slackTeam = new SlackTeamModel();
+        slackTeam.teamName = this.organization.slackTeam.teamName;
+        slackTeam.teamId = this.organization.slackTeam.teamId;
+        slackTeam.publicationChannelId = this.f.slackPublicationChannelId.value;
+        this.slackTeamService.update(slackTeam)
+          .subscribe(
+            () => {
+              this.submitting = false;
+              this.submitStatus = 'success';
+              setTimeout(() => {
+                this.submitStatus = 'idle';
+              }, 2000);
+            },
+            error => {
+              console.log(error);
+              this.submitting = false;
+              this.submitStatus = 'error';
+              setTimeout(() => {
+                this.submitStatus = 'idle';
+              }, 2000);
+            });
+      }
+
     } else {
       this.organizationService.create(organization)
         .subscribe(

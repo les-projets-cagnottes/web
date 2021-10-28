@@ -11,7 +11,7 @@ export class SlackTeam extends SlackTeamModel {
         entity.updatedBy = model.updatedBy;
         entity.teamId = model.teamId;
         entity.teamName = model.teamName;
-        entity.publicationChannel = model.publicationChannel;
+        entity.publicationChannelId = model.publicationChannelId;
         return entity;
     }
 
