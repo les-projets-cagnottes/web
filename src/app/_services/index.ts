@@ -6,6 +6,7 @@ export * from './budget.service';
 export * from './campaign.service';
 export * from './content.service';
 export * from './donation.service';
+export * from './file/file.service';
 export * from './idea.service';
 export * from './news/news.service';
 export * from './organization.service';
