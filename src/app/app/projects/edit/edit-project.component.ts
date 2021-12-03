@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Organization, Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, ProjectService, UserService } from 'src/app/_services';
+import { AuthenticationService, FileService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
   selector: 'app-edit-project',
@@ -34,7 +34,7 @@ export class EditProjectComponent implements OnInit {
   // Long Description editor config
   longDescriptionConfig = {
     height: '600px',
-    uploadImagePath: 'http://localhost:8080/api/files/image'
+    uploadImagePath: this.fileService.getUploadPath(this.project.workspace, true),
   }
 
   constructor(
@@ -42,6 +42,7 @@ export class EditProjectComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private fileService: FileService,
     private projectService: ProjectService,
     private userService: UserService) {
     this.route.params.subscribe(params => this.id = params.id);
@@ -55,6 +56,8 @@ export class EditProjectComponent implements OnInit {
           this.refresh();
         });
     } else {
+      this.project.workspace = this.fileService.generateString(10);
+      this.longDescriptionConfig.uploadImagePath = this.fileService.getUploadPath(this.project.workspace, true);
       this.project.longDescription = "<blockquote><h1>Ceci est un modèle par défaut. N'hésitez pas à l'embellir pour montrer votre projet sous son meilleur jour ;-)<br></h1></blockquote><h1>Mon super projet</h1>\n<h2>De quoi s'agit-il ?</h2>\n<h2>Qui est concerné ?</h2><h2>A quoi va servir le budget ?<br></h2>\n<h2>Pourquoi ça me tient à cœur</h2><p><br></p><p><br></p>\n"
       this.refresh();
     }

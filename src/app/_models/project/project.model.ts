@@ -8,6 +8,7 @@ export class ProjectModel extends AuditModel {
     shortDescription: string = '';
     longDescription: string = '';
     peopleRequired: number = 2;
+    workspace: string = '';
     leader: GenericModel = new GenericModel();
     peopleGivingTimeRef: number[] = [];
     organizationsRef: number[] = [];
