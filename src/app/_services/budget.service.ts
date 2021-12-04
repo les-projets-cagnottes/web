@@ -32,14 +32,6 @@ export class BudgetService {
     return this.http.get<CampaignModel[]>(`${this.configService.get('apiUrl')}/budget/${budgetId}/accounts`, { params });
   }
   
-  getDonations(BudgetModelId: number) {
-    return this.http.get<DonationModel[]>(`${this.configService.get('apiUrl')}/budget/${BudgetModelId}/donations`);
-  }
-  
-  getDonationsByContributorId(contributorId: number, budgetId: number) {
-    return this.http.get<DonationModel[]>(`${this.configService.get('apiUrl')}/budget/${budgetId}/donations?contributorId=${contributorId}`);
-  }
-
   getCampaigns(budgetId: any, offset, limit) {
     const params = new HttpParams()
         .set('offset', offset)
