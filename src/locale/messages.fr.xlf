@@ -48,9 +48,6 @@
       <trans-unit id="administrationMenu" datatype="html">
         <target>ADMINISTRATION</target>
       </trans-unit>
-      <trans-unit id="aLotOfPeople" datatype="html">
-        <target>plein de gens </target>
-      </trans-unit>
       <trans-unit id="budget" datatype="html">
         <target>Budget</target>
       </trans-unit>
@@ -445,6 +442,7 @@
         <target>Démarrer une campagne</target>
       </trans-unit>
       <trans-unit id="7454575571a2ca5298c902e25ca3e0d9251d3bed" datatype="html">
+        <source> Start my project </source>
         <target>Lancer mon projet</target>
       </trans-unit>
       <trans-unit id="02db1dbcf9cdf15db3202e5ec149f94dd7ec3e3b" datatype="html">

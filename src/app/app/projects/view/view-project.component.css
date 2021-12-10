@@ -1,3 +1,8 @@
 .users-list > li img {
     width: 90px;
 }
+
+:host ::ng-deep #long-description img {
+    max-width:100%;
+    max-height:100%;
+}

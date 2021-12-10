@@ -803,7 +803,7 @@
         <source>Summary</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/documentation/getting-started/getting-started.component.html</context>
-          <context context-type="linenumber">68</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6077409ceec10631c0acb0ea042b84dafe873607" datatype="html">
@@ -950,7 +950,7 @@
         <source> Newsfeed </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">43,45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f0274af6c76ea3f99ceae371d3be887e4db4cf3a" datatype="html">
@@ -964,14 +964,14 @@
         <source> Suggestions Box </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">52,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7454575571a2ca5298c902e25ca3e0d9251d3bed" datatype="html">
         <source> Start my project </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">61,62</context>
+          <context context-type="linenumber">60,62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5dda42411cc1aa71c0cf1184a54af89c5acc1344" datatype="html">
@@ -1006,7 +1006,7 @@
         <source> MANAGEMENT</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">93,94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="budgetsMenu" datatype="html">
@@ -1027,7 +1027,7 @@
         <source> ADMINISTRATION</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">107,108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="usersMenu" datatype="html">
@@ -1055,7 +1055,7 @@
         <source> DOCUMENTATION</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">127,128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="gettingStartedMenu" datatype="html">
