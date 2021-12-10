@@ -20,6 +20,7 @@ export class Project extends ProjectModel {
         entity.shortDescription = model.shortDescription;
         entity.longDescription = model.longDescription;
         entity.peopleRequired = model.peopleRequired;
+        entity.workspace = model.workspace;
         entity.peopleGivingTimeRef = model.peopleGivingTimeRef;
         entity.organizationsRef = model.organizationsRef;
         entity.campaignsRef = model.campaignsRef;
