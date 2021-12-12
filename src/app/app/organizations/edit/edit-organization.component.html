@@ -161,7 +161,7 @@
                     <div class="card-header">
                         <h3 class="card-title" i18n="@@organizationContents">Documents</h3>
                         <div class="card-tools">
-                            <a class="btn btn-tool btn-sm" (click)="openContentModal(template, 0)">
+                            <a class="btn btn-tool btn-sm" (click)="openNewContentModal(template)">
                                 <i class="fa fa-plus"></i>
                             </a>
                             <a class="btn btn-tool btn-sm" (click)="refreshContents(pagerContents.currentPage)" [ngClass]="{ 'text-success': refreshContentStatus == 'success', 'text-danger': refreshContentStatus == 'error'}">
@@ -238,9 +238,9 @@
                                 <label for="name" i18n="@@contentName">Name</label>
                                 <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter content name">
                             </div>
-                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
+                            <div  *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
                                 <label for="value" i18n="@@contentValue">Content</label>
-                                <textarea id="longDescription" [ngxSummernote]="contentValueConfig" formControlName="value"></textarea>
+                                <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig" (mediaDelete)="onDeleteMedia($event)"></textarea>
                             </div>
                         </form>
                     </div>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { v4 as uuidv4 } from 'uuid';
 import { Organization, Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, FileService, ProjectService, UserService } from 'src/app/_services';
 
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-edit-project',
@@ -16,7 +16,7 @@ export class EditProjectComponent implements OnInit {
 
   // Data
   id: number = 0;
-  private project: Project = new Project();
+  project: Project = new Project();
   organizations: Organization[] = [];
 
   // Form
@@ -36,7 +36,7 @@ export class EditProjectComponent implements OnInit {
   // Long Description editor config
   longDescriptionConfig = {
     height: '600px',
-    uploadImagePath: this.fileService.getUploadPath("projects/" + this.project.workspace, true),
+    uploadImagePath: '',
   }
 
   constructor(
@@ -59,13 +59,13 @@ export class EditProjectComponent implements OnInit {
         });
     } else {
       this.project.workspace = uuidv4();
-      this.longDescriptionConfig.uploadImagePath = this.fileService.getUploadPath("projects/" + this.project.workspace, true);
       this.project.longDescription = "<blockquote><h1>Ceci est un modèle par défaut. N'hésitez pas à l'embellir pour montrer votre projet sous son meilleur jour ;-)<br></h1></blockquote><h1>Mon super projet</h1>\n<h2>De quoi s'agit-il ?</h2>\n<h2>Qui est concerné ?</h2><h2>A quoi va servir le budget ?<br></h2>\n<h2>Pourquoi ça me tient à cœur</h2><p><br></p><p><br></p>\n"
       this.refresh();
     }
   }
 
   refresh() {
+    this.longDescriptionConfig.uploadImagePath = this.fileService.getUploadPath("projects/" + this.project.workspace, true);
     this.form.controls['organization'].setValue(0);
     this.form.controls['title'].setValue(this.project.title);
     this.form.controls['shortDescription'].setValue(this.project.shortDescription);
@@ -125,5 +125,14 @@ export class EditProjectComponent implements OnInit {
             this.submitting = false;
           });
     }
+  }
+
+  onDeleteMedia(file) {
+    this.fileService.deleteByUrl(file.url)
+      .subscribe(
+        () => {},
+        error => {
+          console.log(error);
+        });
   }
 }
