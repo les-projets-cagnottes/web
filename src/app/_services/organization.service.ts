@@ -110,10 +110,6 @@ export class OrganizationService {
     return this.http.get<ContentModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/contents`, { params });
   }
 
-  addContent(id: number, content: ContentModel) {
-    return this.http.post(`${this.configService.get('apiUrl')}/organization/${id}/contents`, content);
-  }
-
   getOrganizationAuthorities(organizationsId: Number) {
     return this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/organization/${organizationsId}/authorities`, {});
   }

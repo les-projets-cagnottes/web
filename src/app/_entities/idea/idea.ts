@@ -1,7 +1,7 @@
-import { IdeaModel } from '../_models';
+import { IdeaModel } from '../../_models';
 
-import { Organization } from './organization';
-import { User } from './user';
+import { Organization } from '../organization';
+import { User } from '../user';
 
 export class Idea extends IdeaModel {
 
@@ -22,6 +22,7 @@ export class Idea extends IdeaModel {
         entity.longDescription = model.longDescription;
         entity.hasAnonymousCreator = model.hasAnonymousCreator;
         entity.hasLeaderCreator = model.hasLeaderCreator;
+        entity.workspace = model.workspace;
         entity.submitter = new User();
         entity.submitter.id = model.submitter.id;
         entity.organization = new Organization();

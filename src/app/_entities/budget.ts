@@ -1,7 +1,7 @@
 import { BudgetModel } from '../_models/budget.model';
 
 import { Account } from './account';
-import { Content } from './content';
+import { Content } from './content/content';
 import { Donation } from './donation';
 import { Organization } from './organization';
 import { User } from './user';

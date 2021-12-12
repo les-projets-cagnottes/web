@@ -19,19 +19,23 @@ export class ContentService {
 
   getAllByIds(ids: number[]) {
     const params = new HttpParams()
-        .set('ids', ids.toString());
+      .set('ids', ids.toString());
     return this.http.get<ContentModel[]>(`${this.configService.get('apiUrl')}/content`, { params });
-}
-
-  update(content: ContentModel) {
-    return this.http.put<ContentModel>(`${this.configService.get('apiUrl')}/content`, content);
   }
 
   getById(id) {
     return this.http.get<ContentModel>(`${this.configService.get('apiUrl')}/content/${id}`);
   }
 
-  removeContent(organizationId: number, contentId: number) {
-    return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/contents?contentId=${contentId}`);
+  create(content: ContentModel) {
+    return this.http.post(`${this.configService.get('apiUrl')}/content`, content);
+  }
+
+  update(content: ContentModel) {
+    return this.http.put<ContentModel>(`${this.configService.get('apiUrl')}/content`, content);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.configService.get('apiUrl')}/content/${id}`);
   }
 }

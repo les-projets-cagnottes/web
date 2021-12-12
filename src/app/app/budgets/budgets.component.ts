@@ -46,11 +46,12 @@ export class BudgetsComponent implements OnInit {
   }
 
   refresh(): void {
-    if (this.authenticationService.currentUserValue !== null && this.authenticationService.currentOrganizationValue) {
-      this.organizations = [this.authenticationService.currentOrganizationValue];
+    this.organizationService.getById(this.authenticationService.currentOrganizationValue.id)
+    .subscribe(organization => {
+      this.organizations = [Organization.fromModel(organization)];
       this.mainForms = [];
       this.refreshContents(0);
-    }
+    });
   }
 
   refreshContents(indexOrg: number) {

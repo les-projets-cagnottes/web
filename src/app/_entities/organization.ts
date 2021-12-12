@@ -1,7 +1,7 @@
 import { OrganizationModel } from '../_models/organization.model';
 
 import { Budget } from './budget';
-import { Content } from './content';
+import { Content } from './content/content';
 import { OrganizationAuthority } from './organization.authority';
 import { User } from './user';
 import { SlackTeam } from './slack.team';

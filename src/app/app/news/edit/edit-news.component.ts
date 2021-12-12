@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewsModel, Role } from 'src/app/_models';
-import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, NewsService, ProjectService, UserService } from 'src/app/_services';
+import { v4 as uuidv4 } from 'uuid';
+import { NewsModel, ProjectModel, Role } from 'src/app/_models';
+import { AuthenticationService, FileService, NewsService, ProjectService } from 'src/app/_services';
 
 @Component({
   selector: 'app-edit-news',
@@ -28,7 +28,7 @@ export class EditNewsComponent implements OnInit {
   // Long Description editor config
   contentConfig = {
     height: '600px',
-    uploadImagePath: 'http://localhost:8080/api/files/image'
+    uploadImagePath: ''
   }
 
   constructor(
@@ -36,6 +36,7 @@ export class EditNewsComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private fileService: FileService,
     private newsService: NewsService,
     private projectService: ProjectService) {
     this.route.params.subscribe(params => {
@@ -53,11 +54,13 @@ export class EditNewsComponent implements OnInit {
           this.refresh();
         });
     } else {
+      this.news.workspace = uuidv4();
       this.refresh();
     }
   }
 
   refresh() {
+    this.contentConfig.uploadImagePath = this.fileService.getUploadPath("news/" + this.news.workspace, true);
     this.form.controls['title'].setValue(this.news.title);
     this.form.controls['content'].setValue(this.news.content);
     if(this.idProject > 0) {
@@ -115,5 +118,14 @@ export class EditNewsComponent implements OnInit {
   get isAdmin() {
     var isAdmin = this.authenticationService.currentUserValue != null && this.authenticationService.currentUserValue.userAuthorities != null;
     return isAdmin && this.authenticationService.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
+  }
+
+  onDeleteMedia(file) {
+    this.fileService.deleteByUrl(file.url)
+      .subscribe(
+        () => {},
+        error => {
+          console.log(error);
+        });
   }
 }
