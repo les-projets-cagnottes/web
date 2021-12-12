@@ -18,6 +18,7 @@ export class News extends NewsModel {
         entity.updatedBy = model.updatedBy;
         entity.title = model.title;
         entity.content = model.content;
+        entity.workspace = model.workspace;
         entity.author = new User();
         entity.author.id = model.author.id;
         entity.organization = new Organization();

@@ -1,10 +1,10 @@
-import { ContentModel } from '../_models/content.model';
+import { ContentModel } from '../../_models/content/content.model';
 
-import { Organization } from './organization';
+import { Organization } from '../organization';
 
 export class Content extends ContentModel {
     
-    organizations: Organization[];
+    organization: Organization;
     
     static fromModel(model: ContentModel): Content {
         var entity = new Content();
@@ -15,6 +15,9 @@ export class Content extends ContentModel {
         entity.updatedBy = model.updatedBy;
         entity.name = model.name;
         entity.value = model.value;
+        entity.workspace = model.workspace;
+        entity.organization = new Organization();
+        entity.organization.id = model.organization.id;
         return entity;
     }
 

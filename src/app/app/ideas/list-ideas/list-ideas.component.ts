@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { PagerService, OrganizationService, AuthenticationService, UserService, IdeaService } from 'src/app/_services';
+import { v4 as uuidv4 } from 'uuid';
+import { PagerService, OrganizationService, AuthenticationService, UserService, IdeaService, FileService } from 'src/app/_services';
 import { IdeaModel } from 'src/app/_models';
 import { Organization, User, Idea } from 'src/app/_entities';
-import { MainService } from 'src/app/_services/main.service';
 
 @Component({
   selector: 'app-list-ideas',
@@ -17,7 +17,7 @@ export class ListIdeasComponent implements OnInit {
   currentOrganization: Organization;
   currentUser: User;
   ideas: Idea[] = [];
-  selectedIdea: IdeaModel;
+  selectedIdea: IdeaModel = new IdeaModel();
   longDescription: string = "";
 
   // Paginations
@@ -37,13 +37,15 @@ export class ListIdeasComponent implements OnInit {
 
   // Editors
   config = {
-    height: '200px'
+    height: '200px',
+    uploadImagePath: ''
   }
-
+  
   constructor(private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private pagerService: PagerService,
     private authenticationService: AuthenticationService,
+    private fileService: FileService,
     private ideaService: IdeaService,
     private organizationService: OrganizationService,
     private userService: UserService) { }
@@ -105,23 +107,32 @@ export class ListIdeasComponent implements OnInit {
   openModalCreateIdea(template): void {
     this.selectedIdea = new IdeaModel();
     this.longDescription = "";
+    this.selectedIdea.workspace = uuidv4();
+    this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
     this.form.controls.icon.setValue("far fa-lightbulb");
     this.form.controls.shortDescription.setValue("");
     this.form.controls.longDescription.setValue("");
     this.form.controls.hasAnonymousCreator.setValue(false);
     this.form.controls.hasLeaderCreator.setValue(false);
-    this.modal = this.modalService.show(template);
+    this.modal = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'modal-xl' })
+    );
   }
 
   openModalEditIdea(template, idea: IdeaModel): void {
     this.selectedIdea = idea;
     this.longDescription = idea.longDescription;
+    this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
     this.form.controls.icon.setValue(idea.icon);
     this.form.controls.shortDescription.setValue(idea.shortDescription);
     this.form.controls.longDescription.setValue(idea.longDescription);
     this.form.controls.hasAnonymousCreator.setValue(idea.hasAnonymousCreator);
     this.form.controls.hasLeaderCreator.setValue(idea.hasLeaderCreator);
-    this.modal = this.modalService.show(template);
+    this.modal = this.modalService.show(
+      template,
+      Object.assign({}, { class: 'modal-xl' })
+    );
   }
 
   closeModalEditIdea() {
@@ -170,4 +181,12 @@ export class ListIdeasComponent implements OnInit {
     }
   }
 
+  onDeleteMedia(file) {
+    this.fileService.deleteByUrl(file.url)
+      .subscribe(
+        () => {},
+        error => {
+          console.log(error);
+        });
+  }
 }
