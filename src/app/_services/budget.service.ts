@@ -21,10 +21,6 @@ export class BudgetService {
     return this.http.get<BudgetModel[]>(`${this.configService.get('apiUrl')}/budget`, { params });
 }
 
-  getUsable() {
-    return this.http.get<BudgetModel[]>(`${this.configService.get('apiUrl')}/budget/usable`);
-  }
-
   getAccounts(budgetId: any, offset, limit) {
     const params = new HttpParams()
         .set('offset', offset)
