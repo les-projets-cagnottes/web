@@ -10,6 +10,7 @@ import { ProjectModel } from '../_models/project/project.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+
     constructor(private http: HttpClient, private configService: ConfigService) { }
 
     list(offset: number, limit: number) {
@@ -45,14 +46,26 @@ export class UserService {
         return this.http.get<AccountModel[]>(`${this.configService.get('apiUrl')}/user/${id}/accounts`);
     }
 
+    getAccountsByBudgetIds(id: number, budgetIds: number[]) {
+        const params = new HttpParams()
+            .set('budgetIds', budgetIds.toString());
+        return this.http.get<AccountModel[]>(`${this.configService.get('apiUrl')}/user/${id}/accounts`, { params });
+    }
+
     getProjects(id: number) {
         return this.http.get<ProjectModel[]>(`${this.configService.get('apiUrl')}/user/${id}/projects`);
-      }
-    
+    }
+
     getDonations(id: number) {
         return this.http.get<DonationModel[]>(`${this.configService.get('apiUrl')}/user/${id}/donations`);
     }
-    
+
+    getDonationsByAccountIds(id: number, accountIds: number[]) {
+        const params = new HttpParams()
+            .set('accountIds', accountIds.toString());
+        return this.http.get<DonationModel[]>(`${this.configService.get('apiUrl')}/user/${id}/donations`, { params });
+    }
+
     getOrganizations(id: number) {
         return this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/user/${id}/organizations`);
     }

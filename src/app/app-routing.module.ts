@@ -4,19 +4,14 @@ import { LesProjetsCagnottesComponent } from './app/lesprojetscagnottes.componen
 import { AuthGuard } from './_guards';
 import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './app/users/users.component';
-import { ListCampaignsComponent } from './app/campaigns/list/list-campaigns.component';
-import { EditCampaignComponent } from './app/campaigns/edit/edit-campaign.component';
 import { EditOrganizationComponent } from './app/organizations/edit/edit-organization.component';
 import { OrganizationsComponent } from './app/organizations/list/list-organizations.component';
-import { ViewCampaignComponent } from './app/campaigns/view/view-campaign.component';
 import { BudgetsComponent } from './app/budgets/budgets.component';
 import { ProfileComponent } from './app/profile/profile.component';
 import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { AdminComponent } from './app/admin/admin.component';
 import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
-import { SchedulerComponent } from './app/scheduler/scheduler.component';
 import { EditProjectComponent } from './app/projects/edit/edit-project.component';
 import { ListProjectsComponent } from './app/projects/list/list-projects.component';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
@@ -36,23 +31,15 @@ const routes: Routes = [
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
       { path: 'projects/new', component: EditProjectComponent },
-      { path: 'projects/:idProject/campaigns/:id/edit', component: EditCampaignComponent },
-      { path: 'projects/:idProject/campaigns/new', component: EditCampaignComponent },
       { path: 'projects/:idProject/news/new', component: EditNewsComponent },
       { path: 'projects/:id/edit', component: EditProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ListProjectsComponent },
-      { path: 'campaigns/new', component: EditCampaignComponent },
-      { path: 'campaigns/:id/edit', component: EditCampaignComponent },
-      { path: 'campaigns/:id', component: ViewCampaignComponent },
-      { path: 'campaigns', component: ListCampaignsComponent },
       { path: 'ideas', component: ListIdeasComponent },
       { path: 'budgets', component: BudgetsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },
       { path: 'users', component: UsersComponent },
-      { path: 'admin', component: AdminComponent },
-      { path: 'schedules', component: SchedulerComponent },
       { path: 'doc/getting-started', component: GettingStartedComponent },
       { path: 'about', component: AboutComponent }
     ]

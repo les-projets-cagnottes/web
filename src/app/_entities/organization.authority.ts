@@ -1,6 +1,6 @@
 
 import { OrganizationAuthorityModel } from '../_models';
-import { Organization } from './organization';
+import { Organization } from './organization/organization';
 
 export class OrganizationAuthority extends OrganizationAuthorityModel {
 

@@ -1,6 +1,6 @@
 import { ContentModel } from '../../_models/content/content.model';
 
-import { Organization } from '../organization';
+import { Organization } from '../organization/organization';
 
 export class Content extends ContentModel {
     

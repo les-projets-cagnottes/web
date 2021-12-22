@@ -52,7 +52,7 @@
                                 <span *ngIf="campaign.status === 'SUCCESSFUL'" class="badge bg-green" i18n>Validated</span>
                             </td>
                             <td i18n>Campaign</td>
-                            <td><span *ngIf="campaignsBudgets[campaign.budgetsRef[0]] !== undefined">{{ campaignsBudgets[campaign.budgetsRef[0]].name }}</span></td>
+                            <td><span *ngIf="campaignsBudgets[campaign.budget.id] !== undefined">{{ campaignsBudgets[campaign.budget.id].name }}</span></td>
                             <td>{{ campaign.createdAt | date:'medium' }}</td>
                             <td>{{ campaign.fundingDeadline | date:'medium' }}</td>
                             <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }}

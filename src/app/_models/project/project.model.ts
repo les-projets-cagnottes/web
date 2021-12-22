@@ -10,9 +10,10 @@ export class ProjectModel extends AuditModel {
     peopleRequired: number = 2;
     workspace: string = '';
     leader: GenericModel = new GenericModel();
+    organization: GenericModel = new GenericModel();
     peopleGivingTimeRef: number[] = [];
-    organizationsRef: number[] = [];
     campaignsRef: number[] = [];
+    newsRef: number[] = [];
 
     // Only in this component
     peopleRequiredPercent: string;

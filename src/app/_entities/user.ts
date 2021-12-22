@@ -3,7 +3,7 @@ import { ApiToken } from '../_models/apitoken';
 import { UserModel } from '../_models/user.model';
 
 import { Authority } from './authority';
-import { Organization } from './organization';
+import { Organization } from './organization/organization';
 import { SlackUser } from '../_models/slackUser';
 import { OrganizationAuthority } from './organization.authority';
 
