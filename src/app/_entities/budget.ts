@@ -1,9 +1,9 @@
 import { BudgetModel } from '../_models/budget.model';
 
-import { Account } from './account';
+import { Account } from './account/account';
 import { Content } from './content/content';
-import { Donation } from './donation';
-import { Organization } from './organization';
+import { Donation } from './donation/donation';
+import { Organization } from './organization/organization';
 import { User } from './user';
 
 export class Budget extends BudgetModel {

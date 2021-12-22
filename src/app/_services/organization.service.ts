@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ConfigService } from '../_services/config/config.service';
 
 import { BudgetModel } from '../_models/budget.model';
-import { OrganizationModel } from '../_models/organization.model';
+import { OrganizationModel } from '../_models/organization/organization.model';
 import { OrganizationAuthorityModel } from '../_models/organization.authority.model';
 
 import { User } from '../_entities/user';

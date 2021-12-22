@@ -1,5 +1,5 @@
 import { NewsModel } from "src/app/_models";
-import { Organization } from "../organization";
+import { Organization } from "../organization/organization";
 import { Project } from "../project/project";
 import { User } from "../user";
 

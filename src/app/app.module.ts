@@ -15,28 +15,18 @@ import { AppComponent } from './app.component';
 import { AppNavbarComponent } from './app/navbar/navbar.component';
 import { LesProjetsCagnottesComponent } from './app/lesprojetscagnottes.component';
 import { LoginComponent } from './login/login.component';
-
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers';
-
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { UsersComponent } from './app/users/users.component';
 import { OrganizationsComponent } from './app/organizations/list/list-organizations.component';
 import { EditOrganizationComponent } from './app/organizations/edit/edit-organization.component';
 import { ListProjectsComponent } from './app/projects/list/list-projects.component';
 import { EditProjectComponent } from './app/projects/edit/edit-project.component';
-import { ListCampaignsComponent } from './app/campaigns/list/list-campaigns.component';
-import { EditCampaignComponent } from './app/campaigns/edit/edit-campaign.component';
-import { ViewCampaignComponent } from './app/campaigns/view/view-campaign.component';
 import { BudgetsComponent } from './app/budgets/budgets.component';
 import { ProfileComponent } from './app/profile/profile.component';
 import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { AdminComponent } from './app/admin/admin.component';
 import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
-import { SchedulerComponent } from './app/scheduler/scheduler.component';
-
 import { ConfigService } from './_services/config/config.service';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
 import { ListNewsComponent } from './app/news/list/list-news.component';
@@ -55,19 +45,14 @@ const appConfig = (config: ConfigService) => {
     LesProjetsCagnottesComponent,
     LoginComponent,
     UsersComponent,
-    ListCampaignsComponent,
     OrganizationsComponent,
-    EditCampaignComponent,
     EditOrganizationComponent,
-    ViewCampaignComponent,
     BudgetsComponent,
     ProfileComponent,
     ReportComponent,
     GettingStartedComponent,
     AboutComponent,
-    AdminComponent,
     ListIdeasComponent,
-    SchedulerComponent,
     EditProjectComponent,
     ListProjectsComponent,
     ViewProjectComponent,
