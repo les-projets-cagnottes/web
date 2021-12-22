@@ -17,11 +17,9 @@ export class EditProjectComponent implements OnInit {
   // Data
   id: number = 0;
   project: Project = new Project();
-  organizations: Organization[] = [];
 
   // Form
   form: FormGroup = this.formBuilder.group({
-    organization: [0],
     title: ['', [Validators.required, Validators.maxLength(255)]],
     shortDescription: ['', [Validators.required, Validators.maxLength(255)]],
     longDescription: ['', [Validators.required]],
@@ -29,10 +27,6 @@ export class EditProjectComponent implements OnInit {
   });
   submitting: boolean;
 
-  // Funding Deadline field
-  now: Date = new Date();
-  nowPlus3Months = new Date();
-  fundingDeadlineValue = new Date();
   // Long Description editor config
   longDescriptionConfig = {
     height: '600px',
@@ -45,8 +39,7 @@ export class EditProjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private fileService: FileService,
-    private projectService: ProjectService,
-    private userService: UserService) {
+    private projectService: ProjectService) {
     this.route.params.subscribe(params => this.id = params.id);
   }
 
@@ -66,18 +59,10 @@ export class EditProjectComponent implements OnInit {
 
   refresh() {
     this.longDescriptionConfig.uploadImagePath = this.fileService.getUploadPath("projects/" + this.project.workspace, true);
-    this.form.controls['organization'].setValue(0);
     this.form.controls['title'].setValue(this.project.title);
     this.form.controls['shortDescription'].setValue(this.project.shortDescription);
     this.form.controls['longDescription'].setValue(this.project.longDescription);
     this.form.controls['peopleRequired'].setValue(this.project.peopleRequired);
-
-    this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
-    this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
-      .subscribe(orgs => {
-        orgs.forEach(org => this.organizations.push(Organization.fromModel(org)));
-        this.form.controls['organization'].setValue(0);
-      });
   }
 
   onSubmit() {
@@ -95,8 +80,8 @@ export class EditProjectComponent implements OnInit {
     submittedProject.shortDescription = this.form.controls.shortDescription.value;
     submittedProject.longDescription = this.form.controls.longDescription.value;
     submittedProject.peopleRequired = this.form.controls.peopleRequired.value;
-    submittedProject.organizationsRef = [this.organizations[this.form.controls.organization.value].id];
     submittedProject.workspace = this.project.workspace;
+    submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
 
     // Submit item to backend
     if (this.id > 0) {

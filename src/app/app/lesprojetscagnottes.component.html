@@ -17,7 +17,7 @@
                     <img [src]="currentOrganization.logoUrl" class="img-circle elevation-2" alt="Organization Image">
                 </div>
                 <div class="info">
-                    <a routerLink="/profile" class="d-block">
+                    <a (click)="openChangeCurrentOrgModal(changeCurrentOrg)" class="d-block item-clickable">
                         {{ currentOrganization.name }}</a>
                 </div>
             </div>
@@ -112,18 +112,6 @@
                             <p i18n="@@usersMenu">Users</p>
                         </a>
                     </li>
-                    <li *ngIf="isAdmin" class="nav-item">
-                        <a routerLink="/admin" class="nav-link">
-                            <i class="nav-icon fas fa-clipboard-list"></i>
-                            <p i18n="@@controlsMenu">Controls</p>
-                        </a>
-                    </li>
-                    <li *ngIf="isAdmin" class="nav-item">
-                        <a routerLink="/schedules" class="nav-link">
-                            <i class="nav-icon far fa-clock"></i>
-                            <p i18n="@@schedulesMenu">Schedules</p>
-                        </a>
-                    </li>
                     <li class="nav-header" i18n="@@documentationMenu">
                         DOCUMENTATION</li>
                     <li class="nav-item">
@@ -179,3 +167,36 @@
     </footer>
 
 </div>
+
+<ng-template #changeCurrentOrg>
+    <div class="modal-header">
+        <h4 class="modal-title" i18n>Switch to another organization</h4>
+        <button type="button" class="close" (click)="closeChangeCurrentOrgModal()">
+          <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped table-valign-middle">
+            <thead>
+                <tr>
+                    <th i18n>Organization</th>
+                    <th i18n>Members</th>
+                    <th style="width: 5%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let organization of notCurrentOrg">
+                    <td>
+                        <img [src]="organization.logoUrl" class="img-circle img-size-32 mr-2" alt="Organization Image">
+                        <span>{{ organization.name }}</span></td>
+                    <td>{{ organization.membersRef.length }}</td>
+                    <td>
+                        <a class="item-clickable" (click)="setCurrentOrganization(organization)">
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>

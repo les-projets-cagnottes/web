@@ -168,7 +168,7 @@
       <trans-unit id="informations" datatype="html">
         <target>Informations</target>
       </trans-unit>
-      <trans-unit id="loginButton" datatype="html">
+      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <target>Se connecter</target>
       </trans-unit>
       <trans-unit id="logout" datatype="html">
@@ -228,7 +228,7 @@
       <trans-unit id="organizationsMenu" datatype="html">
         <target>Organisations</target>
       </trans-unit>
-      <trans-unit id="orSeparator" datatype="html">
+      <trans-unit id="61953c0203fac94d60f04b603fe292b7c8d95931" datatype="html">
         <target>- OU -</target>
       </trans-unit>
       <trans-unit id="paginationEntries" datatype="html">
@@ -375,10 +375,10 @@
       <trans-unit id="shortDescription" datatype="html">
         <target>Courte description</target>
       </trans-unit>
-      <trans-unit id="signInBoxHeader" datatype="html">
+      <trans-unit id="8ac328594d71e0ec15630019606a1285678f8388" datatype="html">
         <target>Connectez-vous pour démarrer votre session</target>
       </trans-unit>
-      <trans-unit id="slackLoginButton" datatype="html">
+      <trans-unit id="56171eee56f4b0cce6f111780a28901682bfaf5e" datatype="html">
         <target>Se connecter avec Slack</target>
       </trans-unit>
       <trans-unit id="slackNotConnected" datatype="html">
@@ -444,6 +444,10 @@
       <trans-unit id="7454575571a2ca5298c902e25ca3e0d9251d3bed" datatype="html">
         <source> Start my project </source>
         <target>Lancer mon projet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
+          <context context-type="linenumber">60,62</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="02db1dbcf9cdf15db3202e5ec149f94dd7ec3e3b" datatype="html">
         <target>Découvrir les projets</target>

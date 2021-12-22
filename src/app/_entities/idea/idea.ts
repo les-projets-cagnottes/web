@@ -1,6 +1,6 @@
 import { IdeaModel } from '../../_models';
 
-import { Organization } from '../organization';
+import { Organization } from '../organization/organization';
 import { User } from '../user';
 
 export class Idea extends IdeaModel {

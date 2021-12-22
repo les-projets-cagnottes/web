@@ -1,7 +1,7 @@
-import { AccountModel } from '../_models/account.model';
+import { AccountModel } from '../../_models/account/account.model';
 
-import { Budget } from './budget';
-import { User } from './user';
+import { Budget } from '../budget';
+import { User } from '../user';
 
 export class Account extends AccountModel {
     

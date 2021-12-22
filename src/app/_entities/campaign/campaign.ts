@@ -1,19 +1,16 @@
-import { CampaignModel } from '../_models/campaign.model';
+import { CampaignModel } from '../../_models/campaign/campaign.model';
 
-import { Budget } from './budget';
-import { Donation } from './donation';
-import { Organization } from './organization';
-import { Project } from './project/project';
-import { User } from './user';
+import { Budget } from '../budget';
+import { Donation } from '../donation/donation';
+import { Organization } from '../organization/organization';
+import { Project } from '../project/project';
+import { User } from '../user';
 
 export class Campaign extends CampaignModel {
 
-    leader: User = new User();
     project: Project = new Project();
+    budget: Budget = new Budget();
     donations: Donation[] = [];
-    peopleGivingTime: User[] = [];
-    organizations: Organization[] = [];
-    budgets: Budget[] = [];
 
     static fromModel(model: CampaignModel): Campaign {
         var entity = new Campaign();
@@ -24,19 +21,13 @@ export class Campaign extends CampaignModel {
         entity.updatedBy = model.updatedBy;
         entity.title = model.title;
         entity.status = model.status;
-        entity.shortDescription = model.shortDescription;
-        entity.longDescription = model.longDescription;
         entity.donationsRequired = model.donationsRequired;
-        entity.peopleRequired = model.peopleRequired;
         entity.fundingDeadline = model.fundingDeadline;
         entity.totalDonations = model.totalDonations;
-        entity.peopleGivingTimeRef = model.peopleGivingTimeRef;
-        entity.organizationsRef = model.organizationsRef;
-        entity.budgetsRef = model.budgetsRef;
-        entity.leader = new User();
-        entity.leader.id = model.leader.id;
         entity.project = new Project();
         entity.project.id = model.project.id;
+        entity.budget = new Budget();
+        entity.budget.id = model.budget.id;
         return entity;
     }
 

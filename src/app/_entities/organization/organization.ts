@@ -1,10 +1,10 @@
-import { OrganizationModel } from '../_models/organization.model';
+import { OrganizationModel } from '../../_models/organization/organization.model';
 
-import { Budget } from './budget';
-import { Content } from './content/content';
-import { OrganizationAuthority } from './organization.authority';
-import { User } from './user';
-import { SlackTeam } from './slack.team';
+import { Budget } from '../budget';
+import { Content } from '../content/content';
+import { OrganizationAuthority } from '../organization.authority';
+import { User } from '../user';
+import { SlackTeam } from '../slack.team';
 
 export class Organization extends OrganizationModel {
 

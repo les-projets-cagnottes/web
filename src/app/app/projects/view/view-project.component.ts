@@ -146,7 +146,7 @@ export class ViewProjectComponent implements OnInit {
           this.campaigns.forEach(campaign => {
             var remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
             campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
-            budgetsId.push(campaign.budgetsRef);
+            budgetsId.push(campaign.budget.id);
           });
           budgetsId = [... new Set(budgetsId)];
           this.budgetService.getAllByIds(budgetsId)
@@ -221,7 +221,6 @@ export class ViewProjectComponent implements OnInit {
     donation.amount = this.donationForm.controls.amount.value;
     donation.account = GenericModel.valueOf(this.accounts[this.donationForm.controls.budget.value].id);
     donation.campaign = GenericModel.valueOf(this.selectedCampaign.id);
-    donation.budget = GenericModel.valueOf(this.accounts[this.donationForm.controls.budget.value].budget.id);
     donation.contributor = GenericModel.valueOf(this.userLoggedIn.id);
 
     this.donationService.create(donation)
@@ -296,7 +295,7 @@ export class ViewProjectComponent implements OnInit {
 
     var campaignToSave = new CampaignModel();
     campaignToSave.donationsRequired = this.formFunding.controls.donationsRequired.value;
-    campaignToSave.budgetsRef = [this.budgets[this.formFunding.controls.budget.value].id];
+    campaignToSave.budget.id = this.budgets[this.formFunding.controls.budget.value].id;
     campaignToSave.project.id = this.project.id;
 
     // Submit item to backend
@@ -370,7 +369,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   get filterByCampaignBudgets() {
-    return this.accounts.filter( a => this.selectedCampaign.budgetsRef.includes(a.budget.id));
+    return this.accounts.filter( a => this.selectedCampaign.budget.id ==a.budget.id );
   }
 }
  

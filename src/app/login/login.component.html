@@ -8,12 +8,12 @@
 
         <div class="card">
             <div class="card-body login-card-body">
-                <p i18n="@@signInBoxHeader" class="login-box-msg">Sign in to start your session
+                <p i18n class="login-box-msg">Sign in to start your session
                 </p>
 
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="input-group mb-3">
-                        <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@userEmail">
+                        <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder="@@userPassword">
+                        <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -30,14 +30,14 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button [disabled]="loading" class="btn btn-primary btn-block" i18n="@@loginButton" (click)="onSubmit()">Login</button>
+                            <button [disabled]="loading" class="btn btn-primary btn-block" i18n (click)="onSubmit()">Login</button>
                         </div>
                     </div>
                 </form>
                 <div class="social-auth-links text-center">
-                    <p i18n="@@orSeparator">- OR -</p>
+                    <p i18n>- OR -</p>
                     <a href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&user_scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block bg-maroon">
-                        <i class="fab fa-slack"></i><span i18n="@@slackLoginButton">Sign in using Slack</span></a>
+                        <i class="fab fa-slack"></i><span i18n>Sign in using Slack</span></a>
                 </div>
             </div>
             <!-- /.login-box-body -->

@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { Role } from '../_models';
 import { Organization, User } from '../_entities';
-import { AuthenticationService, OrganizationService } from '../_services';
+import { AuthenticationService, OrganizationService, UserService } from '../_services';
 import { ConfigService } from '../_services/config/config.service';
 
 @Component({
@@ -22,10 +23,16 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   currentUserSubscription: Subscription;
   users: User[] = [];
 
+  // Change Current Org Modal
+  changeCurrentOrgModal: BsModalRef;
+  userOrganizations: Organization[] = [];
+
   constructor(
+    private modalService: BsModalService,
     private authenticationService: AuthenticationService,
+    private configService: ConfigService,
     private organizationService: OrganizationService,
-    private configService: ConfigService
+    private userService: UserService
   ) {
     this.version = this.configService.get('version');
     this.versionUrl = this.configService.get('versionUrl');
@@ -42,6 +49,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.refresh();
+    this.refreshOrganizations();
   }
 
   refresh() {
@@ -50,13 +58,43 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
         this.organizationService.getById(this.currentOrganization.id)
           .subscribe(organizationModel => {
             this.authenticationService.setCurrentOrganization(Organization.fromModel(organizationModel));
-          })
+          });
       });
+  }
+
+  refreshOrganizations() {
+    this.userService.getOrganizations(this.currentUser.id)
+      .subscribe(organizations => {
+        this.userOrganizations = Organization.fromModels(organizations);
+        this.currentOrganization = this.authenticationService.currentOrganizationValue;
+        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
+        if(currentOrganizationIndex >= 0) {
+          this.userOrganizations[currentOrganizationIndex].isCurrent = true;
+        }
+      });
+  }
+
+  setCurrentOrganization(organization: Organization) {
+    this.authenticationService.setCurrentOrganization(organization);
+    window.location.reload();
   }
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();
+    this.currentOrganizationSubscription.unsubscribe();
+  }
+
+  openChangeCurrentOrgModal(template): void {
+    this.changeCurrentOrgModal = this.modalService.show(template);
+  }
+
+  closeChangeCurrentOrgModal() {
+    this.changeCurrentOrgModal.hide();
+  }
+
+  get notCurrentOrg() {
+    return this.userOrganizations.filter(org => org.id !== this.currentOrganization.id);
   }
 
   get isSponsor() {
