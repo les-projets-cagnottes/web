@@ -6,6 +6,8 @@ import { Role } from '../_models';
 import { Organization, User } from '../_entities';
 import { AuthenticationService, OrganizationService, UserService } from '../_services';
 import { ConfigService } from '../_services/config/config.service';
+import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -29,6 +31,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: BsModalService,
+    private router: Router,
     private authenticationService: AuthenticationService,
     private configService: ConfigService,
     private organizationService: OrganizationService,
@@ -49,7 +52,6 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.refresh();
-    this.refreshOrganizations();
   }
 
   refresh() {
@@ -62,21 +64,14 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
       });
   }
 
-  refreshOrganizations() {
-    this.userService.getOrganizations(this.currentUser.id)
-      .subscribe(organizations => {
-        this.userOrganizations = Organization.fromModels(organizations);
-        this.currentOrganization = this.authenticationService.currentOrganizationValue;
-        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
-        if(currentOrganizationIndex >= 0) {
-          this.userOrganizations[currentOrganizationIndex].isCurrent = true;
-        }
-      });
-  }
-
   setCurrentOrganization(organization: Organization) {
     this.authenticationService.setCurrentOrganization(organization);
     window.location.reload();
+  }
+
+  editOrganization(organization: Organization) {
+    this.closeChangeCurrentOrgModal();
+    this.router.navigate(['/organizations/edit/', organization.id]);
   }
 
   ngOnDestroy() {
@@ -86,32 +81,49 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   }
 
   openChangeCurrentOrgModal(template): void {
-    this.changeCurrentOrgModal = this.modalService.show(template);
+    this.userService.getOrganizations(this.currentUser.id)
+      .subscribe(organizations => {
+        this.userOrganizations = Organization.fromModels(organizations);
+        this.currentOrganization = this.authenticationService.currentOrganizationValue;
+        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
+        if(currentOrganizationIndex >= 0) {
+          this.userOrganizations[currentOrganizationIndex].isCurrent = true;
+        }
+        this.changeCurrentOrgModal = this.modalService.show(template);
+      });
   }
 
   closeChangeCurrentOrgModal() {
     this.changeCurrentOrgModal.hide();
   }
 
-  get notCurrentOrg() {
-    return this.userOrganizations.filter(org => org.id !== this.currentOrganization.id);
-  }
-
-  get isSponsor() {
+  isSponsor(organization?): boolean {
     var isSponsor = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor);
+    if(organization !== undefined) {
+      isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === organization.id);
+    } else {
+      isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor);
+    }
     return isSponsor || this.isAdmin;
   }
 
-  get isManager() {
+  isManager(organization?): boolean {
     var isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
+    if(organization !== undefined) {
+      isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
+    } else {
+      isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
+    }
     return isManager || this.isAdmin;
   }
 
-  get isOwner() {
+  isOwner(organization?): boolean {
     var isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);
+    if(organization !== undefined) {
+      isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);
+    } else {
+      isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);
+    }
     return isOwner || this.isAdmin;
   }
 

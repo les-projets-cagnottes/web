@@ -1,22 +1,13 @@
 <div class="row action-bar" [formGroup]="selectBudgetForm">
     <div class="col-2">
         <div class="form-group">
-            <label for="amount" i18n>Organization</label>
-            <select class="form-control" style="width: 100%;" formControlName="organization">
-                <option *ngFor="let organization of organizations; index as i" value="{{ organization.id }}">
-                    {{ organization.name }}</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-2">
-        <div class="form-group">
             <label for="amount" i18n>Budget</label>
             <select class="form-control" style="width: 100%;" formControlName="budget">
                 <option *ngFor="let budget of budgets; index as i" value="{{ budget.id }}">{{ budget.name }}</option>
             </select>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-10">
         <div id="budgetUsage" class="progress-group">
             <span class="progress-text" i18n>Usage overview</span>
             <div class="progress" title="{{ budgetUsage }}">
@@ -47,19 +38,18 @@
                             <th i18n>Created at</th>
                             <th i18n>Description</th>
                             <th i18n>Teammates on the project</th>
-                            <th i18n>Donations on this budget</th>
-                            <th i18n>Donations on all budgets</th>
+                            <th i18n>Donations</th>
                             <th i18n>Donations required</th>
                             <th i18n>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let campaign of pagedCampaigns">
-                            <td><a [routerLink]="['/projects/', campaign.project.id]">{{ projects[campaign.project.id].title }}</a></td>
+                            <td><a *ngIf="projects.get(campaign.project.id) !== undefined" 
+                                [routerLink]="['/projects/', campaign.project.id]">{{ projects.get(campaign.project.id).title }}</a></td>
                             <td>{{ campaign.createdAt |date:'medium' }}</td>
-                            <td>{{ projects[campaign.project.id].shortDescription }}</td>
-                            <td>{{ 1 + campaign.peopleGivingTimeRef.length }} / 3</td>
-                            <td>{{ totalDonations[campaign.id].toFixed(2) }} €</td>
+                            <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{ projects.get(campaign.project.id).shortDescription }}</span></td>
+                            <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{ projects.get(campaign.project.id).peopleGivingTimeRef.length }} / 3</span></td>
                             <td>{{ campaign.totalDonations.toFixed(2) }} €</td>
                             <td>{{ campaign.donationsRequired.toFixed(2) }} €</td>
                             <td>

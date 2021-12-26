@@ -25,6 +25,7 @@ export class Organization extends OrganizationModel {
         entity.updatedAt = model.updatedAt;
         entity.updatedBy = model.updatedBy;
         entity.name = model.name;
+        entity.socialName = model.socialName;
         entity.logoUrl = model.logoUrl;
         entity.slackTeam = new SlackTeam();
         entity.slackTeam.id = model.slackTeam.id;

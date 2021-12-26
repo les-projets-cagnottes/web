@@ -106,7 +106,7 @@ export class ProfileComponent implements OnInit {
                     var projectIds = [];
                     campaignModels.forEach(campaignModel => {
                       this.campaigns.set(campaignModel.id, Campaign.fromModel(campaignModel));
-                      projectIds.push(campaignModel.id);
+                      projectIds.push(campaignModel.project.id);
                     });
                     this.projectService.getAllByIds(projectIds)
                       .subscribe(projectModels => {
