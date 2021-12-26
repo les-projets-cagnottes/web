@@ -90,18 +90,12 @@
                             <p i18n="@@reportingMenu">Reporting</p>
                         </a>
                     </li>
-                    <li *ngIf="isSponsor || isManager || isOwner" class="nav-header" i18n="@@managementMenu">
+                    <li *ngIf="isSponsor() || isManager() || isOwner()" class="nav-header" i18n="@@managementMenu">
                         MANAGEMENT</li>
-                    <li *ngIf="isSponsor" class="nav-item">
+                    <li *ngIf="isSponsor()" class="nav-item">
                         <a routerLink="/budgets" class="nav-link">
                             <i class="nav-icon fas fa-money-bill"></i>
                             <p i18n="@@budgetsMenu">Budgets</p>
-                        </a>
-                    </li>
-                    <li *ngIf="isManager || isOwner" class="nav-item">
-                        <a routerLink="/organizations" class="nav-link">
-                            <i class="nav-icon fa fa-users"></i>
-                            <p i18n="@@organizationsMenu">Organizations</p>
                         </a>
                     </li>
                     <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
@@ -110,6 +104,12 @@
                         <a routerLink="/users" class="nav-link">
                             <i class="nav-icon fa fa-user"></i>
                             <p i18n="@@usersMenu">Users</p>
+                        </a>
+                    </li>
+                    <li *ngIf="isAdmin" class="nav-item">
+                        <a routerLink="/organizations" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p i18n="@@organizationsMenu">Organizations</p>
                         </a>
                     </li>
                     <li class="nav-header" i18n="@@documentationMenu">
@@ -170,7 +170,7 @@
 
 <ng-template #changeCurrentOrg>
     <div class="modal-header">
-        <h4 class="modal-title" i18n>Switch to another organization</h4>
+        <h4 class="modal-title" i18n>My organizations</h4>
         <button type="button" class="close" (click)="closeChangeCurrentOrgModal()">
           <span aria-hidden="true">×</span>
         </button>
@@ -185,14 +185,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let organization of notCurrentOrg">
+                <tr *ngFor="let item of userOrganizations">
                     <td>
-                        <img [src]="organization.logoUrl" class="img-circle img-size-32 mr-2" alt="Organization Image">
-                        <span>{{ organization.name }}</span></td>
-                    <td>{{ organization.membersRef.length }}</td>
-                    <td>
-                        <a class="item-clickable" (click)="setCurrentOrganization(organization)">
+                        <img [src]="item.logoUrl" class="img-circle img-size-32 mr-2" alt="Organization Image">
+                        <span>{{ item.name }}</span></td>
+                    <td>{{ item.membersRef.length }}</td>
+                    <td class="action-bar">
+                        <a *ngIf="currentOrganization.id !== item.id" class="item-clickable" (click)="setCurrentOrganization(item)">
                             <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a *ngIf="isManager(item) || isOwner(item)" class="item-clickable" (click)="editOrganization(item)">
+                            <i class="fas fa-pencil-alt"></i>
                         </a>
                     </td>
                 </tr>

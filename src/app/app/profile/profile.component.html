@@ -82,7 +82,7 @@
                             <td><a [routerLink]="['/projects/', campaigns.get(donation.value.campaign.id).project.id]">{{ projects.get(campaigns.get(donation.value.campaign.id).project.id).title }}</a></td>
                             <td>{{ donation.value.amount }} €</td>
                             <td>
-                                <a *ngIf="donation.value.campaign.status == 'IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.value.id] == 'error' }" (click)="deleteDonations(donation.value)">
+                                <a *ngIf="campaigns.get(donation.value.campaign.id).status == 'IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.value.id] == 'error' }" (click)="deleteDonations(donation.value)">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>

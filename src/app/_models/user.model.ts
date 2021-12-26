@@ -11,10 +11,11 @@ export class UserModel extends AuditModel {
     token: string;
     userOrganizationAuthoritiesRef: number[] = [];
 
-    // Only in Valyou-Web
+    // Only in web component
     budgetUsage: string;
     isUserSponsor: boolean = false;
     isUserManager: boolean = false;
     isUserOwner: boolean = false;
+    hasLeftTheOrganization: boolean = false;
 
 }
