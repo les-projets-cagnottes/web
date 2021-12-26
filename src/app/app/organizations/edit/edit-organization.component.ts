@@ -206,8 +206,8 @@ export class EditOrganizationComponent implements OnInit {
       this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => this.pagedItemsMembers[k].userOrganizationAuthorities.push(this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId)));
       if(this.pagedItemsMembers[k].userOrganizationAuthorities.length > 0) {
         this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => this.authorities['ROLE_SPONSOR'].id == authorityId) !== undefined
-        this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authorityId => this.authorities['ROLE_MANAGER'].id == authorityId) !== undefined
-        this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthorities.find(authorityId => this.authorities['ROLE_OWNER'].id == authorityId) !== undefined
+        this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => this.authorities['ROLE_MANAGER'].id == authorityId) !== undefined
+        this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => this.authorities['ROLE_OWNER'].id == authorityId) !== undefined
       }
     }
   }

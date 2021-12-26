@@ -58,6 +58,7 @@ export class ViewProjectComponent implements OnInit {
   // Members Box
   members: User[] = [];
   membersSyncStatus: string = 'idle';
+  organizationSocialName: string = '';
   
   // News Box
   news: any = {};
@@ -88,6 +89,7 @@ export class ViewProjectComponent implements OnInit {
 
   refresh() {
     this.userLoggedIn = this.authenticationService.currentUserValue;
+    this.organizationSocialName = this.authenticationService.currentOrganizationValue.socialName;
     this.projectService.getById(this.id)
       .subscribe(response => {
         this.project = Project.fromModel(response);
@@ -108,10 +110,14 @@ export class ViewProjectComponent implements OnInit {
 
   refreshMembers() {
     this.membersSyncStatus = 'running';
-    this.userService.getAllByIds(this.project.peopleGivingTimeRef)
+    this.projectService.getTeammates(this.project.id)
     .subscribe(members => {
       this.membersSyncStatus = 'success';
       this.members = User.fromModels(members);
+      this.members.forEach(member => {
+        member.hasLeftTheOrganization = !this.authenticationService.currentOrganizationValue.membersRef.some(orgMemberId => orgMemberId == member.id);
+        console.log(member.hasLeftTheOrganization);
+      });
       this.isUserInTeam = this.members.find(user => {
         return this.userLoggedIn.id === user.id;
       }) !== undefined;

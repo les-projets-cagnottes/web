@@ -302,8 +302,9 @@
                 <ul class="users-list clearfix">
                     <li *ngFor="let user of members">
                         <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image"
+                            [ngClass]="{ 'hasLeftTheOrganization': user.hasLeftTheOrganization}"
                             style="max-height: 90px;">
-                        <a class="users-list-name">{{ user.firstname }} {{ user.lastname }}</a>
+                        <div class="users-list-name"><span>{{ user.firstname }} {{ user.lastname }}<br/></span><span *ngIf="user.hasLeftTheOrganization">Left</span></div>
                     </li>
                 </ul>
             </div>
