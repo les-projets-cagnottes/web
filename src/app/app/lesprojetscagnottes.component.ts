@@ -17,8 +17,6 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   public isCollapsed = false;
-  version: string = '';
-  versionUrl: string = '';
   currentOrganization: Organization = new Organization();
   currentOrganizationSubscription: Subscription;
   currentUser: User = new User();
@@ -33,12 +31,9 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private configService: ConfigService,
     private organizationService: OrganizationService,
     private userService: UserService
   ) {
-    this.version = this.configService.get('version');
-    this.versionUrl = this.configService.get('versionUrl');
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
