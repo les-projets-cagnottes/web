@@ -79,10 +79,10 @@
                         <tr *ngFor="let donation of donations | keyvalue">
                             <td>{{ budgets.get(accounts.get(donation.value.account.id).budget.id).name }}</td>
                             <td>{{ donation.value.createdAt | date:'medium' }}</td>
-                            <td><a [routerLink]="['/projects/', campaigns.get(donation.value.campaign.id).project.id]">{{ projects.get(campaigns.get(donation.value.campaign.id).project.id).title }}</a></td>
+                            <td><a *ngIf="campaigns.get(donation.value.campaign.id) !== undefined" [routerLink]="['/projects/', campaigns.get(donation.value.campaign.id).project.id]">{{ projects.get(campaigns.get(donation.value.campaign.id).project.id).title }}</a></td>
                             <td>{{ donation.value.amount }} €</td>
                             <td>
-                                <a *ngIf="campaigns.get(donation.value.campaign.id).status == 'IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.value.id] == 'error' }" (click)="deleteDonations(donation.value)">
+                                <a *ngIf="campaigns.get(donation.value.campaign.id) !== undefined && campaigns.get(donation.value.campaign.id).status == 'IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.value.id] == 'error' }" (click)="deleteDonations(donation.value)">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
