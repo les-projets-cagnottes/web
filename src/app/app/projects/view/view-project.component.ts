@@ -227,7 +227,6 @@ export class ViewProjectComponent implements OnInit {
     donation.amount = this.donationForm.controls.amount.value;
     donation.account = GenericModel.valueOf(this.accounts[this.donationForm.controls.budget.value].id);
     donation.campaign = GenericModel.valueOf(this.selectedCampaign.id);
-    donation.contributor = GenericModel.valueOf(this.userLoggedIn.id);
 
     this.donationService.create(donation)
       .subscribe(

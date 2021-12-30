@@ -11,7 +11,6 @@ import { User } from '../user';
 export class Donation extends DonationModel {
 
     account: Account = new Account();
-    contributor: User = new User();
     campaign: Campaign = new Campaign();
 
     static fromModel(model: DonationModel): Donation {
@@ -24,8 +23,6 @@ export class Donation extends DonationModel {
         entity.amount = model.amount;
         entity.account = new Account();
         entity.account.id = model.account.id;
-        entity.contributor = new User();
-        entity.contributor.id = model.contributor.id;
         entity.campaign = new Campaign();
         entity.campaign.id = model.campaign.id;
         return entity;
@@ -42,8 +39,4 @@ export class Donation extends DonationModel {
         result !== undefined ? this.campaign = Campaign.fromModel(result) : null;
     }
 
-    setContributor(users: UserModel[] ) {
-        var result = users.find(user => this.contributor.id === user.id);
-        result !== undefined ? this.contributor = User.fromModel(result) : null;
-    }
 }
