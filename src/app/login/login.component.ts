@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../_services';
+import { AuthenticationService } from '../_services';
 import { ConfigService } from '../_services/config/config.service';
 
 @Component({
@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService,
     private configService: ConfigService
   ) {
     // redirect to home if alSUCCESSFUL logged in
@@ -71,10 +70,10 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
+          console.log(this.returnUrl);
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.alertService.error(error);
           this.loading = false;
         });
   }
