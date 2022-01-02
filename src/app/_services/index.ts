@@ -1,5 +1,4 @@
 ﻿export * from './account/account.service';
-export * from './alert/alert.service';
 export * from './apitoken/apitoken.service';
 export * from './authentication/authentication.service';
 export * from './authority/authority.service';
