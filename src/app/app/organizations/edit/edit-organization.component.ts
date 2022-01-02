@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ContentService, FileService, OrganizationService, PagerService, SlackTeamService, UserService } from 'src/app/_services';
 import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
-import { OrganizationAuthority } from 'src/app/_entities/organization.authority';
+import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
 import { ContentModel, OrganizationAuthorityModel, OrganizationModel } from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
 
@@ -18,9 +18,9 @@ import { ConfigService } from 'src/app/_services/config/config.service';
 export class EditOrganizationComponent implements OnInit {
 
   // Data
-  id: number;
+  id: number = 0;
   organization: Organization = new Organization();
-  authorities: OrganizationAuthorityModel[] = []
+  authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>()
 
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
@@ -39,37 +39,37 @@ export class EditOrganizationComponent implements OnInit {
     name: ['', Validators.required],
     value: ['']
   });
-  submitting: boolean;
-  submittingEmail: boolean;
+  submitting: boolean = false;
+  submittingEmail: boolean = false;
   addStatus: string = 'idle';
   submitStatus: string = 'idle';
 
   // Slack oauth
   slackSyncStatus: string = 'idle';
   slackDisconnectStatus: string = 'idle';
-  slackClientId: string;
-  redirectUrlOAuth: string;
-  code: string;
+  slackClientId: string = '';
+  redirectUrlOAuth: string = '';
+  code: string = '';
 
   // Members card
   private rawResponseMembers: any;
   pagerMembers: any = {};
-  pagedItemsMembers: User[];
+  pagedItemsMembers: User[] = [];
   pageSizeMembers: number = 10;
   refreshMembersStatus: string = 'idle';
 
   // Contents card
   private rawResponseContents: any;
   pagerContents: any = {};
-  pagedItemsContents: any[];
+  pagedItemsContents: any[] = [];
   pageSizeContents: number = 10;
   refreshContentStatus: string = 'idle';
 
   // Content modal
-  modalRef: BsModalRef;
-  contentId: number;
+  modalRef: BsModalRef = new BsModalRef();
+  contentId: number = 0;
   contentValueConfig = {
-    height: '600px',
+    height: 600,
     uploadImagePath: ''
   }
 
@@ -89,7 +89,7 @@ export class EditOrganizationComponent implements OnInit {
     private organizationService: OrganizationService,
     private slackTeamService: SlackTeamService
   ) {
-    this.route.params.subscribe(params => this.id = <number>params.id);
+    this.route.params.subscribe(params => this.id = <number>params['id']);
     this.ngOnInit();
   }
 
@@ -160,7 +160,7 @@ export class EditOrganizationComponent implements OnInit {
       .subscribe(
         organizationAuthorities => {
           organizationAuthorities.forEach(authority => {
-            this.authorities[authority.name] = authority;
+            this.authorities.set(authority.name, authority);
           })
           this.organization.organizationAuthorities = OrganizationAuthority.fromModels(organizationAuthorities);
         }
@@ -168,12 +168,15 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshForm() {
-    this.editOrgForm.controls.name.setValue(this.organization.name);
+    this.editOrgForm.controls['name'].setValue(this.organization.name);
     if (!(this.id > 0)) {
       this.organization.members = [];
-      var user = JSON.parse(localStorage.getItem('currentUser'));
-      if (user !== null) {
-        this.organization.members.push(JSON.parse(localStorage.getItem('currentUser')));
+      var currentUser = localStorage.getItem('currentUser');
+      if(currentUser !== null) {
+        var user = JSON.parse(currentUser);
+        if (user !== null) {
+          this.organization.members.push(JSON.parse(currentUser));
+        }
       }
     }
   }
@@ -203,11 +206,24 @@ export class EditOrganizationComponent implements OnInit {
     this.pagedItemsMembers = this.rawResponseMembers.content;
     for (var k = 0; k < this.pagedItemsMembers.length; k++) {
       this.pagedItemsMembers[k] = User.fromModel(this.pagedItemsMembers[k]);
-      this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => this.pagedItemsMembers[k].userOrganizationAuthorities.push(this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId)));
+      this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => {
+        var orgAuthorityFound = this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId);
+        if(orgAuthorityFound !== undefined) {
+          this.pagedItemsMembers[k].userOrganizationAuthorities.push(orgAuthorityFound)
+        }
+      });
       if(this.pagedItemsMembers[k].userOrganizationAuthorities.length > 0) {
-        this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => this.authorities['ROLE_SPONSOR'].id == authorityId) !== undefined
-        this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => this.authorities['ROLE_MANAGER'].id == authorityId) !== undefined
-        this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => this.authorities['ROLE_OWNER'].id == authorityId) !== undefined
+        var sponsorAuthority = this.authorities.get('ROLE_SPONSOR');
+        var managerAuthority = this.authorities.get('ROLE_MANAGER');
+        var ownerAuthority = this.authorities.get('ROLE_OWNER');
+        if(sponsorAuthority !== undefined && managerAuthority !== undefined && ownerAuthority !== undefined) {
+          var sponsorAuthorityId = sponsorAuthority.id;
+          var managerAuthorityId = managerAuthority.id;
+          var ownerAuthorityId = ownerAuthority.id;
+          this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => sponsorAuthorityId == authorityId) !== undefined
+          this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => managerAuthorityId == authorityId) !== undefined
+          this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => ownerAuthorityId == authorityId) !== undefined
+        }
       }
     }
   }
@@ -257,7 +273,7 @@ export class EditOrganizationComponent implements OnInit {
     this.openContentModal(template, new Content());
   }
 
-  openContentModal(template: TemplateRef<any>, content) {
+  openContentModal(template: TemplateRef<any>, content: Content) {
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-xl' })
@@ -354,7 +370,7 @@ export class EditOrganizationComponent implements OnInit {
     if (this.addMemberOrgForm.invalid) {
       return;
     }
-    this.userService.getByEmail(this.addMemberOrgForm.controls.email.value)
+    this.userService.getByEmail(this.addMemberOrgForm.controls['email'].value)
       .subscribe(
         response => {
           var user = User.fromModel(response);
@@ -403,10 +419,12 @@ export class EditOrganizationComponent implements OnInit {
 
   grant(userId: number, role: string) {
     var organizationAuthority = this.organization.organizationAuthorities.find(authority => authority.name === role);
-    this.userService.grant(userId, organizationAuthority)
-      .subscribe(() => {
-        this.refreshMembers(this.pagerMembers.currentPage);
-      })
+    if(organizationAuthority !== undefined) {
+      this.userService.grant(userId, organizationAuthority)
+        .subscribe(() => {
+          this.refreshMembers(this.pagerMembers.currentPage);
+        });
+    }
   }
 
   get f() { return this.editOrgForm.controls; }
@@ -419,8 +437,8 @@ export class EditOrganizationComponent implements OnInit {
     }
 
     var organization = new OrganizationModel();
-    organization.name = this.f.name.value;
-    organization.logoUrl = this.f.logoUrl.value;
+    organization.name = this.f['name'].value;
+    organization.logoUrl = this.f['logoUrl'].value;
     if(organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
@@ -450,7 +468,7 @@ export class EditOrganizationComponent implements OnInit {
           response => {
             this.submitting = false;
             this.submitStatus = 'success';
-            window.location.href = "/organizations/edit/" + response['id']
+            window.location.href = "/organizations/edit/" + response.id
             setTimeout(() => {
               this.submitStatus = 'idle';
             }, 2000);
@@ -467,7 +485,7 @@ export class EditOrganizationComponent implements OnInit {
 
   }
 
-  onDeleteMedia(file) {
+  onDeleteMedia(file: any) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
         () => {},

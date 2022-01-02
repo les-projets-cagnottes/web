@@ -92,12 +92,12 @@
                         </div>
                         <div class="form-group">
                             <label for="amount" i18n>Amount (in €)</label>
-                            <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[donationForm.controls.budget.value].amount, selectedCampaign.donationsRequired - selectedCampaign.totalDonations)).toFixed(2) }}" [ngClass]="{ 'is-invalid': donationForm.controls.amount.errors }"
+                            <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01" max="{{ (min(accounts[donationForm.controls['budget'].value].amount, selectedCampaign.donationsRequired - selectedCampaign.totalDonations)).toFixed(2) }}" [ngClass]="{ 'is-invalid': donationForm.controls['amount'].errors }"
                             />
                         </div>
                         <div class="callout callout-info">
                             <span i18n>You will have </span>
-                            <b>{{ (accounts[donationForm.controls.budget.value].amount - donationForm.controls.amount.value).toFixed(2) }} €</b>
+                            <b>{{ (accounts[donationForm.controls['budget'].value].amount - donationForm.controls['amount'].value).toFixed(2) }} €</b>
                             <span i18n> left to finance other projects.</span>
                         </div>
                         <div class="callout callout-warning">
@@ -138,7 +138,7 @@
                                                 <input formControlName="donationsRequired" type="number"
                                                     class="form-control" id="donationsRequired"
                                                     min="{{ minDonations }}" step="0.01"
-                                                    [ngClass]="{ 'is-invalid': fFunding.donationsRequired.errors }" />
+                                                    [ngClass]="{ 'is-invalid': fFunding['donationsRequired'].errors }" />
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">€</span>
                                                 </div>
@@ -155,26 +155,26 @@
                                                     value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}"
                                                     min="{{ now | date:'yyyy-MM-dd' }}"
                                                     max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}"
-                                                    [ngClass]="{ 'is-invalid': fFunding.fundingDeadline.errors }" />
+                                                    [ngClass]="{ 'is-invalid': fFunding['fundingDeadline'].errors }" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div *ngIf="this.budgets.length > 0 && fFunding.budget.value !== undefined"
+                                        <div *ngIf="this.budgets.length > 0 && fFunding['budget'].value !== undefined"
                                             class="custom-control custom-checkbox">
                                             <input formControlName="rulesCompliant" type="checkbox"
                                                 id="rulesCompliant" class="custom-control-input"
                                                 name="rulesCompliant"
-                                                [ngClass]="{ 'is-invalid': fFunding.rulesCompliant.errors }" />
+                                                [ngClass]="{ 'is-invalid': fFunding['rulesCompliant'].errors }" />
                                             <label for="rulesCompliant" class="custom-control-label">
                                                 <span i18n>This project is compliant with the rules of </span>
                                             </label>
                                             <br/>
                                             <span class="item-clickable" style="margin-left: 0.2em"
                                                 (click)="onViewTermsOfUse(viewRulesModalTemplate)"><b> <u>{{
-                                                        budgets[fFunding.budget.value].name }}</u></b></span>
+                                                        budgets[fFunding['budget'].value].name }}</u></b></span>
                                         </div>
                                     </div>
                                 </div>
@@ -301,7 +301,7 @@
             <div class="card-body p-0">
                 <ul class="users-list clearfix">
                     <li *ngFor="let user of members">
-                        <img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="User Image"
+                        <img [src]="user.avatarUrl" alt="User Image"
                             [ngClass]="{ 'hasLeftTheOrganization': user.hasLeftTheOrganization}"
                             style="max-height: 90px;">
                         <div class="users-list-name"><span>{{ user.firstname }} {{ user.lastname }}<br/></span><span *ngIf="user.hasLeftTheOrganization">Left</span></div>

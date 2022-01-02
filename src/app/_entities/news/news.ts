@@ -1,13 +1,14 @@
 import { NewsModel } from "src/app/_models";
+
 import { Organization } from "../organization/organization";
 import { Project } from "../project/project";
-import { User } from "../user";
+import { User } from "../user/user";
 
 export class News extends NewsModel {
 
-    author: User = new User();
-    organization: Organization = new Organization();
-    project: Project = new Project();
+    override author: User = new User();
+    override organization: Organization = new Organization();
+    override project: Project = new Project();
 
     static fromModel(model: NewsModel): News {
         var entity = new News();
@@ -29,7 +30,7 @@ export class News extends NewsModel {
     }
 
     static fromModels(models: NewsModel[]): News[] {
-        var entities = [];
+        var entities: News[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

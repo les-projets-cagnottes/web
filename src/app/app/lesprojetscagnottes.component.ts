@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
@@ -24,7 +24,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   users: User[] = [];
 
   // Change Current Org Modal
-  changeCurrentOrgModal: BsModalRef;
+  changeCurrentOrgModal: BsModalRef = new BsModalRef();
   userOrganizations: Organization[] = [];
 
   constructor(
@@ -75,7 +75,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     this.currentOrganizationSubscription.unsubscribe();
   }
 
-  openChangeCurrentOrgModal(template): void {
+  openChangeCurrentOrgModal(template: TemplateRef<any>): void {
     this.userService.getOrganizations(this.currentUser.id)
       .subscribe(organizations => {
         this.userOrganizations = Organization.fromModels(organizations);
@@ -92,7 +92,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     this.changeCurrentOrgModal.hide();
   }
 
-  isSponsor(organization?): boolean {
+  isSponsor(organization?: Organization): boolean {
     var isSponsor = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
     if(organization !== undefined) {
       isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === organization.id);
@@ -102,7 +102,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     return isSponsor || this.isAdmin;
   }
 
-  isManager(organization?): boolean {
+  isManager(organization?: Organization): boolean {
     var isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
     if(organization !== undefined) {
       isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
@@ -112,7 +112,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     return isManager || this.isAdmin;
   }
 
-  isOwner(organization?): boolean {
+  isOwner(organization?: Organization): boolean {
     var isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
     if(organization !== undefined) {
       isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);

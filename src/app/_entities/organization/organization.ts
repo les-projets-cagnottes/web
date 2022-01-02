@@ -1,21 +1,21 @@
 import { OrganizationModel } from '../../_models/organization/organization.model';
 
-import { Budget } from '../budget';
+import { Budget } from '../budget/budget';
 import { Content } from '../content/content';
-import { OrganizationAuthority } from '../organization.authority';
-import { User } from '../user';
-import { SlackTeam } from '../slack.team';
+import { OrganizationAuthority } from '../organization-authority/organization-authority';
+import { User } from '../user/user';
+import { SlackTeam } from '../slack-team/slack-team';
 
 export class Organization extends OrganizationModel {
 
-    slackTeam: SlackTeam = new SlackTeam();
+    override slackTeam: SlackTeam = new SlackTeam();
     members: User[] = [];
     budgets: Budget[] = [];
     contents: Content[] = [];
     organizationAuthorities: OrganizationAuthority[] = [];
 
     // Defines if this organization is the current one for the logged in user
-    isCurrent: boolean;
+    isCurrent: boolean = false;
 
     static fromModel(model: OrganizationModel): Organization {
         var entity = new Organization();
@@ -35,7 +35,7 @@ export class Organization extends OrganizationModel {
     }
 
     static fromModels(models: OrganizationModel[]): Organization[] {
-        var entities = [];
+        var entities: Organization[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuidv4 } from 'uuid';
 import { PagerService, OrganizationService, AuthenticationService, UserService, IdeaService, FileService } from 'src/app/_services';
-import { IdeaModel } from 'src/app/_models';
+import { DataPage, IdeaModel } from 'src/app/_models';
 import { Organization, User, Idea } from 'src/app/_entities';
 
 @Component({
@@ -14,30 +14,36 @@ import { Organization, User, Idea } from 'src/app/_entities';
 export class ListIdeasComponent implements OnInit {
 
   // Datas
-  currentOrganization: Organization;
-  currentUser: User;
+  currentOrganization: Organization = this.authenticationService.currentOrganizationValue;
+  currentUser: User = this.authenticationService.currentUserValue;
   ideas: Idea[] = [];
   selectedIdea: IdeaModel = new IdeaModel();
   longDescription: string = "";
 
   // Paginations
-  private pagedIdeas: any;
+  private pagedIdeas: DataPage = new DataPage();
   pager: any = {};
   pageSize: number = 20;
 
   // Forms
-  form: FormGroup;
+  form: FormGroup = this.formBuilder.group({
+    icon: ['', Validators.required],
+    shortDescription: ['', Validators.required],
+    longDescription: [''],
+    hasAnonymousCreator: [false],
+    hasLeaderCreator: [false]
+  });
 
   // Statuses
   refreshStatus: string = "idle";
   submitting: boolean = false;
 
   // Modals
-  modal: BsModalRef;
+  modal: BsModalRef = new BsModalRef();
 
   // Editors
   config = {
-    height: '200px',
+    height: 200,
     uploadImagePath: ''
   }
   
@@ -51,15 +57,6 @@ export class ListIdeasComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-    this.currentOrganization = this.authenticationService.currentOrganizationValue;
-    this.currentUser = this.authenticationService.currentUserValue  ;
-    this.form = this.formBuilder.group({
-      icon: ['', Validators.required],
-      shortDescription: ['', Validators.required],
-      longDescription: [''],
-      hasAnonymousCreator: [false],
-      hasLeaderCreator: [false]
-    });
     this.refresh();
   }
 
@@ -80,7 +77,7 @@ export class ListIdeasComponent implements OnInit {
   setPage(page: number) {
     this.pager = this.pagerService.getPager(this.pagedIdeas.totalElements, page, this.pageSize);
     this.pagedIdeas.content.forEach(model => this.ideas.push(Idea.fromModel(model)));
-    var ids = [];
+    var ids: number[] = [];
     this.ideas.forEach(idea => {
       if(idea.submitter.id > 0) {
         ids.push(idea.submitter.id);
@@ -104,31 +101,31 @@ export class ListIdeasComponent implements OnInit {
       });
   }
 
-  openModalCreateIdea(template): void {
+  openModalCreateIdea(template: TemplateRef<any>): void {
     this.selectedIdea = new IdeaModel();
     this.longDescription = "";
     this.selectedIdea.workspace = uuidv4();
     this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
-    this.form.controls.icon.setValue("far fa-lightbulb");
-    this.form.controls.shortDescription.setValue("");
-    this.form.controls.longDescription.setValue("");
-    this.form.controls.hasAnonymousCreator.setValue(false);
-    this.form.controls.hasLeaderCreator.setValue(false);
+    this.form.controls['icon'].setValue("far fa-lightbulb");
+    this.form.controls['shortDescription'].setValue("");
+    this.form.controls['longDescription'].setValue("");
+    this.form.controls['hasAnonymousCreator'].setValue(false);
+    this.form.controls['hasLeaderCreator'].setValue(false);
     this.modal = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-xl' })
     );
   }
 
-  openModalEditIdea(template, idea: IdeaModel): void {
+  openModalEditIdea(template: TemplateRef<any>, idea: IdeaModel): void {
     this.selectedIdea = idea;
     this.longDescription = idea.longDescription;
     this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
-    this.form.controls.icon.setValue(idea.icon);
-    this.form.controls.shortDescription.setValue(idea.shortDescription);
-    this.form.controls.longDescription.setValue(idea.longDescription);
-    this.form.controls.hasAnonymousCreator.setValue(idea.hasAnonymousCreator);
-    this.form.controls.hasLeaderCreator.setValue(idea.hasLeaderCreator);
+    this.form.controls['icon'].setValue(idea.icon);
+    this.form.controls['shortDescription'].setValue(idea.shortDescription);
+    this.form.controls['longDescription'].setValue(idea.longDescription);
+    this.form.controls['hasAnonymousCreator'].setValue(idea.hasAnonymousCreator);
+    this.form.controls['hasLeaderCreator'].setValue(idea.hasLeaderCreator);
     this.modal = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-xl' })
@@ -147,11 +144,11 @@ export class ListIdeasComponent implements OnInit {
     }
 
     this.submitting = true;
-    this.selectedIdea.icon = this.form.controls.icon.value;
-    this.selectedIdea.shortDescription = this.form.controls.shortDescription.value;
-    this.selectedIdea.longDescription = this.form.controls.longDescription.value;
-    this.selectedIdea.hasAnonymousCreator = this.form.controls.hasAnonymousCreator.value;
-    this.selectedIdea.hasLeaderCreator = this.form.controls.hasLeaderCreator.value;
+    this.selectedIdea.icon = this.form.controls['icon'].value;
+    this.selectedIdea.shortDescription = this.form.controls['shortDescription'].value;
+    this.selectedIdea.longDescription = this.form.controls['longDescription'].value;
+    this.selectedIdea.hasAnonymousCreator = this.form.controls['hasAnonymousCreator'].value;
+    this.selectedIdea.hasLeaderCreator = this.form.controls['hasLeaderCreator'].value;
     this.selectedIdea.organization.id = this.currentOrganization.id;
     
     if (this.selectedIdea.id <= 0) {
@@ -181,7 +178,7 @@ export class ListIdeasComponent implements OnInit {
     }
   }
 
-  onDeleteMedia(file) {
+  onDeleteMedia(file: any) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
         () => {},

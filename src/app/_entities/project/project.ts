@@ -3,8 +3,8 @@ import { Campaign, News, Organization, User } from "..";
 
 export class Project extends ProjectModel {
     
-    leader: User = new User();
-    organization: Organization = new Organization();
+    override leader: User = new User();
+    override organization: Organization = new Organization();
     peopleGivingTime: User[] = [];
     campaigns: Campaign[] = [];
     news: News[] = [];
@@ -32,13 +32,13 @@ export class Project extends ProjectModel {
     }
 
     static valuesOf(models: ProjectModel[]): Project[] {
-        var entities = [];
+        var entities: Project[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     static fromModels(models: ProjectModel[]): Project[] {
-        var entities = [];
+        var entities: Project[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

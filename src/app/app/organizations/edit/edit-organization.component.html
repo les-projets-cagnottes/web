@@ -2,7 +2,7 @@
     <div class="col-8">
         <div *ngIf="id > 0" class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@organizationMembers">Members</h3>
+                <h3 class="card-title" i18n>Members</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshMembers(pagerMembers.currentPage)" [ngClass]="{ 'text-success': refreshMembersStatus == 'success', 'text-danger': refreshMembersStatus == 'error'}">
                         <i class="fas fa-sync"></i>
@@ -13,13 +13,13 @@
             <div class="card-body">
                 <form class="form-horizontal action-bar" [formGroup]="addMemberOrgForm">
                     <div class="form-group row">
-                        <label for="inputEmail" id="inputEmailLabel" class="col-2 control-label float-right" i18n="@@addMemberAction">Add member : </label>
+                        <label for="inputEmail" id="inputEmailLabel" class="col-2 control-label float-right" i18n>Add member : </label>
                         <div class="col-8">
                             <input formControlName="email" type="email" class="form-control" formControlName="email" placeholder="Email" i18n-placeholder="@@userEmail">
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
-                                <span i18n="@@actionAdd">Add</span></button>
+                                <span i18n>Add</span></button>
                         </div>
                     </div>
                 </form>
@@ -28,18 +28,16 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th i18n="@@userAvatar"></th>
-                                <th i18n="@@userFullname">Name</th>
-                                <th i18n="@@userEmail">Email</th>
-                                <th i18n="@@grantUserSponsor">Is Sponsor ?</th>
-                                <th i18n="@@grantUserManager">Is Manager ?</th>
-                                <th i18n="@@grantUserOwner">Is Owner ?</th>
+                                <th i18n>Name</th>
+                                <th i18n>Email</th>
+                                <th i18n>Is Sponsor ?</th>
+                                <th i18n>Is Manager ?</th>
+                                <th i18n>Is Owner ?</th>
                                 <th i18n>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let user of pagedItemsMembers">
-                                <td><img [src]="user.avatarUrl || user.getDefaultAvatarUrl()" alt="Profile picture" height="24px" /></td>
                                 <td>{{ user.firstname }} {{ user.lastname }}</td>
                                 <td>{{ user.email }}</td>
                                 <td *ngIf="user.isUserSponsor" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="far fa-check-square"></i></td>
@@ -98,41 +96,41 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header with-border">
-                        <h3 class="card-title" i18n="@@informations">Informations</h3>
+                        <h3 class="card-title" i18n>Informations</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <form [formGroup]="editOrgForm">
                         <div class="card-body">
-                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
+                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['name'].errors }">
                                 <label for="name" i18n>Name</label>
                                 <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
                             </div>
-                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.logoUrl.errors }">
-                                <label for="logoUrl" i18n="@@organizationLogoUrl">Logo URL</label>
+                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['logoUrl'].errors }">
+                                <label for="logoUrl" i18n>Logo URL</label>
                                 <input type="url" formControlName="logoUrl" class="form-control" id="logoUrl" placeholder="Enter organization logo URL">
                             </div>
                             <div *ngIf="id > 0" class="form-group action-bar">
-                                <label i18n="@@messengingApps">Messenging Apps</label>
+                                <label i18n>Messenging Apps</label>
                                 <table class="table table-striped table-valign-middle">
                                     <thead>
                                         <tr>
-                                            <th i18n="@@messengingApp">App</th>
-                                            <th i18n="@@messengingAppStatus">Status</th>
+                                            <th i18n>App</th>
+                                            <th i18n>Status</th>
                                             <th i18n>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>Slack</td>
-                                            <td *ngIf="organization.slackTeam.id <= 0"><span i18n="@@slackNotConnected">Not connected Yet </span></td>
-                                            <td *ngIf="organization.slackTeam.id > 0"><span i18n="@@slackConnected">Connected with Slack Team : </span>
+                                            <td *ngIf="organization.slackTeam.id <= 0"><span i18n>Not connected Yet </span></td>
+                                            <td *ngIf="organization.slackTeam.id > 0"><span i18n>Connected with Slack Team : </span>
                                                 <b><a href="https://app.slack.com/client/{{ organization.slackTeam.teamId }}" target="_blank" rel="noopener noreferrer">{{ organization.slackTeam.teamName }}</a></b></td>
                                             <td class="action-bar">
                                                 <div *ngIf="organization.slackTeam.id <= 0">
                                                     <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-social bg-maroon">
                                                         <i class="fab fa-slack"></i>
-                                                        <span i18n="@@addToSlack">Add to Slack</span></a>
+                                                        <span i18n>Add to Slack</span></a>
                                                 </div>
                                                 <a *ngIf="organization.slackTeam.id > 0" [ngClass]="{ 'text-success': slackSyncStatus == 'success', 'text-danger': slackSyncStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }" (click)="onSlackSync()" class="text-muted item-clickable">
                                                     <i class="fas fa-sync"></i>
@@ -149,7 +147,7 @@
                         </div>
                         <div class="card-footer" style="text-align: center">
                             <button type="submit" class="btn btn-primary" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }" (click)="onSubmit()" [disabled]="submitting">
-                                <i class="fas fa-save"></i> <span i18n="@@save">Save</span></button>
+                                <i class="fas fa-save"></i> <span i18n>Save</span></button>
                         </div>
                     </form>
                 </div>
@@ -159,7 +157,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title" i18n="@@organizationContents">Documents</h3>
+                        <h3 class="card-title" i18n>Documents</h3>
                         <div class="card-tools">
                             <a class="btn btn-tool btn-sm" (click)="openNewContentModal(template)">
                                 <i class="fa fa-plus"></i>
@@ -173,7 +171,7 @@
                         <table class="table table-striped table-valign-middle">
                             <thead>
                                 <tr>
-                                    <th i18n="@@contentName">Name</th>
+                                    <th i18n>Name</th>
                                     <th i18n>Actions</th>
                                 </tr>
                             </thead>
@@ -227,25 +225,25 @@
                 </div>
                 <ng-template #template class="modal-lg">
                     <div class="modal-header">
-                        <h4 class="modal-title pull-left" i18n="@@contentEdit">Edit content</h4>
+                        <h4 class="modal-title pull-left" i18n>Edit content</h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form [formGroup]="contentForm">
-                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.name.errors }">
-                                <label for="name" i18n="@@contentName">Name</label>
+                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls['name'].errors }">
+                                <label for="name" i18n>Name</label>
                                 <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter content name">
                             </div>
-                            <div  *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls.value.errors }">
-                                <label for="value" i18n="@@contentValue">Content</label>
+                            <div  *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
+                                <label for="value" i18n>Content</label>
                                 <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig" (mediaDelete)="onDeleteMedia($event)"></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" (click)="onSubmitContent()" i18n="@@save">Save</button>
+                        <button class="btn btn-primary" (click)="onSubmitContent()" i18n>Save</button>
                     </div>
                 </ng-template>
             </div>

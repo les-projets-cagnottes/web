@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganizationService } from 'src/app/_services/organization.service';
-import { PagerService, AuthenticationService } from 'src/app/_services';
+import { PagerService, AuthenticationService, OrganizationService } from 'src/app/_services';
 import { OrganizationModel } from 'src/app/_models';
 
 @Component({
@@ -10,14 +9,14 @@ import { OrganizationModel } from 'src/app/_models';
 })
 export class OrganizationsComponent implements OnInit {
 
-  closeResult: string;
-  editUserModalLabel: string;
-  submitting: boolean;
+  closeResult: string = '';
+  editUserModalLabel: string = '';
+  submitting: boolean = false;
   refreshStatus: string = "no-refresh";
 
   private rawResponse: any;
   pager: any = {};
-  pagedItems: OrganizationModel[];
+  pagedItems: OrganizationModel[] = [];
   pageSize: number = 10;
 
   constructor(
@@ -31,7 +30,7 @@ export class OrganizationsComponent implements OnInit {
 
   refresh(page: number = 1): void {
     if(this.authenticationService.currentUserValue !== null && this.pagerService.canChangePage(this.pager, page)) {
-      this.organizationService.getByOwner(this.authenticationService.currentUserValue, page - 1, this.pageSize)
+      this.organizationService.list(page - 1, this.pageSize)
         .subscribe(response => {
           this.rawResponse = response;
           this.setPage(page);

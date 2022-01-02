@@ -1,9 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { User } from 'src/app/_entities';
+import { Project, User } from 'src/app/_entities';
 import { NewsModel } from 'src/app/_models';
-import { AuthenticationService, NewsService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
+import { AuthenticationService, OrganizationService, PagerService, ProjectService } from 'src/app/_services';
 
 @Component({
   selector: 'app-news',
@@ -13,10 +12,10 @@ import { AuthenticationService, NewsService, OrganizationService, PagerService, 
 export class ListNewsComponent implements OnInit {
 
   // Data
+  projects: Map<number, Project> = new Map<number, Project>();
   private news: any;
   userLoggedIn: User = new User();
   data: any = {};
-  projects: any = {};
   dates: string[] = [];
 
   // Refreshing state
@@ -59,7 +58,7 @@ export class ListNewsComponent implements OnInit {
     this.newsPager = this.pagerService.getPager(this.news.totalElements, page, this.newsLength);
     this.newsPaged = this.news.content;
     this.data = {};
-    var projectIds = [];
+    var projectIds: number[] = [];
     this.newsPaged.forEach(news => {
       var stringDate = formatDate(news.createdAt, 'dd/MM/yyyy', this.locale);
       if(!this.dates.find(date => date === stringDate)) {
@@ -74,8 +73,8 @@ export class ListNewsComponent implements OnInit {
       this.data[stringDate].push(news);
     });
     this.projectService.getAllByIds(projectIds)
-      .subscribe(response => {
-        response.forEach(prj => this.projects[prj.id] = prj)
+      .subscribe(projectModels => {
+        projectModels.forEach(model => this.projects.set(model.id, Project.fromModel(model)))
       },
       error => {
         console.log(error);
@@ -89,6 +88,14 @@ export class ListNewsComponent implements OnInit {
       return "100";
     }
     return 100 * number / max;
+  }
+  
+  getProject(id: number): Project {
+    var entity = this.projects.get(id);
+    if(entity === undefined) {
+      entity = new Project();
+    }
+    return entity;
   }
 
 }

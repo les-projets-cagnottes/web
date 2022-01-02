@@ -1,5 +1,4 @@
-import { GenericModel } from '../generic.model';
-import { AuditModel } from '../audit.model';
+import { AuditModel, GenericModel } from '..';
 
 export class IdeaModel extends AuditModel {
     icon: string = '';
