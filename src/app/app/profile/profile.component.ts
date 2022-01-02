@@ -1,11 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
-import { ApiTokenService, AuthenticationService, OrganizationService, BudgetService, DonationService, CampaignService, UserService, ProjectService } from 'src/app/_services';
-import { ApiToken, CampaignModel } from 'src/app/_models';
-import { Account, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
-import { AccountService } from 'src/app/_services/account/account.service';
+import { ApiTokenService, AuthenticationService, OrganizationService, DonationService, CampaignService, UserService, ProjectService } from 'src/app/_services';
+import { Account, ApiToken, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
+import { AccountModel, BudgetModel, CampaignModel } from 'src/app/_models';
 
 @Component({
   selector: 'app-profile',
@@ -48,7 +46,7 @@ export class ProfileComponent implements OnInit {
   deleteApiTokenStatus: string[] = [];
 
   // TermsOfUse modal
-  modalRef: BsModalRef;
+  modalRef: BsModalRef = new BsModalRef();
 
   constructor(
     private apiTokenService: ApiTokenService,
@@ -80,14 +78,14 @@ export class ProfileComponent implements OnInit {
 
     this.organizationService.getBudgets(this.organization.id)
       .subscribe(budgetModels => {
-        var budgetIds = [];
+        var budgetIds: number[] = [];
         budgetModels.forEach(budgetModel => {
           this.budgets.set(budgetModel.id, Budget.fromModel(budgetModel));
           budgetIds.push(budgetModel.id);
         });
         this.userService.getAccountsByBudgetIds(this.user.id, budgetIds)
           .subscribe(accountModels => {
-            var accountIds = [];
+            var accountIds: number[] = [];
             accountModels.forEach(accountModel => {
               var account = Account.fromModel(accountModel);
               account.usage = this.computeNumberPercent(account.amount, account.initialAmount) + "%";
@@ -96,14 +94,14 @@ export class ProfileComponent implements OnInit {
             });
             this.userService.getDonationsByAccountIds(this.user.id, accountIds)
               .subscribe(donationModels => {
-                var campaignIds = [];
+                var campaignIds: number[] = [];
                 donationModels.forEach(donationModel => {
                   this.donations.set(donationModel.id, Donation.fromModel(donationModel));
                   campaignIds.push(donationModel.campaign.id);
                 });
                 this.campaignService.getAllByIds(campaignIds)
                   .subscribe(campaignModels => {
-                    var projectIds = [];
+                    var projectIds: number[] = [];
                     campaignModels.forEach(campaignModel => {
                       this.campaigns.set(campaignModel.id, Campaign.fromModel(campaignModel));
                       projectIds.push(campaignModel.project.id);
@@ -139,7 +137,7 @@ export class ProfileComponent implements OnInit {
     this.apiTokenService.getAll()
       .subscribe(apiTokenModels => {
         apiTokenModels.forEach(apiTokenModel => {
-          this.apiTokens.set(apiTokenModel.id, apiTokenModel);
+          this.apiTokens.set(apiTokenModel.id, ApiToken.fromModel(apiTokenModel));
         });
       });
   }
@@ -157,8 +155,8 @@ export class ProfileComponent implements OnInit {
 
   generateApiToken(template: TemplateRef<any>) {
     this.apiTokenService.generateApiToken()
-      .subscribe((apiToken) => {
-        this.generatedApiToken = apiToken;
+      .subscribe((apiTokenModel) => {
+        this.generatedApiToken = ApiToken.fromModel(apiTokenModel);
         this.modalRef = this.modalService.show(template);
         this.refreshApiTokens();
       },
@@ -230,6 +228,39 @@ export class ProfileComponent implements OnInit {
       return 100;
     }
     return 100 * number / max;
+  }
+
+  
+  getAccount(id: number): Account {
+    var entity = this.accounts.get(id);
+    if(entity === undefined) {
+      entity = new Account();
+    }
+    return entity;
+  }
+
+  getBudget(id: number): Budget {
+    var entity = this.budgets.get(id);
+    if(entity === undefined) {
+      entity = new Budget();
+    }
+    return entity;
+  }
+
+  getCampaign(id: number): Campaign {
+    var entity = this.campaigns.get(id);
+    if(entity === undefined) {
+      entity = new Campaign();
+    }
+    return entity;
+  }
+
+  getProject(id: number): Project {
+    var entity = this.projects.get(id);
+    if(entity === undefined) {
+      entity = new Project();
+    }
+    return entity;
   }
 
 }

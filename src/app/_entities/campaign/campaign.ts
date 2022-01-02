@@ -1,15 +1,13 @@
-import { CampaignModel } from '../../_models/campaign/campaign.model';
+import { CampaignModel } from '../../_models';
 
-import { Budget } from '../budget';
+import { Budget } from '../budget/budget';
 import { Donation } from '../donation/donation';
-import { Organization } from '../organization/organization';
 import { Project } from '../project/project';
-import { User } from '../user';
 
 export class Campaign extends CampaignModel {
 
-    project: Project = new Project();
-    budget: Budget = new Budget();
+    override project: Project = new Project();
+    override budget: Budget = new Budget();
     donations: Donation[] = [];
 
     static fromModel(model: CampaignModel): Campaign {
@@ -32,13 +30,13 @@ export class Campaign extends CampaignModel {
     }
 
     static valuesOf(models: CampaignModel[]): Campaign[] {
-        var entities = [];
+        var entities: Campaign[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     static fromModels(models: CampaignModel[]): Campaign[] {
-        var entities = [];
+        var entities: Campaign[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

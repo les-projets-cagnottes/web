@@ -99,18 +99,18 @@
 
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title" id="editUserModalLabel">{{ f.firstname.value }} {{ f.lastname.value }}</h4>
+        <h4 class="modal-title" id="editUserModalLabel">{{ f['firstname'].value }} {{ f['lastname'].value }}</h4>
         <button type="button" class="close" (click)="closeModalEditUser()">
           <span aria-hidden="true">×</span>
         </button>
     </div>
     <div class="modal-body">
         <form [formGroup]="editUserForm">
-            <div class="form-group" [ngClass]="{ 'has-error': f.email.errors }">
+            <div class="form-group" [ngClass]="{ 'has-error': f['email'].errors }">
                 <label i18n>Email</label>
                 <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder>
             </div>
-            <div class="form-group" [ngClass]="{ 'has-error': userEdited.id === undefined && f.password.value === '' }">
+            <div class="form-group" [ngClass]="{ 'has-error': userEdited.id === undefined && f['password'].value === '' }">
                 <label i18n>Password</label>
                 <input type="password" formControlName="password" class="form-control" placeholder="Password - Keep empty to leave it unchanged" i18n-placeholder>
             </div>

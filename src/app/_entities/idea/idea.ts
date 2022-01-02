@@ -1,12 +1,12 @@
 import { IdeaModel } from '../../_models';
 
 import { Organization } from '../organization/organization';
-import { User } from '../user';
+import { User } from '../user/user';
 
 export class Idea extends IdeaModel {
 
-    submitter: User = new User();
-    organization: Organization = new Organization();
+    override submitter: User = new User();
+    override organization: Organization = new Organization();
     followers: User[] = [];
     tags: any[] = [];
 
@@ -31,7 +31,7 @@ export class Idea extends IdeaModel {
     }
 
     static valuesOf(models: IdeaModel[]): Idea[] {
-        var entities = [];
+        var entities: Idea[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

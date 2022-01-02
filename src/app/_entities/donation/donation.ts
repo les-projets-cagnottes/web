@@ -1,17 +1,11 @@
-
-import { CampaignModel } from '../../_models/campaign/campaign.model';
-import { DonationModel } from '../../_models/donation/donation.model';
-import { UserModel } from '../../_models/user.model';
-
-import { Budget } from '../budget';
+import { CampaignModel, DonationModel } from 'src/app/_models';
 import { Account } from '../account/account';
 import { Campaign } from '../campaign/campaign';
-import { User } from '../user';
 
 export class Donation extends DonationModel {
 
-    account: Account = new Account();
-    campaign: Campaign = new Campaign();
+    override account: Account = new Account();
+    override campaign: Campaign = new Campaign();
 
     static fromModel(model: DonationModel): Donation {
         var entity = new Donation();
@@ -29,7 +23,7 @@ export class Donation extends DonationModel {
     }
 
     static fromModels(models: DonationModel[]): Donation[] {
-        var entities = [];
+        var entities: Donation[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

@@ -13,15 +13,18 @@ import { ConfigService } from '../_services/config/config.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  });;
   loading = false;
   submitted = false;
-  returnUrl: string;
-  slackClientId: string;
+  returnUrl: string = '';
+  slackClientId: string = '';
 
   // slack oauth
-  redirectUrlOAuth: string;
-  code: string;
+  redirectUrlOAuth: string = '';
+  code: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,11 +54,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';

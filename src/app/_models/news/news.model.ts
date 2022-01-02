@@ -1,5 +1,4 @@
-import { AuditModel } from "../audit.model";
-import { GenericModel } from "../generic.model";
+import { AuditModel, GenericModel } from '..';
 
 export class NewsModel extends AuditModel {
     type: string = '';

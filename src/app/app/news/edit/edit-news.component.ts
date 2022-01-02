@@ -23,11 +23,11 @@ export class EditNewsComponent implements OnInit {
     title: ['', [Validators.required, Validators.maxLength(255)]],
     content: ['', [Validators.required]]
   });
-  submitting: boolean;
+  submitting: boolean = false;
 
   // Long Description editor config
   contentConfig = {
-    height: '600px',
+    height: 600,
     uploadImagePath: ''
   }
 
@@ -40,8 +40,8 @@ export class EditNewsComponent implements OnInit {
     private newsService: NewsService,
     private projectService: ProjectService) {
     this.route.params.subscribe(params => {
-      this.id = params.id;
-      this.idProject = params.idProject;
+      this.id = params['id'];
+      this.idProject = params['idProject'];
     });
   }
 
@@ -82,8 +82,8 @@ export class EditNewsComponent implements OnInit {
     this.submitting = true;
 
     var submittedNews = new NewsModel();
-    submittedNews.title = this.form.controls.title.value;
-    submittedNews.content = this.form.controls.content.value;
+    submittedNews.title = this.form.controls['title'].value;
+    submittedNews.content = this.form.controls['content'].value;
     submittedNews.organization.id = this.authenticationService.currentOrganizationValue.id;
     submittedNews.project.id = this.project.id;
     submittedNews.type = 'ARTICLE';
@@ -120,7 +120,7 @@ export class EditNewsComponent implements OnInit {
     return isAdmin && this.authenticationService.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
   }
 
-  onDeleteMedia(file) {
+  onDeleteMedia(file: any) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
         () => {},

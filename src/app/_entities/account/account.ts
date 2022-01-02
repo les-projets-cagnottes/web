@@ -1,12 +1,12 @@
-import { AccountModel } from '../../_models/account/account.model';
+import { AccountModel } from '../../_models';
 
-import { Budget } from '../budget';
-import { User } from '../user';
+import { Budget } from '../budget/budget';
+import { User } from '../user/user';
 
 export class Account extends AccountModel {
     
-    owner: User = new User();
-    budget: Budget = new Budget();
+    override owner: User = new User();
+    override budget: Budget = new Budget();
 
     // Front only
     usage: string = "0%";
@@ -28,7 +28,7 @@ export class Account extends AccountModel {
     }
 
     static fromModels(models: AccountModel[]): Account[] {
-        var entities = [];
+        var entities: Account[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

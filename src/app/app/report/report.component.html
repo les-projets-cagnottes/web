@@ -46,10 +46,10 @@
                     <tbody>
                         <tr *ngFor="let campaign of pagedCampaigns">
                             <td><a *ngIf="projects.get(campaign.project.id) !== undefined" 
-                                [routerLink]="['/projects/', campaign.project.id]">{{ projects.get(campaign.project.id).title }}</a></td>
+                                [routerLink]="['/projects/', campaign.project.id]">{{ getProject(campaign.project.id).title }}</a></td>
                             <td>{{ campaign.createdAt |date:'medium' }}</td>
-                            <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{ projects.get(campaign.project.id).shortDescription }}</span></td>
-                            <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{ projects.get(campaign.project.id).peopleGivingTimeRef.length }} / 3</span></td>
+                            <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{ getProject(campaign.project.id).shortDescription }}</span></td>
+                            <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{ getProject(campaign.project.id).peopleGivingTimeRef.length }} / 3</span></td>
                             <td>{{ campaign.totalDonations.toFixed(2) }} €</td>
                             <td>{{ campaign.donationsRequired.toFixed(2) }} €</td>
                             <td>
