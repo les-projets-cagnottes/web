@@ -37,7 +37,7 @@
                     <span i18n *ngIf="news.organization.id <= 0"> published the system message </span>
                     <b>{{ news.title }}</b> 
                     <span *ngIf="news.project.id > 0" i18n> in the project </span>
-                    <b *ngIf="news.project.id > 0">{{ projects[news.project.id].title }}</b>
+                    <b *ngIf="news.project.id > 0 && projects.get(news.project.id) !== undefined">{{ getProject(news.project.id).title }}</b>
                 </h3>
                 <div class="timeline-body" [innerHTML]="news.content"></div>
                 <div class="timeline-footer action-bar">

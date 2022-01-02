@@ -2,14 +2,14 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@organizations">Organizations</h3>
+                <h3 class="card-title" i18n>Organizations</h3>
             </div>
             <div class="card-body">
                 <div class="row action-bar">
                     <div class="col-6">
                         <button type="button" class="btn btn-default" [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }" (click)="refresh()"><i class="fas fa-sync"></i>
                             <span i18n>Refresh</span></button>
-                        <button type="button" class="btn btn-default" routerLink="/organizations/new"><i class="fa fa-plus"></i> <span i18n="@@actionAdd">Add</span></button>
+                        <button type="button" class="btn btn-default" routerLink="/organizations/new"><i class="fa fa-plus"></i> <span i18n>Add</span></button>
                     </div>
                     <div class="col-6">
                         <div class="dataTables_length text-right"><label for="pageSize" i18n>Nb entries</label>

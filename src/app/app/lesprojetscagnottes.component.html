@@ -87,44 +87,44 @@
                     <li class="nav-item">
                         <a routerLink="/report" class="nav-link">
                             <i class="nav-icon fas fa-clipboard"></i>
-                            <p i18n="@@reportingMenu">Reporting</p>
+                            <p i18n>Reporting</p>
                         </a>
                     </li>
-                    <li *ngIf="isSponsor() || isManager() || isOwner()" class="nav-header" i18n="@@managementMenu">
+                    <li *ngIf="isSponsor() || isManager() || isOwner()" class="nav-header" i18n>
                         MANAGEMENT</li>
                     <li *ngIf="isSponsor()" class="nav-item">
                         <a routerLink="/budgets" class="nav-link">
                             <i class="nav-icon fas fa-money-bill"></i>
-                            <p i18n="@@budgetsMenu">Budgets</p>
+                            <p i18n>Budgets</p>
                         </a>
                     </li>
-                    <li *ngIf="isAdmin" class="nav-header" i18n="@@administrationMenu">
+                    <li *ngIf="isAdmin" class="nav-header" i18n>
                         ADMINISTRATION</li>
                     <li *ngIf="isAdmin" class="nav-item">
                         <a routerLink="/users" class="nav-link">
                             <i class="nav-icon fa fa-user"></i>
-                            <p i18n="@@usersMenu">Users</p>
+                            <p i18n>Users</p>
                         </a>
                     </li>
                     <li *ngIf="isAdmin" class="nav-item">
                         <a routerLink="/organizations" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
-                            <p i18n="@@organizationsMenu">Organizations</p>
+                            <p i18n>Organizations</p>
                         </a>
                     </li>
-                    <li class="nav-header" i18n="@@documentationMenu">
+                    <li class="nav-header" i18n>
                         DOCUMENTATION</li>
                     <li class="nav-item">
                         <a routerLink="/doc/getting-started" class="nav-link">
                             <i class="nav-icon fa fa-book"></i>
-                            <p i18n="@@gettingStartedMenu">Getting Started
+                            <p i18n>Getting Started
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a routerLink="/about" class="nav-link">
                             <i class="nav-icon fas fa-code-branch"></i>
-                            <p i18n="@@aboutMenu">About
+                            <p i18n>About
                             </p>
                         </a>
                     </li>

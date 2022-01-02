@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -13,38 +13,37 @@ import { UserService, PagerService } from 'src/app/_services';
 })
 export class UsersComponent implements OnInit {
 
-  editUserForm: FormGroup;
-  closeResult: string;
-  userEdited: UserModel;
-  submitting: boolean;
+  editUserForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required],
+    password: [''],
+    firstname: [''],
+    lastname: [''],
+    isActivated: [''],
+    avatarUrl: [''],
+    color: ['']
+  });;
+  closeResult: string = '';
+  userEdited: UserModel = new UserModel();;
+  submitting: boolean = false;
   refreshStatus: string = "no-refresh";
 
   // Modal
-  modalRef: BsModalRef;
+  modalRef: BsModalRef = new BsModalRef();
 
   // Pagination
   private rawResponse: any;
   pager: any = {};
-  pagedItems: any[];
+  pagedItems: any[] = [];
   pageSize: number = 10;
 
   constructor(
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
     private userService: UserService,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService) {
+  }
 
   ngOnInit() {
-    this.editUserForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: [''],
-      firstname: [''],
-      lastname: [''],
-      isActivated: [''],
-      avatarUrl: [''],
-      color: ['']
-    });
-    this.userEdited = new UserModel();
     this.refresh();
   }
 
@@ -63,28 +62,28 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  openModalCreateUser(template): void {
+  openModalCreateUser(template: TemplateRef<any>): void {
     this.userEdited = new UserModel();
-    this.f.email.setValue("");
-    this.f.firstname.setValue("");
-    this.f.lastname.setValue("");
-    this.f.avatarUrl.setValue("");
-    this.f.color.setValue("");
-    this.f.isActivated.setValue(false);
+    this.f['email'].setValue("");
+    this.f['firstname'].setValue("");
+    this.f['lastname'].setValue("");
+    this.f['avatarUrl'].setValue("");
+    this.f['color'].setValue("");
+    this.f['isActivated'].setValue(false);
     this.openModal(template);
   }
 
-  openModalEditUser(template, user: UserModel): void {
+  openModalEditUser(template: TemplateRef<any>, user: UserModel): void {
     this.userEdited = user;
-    this.f.email.setValue(user.email);
-    this.f.firstname.setValue(user.firstname);
-    this.f.lastname.setValue(user.lastname);
-    this.f.avatarUrl.setValue(user.avatarUrl);
-    this.f.isActivated.setValue(user.enabled);
+    this.f['email'].setValue(user.email);
+    this.f['firstname'].setValue(user.firstname);
+    this.f['lastname'].setValue(user.lastname);
+    this.f['avatarUrl'].setValue(user.avatarUrl);
+    this.f['isActivated'].setValue(user.enabled);
     this.openModal(template);
   }
 
-  openModal(template): void {
+  openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-xl' })
@@ -108,20 +107,19 @@ export class UsersComponent implements OnInit {
     if (this.editUserForm.invalid) {
       return;
     }
-    if (this.userEdited.id === undefined && this.f.password.value === '') {
-      this.f.password.errors.append('Password is required when creating a user');
+    if (this.userEdited.id === undefined && this.f['password'].value === '') {
       return;
     }
 
     this.submitting = true;
-    this.userEdited.email = this.f.email.value;
-    this.userEdited.firstname = this.f.firstname.value;
-    this.userEdited.lastname = this.f.lastname.value;
-    this.userEdited.avatarUrl = this.f.avatarUrl.value;
-    this.userEdited.enabled = this.f.isActivated.value;
-    
+    this.userEdited.email = this.f['email'].value;
+    this.userEdited.firstname = this.f['firstname'].value;
+    this.userEdited.lastname = this.f['lastname'].value;
+    this.userEdited.avatarUrl = this.f['avatarUrl'].value;
+    this.userEdited.enabled = this.f['isActivated'].value;
+
     if (this.userEdited.id === 0) {
-      this.userEdited.password = this.f.password.value;
+      this.userEdited.password = this.f['password'].value;
       this.userService.create(this.userEdited)
         .pipe(first())
         .subscribe(
@@ -135,8 +133,8 @@ export class UsersComponent implements OnInit {
             this.submitting = false;
           });
     } else {
-      if (this.f.password.value !== undefined) {
-        this.userEdited.password = this.f.password.value;
+      if (this.f['password'].value !== undefined) {
+        this.userEdited.password = this.f['password'].value;
       }
       this.userService.update(this.userEdited)
         .pipe(first())

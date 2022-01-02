@@ -4,7 +4,7 @@ import { Organization } from '../organization/organization';
 
 export class Content extends ContentModel {
     
-    organization: Organization;
+    override organization: Organization = new Organization();
     
     static fromModel(model: ContentModel): Content {
         var entity = new Content();
@@ -22,7 +22,7 @@ export class Content extends ContentModel {
     }
 
     static fromModels(models: ContentModel[]): Content[] {
-        var entities = [];
+        var entities: Content[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

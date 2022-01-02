@@ -11,7 +11,7 @@
                         <label for="title" i18n>Title</label>
                         <input type="text" formControlName="title" class="form-control" id="title"
                             placeholder="Title" i18n-placeholder="Project Title"
-                            [ngClass]="{ 'is-invalid': this.form.controls.title.errors }" />
+                            [ngClass]="{ 'is-invalid': this.form.controls['title'].errors }" />
                     </div>
                     <div *ngIf="contentConfig.uploadImagePath != ''" class="form-group">
                         <textarea id="content" formControlName="content" [ngxSummernote]="contentConfig" (mediaDelete)="onDeleteMedia($event)"></textarea>

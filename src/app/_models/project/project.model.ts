@@ -1,5 +1,4 @@
-import { AuditModel } from "../audit.model";
-import { GenericModel } from "../generic.model";
+import { AuditModel, GenericModel } from '..';
 
 export class ProjectModel extends AuditModel {
     
@@ -16,5 +15,5 @@ export class ProjectModel extends AuditModel {
     newsRef: number[] = [];
 
     // Only in this component
-    peopleRequiredPercent: string;
+    peopleRequiredPercent: string = '';
 }

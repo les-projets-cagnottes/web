@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
-import { Organization, Project } from 'src/app/_entities';
+import { Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, FileService, ProjectService, UserService } from 'src/app/_services';
-
+import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
 
 @Component({
   selector: 'app-edit-project',
@@ -25,11 +24,11 @@ export class EditProjectComponent implements OnInit {
     longDescription: ['', [Validators.required]],
     peopleRequired: [2, [Validators.required, Validators.min(2)]]
   });
-  submitting: boolean;
+  submitting: boolean = false;
 
   // Long Description editor config
   longDescriptionConfig = {
-    height: '600px',
+    height: 600,
     uploadImagePath: '',
   }
 
@@ -40,7 +39,7 @@ export class EditProjectComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private fileService: FileService,
     private projectService: ProjectService) {
-    this.route.params.subscribe(params => this.id = params.id);
+    this.route.params.subscribe(params => this.id = params['id']);
   }
 
   ngOnInit(): void {
@@ -76,10 +75,10 @@ export class EditProjectComponent implements OnInit {
     this.submitting = true;
 
     var submittedProject = new ProjectModel();
-    submittedProject.title = this.form.controls.title.value;
-    submittedProject.shortDescription = this.form.controls.shortDescription.value;
-    submittedProject.longDescription = this.form.controls.longDescription.value;
-    submittedProject.peopleRequired = this.form.controls.peopleRequired.value;
+    submittedProject.title = this.form.controls['title'].value;
+    submittedProject.shortDescription = this.form.controls['shortDescription'].value;
+    submittedProject.longDescription = this.form.controls['longDescription'].value;
+    submittedProject.peopleRequired = this.form.controls['peopleRequired'].value;
     submittedProject.workspace = this.project.workspace;
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
 
@@ -112,7 +111,7 @@ export class EditProjectComponent implements OnInit {
     }
   }
 
-  onDeleteMedia(file) {
+  onDeleteMedia(file: any) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
         () => {},
