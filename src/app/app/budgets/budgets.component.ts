@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { BudgetService, AuthenticationService, OrganizationService, UserService, ContentService } from 'src/app/_services';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BudgetService, AuthenticationService, OrganizationService } from 'src/app/_services';
 import { BudgetModel, ContentModel } from 'src/app/_models';
-import { first } from 'rxjs/operators';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Organization, Budget, Content } from 'src/app/_entities';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-budgets',
@@ -12,25 +11,126 @@ import { Organization, Budget, Content } from 'src/app/_entities';
 })
 export class BudgetsComponent implements OnInit {
 
+  // Data
+  rules: Map<number, ContentModel> = new Map<number, ContentModel>();
+  budgets: Map<number, BudgetModel> = new Map<number, BudgetModel>();
+
+  // Refresh Status
+  refreshStatus: string = 'idle';
+
+  // Selected Budget
+  selectedBudget: BudgetModel = new BudgetModel();
+
+  // Edit Budget Modal
+  editBudgetModal: BsModalRef = new BsModalRef();
+
+  // Edit Budget Form
+  editBudgetForm: FormGroup = this.formBuilder.group({
+    name: [this.selectedBudget.name, Validators.required],
+    amountPerMember: [this.selectedBudget.amountPerMember, [Validators.required, Validators.min(0.01)]],
+    startDate: [this.selectedBudget.startDate, Validators.required],
+    endDate: [this.selectedBudget.endDate, Validators.required],
+    rules: [this.selectedBudget.rules.id, Validators.required]
+  });
+
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
+    private modalService: BsModalService,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
-    private contentService: ContentService,
     private organizationService: OrganizationService
-  ) {
-    this.fb.group({
-      organizations: this.fb.group({
-        budgets: this.fb.array([])
-      })
-    });
-  }
+  ) { }
 
   ngOnInit() {
     this.refresh();
   }
 
   refresh(): void {
+    this.budgets = new Map<number, BudgetModel>();
+    this.organizationService.getBudgets(this.authenticationService.currentOrganizationValue.id)
+      .subscribe(budgets => {
+        budgets.forEach(budget => {
+          this.budgets.set(budget.id, budget);
+        });
+        this.refreshStatus = 'success';
+        setTimeout(() => {
+          this.refreshStatus = 'idle';
+        }, 2000);
+      }, error => {
+        this.refreshStatus = 'error';
+        setTimeout(() => {
+          this.refreshStatus = 'idle';
+        }, 2000);
+        console.log(error);
+      });
+  }
+
+  openNewBudgetModal(template: TemplateRef<any>) {
+    this.openBudgetModal(template, new BudgetModel());
+  }
+
+  openBudgetModal(template: TemplateRef<any>, budget: BudgetModel) {
+    this.rules = new Map<number, ContentModel>();
+    this.organizationService.getAllContents(this.authenticationService.currentOrganizationValue.id)
+      .subscribe(contents => {
+        contents.forEach(content => {
+          this.rules.set(content.id, content);
+        });
+        this.editBudgetForm.controls['name'].setValue(budget.name);
+        this.editBudgetForm.controls['amountPerMember'].setValue(budget.amountPerMember);
+        this.editBudgetForm.controls['startDate'].setValue(budget.startDate);
+        this.editBudgetForm.controls['endDate'].setValue(budget.endDate);
+        if(contents.length > 0) {
+          if(budget.rules.id > 0) {
+            this.editBudgetForm.controls['rules'].setValue(budget.rules.id);
+          } else {
+            this.editBudgetForm.controls['rules'].setValue(contents[0].id);
+          }
+        }
+        this.selectedBudget = budget;
+        this.editBudgetModal = this.modalService.show(template);
+      });
+  }
+
+  saveBudget() {
+
+    // Stop here if form is invalid
+    if (this.editBudgetForm.invalid) {
+      return;
+    }
+
+    var budget = new BudgetModel();
+    budget.id = this.selectedBudget.id;
+    budget.name = this.editBudgetForm.controls['name'].value;
+    budget.amountPerMember = this.editBudgetForm.controls['amountPerMember'].value;
+    budget.startDate = this.editBudgetForm.controls['startDate'].value;
+    budget.endDate = this.editBudgetForm.controls['endDate'].value;
+    budget.rules.id = this.editBudgetForm.controls['rules'].value;
+    budget.organization.id = this.authenticationService.currentOrganizationValue.id;
+    budget.sponsor.id = this.authenticationService.currentUserValue.id;
+
+    if(budget.id == 0) {
+      this.budgetService.create(budget)
+        .subscribe(() => {
+          this.editBudgetModal.hide();
+          this.refresh();
+        });
+    } else {
+      this.budgetService.save(budget)
+        .subscribe(() => {
+          this.editBudgetModal.hide();
+          this.refresh();
+        });
+    }
+  }
+
+  delete(budget: BudgetModel) {
+    if(!budget.isDistributed) {
+      this.budgetService.delete(budget.id)
+        .subscribe(() => {
+          this.refresh();
+        });
+    }
   }
 
 }

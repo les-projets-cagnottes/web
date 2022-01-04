@@ -1,0 +1,122 @@
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Budgets</h3>
+
+        <div class="card-tools">
+            <a class="btn btn-tool btn-sm" (click)="refresh()"
+                [ngClass]="{ 'text-success': refreshStatus == 'success', 'text-danger': refreshStatus == 'error'}">
+                <i class="fas fa-sync"></i>
+            </a>
+            <a class="btn btn-tool btn-sm" (click)="openNewBudgetModal(editBudgetModalTemplate)">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%"> # </th>
+                    <th> Budget Name </th>
+                    <th> Amount per member </th>
+                    <th> Starting Date </th>
+                    <th> Ending Date </th>
+                    <th class="project-state"> Status </th>
+                    <th style="width: 10%">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of budgets | keyvalue">
+                    <td> # </td>
+                    <td>
+                        <a> {{ item.value.name }} </a>
+                        <br />
+                        <small> Created {{ item.value.createdAt | date:'medium'}} </small>
+                    </td>
+                    <td> {{ item.value.amountPerMember.toFixed(2) }} € </td>
+                    <td> {{ item.value.startDate | date:'longDate' }} </td>
+                    <td> {{ item.value.endDate | date:'longDate' }} </td>
+                    <td class="project-state">
+                        <span *ngIf="!item.value.isDistributed" class="badge bg-yellow" i18n>Preparing</span>
+                        <span *ngIf="item.value.isDistributed" class="badge bg-green" i18n>Distributed</span>
+                    </td>
+                    <td class="project-actions text-right" style="width: 10%">
+                        <a class="btn btn-info btn-sm" (click)="openBudgetModal(editBudgetModalTemplate, item.value)">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" (click)="delete(item.value)">
+                            <i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<ng-template #editBudgetModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n>Edit budget</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="editBudgetModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="editBudgetForm">
+            <div class="form-group">
+                <label for="name" i18n>Name</label>
+                <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter budget name"
+                    [ngClass]="{ 'is-invalid': editBudgetForm.controls['name'].errors }">
+            </div>
+            <div class="form-group">
+                <label for="amountPerMember" i18n>Amount Per Member</label>
+                <div class="input-group">
+                    <input class="form-control" type="number" min="0.00" step="0.01" formControlName="amountPerMember"
+                        id="amountPerMember"
+                        [ngClass]="{ 'is-invalid': editBudgetForm.controls['amountPerMember'].errors }">
+                    <div class="input-group-append">
+                        <span class="input-group-text">€</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="startDate" i18n>Start Date</label>
+                        <input type="date" formControlName="startDate" class="form-control" id="startDate"
+                            placeholder="Enter budget starting date"
+                            [ngClass]="{ 'is-invalid': editBudgetForm.controls['startDate'].errors }">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="endDate" i18n>Ending Date</label>
+                        <input type="date" formControlName="endDate" class="form-control" id="endDate"
+                            placeholder="Enter budget ending date"
+                            [ngClass]="{ 'is-invalid': editBudgetForm.controls['endDate'].errors }">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rules">Rules</label>
+                <select class="custom-select" class="form-control" style="width: 100%;" formControlName="rules"
+                    id="rules">
+                    <option *ngFor="let item of rules | keyvalue" value="{{ item.key }}">{{ item.value.name }}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" (click)="editBudgetModal.hide()">Close</button>
+        <button *ngIf="selectedBudget.id > 0" type="button" class="btn btn-primary" (click)="saveBudget()"
+            i18n>Save</button>
+        <button *ngIf="selectedBudget.id <= 0" type="button" class="btn btn-primary" (click)="saveBudget()"
+            i18n>Create</button>
+    </div>
+</ng-template>

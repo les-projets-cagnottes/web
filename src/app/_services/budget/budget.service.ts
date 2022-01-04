@@ -43,7 +43,7 @@ export class BudgetService {
     return this.http.post(`${this.configService.get('apiUrl')}/budget`, budget);
   }
 
-  updateAll(budget: BudgetModel[]) {
+  save(budget: BudgetModel) {
     return this.http.put(`${this.configService.get('apiUrl')}/budget`, budget);
   }
 
