@@ -4,7 +4,6 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { MarkdownModule } from 'ngx-markdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -67,7 +66,6 @@ const appConfig = (config: ConfigService) => {
     NgxSummernoteModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MarkdownModule.forRoot(),
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule.forRoot(),
