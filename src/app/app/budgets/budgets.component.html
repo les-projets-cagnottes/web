@@ -22,7 +22,7 @@
                     <th> Starting Date </th>
                     <th> Ending Date </th>
                     <th class="project-state"> Status </th>
-                    <th style="width: 10%">
+                    <th>
                     </th>
                 </tr>
             </thead>
@@ -32,7 +32,7 @@
                     <td>
                         <a> {{ item.value.name }} </a>
                         <br />
-                        <small> Created {{ item.value.createdAt | date:'medium'}} </small>
+                        <small> <span i18n>Created on </span> {{ item.value.createdAt | date:'medium'}} </small>
                     </td>
                     <td> {{ item.value.amountPerMember.toFixed(2) }} € </td>
                     <td> {{ item.value.startDate | date:'longDate' }} </td>
@@ -41,13 +41,18 @@
                         <span *ngIf="!item.value.isDistributed" class="badge bg-yellow" i18n>Preparing</span>
                         <span *ngIf="item.value.isDistributed" class="badge bg-green" i18n>Distributed</span>
                     </td>
-                    <td class="project-actions text-right" style="width: 10%">
+                    <td class="project-actions text-right action-bar">
+                        <a *ngIf="!item.value.isDistributed" class="btn btn-primary btn-sm" (click)="distribute(item.key)">
+                            <i class="fas fa-paper-plane">
+                            </i>
+                            <span i18n>Distribute</span>
+                        </a>
                         <a class="btn btn-info btn-sm" (click)="openBudgetModal(editBudgetModalTemplate, item.value)">
                             <i class="fas fa-pencil-alt">
                             </i>
                             Edit
                         </a>
-                        <a class="btn btn-danger btn-sm" (click)="delete(item.value)">
+                        <a *ngIf="!item.value.isDistributed" class="btn btn-danger btn-sm" (click)="delete(item.value)">
                             <i class="fas fa-trash">
                             </i>
                             Delete
@@ -57,7 +62,9 @@
             </tbody>
         </table>
     </div>
-    <!-- /.card-body -->
+    <div *ngIf="refreshStatus == 'running'" class="overlay">
+        <i class="fas fa-sync fa-spin"></i>
+    </div>
 </div>
 
 <ng-template #editBudgetModalTemplate>
@@ -111,6 +118,9 @@
                 </select>
             </div>
         </form>
+        <div *ngIf="selectedBudget.isDistributed" class="callout callout-info" i18n>
+            Some field have been disabled because budget is already distributed between organization members.
+        </div>
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" (click)="editBudgetModal.hide()">Close</button>
