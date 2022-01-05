@@ -78,14 +78,25 @@ export class BudgetsComponent implements OnInit {
         });
         this.editBudgetForm.controls['name'].setValue(budget.name);
         this.editBudgetForm.controls['amountPerMember'].setValue(budget.amountPerMember);
-        this.editBudgetForm.controls['startDate'].setValue(budget.startDate);
-        this.editBudgetForm.controls['endDate'].setValue(budget.endDate);
+        this.editBudgetForm.controls['startDate'].setValue(this.dateToString(budget.startDate));
+        this.editBudgetForm.controls['endDate'].setValue(this.dateToString(budget.endDate));
         if(contents.length > 0) {
           if(budget.rules.id > 0) {
             this.editBudgetForm.controls['rules'].setValue(budget.rules.id);
           } else {
             this.editBudgetForm.controls['rules'].setValue(contents[0].id);
           }
+        }
+        if(budget.isDistributed) {
+          this.editBudgetForm.controls['amountPerMember'].disable();
+          this.editBudgetForm.controls['startDate'].disable();
+          this.editBudgetForm.controls['endDate'].disable();
+          this.editBudgetForm.controls['rules'].disable();
+        } else {
+          this.editBudgetForm.controls['amountPerMember'].enable();
+          this.editBudgetForm.controls['startDate'].enable();
+          this.editBudgetForm.controls['endDate'].enable();
+          this.editBudgetForm.controls['rules'].enable();
         }
         this.selectedBudget = budget;
         this.editBudgetModal = this.modalService.show(template);
@@ -124,6 +135,13 @@ export class BudgetsComponent implements OnInit {
     }
   }
 
+  distribute(budgetId: number) {
+    this.budgetService.distribute(budgetId)
+      .subscribe(() => {
+        this.refresh();
+      });
+  }
+
   delete(budget: BudgetModel) {
     if(!budget.isDistributed) {
       this.budgetService.delete(budget.id)
@@ -131,6 +149,11 @@ export class BudgetsComponent implements OnInit {
           this.refresh();
         });
     }
+  }
+
+  dateToString(date: Date) {
+    var date = new Date(date);
+    return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
   }
 
 }
