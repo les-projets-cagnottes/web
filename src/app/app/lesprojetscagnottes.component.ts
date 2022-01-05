@@ -92,14 +92,11 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     this.changeCurrentOrgModal.hide();
   }
 
-  isSponsor(organization?: Organization): boolean {
-    var isSponsor = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    if(organization !== undefined) {
-      isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === organization.id);
-    } else {
-      isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor);
-    }
-    return isSponsor || this.isAdmin;
+  isSponsor(): boolean {
+    return (this.currentUser != null 
+      && this.currentUser.userOrganizationAuthorities != null
+      && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === this.currentOrganization.id))
+      || this.isAdmin;
   }
 
   isManager(organization?: Organization): boolean {
