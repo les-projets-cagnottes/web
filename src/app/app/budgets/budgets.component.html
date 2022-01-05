@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Budgets</h3>
+        <h3 class="card-title" i18n="@@budgets">Budgets</h3>
 
         <div class="card-tools">
             <a class="btn btn-tool btn-sm" (click)="refresh()"
@@ -16,14 +16,13 @@
         <table class="table table-striped projects">
             <thead>
                 <tr>
-                    <th style="width: 1%"> # </th>
-                    <th> Budget Name </th>
-                    <th> Amount per member </th>
-                    <th> Starting Date </th>
-                    <th> Ending Date </th>
-                    <th class="project-state"> Status </th>
-                    <th>
-                    </th>
+                    <th style="width: 1%">#</th>
+                    <th i18n="@@name">Name</th>
+                    <th i18n="@@amountPerMember">Amount per member</th>
+                    <th i18n="@@startDate">Starting Date</th>
+                    <th i18n="@@endDate">Ending Date</th>
+                    <th i18n="@@status" class="project-state">Status</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,30 +31,36 @@
                     <td>
                         <a> {{ item.value.name }} </a>
                         <br />
-                        <small> <span i18n>Created on </span> {{ item.value.createdAt | date:'medium'}} </small>
+                        <small>
+                            <span i18n="@@createdAtInline">Created at </span>
+                            <span>{{ item.value.createdAt | date:'medium'}}</span>
+                        </small>
                     </td>
                     <td> {{ item.value.amountPerMember.toFixed(2) }} € </td>
                     <td> {{ item.value.startDate | date:'longDate' }} </td>
                     <td> {{ item.value.endDate | date:'longDate' }} </td>
                     <td class="project-state">
-                        <span *ngIf="!item.value.isDistributed" class="badge bg-yellow" i18n>Preparing</span>
-                        <span *ngIf="item.value.isDistributed" class="badge bg-green" i18n>Distributed</span>
+                        <span *ngIf="!item.value.isDistributed" class="badge bg-yellow"
+                            i18n="@@preparing">Preparing</span>
+                        <span *ngIf="item.value.isDistributed" class="badge bg-green"
+                            i18n="@@distributed">Distributed</span>
                     </td>
                     <td class="project-actions text-right action-bar">
-                        <a *ngIf="!item.value.isDistributed" class="btn btn-primary btn-sm" (click)="distribute(item.key)">
+                        <a *ngIf="!item.value.isDistributed" class="btn btn-primary btn-sm"
+                            (click)="distribute(item.key)">
                             <i class="fas fa-paper-plane">
                             </i>
-                            <span i18n>Distribute</span>
+                            <span i18n="@@distribute">Distribute</span>
                         </a>
                         <a class="btn btn-info btn-sm" (click)="openBudgetModal(editBudgetModalTemplate, item.value)">
                             <i class="fas fa-pencil-alt">
                             </i>
-                            Edit
+                            <span i18n="@@edit">Edit</span>
                         </a>
                         <a *ngIf="!item.value.isDistributed" class="btn btn-danger btn-sm" (click)="delete(item.value)">
                             <i class="fas fa-trash">
                             </i>
-                            Delete
+                            <span i18n="@@delete">Delete</span>
                         </a>
                     </td>
                 </tr>
@@ -69,7 +74,7 @@
 
 <ng-template #editBudgetModalTemplate>
     <div class="modal-header">
-        <h4 class="modal-title pull-left" i18n>Edit budget</h4>
+        <h4 class="modal-title pull-left" i18n="@@editBudget">Edit budget</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="editBudgetModal.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -77,12 +82,12 @@
     <div class="modal-body">
         <form [formGroup]="editBudgetForm">
             <div class="form-group">
-                <label for="name" i18n>Name</label>
+                <label for="name" i18n="@@name">Name</label>
                 <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter budget name"
                     [ngClass]="{ 'is-invalid': editBudgetForm.controls['name'].errors }">
             </div>
             <div class="form-group">
-                <label for="amountPerMember" i18n>Amount Per Member</label>
+                <label for="amountPerMember" i18n="@@amountPerMember">Amount per member</label>
                 <div class="input-group">
                     <input class="form-control" type="number" min="0.00" step="0.01" formControlName="amountPerMember"
                         id="amountPerMember"
@@ -95,7 +100,7 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="startDate" i18n>Start Date</label>
+                        <label for="startDate" i18n="@@startDate">Starting Date</label>
                         <input type="date" formControlName="startDate" class="form-control" id="startDate"
                             placeholder="Enter budget starting date"
                             [ngClass]="{ 'is-invalid': editBudgetForm.controls['startDate'].errors }">
@@ -103,7 +108,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label for="endDate" i18n>Ending Date</label>
+                        <label for="endDate" i18n="@@endDate">Ending Date</label>
                         <input type="date" formControlName="endDate" class="form-control" id="endDate"
                             placeholder="Enter budget ending date"
                             [ngClass]="{ 'is-invalid': editBudgetForm.controls['endDate'].errors }">
@@ -118,15 +123,15 @@
                 </select>
             </div>
         </form>
-        <div *ngIf="selectedBudget.isDistributed" class="callout callout-info" i18n>
+        <div *ngIf="selectedBudget.isDistributed" class="callout callout-info" i18n="@@budgetFieldDisabled">
             Some field have been disabled because budget is already distributed between organization members.
         </div>
     </div>
     <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-default" (click)="editBudgetModal.hide()">Close</button>
         <button *ngIf="selectedBudget.id > 0" type="button" class="btn btn-primary" (click)="saveBudget()"
-            i18n>Save</button>
+            i18n="@@save">Save</button>
         <button *ngIf="selectedBudget.id <= 0" type="button" class="btn btn-primary" (click)="saveBudget()"
-            i18n>Create</button>
+            i18n="@@create">Create</button>
     </div>
 </ng-template>

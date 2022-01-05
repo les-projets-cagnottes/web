@@ -2,9 +2,10 @@
     <div class="col-8">
         <div *ngIf="id > 0" class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n>Members</h3>
+                <h3 class="card-title" i18n="@@members">Members</h3>
                 <div class="card-tools">
-                    <a class="btn btn-tool btn-sm" (click)="refreshMembers(pagerMembers.currentPage)" [ngClass]="{ 'text-success': refreshMembersStatus == 'success', 'text-danger': refreshMembersStatus == 'error'}">
+                    <a class="btn btn-tool btn-sm" (click)="refreshMembers(pagerMembers.currentPage)"
+                        [ngClass]="{ 'text-success': refreshMembersStatus == 'success', 'text-danger': refreshMembersStatus == 'error'}">
                         <i class="fas fa-sync"></i>
                     </a>
                 </div>
@@ -13,39 +14,49 @@
             <div class="card-body">
                 <form class="form-horizontal action-bar" [formGroup]="addMemberOrgForm">
                     <div class="form-group row">
-                        <label for="inputEmail" id="inputEmailLabel" class="col-2 control-label float-right" i18n>Add member : </label>
+                        <label for="inputEmail" id="inputEmailLabel" class="col-2 control-label float-right"
+                            i18n="@@addMember">Add member : </label>
                         <div class="col-8">
-                            <input formControlName="email" type="email" class="form-control" formControlName="email" placeholder="Email" i18n-placeholder="@@userEmail">
+                            <input formControlName="email" type="email" class="form-control" formControlName="email"
+                                placeholder="Email" i18n-placeholder="@@userEmail">
                         </div>
                         <div class="col-1">
-                            <button type="button" class="btn btn-flat btn-default" [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }" (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
-                                <span i18n>Add</span></button>
+                            <button type="button" class="btn btn-flat btn-default"
+                                [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }"
+                                (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
+                                <span i18n="@@add">Add</span></button>
                         </div>
                     </div>
                 </form>
-                <hr/>
+                <hr />
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th i18n>Name</th>
-                                <th i18n>Email</th>
-                                <th i18n>Is Sponsor ?</th>
-                                <th i18n>Is Manager ?</th>
-                                <th i18n>Is Owner ?</th>
-                                <th i18n>Actions</th>
+                                <th i18n="@@name">Name</th>
+                                <th i18n="@@email">Email</th>
+                                <th i18n="@@isSponsor">Is Sponsor ?</th>
+                                <th i18n="@@isManager">Is Manager ?</th>
+                                <th i18n="@@isOwner">Is Owner ?</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let user of pagedItemsMembers">
                                 <td>{{ user.firstname }} {{ user.lastname }}</td>
                                 <td>{{ user.email }}</td>
-                                <td *ngIf="user.isUserSponsor" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="far fa-check-square"></i></td>
-                                <td *ngIf="!user.isUserSponsor" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="far fa-square"></i></td>
-                                <td *ngIf="user.isUserManager" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="far fa-check-square"></i></td>
-                                <td *ngIf="!user.isUserManager" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_MANAGER')"><i class="far fa-square"></i></td>
-                                <td *ngIf="user.isUserOwner" class="item-clickable text-green" (click)="grant(user.id, 'ROLE_OWNER')"><i class="far fa-check-square"></i></td>
-                                <td *ngIf="!user.isUserOwner" class="item-clickable text-red" (click)="grant(user.id, 'ROLE_OWNER')"><i class="far fa-square"></i></td>
+                                <td *ngIf="user.isUserSponsor" class="item-clickable text-green"
+                                    (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="far fa-check-square"></i></td>
+                                <td *ngIf="!user.isUserSponsor" class="item-clickable text-red"
+                                    (click)="grant(user.id, 'ROLE_SPONSOR')"><i class="far fa-square"></i></td>
+                                <td *ngIf="user.isUserManager" class="item-clickable text-green"
+                                    (click)="grant(user.id, 'ROLE_MANAGER')"><i class="far fa-check-square"></i></td>
+                                <td *ngIf="!user.isUserManager" class="item-clickable text-red"
+                                    (click)="grant(user.id, 'ROLE_MANAGER')"><i class="far fa-square"></i></td>
+                                <td *ngIf="user.isUserOwner" class="item-clickable text-green"
+                                    (click)="grant(user.id, 'ROLE_OWNER')"><i class="far fa-check-square"></i></td>
+                                <td *ngIf="!user.isUserOwner" class="item-clickable text-red"
+                                    (click)="grant(user.id, 'ROLE_OWNER')"><i class="far fa-square"></i></td>
                                 <td class="action-bar">
                                     <a class="text-muted item-clickable" (click)="onRemoveMember(user)">
                                         <i class="fa fa-trash"></i>
@@ -64,25 +75,34 @@
                 <div class="row">
                     <div class="col-5">
                         <div *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="dataTables_info">
-                            <span i18n>Showing </span>{{ pagerMembers.startIndex + 1 }}<span i18n> to
-                                </span>{{ pagerMembers.endIndex + 1 }}<span i18n> of </span>{{ pagerMembers.totalItems }}<span i18n> entries</span>
+                            <span i18n="@@pageShowing">Showing </span>
+                            <span>{{ pagerMembers.startIndex + 1 }}</span>
+                            <span i18n="@@pageTo"> to </span>
+                            <span>{{ pagerMembers.endIndex + 1 }}</span>
+                            <span i18n="@@pageOf"> of </span>
+                            <span>{{ pagerMembers.totalItems }}</span>
+                            <span i18n="@@pageEntries"> entries</span>
                         </div>
                     </div>
                     <div class="col-7">
-                        <ul *ngIf="pagerMembers.pages && pagerMembers.pages.length" class="pagination justify-content-end">
+                        <ul *ngIf="pagerMembers.pages && pagerMembers.pages.length"
+                            class="pagination justify-content-end">
                             <li class="page-item" [ngClass]="{disabled:pagerMembers.currentPage === 1}">
                                 <a class="page-link" (click)="refreshMembers(1)">&#171;</a>
                             </li>
                             <li class="page-item" [ngClass]="{disabled:pagerMembers.currentPage === 1}">
                                 <a class="page-link" (click)="refreshMembers(pagerMembers.currentPage - 1)">&#8249;</a>
                             </li>
-                            <li class="page-item" *ngFor="let page of pagerMembers.pages" [ngClass]="{active:pagerMembers.currentPage === page}">
+                            <li class="page-item" *ngFor="let page of pagerMembers.pages"
+                                [ngClass]="{active:pagerMembers.currentPage === page}">
                                 <a class="page-link" (click)="refreshMembers(page)">{{page}}</a>
                             </li>
-                            <li class="page-item" [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
+                            <li class="page-item"
+                                [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
                                 <a class="page-link" (click)="refreshMembers(pagerMembers.currentPage + 1)">&#8250;</a>
                             </li>
-                            <li class="page-item" [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
+                            <li class="page-item"
+                                [ngClass]="{disabled:pagerMembers.currentPage === pagerMembers.totalPages}">
                                 <a class="page-link" (click)="refreshMembers(pagerMembers.totalPages)">&#187;</a>
                             </li>
                         </ul>
@@ -96,47 +116,62 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header with-border">
-                        <h3 class="card-title" i18n>Informations</h3>
+                        <h3 class="card-title" i18n=@@informations>Informations</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <form [formGroup]="editOrgForm">
                         <div class="card-body">
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['name'].errors }">
-                                <label for="name" i18n>Name</label>
-                                <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter organization name">
+                                <label for="name" i18n="@@name">Name</label>
+                                <input type="text" formControlName="name" class="form-control" id="name"
+                                    placeholder="Enter organization name">
                             </div>
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['logoUrl'].errors }">
-                                <label for="logoUrl" i18n>Logo URL</label>
-                                <input type="url" formControlName="logoUrl" class="form-control" id="logoUrl" placeholder="Enter organization logo URL">
+                                <label for="logoUrl" i18n="@@logoUrl">Logo URL</label>
+                                <input type="url" formControlName="logoUrl" class="form-control" id="logoUrl"
+                                    placeholder="Enter organization logo URL">
                             </div>
                             <div *ngIf="id > 0" class="form-group action-bar">
-                                <label i18n>Messenging Apps</label>
+                                <label i18n="@@thirdApps">Third Apps</label>
                                 <table class="table table-striped table-valign-middle">
                                     <thead>
                                         <tr>
-                                            <th i18n>App</th>
-                                            <th i18n>Status</th>
-                                            <th i18n>Actions</th>
+                                            <th i18n="@@app">App</th>
+                                            <th i18n="@@appStatus">Status</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>Slack</td>
-                                            <td *ngIf="organization.slackTeam.id <= 0"><span i18n>Not connected Yet </span></td>
-                                            <td *ngIf="organization.slackTeam.id > 0"><span i18n>Connected with Slack Team : </span>
-                                                <b><a href="https://app.slack.com/client/{{ organization.slackTeam.teamId }}" target="_blank" rel="noopener noreferrer">{{ organization.slackTeam.teamName }}</a></b></td>
+                                            <td *ngIf="organization.slackTeam.id <= 0"><span
+                                                    i18n="@@notConnectedYet">Not connected Yet
+                                                </span></td>
+                                            <td *ngIf="organization.slackTeam.id > 0">
+                                                <span i18n="@@connectedWithSlackTeam">Connected with Slack Team :
+                                                </span>
+                                                <b>
+                                                    <a href="https://app.slack.com/client/{{ organization.slackTeam.teamId }}"
+                                                        target="_blank" rel="noopener noreferrer">{{
+                                                        organization.slackTeam.teamName }}</a>
+                                                </b>
+                                            </td>
                                             <td class="action-bar">
                                                 <div *ngIf="organization.slackTeam.id <= 0">
-                                                    <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-social bg-maroon">
+                                                    <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlOAuth }}"
+                                                        class="btn btn-social bg-maroon">
                                                         <i class="fab fa-slack"></i>
-                                                        <span i18n>Add to Slack</span></a>
+                                                        <span i18n="@@addToSlack">Add to Slack</span></a>
                                                 </div>
-                                                <a *ngIf="organization.slackTeam.id > 0" [ngClass]="{ 'text-success': slackSyncStatus == 'success', 'text-danger': slackSyncStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }" (click)="onSlackSync()" class="text-muted item-clickable">
+                                                <a *ngIf="organization.slackTeam.id > 0"
+                                                    [ngClass]="{ 'text-success': slackSyncStatus == 'success', 'text-danger': slackSyncStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }"
+                                                    (click)="onSlackSync()" class="text-muted item-clickable">
                                                     <i class="fas fa-sync"></i>
                                                 </a>
-                                                <a *ngIf="organization.slackTeam.id > 0" [ngClass]="{ 'text-success': slackDisconnectStatus == 'success', 'text-danger': slackDisconnectStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }" (click)="onSlackDisconnect()"
-                                                    class="text-muted item-clickable">
+                                                <a *ngIf="organization.slackTeam.id > 0"
+                                                    [ngClass]="{ 'text-success': slackDisconnectStatus == 'success', 'text-danger': slackDisconnectStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }"
+                                                    (click)="onSlackDisconnect()" class="text-muted item-clickable">
                                                     <i class="fas fa-times"></i>
                                                 </a>
                                             </td>
@@ -146,8 +181,12 @@
                             </div>
                         </div>
                         <div class="card-footer" style="text-align: center">
-                            <button type="submit" class="btn btn-primary" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }" (click)="onSubmit()" [disabled]="submitting">
-                                <i class="fas fa-save"></i> <span i18n>Save</span></button>
+                            <button type="submit" class="btn btn-primary"
+                                [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }"
+                                (click)="onSubmit()" [disabled]="submitting">
+                                <i class="fas fa-save"></i>
+                                <span i18n="@@save">Save</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -157,12 +196,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title" i18n>Documents</h3>
+                        <h3 class="card-title" i18n="@@documents">Documents</h3>
                         <div class="card-tools">
-                            <a class="btn btn-tool btn-sm" (click)="openNewContentModal(template)">
+                            <a class="btn btn-tool btn-sm" (click)="openNewContentModal(editContentModalTemplate)">
                                 <i class="fa fa-plus"></i>
                             </a>
-                            <a class="btn btn-tool btn-sm" (click)="refreshContents(pagerContents.currentPage)" [ngClass]="{ 'text-success': refreshContentStatus == 'success', 'text-danger': refreshContentStatus == 'error'}">
+                            <a class="btn btn-tool btn-sm" (click)="refreshContents(pagerContents.currentPage)"
+                                [ngClass]="{ 'text-success': refreshContentStatus == 'success', 'text-danger': refreshContentStatus == 'error'}">
                                 <i class="fas fa-sync"></i>
                             </a>
                         </div>
@@ -171,15 +211,16 @@
                         <table class="table table-striped table-valign-middle">
                             <thead>
                                 <tr>
-                                    <th i18n>Name</th>
-                                    <th i18n>Actions</th>
+                                    <th i18n="@@name">Name</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let content of pagedItemsContents">
                                     <td>{{ content.name }}</td>
                                     <td class="action-bar">
-                                        <a class="text-muted item-clickable" (click)="openContentModal(template, content)">
+                                        <a class="text-muted item-clickable"
+                                            (click)="openContentModal(editContentModalTemplate, content)">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <a class="text-muted item-clickable" (click)="onRemoveContent(content)">
@@ -197,57 +238,73 @@
                         <div class="row">
                             <div class="col-5">
                                 <div *ngIf="pagerContents.pages && pagerContents.pages.length" class="dataTables_info">
-                                    <span i18n>Showing </span>{{ pagerContents.startIndex + 1 }}<span i18n> to
-                                            </span>{{ pagerContents.endIndex + 1 }}<span i18n> of </span>{{ pagerContents.totalItems }}<span i18n> entries</span>
+                                    <span i18n="@@pageShowing">Showing </span>
+                                    <span>{{ pagerContents.startIndex + 1 }}</span>
+                                    <span i18n="@@pageTo"> to </span>
+                                    <span>{{ pagerContents.endIndex + 1 }}</span>
+                                    <span i18n="@@pageOf"> of </span>
+                                    <span>{{ pagerContents.totalItems }}</span>
+                                    <span i18n="@@pageEntries"> entries</span>
                                 </div>
                             </div>
                             <div class="col-7">
-                                <ul *ngIf="pagerContents.pages && pagerContents.pages.length" class="pagination justify-content-end">
+                                <ul *ngIf="pagerContents.pages && pagerContents.pages.length"
+                                    class="pagination justify-content-end">
                                     <li class="page-item" [ngClass]="{disabled:pagerContents.currentPage === 1}">
                                         <a class="page-link" (click)="refreshContents(1)">&#171;</a>
                                     </li>
                                     <li class="page-item" [ngClass]="{disabled:pagerContents.currentPage === 1}">
-                                        <a class="page-link" (click)="refreshContents(pagerContents.currentPage - 1)">&#8249;</a>
+                                        <a class="page-link"
+                                            (click)="refreshContents(pagerContents.currentPage - 1)">&#8249;</a>
                                     </li>
-                                    <li class="page-item" *ngFor="let page of pagerContents.pages" [ngClass]="{active:pagerContents.currentPage === page}">
+                                    <li class="page-item" *ngFor="let page of pagerContents.pages"
+                                        [ngClass]="{active:pagerContents.currentPage === page}">
                                         <a class="page-link" (click)="refreshContents(page)">{{page}}</a>
                                     </li>
-                                    <li class="page-item" [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
-                                        <a class="page-link" (click)="refreshContents(pagerContents.currentPage + 1)">&#8250;</a>
+                                    <li class="page-item"
+                                        [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
+                                        <a class="page-link"
+                                            (click)="refreshContents(pagerContents.currentPage + 1)">&#8250;</a>
                                     </li>
-                                    <li class="page-item" [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
-                                        <a class="page-link" (click)="refreshContents(pagerContents.totalPages)">&#187;</a>
+                                    <li class="page-item"
+                                        [ngClass]="{disabled:pagerContents.currentPage === pagerContents.totalPages}">
+                                        <a class="page-link"
+                                            (click)="refreshContents(pagerContents.totalPages)">&#187;</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ng-template #template class="modal-lg">
+                <ng-template #editContentModalTemplate>
                     <div class="modal-header">
-                        <h4 class="modal-title pull-left" i18n>Edit content</h4>
+                        <h4 class="modal-title pull-left" i18n="@@editContent">Edit content</h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form [formGroup]="contentForm">
-                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls['name'].errors }">
-                                <label for="name" i18n>Name</label>
-                                <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter content name">
+                            <div class="form-group has-feedback"
+                                [ngClass]="{ 'has-error': contentForm.controls['name'].errors }">
+                                <label for="name" i18n="@@name">Name</label>
+                                <input type="text" formControlName="name" class="form-control" id="name"
+                                    placeholder="Enter content name">
                             </div>
-                            <div  *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
-                                <label for="value" i18n>Content</label>
-                                <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig" (mediaDelete)="onDeleteMedia($event)"></textarea>
+                            <div *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback"
+                                [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
+                                <label for="value" i18n="@@content">Content</label>
+                                <textarea id="longDescription" formControlName="value"
+                                    [ngxSummernote]="contentValueConfig"
+                                    (mediaDelete)="onDeleteMedia($event)"></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-primary" (click)="onSubmitContent()" i18n>Save</button>
+                        <button class="btn btn-primary" (click)="onSubmitContent()" i18n="@@save">Save</button>
                     </div>
                 </ng-template>
             </div>
         </div>
     </div>
 </div>
-<!-- /.row -->
