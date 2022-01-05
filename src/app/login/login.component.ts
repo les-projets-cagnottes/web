@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string = '';
+  slackEnabled: boolean = false;
   slackClientId: string = '';
 
   // slack oauth
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
         });
     }
     this.slackClientId = this.configService.get('slackClientId');
+    this.slackEnabled = (/true/i).test(this.configService.get('slackEnabled'));
   }
 
   ngOnInit() {
