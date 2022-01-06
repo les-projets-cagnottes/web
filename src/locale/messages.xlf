@@ -198,6 +198,21 @@
           <context context-type="linenumber">126,128</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <source>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/budgets/budgets.component.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="save" datatype="html">
         <source>Save</source>
         <context-group purpose="location">
@@ -1136,17 +1151,6 @@
           <context context-type="linenumber">144</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="close" datatype="html">
-        <source>Close</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
-          <context context-type="linenumber">153</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">207</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="detailedPresentation" datatype="html">
         <source>Detailed Presentation</source>
         <context-group purpose="location">
@@ -1226,8 +1230,8 @@
           <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="avorted" datatype="html">
-        <source>Avorted</source>
+      <trans-unit id="cancelled" datatype="html">
+        <source>Cancelled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
           <context context-type="linenumber">53</context>
@@ -1237,8 +1241,8 @@
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="validated" datatype="html">
-        <source>Validated</source>
+      <trans-unit id="completed" datatype="html">
+        <source>Completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
           <context context-type="linenumber">54</context>
