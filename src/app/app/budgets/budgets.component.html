@@ -128,7 +128,7 @@
         </div>
     </div>
     <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" (click)="editBudgetModal.hide()">Close</button>
+        <button type="button" class="btn btn-default" (click)="editBudgetModal.hide()" i18n="@@close">Close</button>
         <button *ngIf="selectedBudget.id > 0" type="button" class="btn btn-primary" (click)="saveBudget()"
             i18n="@@save">Save</button>
         <button *ngIf="selectedBudget.id <= 0" type="button" class="btn btn-primary" (click)="saveBudget()"
