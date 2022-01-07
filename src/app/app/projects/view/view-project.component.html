@@ -17,7 +17,7 @@
                 <h3 class="card-title" i18n="@@founding">Founding</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="openAddFundingModal(addFundintModalTemplate)"
-                        *ngIf="leader.id === userLoggedIn.id">
+                        *ngIf="leader.id === userLoggedIn.id && project.peopleGivingTimeRef.length >= 3">
                         <i class="fas fa-plus-circle"></i>
                     </a>
                     <a class="btn btn-tool btn-sm" (click)="refreshCampaigns()"
