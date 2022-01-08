@@ -15,4 +15,10 @@ export class AccountService {
     return this.http.get<AccountModel[]>(`${this.configService.get('apiUrl')}/account`, { params });
   }
 
+  getByBudgetAndUser(budgetId: number, userId: number) {
+    const params = new HttpParams()
+      .set('budgetId', budgetId)
+      .set('userId', userId);
+    return this.http.get<AccountModel>(`${this.configService.get('apiUrl')}/account`, { params });
+  }
 }

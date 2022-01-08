@@ -80,144 +80,6 @@
                     </tbody>
                 </table>
             </div>
-            <ng-template #contributeFinanciallyModalTemplate>
-                <div class="modal-header">
-                    <h4 class="modal-title pull-left" i18n="@@contributeFinancially">Contribute financially</h4>
-                    <button type="button" class="close pull-right" aria-label="Close"
-                        (click)="contributeFinanciallyModalRef.hide()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="donationForm">
-                        <div class="form-group">
-                            <label for="amount" i18n="@@budget">Budget</label>
-                            <select class="form-control select-border" style="width: 100%;" formControlName="budget"
-                                (ngModelChange)="onAccountSelectionChange()">
-                                <option *ngFor="let account of filterByCampaignBudgets; index as i" value="{{ i }}">
-                                    {{ campaignsBudgets[account.budget.id].name }}</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="amount" i18n="@@amountInEuros">Amount (in €)</label>
-                            <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00"
-                                step="0.01"
-                                max="{{ (min(accounts[donationForm.controls['budget'].value].amount, selectedCampaign.donationsRequired - selectedCampaign.totalDonations)).toFixed(2) }}"
-                                [ngClass]="{ 'is-invalid': donationForm.controls['amount'].errors }" />
-                        </div>
-                        <div class="callout callout-info">
-                            <span i18n="@@youWillHave">You will have </span>
-                            <b>{{ (accounts[donationForm.controls['budget'].value].amount -
-                                donationForm.controls['amount'].value).toFixed(2) }} €</b>
-                            <span i18n="@@youWillHaveEnd"> left to finance other projects.</span>
-                        </div>
-                        <div class="callout callout-warning">
-                            <p i18n="@@yourContributionMayTakeTime">Your contribution may take a few times before beeing
-                                taken into account.</p>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" (click)="onSubmitDonation()" i18n="@@submit">Submit</button>
-                </div>
-            </ng-template>
-            <ng-template #addFundintModalTemplate>
-                <div class="modal-header">
-                    <h4 class="modal-title pull-left" i18n="@@foundingCampaign">Funding campaign</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="addFundingModal.hide()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="formFunding">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="amount" i18n="@@budget">Budget</label>
-                                            <select class="form-control select-border" style="width: 100%;"
-                                                formControlName="budget">
-                                                <option *ngFor="let item of budgets; index as i" value="{{ i }}">{{
-                                                    item.name }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="donationsRequired" i18n="@@moneyNeededInEuros">Money needed (in
-                                                €)</label>
-                                            <div class="input-group">
-                                                <input formControlName="donationsRequired" type="number"
-                                                    class="form-control" id="donationsRequired" min="{{ minDonations }}"
-                                                    step="0.01"
-                                                    [ngClass]="{ 'is-invalid': fFunding['donationsRequired'].errors }" />
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">€</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="fundingDeadline" i18n="@@fundingDeadline"
-                                                style="display: block;">Funding
-                                                Deadline</label>
-                                            <div class="input-group date" id="fundingDeadline">
-                                                <input type="date" class="form-control datetimepicker-input"
-                                                    formControlName="fundingDeadline"
-                                                    value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}"
-                                                    min="{{ now | date:'yyyy-MM-dd' }}"
-                                                    max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}"
-                                                    [ngClass]="{ 'is-invalid': fFunding['fundingDeadline'].errors }" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div *ngIf="this.budgets.length > 0 && fFunding['budget'].value !== undefined"
-                                            class="custom-control custom-checkbox">
-                                            <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant"
-                                                class="custom-control-input" name="rulesCompliant"
-                                                [ngClass]="{ 'is-invalid': fFunding['rulesCompliant'].errors }" />
-                                            <label for="rulesCompliant" class="custom-control-label">
-                                                <span i18n="@@thisProjectIsRuleCompliant">This project is compliant with
-                                                    the rules of </span>
-                                            </label>
-                                            <br />
-                                            <span class="item-clickable" style="margin-left: 0.2em"
-                                                (click)="onViewTermsOfUse(viewRulesModalTemplate)"><b> <u>{{
-                                                        budgets[fFunding['budget'].value].name }}</u></b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ng-template #viewRulesModalTemplate>
-                                    <div class="modal-header">
-                                        <h4 class="modal-title pull-left">{{ rules.name }}</h4>
-                                        <button type="button" class="close pull-right" aria-label="Close"
-                                            (click)="viewRulesModal.hide()">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" [innerHTML]="rules.value">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-primary" (click)="viewRulesModal.hide()"
-                                            i18n="@@close">Close</button>
-                                    </div>
-                                </ng-template>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="text-center">
-                        <button [disabled]="submittingFunding" type="button" class="btn btn-primary"
-                            (click)="onSubmitFunding()" i18n="@@save">Save</button>
-                    </div>
-                </div>
-            </ng-template>
             <div *ngIf="campaignsSyncStatus == 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
@@ -332,3 +194,141 @@
         </div>
     </div>
 </div>
+
+<ng-template #contributeFinanciallyModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n="@@contributeFinancially">Contribute financially</h4>
+        <button type="button" class="close pull-right" aria-label="Close"
+            (click)="contributeFinanciallyModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="donationForm">
+            <div class="form-group">
+                <label for="amount" i18n="@@budget">Budget</label>
+                <select class="form-control select-border" style="width: 100%;" disabled>
+                    <option>{{ campaignsBudgets[account.budget.id].name }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount" i18n="@@amountInEuros">Amount (in €)</label>
+                <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00"
+                    step="0.01"
+                    max="{{ (min(account.amount, selectedCampaign.donationsRequired - selectedCampaign.totalDonations)).toFixed(2) }}"
+                    [ngClass]="{ 'is-invalid': donationForm.controls['amount'].errors }" />
+            </div>
+            <div class="callout callout-info">
+                <span i18n="@@youWillHave">You will have </span>
+                <b>{{ (account.amount -
+                    donationForm.controls['amount'].value).toFixed(2) }} €</b>
+                <span i18n="@@youWillHaveEnd"> left to finance other projects.</span>
+            </div>
+            <div class="callout callout-warning">
+                <p i18n="@@yourContributionMayTakeTime">Your contribution may take a few times before beeing
+                    taken into account.</p>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="onSubmitDonation()" i18n="@@submit">Submit</button>
+    </div>
+</ng-template>
+
+<ng-template #addFundintModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n="@@foundingCampaign">Funding campaign</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="addFundingModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formFunding">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="amount" i18n="@@budget">Budget</label>
+                                <select class="form-control select-border" style="width: 100%;"
+                                    formControlName="budget">
+                                    <option *ngFor="let item of budgets; index as i" value="{{ i }}">{{
+                                        item.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="donationsRequired" i18n="@@moneyNeededInEuros">Money needed (in
+                                    €)</label>
+                                <div class="input-group">
+                                    <input formControlName="donationsRequired" type="number"
+                                        class="form-control" id="donationsRequired" min="{{ minDonations }}"
+                                        step="0.01"
+                                        [ngClass]="{ 'is-invalid': fFunding['donationsRequired'].errors }" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="fundingDeadline" i18n="@@fundingDeadline"
+                                    style="display: block;">Funding
+                                    Deadline</label>
+                                <div class="input-group date" id="fundingDeadline">
+                                    <input type="date" class="form-control datetimepicker-input"
+                                        formControlName="fundingDeadline"
+                                        value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}"
+                                        min="{{ now | date:'yyyy-MM-dd' }}"
+                                        max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}"
+                                        [ngClass]="{ 'is-invalid': fFunding['fundingDeadline'].errors }" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div *ngIf="this.budgets.length > 0 && fFunding['budget'].value !== undefined"
+                                class="custom-control custom-checkbox">
+                                <input formControlName="rulesCompliant" type="checkbox" id="rulesCompliant"
+                                    class="custom-control-input" name="rulesCompliant"
+                                    [ngClass]="{ 'is-invalid': fFunding['rulesCompliant'].errors }" />
+                                <label for="rulesCompliant" class="custom-control-label">
+                                    <span i18n="@@thisProjectIsRuleCompliant">This project is compliant with
+                                        the rules of </span>
+                                </label>
+                                <br />
+                                <span class="item-clickable" style="margin-left: 0.2em"
+                                    (click)="onViewTermsOfUse(viewRulesModalTemplate)"><b> <u>{{
+                                            budgets[fFunding['budget'].value].name }}</u></b></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="text-center">
+            <button [disabled]="submittingFunding" type="button" class="btn btn-primary"
+                (click)="onSubmitFunding()" i18n="@@save">Save</button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #viewRulesModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ rules.name }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close"
+            (click)="viewRulesModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" [innerHTML]="rules.value">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="viewRulesModal.hide()"
+            i18n="@@close">Close</button>
+    </div>
+</ng-template>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BudgetModel, CampaignModel, DataPage, UserModel } from '../../_models';
+import { AccountModel, BudgetModel, CampaignModel, DataPage, UserModel } from '../../_models';
 
 import { ConfigService } from '../config/config.service';
 
@@ -21,7 +21,7 @@ export class BudgetService {
     return this.http.get<BudgetModel[]>(`${this.configService.get('apiUrl')}/budget`, { params });
 }
 
-  getAccounts(budgetId: any, offset: number, limit: number) {
+  getAccounts(budgetId: number, offset: number, limit: number) {
     const params = new HttpParams()
         .set('offset', offset)
         .set('limit', limit);

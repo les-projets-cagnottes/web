@@ -15,7 +15,9 @@ export class ApiToken extends ApiTokenModel {
         entity.expiration = model.expiration;
         entity.token = model.token;
         entity.user = new User();
-        entity.user.id = model.user.id;
+        if(model.user !== undefined) {
+            entity.user.id = model.user.id;
+        }
         return entity;
     }
 }
