@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'news/:id/edit', component: EditNewsComponent },
       { path: 'news', component: ListNewsComponent },
       { path: 'organizations/new', redirectTo: 'organizations/edit/0' },
+      { path: 'organizations/edit/microsoft', component: EditOrganizationComponent },
       { path: 'organizations/edit/:id', component: EditOrganizationComponent },
       { path: 'organizations/edit/slack/:id', component: EditOrganizationComponent },
       { path: 'organizations', component: OrganizationsComponent },
@@ -46,6 +47,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'login/slack', component: LoginComponent },
+  { path: 'login/ms', component: LoginComponent },
   { path: '**', redirectTo: '' }
 ];
 
