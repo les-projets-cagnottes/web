@@ -405,6 +405,9 @@
       <trans-unit id="signInUsingSlack" datatype="html">
         <target>Se connecter avec Slack</target>
       </trans-unit>
+      <trans-unit id="signInUsingMS" datatype="html">
+        <target>Se connecter avec Microsoft</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
