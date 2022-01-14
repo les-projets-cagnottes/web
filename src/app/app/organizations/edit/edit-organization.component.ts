@@ -44,12 +44,22 @@ export class EditOrganizationComponent implements OnInit {
   addStatus: string = 'idle';
   submitStatus: string = 'idle';
 
-  // Slack oauth
+  // Slack OAuth
   slackSyncStatus: string = 'idle';
   slackDisconnectStatus: string = 'idle';
   slackClientId: string = '';
-  redirectUrlOAuth: string = '';
+  redirectUrlSlackOAuth: string = '';
   code: string = '';
+
+  // Microsoft OAuth
+  microsoftEnabled: boolean = false;
+  microsoftSyncStatus: string = 'idle';
+  microsoftDisconnectStatus: string = 'idle';
+  microsoftTenantId: string = '';
+  microsoftClientId: string = '';
+  microsoftState: string = '';
+  microsoftRedirectUrl: string = '';
+  microsoftCode: string = '';
 
   // Members card
   private rawResponseMembers: any;
@@ -75,7 +85,7 @@ export class EditOrganizationComponent implements OnInit {
 
   endPointEdit: string = '';
   slackEndPoint: string = '';
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -93,31 +103,45 @@ export class EditOrganizationComponent implements OnInit {
     this.ngOnInit();
   }
 
-  setRedirectUrlOAuth(id: number) {
+  setredirectUrlSlackOAuth(id: number) {
     var endPointEdit = '/organizations/edit/' + id;
     var slackEndPoint = '/organizations/edit/slack/' + id;
-    
+
     if (this.router.url.startsWith(endPointEdit)
       && !this.router.url.startsWith(slackEndPoint)) {
-      this.redirectUrlOAuth = location.href.replace(endPointEdit, slackEndPoint);
+      this.redirectUrlSlackOAuth = location.href.replace(endPointEdit, slackEndPoint);
     }
     if (this.router.url.startsWith(slackEndPoint)) {
-      this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
+      this.redirectUrlSlackOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
     }
+  }
+
+  setMicrosoftRedirectUrl(id: number) {
+    var currentEndPoint = '/organizations/edit/' + id;
+    var finalEndPoint = '/organizations/edit/microsoft';
+    this.microsoftRedirectUrl = location.href.replace(currentEndPoint, finalEndPoint);
   }
 
   ngOnInit() {
     if (this.id > 0) {
-      this.setRedirectUrlOAuth(this.id);
+      this.setredirectUrlSlackOAuth(this.id);
       var slackEndPoint = '/organizations/edit/slack/' + this.id;
       if (this.router.url.startsWith(slackEndPoint)) {
         this.code = this.route.snapshot.queryParams['code'];
-        this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth)
+        this.organizationService.slack(this.id, this.code, this.redirectUrlSlackOAuth)
           .subscribe(() => {
             this.ngOnInit();
           });
       }
       this.slackClientId = this.configService.get('slackClientId');
+
+      this.microsoftEnabled = (/true/i).test(this.configService.get('microsoftEnabled'));
+      if (this.microsoftEnabled) {
+        this.microsoftTenantId = this.configService.get('microsoftTenantId');
+        this.microsoftClientId = this.configService.get('microsoftClientId');
+        this.microsoftState = this.id.toString();
+        this.setMicrosoftRedirectUrl(this.id);
+      }
 
       this.organizationService.getById(this.id)
         .subscribe(
@@ -172,7 +196,7 @@ export class EditOrganizationComponent implements OnInit {
     if (!(this.id > 0)) {
       this.organization.members = [];
       var currentUser = localStorage.getItem('currentUser');
-      if(currentUser !== null) {
+      if (currentUser !== null) {
         var user = JSON.parse(currentUser);
         if (user !== null) {
           this.organization.members.push(JSON.parse(currentUser));
@@ -208,15 +232,15 @@ export class EditOrganizationComponent implements OnInit {
       this.pagedItemsMembers[k] = User.fromModel(this.pagedItemsMembers[k]);
       this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => {
         var orgAuthorityFound = this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId);
-        if(orgAuthorityFound !== undefined) {
+        if (orgAuthorityFound !== undefined) {
           this.pagedItemsMembers[k].userOrganizationAuthorities.push(orgAuthorityFound)
         }
       });
-      if(this.pagedItemsMembers[k].userOrganizationAuthorities.length > 0) {
+      if (this.pagedItemsMembers[k].userOrganizationAuthorities.length > 0) {
         var sponsorAuthority = this.authorities.get('ROLE_SPONSOR');
         var managerAuthority = this.authorities.get('ROLE_MANAGER');
         var ownerAuthority = this.authorities.get('ROLE_OWNER');
-        if(sponsorAuthority !== undefined && managerAuthority !== undefined && ownerAuthority !== undefined) {
+        if (sponsorAuthority !== undefined && managerAuthority !== undefined && ownerAuthority !== undefined) {
           var sponsorAuthorityId = sponsorAuthority.id;
           var managerAuthorityId = managerAuthority.id;
           var ownerAuthorityId = ownerAuthority.id;
@@ -229,7 +253,7 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshContents(page: number = 1, force: boolean = false) {
-    if(this.pagerService.canChangePage(this.pagerContents, page) || force) {
+    if (this.pagerService.canChangePage(this.pagerContents, page) || force) {
       this.refreshContentStatus = 'running';
       this.organizationService.getContents(this.organization.id, page - 1, this.pageSizeContents)
         .subscribe(contents => {
@@ -246,7 +270,7 @@ export class EditOrganizationComponent implements OnInit {
             this.refreshContentStatus = 'idle';
           }, 1000);
         }
-      );
+        );
     }
   }
 
@@ -259,7 +283,7 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshSlackTeam() {
-    if(this.organization.slackTeam.id > 0) {
+    if (this.organization.slackTeam.id > 0) {
       this.slackTeamService.getById(this.organization.slackTeam.id)
         .subscribe(
           slackTeam => {
@@ -419,7 +443,7 @@ export class EditOrganizationComponent implements OnInit {
 
   grant(userId: number, role: string) {
     var organizationAuthority = this.organization.organizationAuthorities.find(authority => authority.name === role);
-    if(organizationAuthority !== undefined) {
+    if (organizationAuthority !== undefined) {
       this.userService.grant(userId, organizationAuthority)
         .subscribe(() => {
           this.refreshMembers(this.pagerMembers.currentPage);
@@ -439,7 +463,7 @@ export class EditOrganizationComponent implements OnInit {
     var organization = new OrganizationModel();
     organization.name = this.f['name'].value;
     organization.logoUrl = this.f['logoUrl'].value;
-    if(organization.logoUrl === "") {
+    if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
 
@@ -488,7 +512,7 @@ export class EditOrganizationComponent implements OnInit {
   onDeleteMedia(file: any) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => {},
+        () => { },
         error => {
           console.log(error);
         });
