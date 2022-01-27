@@ -20,7 +20,7 @@ export class EditOrganizationComponent implements OnInit {
   // Data
   id: number = 0;
   organization: Organization = new Organization();
-  authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>()
+  authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>();
 
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
@@ -107,6 +107,8 @@ export class EditOrganizationComponent implements OnInit {
     var endPointEdit = '/organizations/edit/' + id;
     var slackEndPoint = '/organizations/edit/slack/' + id;
 
+    http://localhost:4200/organizations/edit/microsoft?admin_consent=True&tenant=ab8f3573-a42c-4b8b-a615-f03fd683bbbd&state=4
+
     if (this.router.url.startsWith(endPointEdit)
       && !this.router.url.startsWith(slackEndPoint)) {
       this.redirectUrlSlackOAuth = location.href.replace(endPointEdit, slackEndPoint);
@@ -117,12 +119,21 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   setMicrosoftRedirectUrl(id: number) {
-    var currentEndPoint = '/organizations/edit/' + id;
+    var currentEndPoint = /\/organizations\/edit\/.*/;
     var finalEndPoint = '/organizations/edit/microsoft';
     this.microsoftRedirectUrl = location.href.replace(currentEndPoint, finalEndPoint);
   }
 
   ngOnInit() {
+    this.route.queryParamMap
+      .subscribe((params) => {
+        var state = Number(params.get('state'));
+        if(state > 0) {
+          this.router.navigate(['/organizations/edit/' + state]);
+        }
+      }
+    );
+    var state = Number(this.route.snapshot.paramMap.get("state"));
     if (this.id > 0) {
       this.setredirectUrlSlackOAuth(this.id);
       var slackEndPoint = '/organizations/edit/slack/' + this.id;

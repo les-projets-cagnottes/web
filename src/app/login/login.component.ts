@@ -47,11 +47,11 @@ export class LoginComponent implements OnInit {
     console.log(this.router.url);
     if (this.router.url.startsWith('/login')
       && !this.router.url.startsWith('/login/slack')) {
-      this.redirectUrlSlackOAuth = location.href.replace("/login", "/login/slack");
+      this.redirectUrlSlackOAuth = location.href.replace(/\/login/, "/login/slack");
     }
     if (this.router.url.startsWith('/login')
       && !this.router.url.startsWith('/login/ms')) {
-      this.redirectUrlMSOAuth = location.href.replace("/login", "/login/ms");
+      this.redirectUrlMSOAuth = location.href.replace(/\/login.*/, "/login/ms");
     }
     if(this.router.url.startsWith('/login/slack')) {
       this.redirectUrlSlackOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));

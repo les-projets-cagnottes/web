@@ -51,13 +51,13 @@ mklink /d dist\fr\img <core-directory>\files\img
 
 #### Build in production mode
 
-````cmd
+```cmd
 npm run ng build -- --configuration production --output-path=dist
 ```
 
 #### Run a debug HTTP server
 
-````cmd
+```cmd
 angular-http-server -p 4200 --path dist\fr
 ```
 
@@ -69,9 +69,11 @@ On your host, create a `config.json` file with the following content :
 {
     "webUrl": "http://localhost:4200",
     "apiUrl": "http://localhost:8080/api",
+    "slackEnabled": true,
     "slackClientId": "1267900044419.1280463132273",
-    "version": "head",
-    "versionUrl": "head"
+    "microsoftEnabled": true,
+    "microsoftTenantId": "ab8f3573-a42c-4b8b-a615-f03fd683bbbd",
+    "microsoftClientId": "08a651e0-9f49-4984-9834-2ad26a490f86"
 }
 ```
 
@@ -84,3 +86,12 @@ docker run -d --name web \
   -v <YOUR_HOST_DIRECTORY>/config.json:/usr/share/nginx/html/assets/config.json \
   lesprojetscagnottes/web:<tag>
 ```
+
+### Configuration of Microsoft Auth
+
+Configure the App Registration with the following Authentication :
+
+- Platform : web
+- Redirection URIs :
+  * http://localhost:4200/login/ms
+  * http://localhost:4200/organizations/edit/microsoft
