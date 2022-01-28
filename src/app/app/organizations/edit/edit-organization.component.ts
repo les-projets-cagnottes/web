@@ -9,6 +9,8 @@ import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
 import { ContentModel, OrganizationAuthorityModel, OrganizationModel } from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
+import { MsTeamService } from 'src/app/_services/ms-team/ms-team.service';
+import { MsTeamModel } from 'src/app/_models/ms-team/ms-team.model';
 
 @Component({
   selector: 'app-edit-organization',
@@ -60,6 +62,7 @@ export class EditOrganizationComponent implements OnInit {
   microsoftState: string = '';
   microsoftRedirectUrl: string = '';
   microsoftCode: string = '';
+  msDisconnectStatus: string = 'idle';
 
   // Members card
   private rawResponseMembers: any;
@@ -96,6 +99,7 @@ export class EditOrganizationComponent implements OnInit {
     private contentService: ContentService,
     private fileService: FileService,
     private userService: UserService,
+    private msTeamService: MsTeamService,
     private organizationService: OrganizationService,
     private slackTeamService: SlackTeamService
   ) {
@@ -106,8 +110,6 @@ export class EditOrganizationComponent implements OnInit {
   setredirectUrlSlackOAuth(id: number) {
     var endPointEdit = '/organizations/edit/' + id;
     var slackEndPoint = '/organizations/edit/slack/' + id;
-
-    http://localhost:4200/organizations/edit/microsoft?admin_consent=True&tenant=ab8f3573-a42c-4b8b-a615-f03fd683bbbd&state=4
 
     if (this.router.url.startsWith(endPointEdit)
       && !this.router.url.startsWith(slackEndPoint)) {
@@ -129,7 +131,16 @@ export class EditOrganizationComponent implements OnInit {
       .subscribe((params) => {
         var state = Number(params.get('state'));
         if(state > 0) {
-          this.router.navigate(['/organizations/edit/' + state]);
+          var msTeam = new MsTeamModel();
+          msTeam.organization.id = state;
+          msTeam.tenantId = this.configService.get('microsoftTenantId');
+          this.msTeamService.create(msTeam)
+            .subscribe(response => {
+              this.rawResponseMembers = response;
+              this.router.navigate(['/organizations/edit/' + state]);
+            }, error => {
+              console.log(error);
+            });
         }
       }
     );
@@ -361,6 +372,29 @@ export class EditOrganizationComponent implements OnInit {
             console.log(error);
             setTimeout(() => {
               this.slackDisconnectStatus = 'idle';
+            }, 2000);
+          });
+    }
+  }
+
+  onMsDisconnect() {
+    this.msDisconnectStatus = 'running';
+    if (this.id > 0 && this.organization.msTeam != null && this.organization.msTeam != undefined) {
+      this.msTeamService.delete(this.organization.msTeam.id)
+        .subscribe(
+          () => {
+            this.msDisconnectStatus = 'success';
+            this.pagerMembers.currentPage = undefined;
+            this.refreshInformations();
+            setTimeout(() => {
+              this.msDisconnectStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            this.msDisconnectStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.msDisconnectStatus = 'idle';
             }, 2000);
           });
     }
