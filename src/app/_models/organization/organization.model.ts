@@ -5,6 +5,7 @@ export class OrganizationModel extends AuditModel {
     socialName: string = '';
     logoUrl: string = '';
     slackTeam: GenericModel = new GenericModel();
+    msTeam: GenericModel = new GenericModel();
     contentsRef: number[] = [];
     membersRef: number[] = [];
 }

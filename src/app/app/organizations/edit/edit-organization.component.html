@@ -178,16 +178,23 @@
                                         </tr>
                                         <tr>
                                             <td>Microsoft</td>
-                                            <td>
+                                            <td *ngIf="organization.msTeam.id <= 0">
                                                 <span i18n="@@notConnectedYet">Not connected Yet</span>
                                             </td>
+                                            <td *ngIf="organization.msTeam.id > 0">
+                                                <span i18n="@@connectedWithMicrosoft">Connected with Microsoft
+                                                </span>
+                                            </td>
                                             <td class="action-bar">
-                                                <div>
-                                                    <a href="https://login.microsoftonline.com/{{ microsoftTenantId }}/adminconsent?client_id={{ microsoftClientId }}&state={{ microsoftState }}&redirect_uri={{ microsoftRedirectUrl }}"
-                                                        class="btn btn-social bg-warning">
-                                                        <i class="fab fa-microsoft"></i>
-                                                        <span i18n="@@addToMicrosoft">Add to Microsoft</span></a>
-                                                </div>
+                                                <a *ngIf="organization.msTeam.id <= 0" href="https://login.microsoftonline.com/{{ microsoftTenantId }}/adminconsent?client_id={{ microsoftClientId }}&state={{ microsoftState }}&redirect_uri={{ microsoftRedirectUrl }}"
+                                                    class="btn btn-social bg-warning">
+                                                    <i class="fab fa-microsoft"></i>
+                                                    <span i18n="@@addToMicrosoft">Add to Microsoft</span></a>
+                                                <a *ngIf="organization.msTeam.id > 0"
+                                                    [ngClass]="{ 'text-success': msDisconnectStatus == 'success', 'text-danger': msDisconnectStatus == 'error' }"
+                                                    (click)="onMsDisconnect()" class="text-muted item-clickable">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>

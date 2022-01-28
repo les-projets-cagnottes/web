@@ -127,4 +127,5 @@ export class OrganizationService {
   slackDisconnect(organizationId: number) {
     return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack`, {});
   }
+
 }
