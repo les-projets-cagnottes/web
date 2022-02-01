@@ -5,7 +5,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ContentService, FileService, OrganizationService, PagerService, SlackTeamService, UserService } from 'src/app/_services';
-import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
+import { Organization, User, Content, SlackTeam, MsTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
 import { ContentModel, OrganizationAuthorityModel, OrganizationModel } from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
@@ -63,6 +63,7 @@ export class EditOrganizationComponent implements OnInit {
   microsoftRedirectUrl: string = '';
   microsoftCode: string = '';
   msDisconnectStatus: string = 'idle';
+  msTeam: MsTeamModel = new MsTeamModel();
 
   // Members card
   private rawResponseMembers: any;
@@ -104,7 +105,6 @@ export class EditOrganizationComponent implements OnInit {
     private slackTeamService: SlackTeamService
   ) {
     this.route.params.subscribe(params => this.id = <number>params['id']);
-    this.ngOnInit();
   }
 
   setredirectUrlSlackOAuth(id: number) {
@@ -144,7 +144,6 @@ export class EditOrganizationComponent implements OnInit {
         }
       }
     );
-    var state = Number(this.route.snapshot.paramMap.get("state"));
     if (this.id > 0) {
       this.setredirectUrlSlackOAuth(this.id);
       var slackEndPoint = '/organizations/edit/slack/' + this.id;
@@ -152,7 +151,8 @@ export class EditOrganizationComponent implements OnInit {
         this.code = this.route.snapshot.queryParams['code'];
         this.organizationService.slack(this.id, this.code, this.redirectUrlSlackOAuth)
           .subscribe(() => {
-            this.ngOnInit();
+            this.refreshInformations();
+            this.refreshMembers();
           });
       }
       this.slackClientId = this.configService.get('slackClientId');
@@ -165,21 +165,8 @@ export class EditOrganizationComponent implements OnInit {
         this.setMicrosoftRedirectUrl(this.id);
       }
 
-      this.organizationService.getById(this.id)
-        .subscribe(
-          organization => {
-            this.organization = Organization.fromModel(organization);
-            this.refreshAuthorities();
-            this.refreshForm();
-            this.refreshMembers();
-            this.refreshContents();
-            if (this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-              this.refreshSlackTeam();
-            }
-          },
-          error => {
-            console.log(error);
-          });
+      this.refreshInformations();
+      this.refreshMembers();
     } else {
       this.refreshForm();
     }
@@ -192,9 +179,8 @@ export class EditOrganizationComponent implements OnInit {
           this.organization = Organization.fromModel(organization);
           this.refreshAuthorities();
           this.refreshForm();
-          if (this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-            this.refreshSlackTeam();
-          }
+          this.refreshSlackTeam();
+          this.refreshMsTeam();
         },
         error => {
           console.log(error);
@@ -229,7 +215,7 @@ export class EditOrganizationComponent implements OnInit {
 
   refreshMembers(page: number = 1) {
     if (this.pagerService.canChangePage(this.pagerMembers, page)) {
-      this.organizationService.getMembers(this.organization.id, page - 1, this.pageSizeMembers)
+      this.organizationService.getMembers(this.id, page - 1, this.pageSizeMembers)
         .subscribe(response => {
           this.rawResponseMembers = response;
           this.setMembersPage(page);
@@ -305,11 +291,27 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshSlackTeam() {
-    if (this.organization.slackTeam.id > 0) {
+    if (this.organization.slackTeam != null 
+      && this.organization.slackTeam != undefined 
+      && this.organization.slackTeam.id > 0) {
       this.slackTeamService.getById(this.organization.slackTeam.id)
         .subscribe(
           slackTeam => {
             this.organization.slackTeam = SlackTeam.fromModel(slackTeam);
+          }
+        );
+    }
+  }
+
+  refreshMsTeam() {
+    console.log(this.organization.msTeam);
+    if (this.organization.msTeam != null 
+      && this.organization.msTeam != undefined 
+      && this.organization.msTeam.id > 0) {
+      this.msTeamService.getById(this.organization.msTeam.id)
+        .subscribe(
+          msTeam => {
+            this.msTeam = msTeam;
           }
         );
     }
