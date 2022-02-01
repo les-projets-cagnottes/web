@@ -182,8 +182,9 @@
                                                 <span i18n="@@notConnectedYet">Not connected Yet</span>
                                             </td>
                                             <td *ngIf="organization.msTeam.id > 0">
-                                                <span i18n="@@connectedWithMicrosoft">Connected with Microsoft
+                                                <span i18n="@@connectedWithMicrosoft">Connected with Microsoft : 
                                                 </span>
+                                                <b>{{ msTeam.displayName }}</b>
                                             </td>
                                             <td class="action-bar">
                                                 <a *ngIf="organization.msTeam.id <= 0" href="https://login.microsoftonline.com/{{ microsoftTenantId }}/adminconsent?client_id={{ microsoftClientId }}&state={{ microsoftState }}&redirect_uri={{ microsoftRedirectUrl }}"
