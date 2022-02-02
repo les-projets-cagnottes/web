@@ -101,8 +101,8 @@ export class AuthenticationService {
         }));
     }
 
-    microsoft(code: string, redirect_uri: string) {
-        return this.http.get<any>(`${this.configService.get('apiUrl')}/auth/login/microsoft?code=${code}&redirect_uri=${redirect_uri}`)
+    microsoft(code: string, redirect_uri: string, tenant_id: string) {
+        return this.http.get<any>(`${this.configService.get('apiUrl')}/auth/login/microsoft?code=${code}&redirect_uri=${redirect_uri}&tenant_id=${tenant_id}`)
         .pipe(map(user => {
             // login successful if there's a jwt token in the response
             if (user && user.token) {

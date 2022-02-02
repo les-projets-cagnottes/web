@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     if(this.router.url.startsWith('/login/ms')) {
       this.redirectUrlMSOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
-      this.authenticationService.microsoft(this.code, this.redirectUrlMSOAuth)
+      this.authenticationService.microsoft(this.code, this.redirectUrlMSOAuth, this.configService.get('microsoftTenantId'))
         .subscribe(() => {
           this.router.navigate([this.returnUrl]);
         });
