@@ -145,10 +145,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                              <div *ngIf="organization.slackTeam.id > 0">
-                                <label i18n="@@publicationChannelId">Slack Publication Channel id</label>
-                                <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.name.errors }">
-                                  <label for="name" i18n>Name</label>
+                              <div *ngIf="this.organization.slackTeam && organization.slackTeam.id > 0">
+                                <div class="form-group has-feedback" [ngClass]="{ 'has-error': f.slackPublicationChannelId.errors }">
+                                  <label i18n="@@publicationChannelId">Slack Publication Channel id</label>
                                   <input type="text" formControlName="slackPublicationChannelId" class="form-control" id="slackPublicationChannelId" placeholder="Enter channel id for slack">
                                 </div>
                               </div>
