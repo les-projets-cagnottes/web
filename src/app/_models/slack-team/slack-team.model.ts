@@ -4,4 +4,5 @@ export class SlackTeamModel extends AuditModel {
     teamId: string = '';
     teamName: string = '';
     publicationChannel: string = '';
+    publicationChannelId: string = '';
 }
