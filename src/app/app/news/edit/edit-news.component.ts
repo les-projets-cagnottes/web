@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewsModel, Role } from 'src/app/_models';
-import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, NewsService, ProjectService, UserService } from 'src/app/_services';
+import { v4 as uuidv4 } from 'uuid';
+import { NewsModel, ProjectModel, Role } from 'src/app/_models';
+import { AuthenticationService, FileService, NewsService, ProjectService } from 'src/app/_services';
 
 @Component({
   selector: 'app-edit-news',
@@ -23,12 +23,12 @@ export class EditNewsComponent implements OnInit {
     title: ['', [Validators.required, Validators.maxLength(255)]],
     content: ['', [Validators.required]]
   });
-  submitting: boolean;
+  submitting: boolean = false;
 
   // Long Description editor config
   contentConfig = {
-    height: '600px',
-    uploadImagePath: 'http://localhost:8080/api/files/image'
+    height: 600,
+    uploadImagePath: ''
   }
 
   constructor(
@@ -36,11 +36,12 @@ export class EditNewsComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private fileService: FileService,
     private newsService: NewsService,
     private projectService: ProjectService) {
     this.route.params.subscribe(params => {
-      this.id = params.id;
-      this.idProject = params.idProject;
+      this.id = params['id'];
+      this.idProject = params['idProject'];
     });
   }
 
@@ -53,11 +54,13 @@ export class EditNewsComponent implements OnInit {
           this.refresh();
         });
     } else {
+      this.news.workspace = uuidv4();
       this.refresh();
     }
   }
 
   refresh() {
+    this.contentConfig.uploadImagePath = this.fileService.getUploadPath("news/" + this.news.workspace, true);
     this.form.controls['title'].setValue(this.news.title);
     this.form.controls['content'].setValue(this.news.content);
     if(this.idProject > 0) {
@@ -79,8 +82,8 @@ export class EditNewsComponent implements OnInit {
     this.submitting = true;
 
     var submittedNews = new NewsModel();
-    submittedNews.title = this.form.controls.title.value;
-    submittedNews.content = this.form.controls.content.value;
+    submittedNews.title = this.form.controls['title'].value;
+    submittedNews.content = this.form.controls['content'].value;
     submittedNews.organization.id = this.authenticationService.currentOrganizationValue.id;
     submittedNews.project.id = this.project.id;
     submittedNews.type = 'ARTICLE';
@@ -115,5 +118,14 @@ export class EditNewsComponent implements OnInit {
   get isAdmin() {
     var isAdmin = this.authenticationService.currentUserValue != null && this.authenticationService.currentUserValue.userAuthorities != null;
     return isAdmin && this.authenticationService.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
+  }
+
+  onDeleteMedia(file: any) {
+    this.fileService.deleteByUrl(file.url)
+      .subscribe(
+        () => {},
+        error => {
+          console.log(error);
+        });
   }
 }

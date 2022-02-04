@@ -1,7 +1,6 @@
 {
     "webUrl": "http://localhost:4200",
     "apiUrl": "http://localhost:8080/api",
-    "slackClientId": "1267900044419.1280463132273",
-    "version": "development",
-    "versionUrl": "https://github.com/les-projets-cagnottes"
+    "slackEnabled": true,
+    "slackClientId": "1267900044419.1280463132273"
 }

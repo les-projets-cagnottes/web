@@ -3,12 +3,12 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 i18n class="card-title">Detailed Presentation</h3>
+                    <h3 i18n="@@detailedPresentation" class="card-title">Detailed Presentation</h3>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
+                    <div *ngIf="longDescriptionConfig.uploadImagePath != ''" class="form-group">
                         <textarea id="longDescription" [ngxSummernote]="longDescriptionConfig"
-                            formControlName="longDescription"></textarea>
+                            (mediaDelete)="onDeleteMedia($event)" formControlName="longDescription"></textarea>
                     </div>
                 </div>
             </div>
@@ -17,38 +17,33 @@
             <!-- general form elements -->
             <div class="card">
                 <div class="card-header with-border">
-                    <h3 class="card-title" i18n>Informations</h3>
+                    <h3 class="card-title" i18n="@@informations">Informations</h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="amount" i18n>Organization</label>
-                        <select class="form-control select-border" style="width: 100%;" formControlName="organization">
-                            <option *ngFor="let item of organizations; index as i" value="{{ i }}">{{ item.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="title" i18n>Title</label>
+                        <label for="title" i18n="@@title">Title</label>
                         <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title"
-                            i18n-placeholder="Project Title" [ngClass]="{ 'is-invalid': this.form.controls.title.errors }" />
+                            i18n-placeholder="@@title"
+                            [ngClass]="{ 'is-invalid': this.form.controls['title'].errors }" />
                     </div>
                     <div class="form-group">
-                        <label for="shortDescription" i18n>Short Description</label>
+                        <label for="shortDescription" i18n="@@shortDescription">Short Description</label>
                         <input formControlName="shortDescription" type="text" class="form-control" id="shortDescription"
-                            placeholder="Project Short Description" i18n-placeholder
-                            [ngClass]="{ 'is-invalid': this.form.controls.shortDescription.errors }" />
+                            placeholder="Short Description" i18n-placeholder="@@shortDescription"
+                            [ngClass]="{ 'is-invalid': this.form.controls['shortDescription'].errors }" />
                     </div>
                     <div class="form-group">
-                        <label for="peopleRequired" i18n>People needed (in addition
+                        <label for="peopleRequired" i18n="@@peopleNeededInAdditionOfProjectLeader">People needed (in
+                            addition
                             of the project leader)</label>
                         <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired"
-                            min="2" [ngClass]="{ 'is-invalid': this.form.controls.peopleRequired.errors }" />
+                            min="2" [ngClass]="{ 'is-invalid': this.form.controls['peopleRequired'].errors }" />
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="text-center">
                         <button [disabled]="submitting" type="button" class="btn btn-primary" (click)="onSubmit()"
-                            i18n>Save</button>
+                            i18n="@@save">Save</button>
                     </div>
                 </div>
             </div>

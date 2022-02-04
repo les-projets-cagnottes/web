@@ -1,10 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { Role } from '../_models';
 import { Organization, User } from '../_entities';
-import { AuthenticationService, OrganizationService } from '../_services';
+import { AuthenticationService, OrganizationService, UserService } from '../_services';
 import { ConfigService } from '../_services/config/config.service';
+import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -14,21 +17,23 @@ import { ConfigService } from '../_services/config/config.service';
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
   public isCollapsed = false;
-  version: string = '';
-  versionUrl: string = '';
   currentOrganization: Organization = new Organization();
   currentOrganizationSubscription: Subscription;
   currentUser: User = new User();
   currentUserSubscription: Subscription;
   users: User[] = [];
 
+  // Change Current Org Modal
+  changeCurrentOrgModal: BsModalRef = new BsModalRef();
+  userOrganizations: Organization[] = [];
+
   constructor(
+    private modalService: BsModalService,
+    private router: Router,
     private authenticationService: AuthenticationService,
     private organizationService: OrganizationService,
-    private configService: ConfigService
+    private userService: UserService
   ) {
-    this.version = this.configService.get('version');
-    this.versionUrl = this.configService.get('versionUrl');
     this.currentUser.avatarUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -50,30 +55,67 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
         this.organizationService.getById(this.currentOrganization.id)
           .subscribe(organizationModel => {
             this.authenticationService.setCurrentOrganization(Organization.fromModel(organizationModel));
-          })
+          });
       });
+  }
+
+  setCurrentOrganization(organization: Organization) {
+    this.authenticationService.setCurrentOrganization(organization);
+    window.location.reload();
+  }
+
+  editOrganization(organization: Organization) {
+    this.closeChangeCurrentOrgModal();
+    this.router.navigate(['/organizations/edit/', organization.id]);
   }
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
     this.currentUserSubscription.unsubscribe();
+    this.currentOrganizationSubscription.unsubscribe();
   }
 
-  get isSponsor() {
-    var isSponsor = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    isSponsor = isSponsor && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor);
-    return isSponsor || this.isAdmin;
+  openChangeCurrentOrgModal(template: TemplateRef<any>): void {
+    this.userService.getOrganizations(this.currentUser.id)
+      .subscribe(organizations => {
+        this.userOrganizations = Organization.fromModels(organizations);
+        this.currentOrganization = this.authenticationService.currentOrganizationValue;
+        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
+        if(currentOrganizationIndex >= 0) {
+          this.userOrganizations[currentOrganizationIndex].isCurrent = true;
+        }
+        this.changeCurrentOrgModal = this.modalService.show(template);
+      });
   }
 
-  get isManager() {
+  closeChangeCurrentOrgModal() {
+    this.changeCurrentOrgModal.hide();
+  }
+
+  isSponsor(): boolean {
+    return (this.currentUser != null 
+      && this.currentUser.userOrganizationAuthorities != null
+      && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === this.currentOrganization.id))
+      || this.isAdmin;
+  }
+
+  isManager(organization?: Organization): boolean {
     var isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
+    if(organization !== undefined) {
+      isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
+    } else {
+      isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
+    }
     return isManager || this.isAdmin;
   }
 
-  get isOwner() {
+  isOwner(organization?: Organization): boolean {
     var isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);
+    if(organization !== undefined) {
+      isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);
+    } else {
+      isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);
+    }
     return isOwner || this.isAdmin;
   }
 

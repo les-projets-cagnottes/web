@@ -1,5 +1,4 @@
-import { AuditModel } from "../audit.model";
-import { GenericModel } from "../generic.model";
+import { AuditModel, GenericModel } from '..';
 
 export class ProjectModel extends AuditModel {
     
@@ -8,11 +7,13 @@ export class ProjectModel extends AuditModel {
     shortDescription: string = '';
     longDescription: string = '';
     peopleRequired: number = 2;
+    workspace: string = '';
     leader: GenericModel = new GenericModel();
+    organization: GenericModel = new GenericModel();
     peopleGivingTimeRef: number[] = [];
-    organizationsRef: number[] = [];
     campaignsRef: number[] = [];
+    newsRef: number[] = [];
 
     // Only in this component
-    peopleRequiredPercent: string;
+    peopleRequiredPercent: string = '';
 }

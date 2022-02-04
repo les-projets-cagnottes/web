@@ -1,12 +1,13 @@
 import { ProjectModel } from "src/app/_models/project/project.model";
-import { Campaign, Organization, User } from "..";
+import { Campaign, News, Organization, User } from "..";
 
 export class Project extends ProjectModel {
     
-    leader: User = new User();
+    override leader: User = new User();
+    override organization: Organization = new Organization();
     peopleGivingTime: User[] = [];
-    organizations: Organization[] = [];
     campaigns: Campaign[] = [];
+    news: News[] = [];
 
     static fromModel(model: ProjectModel): Project {
         var entity = new Project();
@@ -20,22 +21,24 @@ export class Project extends ProjectModel {
         entity.shortDescription = model.shortDescription;
         entity.longDescription = model.longDescription;
         entity.peopleRequired = model.peopleRequired;
+        entity.workspace = model.workspace;
         entity.peopleGivingTimeRef = model.peopleGivingTimeRef;
-        entity.organizationsRef = model.organizationsRef;
         entity.campaignsRef = model.campaignsRef;
+        entity.organization = new Organization();
+        entity.organization.id = model.organization.id;
         entity.leader = new User();
         entity.leader.id = model.leader.id;
         return entity;
     }
 
     static valuesOf(models: ProjectModel[]): Project[] {
-        var entities = [];
+        var entities: Project[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     static fromModels(models: ProjectModel[]): Project[] {
-        var entities = [];
+        var entities: Project[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

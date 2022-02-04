@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Account, Budget, Campaign, Organization, User } from 'src/app/_entities';
+import { Account, Budget, Campaign, User } from 'src/app/_entities';
+import { CampaignModel, DataPage, ProjectModel } from 'src/app/_models';
 import { AuthenticationService, BudgetService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
@@ -10,29 +11,25 @@ import { AuthenticationService, BudgetService, OrganizationService, PagerService
 })
 export class ReportComponent implements OnInit {
 
-  organizations: Organization[] = [];
-  organization: Organization = new Organization();
+  projects: Map<number, ProjectModel> = new Map<number, ProjectModel>();
   budgets: Budget[] = [];
   budget: Budget = new Budget();
   budgetUsage: string = "";
-  totalDonations: number[] = [];
 
   // Form
   selectBudgetForm = this.fb.group({
-    organization: [0],
     budget: [0]
   });
 
   // Campaigns Box
   private rawProjectsResponse: any;
   campaignPager: any = {};
-  pagedCampaigns: Campaign[];
-  projects: any = {};
+  pagedCampaigns: Campaign[] = [];
   campaignsPageSize: number = 10;
   campaignsSyncStatus: string = 'idle';
 
   // Accounts Box
-  private rawAccountsResponse: any;
+  private rawAccountsResponse: DataPage = new DataPage();
   accountsPager: any = {};
   pagedAccounts: Account[] = [];
   accountsPageSize: number = 10;
@@ -43,7 +40,6 @@ export class ReportComponent implements OnInit {
     private budgetService: BudgetService,
     private organizationService: OrganizationService,
     private projectService: ProjectService,
-    private userService: UserService,
     private pagerService: PagerService,
     private fb: FormBuilder) { }
 
@@ -52,28 +48,19 @@ export class ReportComponent implements OnInit {
   }
 
   refresh() {
-    this.userService.getOrganizations(this.authenticationService.currentUserValue.id)
-      .subscribe(organizations => {
-        organizations.forEach(organization => this.organizations.push(Organization.fromModel(organization)));
-        this.selectBudgetForm.controls['organization'].setValue(this.organizations[0].id);
-      });
-    this.selectBudgetForm.controls['organization'].valueChanges.subscribe(val => {
-      this.organization = this.organizations.find(organization => organization.id === +val);
-      this.refreshBudgets(val);
-    });
-  }
-
-  refreshBudgets(organizationId: number) {
-    this.organizationService.getBudgets(organizationId)
+    this.organizationService.getBudgets(this.authenticationService.currentOrganizationValue.id)
       .subscribe(budgets => {
         this.budgets = Budget.fromModels(budgets);
         this.selectBudgetForm.controls['budget'].setValue(this.budgets[0].id);
       });
     this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
-      this.budget = this.budgets.find(budget => budget.id === +val);
-      this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.organization.membersRef.length * this.budget.amountPerMember) + "%";
-      this.refreshCampaigns(this.campaignPager.page, true);
-      this.refreshAccounts(this.accountsPager.page, true);
+      var budgetFound = this.budgets.find(budget => budget.id === +val);
+      if(budgetFound !== undefined) {
+        this.budget = budgetFound;
+        this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.authenticationService.currentOrganizationValue.membersRef.length * this.budget.amountPerMember) + "%";
+        this.refreshCampaigns(this.campaignPager.page, true);
+        this.refreshAccounts(this.accountsPager.page, true);
+      }
     });
   }
 
@@ -84,7 +71,7 @@ export class ReportComponent implements OnInit {
         .subscribe(response => {
           this.rawProjectsResponse = response;
           this.setCampaignsPage(page);
-          var projectIds = [];
+          var projectIds: number[] = [];
           this.pagedCampaigns.forEach(campaign => {
             if(campaign.project.id > 0) {
               projectIds.push(campaign.project.id);
@@ -92,7 +79,7 @@ export class ReportComponent implements OnInit {
           });
           this.projectService.getAllByIds(projectIds)
             .subscribe(response => {
-              response.forEach(prj => this.projects[prj.id] = prj)
+              response.forEach(prj => this.projects.set(prj.id, prj))
             },
             error => {
               console.log(error);
@@ -120,7 +107,7 @@ export class ReportComponent implements OnInit {
           this.setAccountsPage(page);
           var accountUserRef = []
           this.pagedAccounts.forEach(account => accountUserRef.push(account.owner.id));
-          this.userService.getAllByIds(accountUserRef)
+          this.budgetService.getUsers(this.selectBudgetForm.controls['budget'].value)
             .subscribe(users => {
               this.pagedAccounts.forEach(account => account.setOwner(User.fromModels(users)));
               this.accountsSyncStatus = 'success';
@@ -141,12 +128,6 @@ export class ReportComponent implements OnInit {
   setCampaignsPage(page: number) {
     this.campaignPager = this.pagerService.getPager(this.rawProjectsResponse.totalElements, page, this.campaignsPageSize);
     this.pagedCampaigns = this.rawProjectsResponse.content;
-    this.pagedCampaigns.forEach(project => {
-      this.totalDonations[project.id] = 0;
-    })
-    this.budget.donations.forEach(donation => {
-      this.totalDonations[donation.campaign.id] += donation.amount;
-    })
   }
 
   setAccountsPage(page: number) {
@@ -157,6 +138,14 @@ export class ReportComponent implements OnInit {
       account.usage = this.computeNumberPercent(account.initialAmount - account.amount, account.initialAmount) + "%";
       this.pagedAccounts.push(account);
     });
+  }
+
+  getProject(id: number): ProjectModel {
+    var entity = this.projects.get(id);
+    if(entity === undefined) {
+      entity = new ProjectModel();
+    }
+    return entity;
   }
 
   computeNumberPercent(number: number, max: number) {

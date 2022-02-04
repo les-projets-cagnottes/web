@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../_services';
+import { AuthenticationService } from '../_services';
 import { ConfigService } from '../_services/config/config.service';
 
 @Component({
@@ -13,22 +13,25 @@ import { ConfigService } from '../_services/config/config.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  loginForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  });;
   loading = false;
   submitted = false;
-  returnUrl: string;
-  slackClientId: string;
+  returnUrl: string = '';
+  slackEnabled: boolean = false;
+  slackClientId: string = '';
 
   // slack oauth
-  redirectUrlOAuth: string;
-  code: string;
+  redirectUrlOAuth: string = '';
+  code: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService,
     private configService: ConfigService
   ) {
     // redirect to home if alSUCCESSFUL logged in
@@ -48,21 +51,14 @@ export class LoginComponent implements OnInit {
         });
     }
     this.slackClientId = this.configService.get('slackClientId');
+    this.slackEnabled = (/true/i).test(this.configService.get('slackEnabled'));
   }
 
   ngOnInit() {
 
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
 
   onSubmit() {
     this.submitted = true;
@@ -72,14 +68,14 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
+    this.authenticationService.login(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
       .pipe(first())
       .subscribe(
         () => {
+          console.log(this.returnUrl);
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.alertService.error(error);
           this.loading = false;
         });
   }

@@ -1,19 +1,20 @@
 <div class="login-page">
 
     <div class="login-box">
-        <div class="login-logo">
-            <a href="/"><b>Les Projets Cagnottes</b></a>
-        </div>
-        <!-- /.login-logo -->
-
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p i18n="@@signInBoxHeader" class="login-box-msg">Sign in to start your session
+        <div class="card card-outline card-yellow">
+            <div class="card-header text-center">
+                <a class="h1">
+                    <b>Les Projets Cagnottes</b>
+                </a>
+            </div>
+            <div class="card-body">
+                <p i18n="@@signInToStart" class="login-box-msg">Sign in to start your session
                 </p>
 
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="input-group mb-3">
-                        <input type="email" formControlName="email" class="form-control" placeholder="Email" i18n-placeholder="@@userEmail">
+                        <input type="email" formControlName="email" class="form-control" placeholder="Email"
+                            i18n-placeholder="@@email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -21,7 +22,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" formControlName="password" class="form-control" placeholder="Password" i18n-placeholder="@@userPassword">
+                        <input type="password" formControlName="password" class="form-control" placeholder="Password"
+                            i18n-placeholder="@@password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -30,14 +32,16 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button [disabled]="loading" class="btn btn-primary btn-block" i18n="@@loginButton" (click)="onSubmit()">Login</button>
+                            <button [disabled]="loading" class="btn btn-primary btn-block" i18n="@@signIn"
+                                (click)="onSubmit()">Sign In</button>
                         </div>
                     </div>
                 </form>
-                <div class="social-auth-links text-center">
-                    <p i18n="@@orSeparator">- OR -</p>
-                    <a href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&user_scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}" class="btn btn-block bg-maroon">
-                        <i class="fab fa-slack"></i><span i18n="@@slackLoginButton">Sign in using Slack</span></a>
+                <div class="social-auth-links text-center mt-2 mb-3">
+                    <a *ngIf="slackEnabled"
+                        href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&user_scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlOAuth }}"
+                        class="btn btn-block bg-maroon">
+                        <i class="fab fa-slack"></i><span i18n="@@signInUsingSlack">Sign in using Slack</span></a>
                 </div>
             </div>
             <!-- /.login-box-body -->

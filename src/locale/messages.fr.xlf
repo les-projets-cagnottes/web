@@ -6,839 +6,405 @@
       <trans-unit id="about" datatype="html">
         <target>A propos</target>
       </trans-unit>
-      <trans-unit id="aboutMenu" datatype="html">
-        <target>A propos</target>
+      <trans-unit id="summary" datatype="html">
+        <target>Sommaire</target>
       </trans-unit>
-      <trans-unit id="actionAdd" datatype="html">
-        <target>Ajouter</target>
-      </trans-unit>
-      <trans-unit id="actionClose" datatype="html">
-        <target>Fermer</target>
-      </trans-unit>
-      <trans-unit id="actionControlDonations" datatype="html">
-        <target>Contrôle donations</target>
-      </trans-unit>
-      <trans-unit id="actionDelete" datatype="html">
-        <target>Supprimer</target>
-      </trans-unit>
-      <trans-unit id="actionDistribute" datatype="html">
-        <target>Distribuer</target>
-      </trans-unit>
-      <trans-unit id="actionEdit" datatype="html">
-        <target>Editer</target>
-      </trans-unit>
-      <trans-unit id="actionGenerate" datatype="html">
-        <target>Générer</target>
-      </trans-unit>
-      <trans-unit id="actionSubmit" datatype="html">
-        <target>Soumettre</target>
-      </trans-unit>
-      <trans-unit id="actionValidateProjects" datatype="html">
-        <target>Valider les projets</target>
-      </trans-unit>
-      <trans-unit id="actions" datatype="html">
-        <target>Actions</target>
-      </trans-unit>
-      <trans-unit id="addMemberAction" datatype="html">
-        <target>Ajouter un membre : </target>
-      </trans-unit>
-      <trans-unit id="addToSlack" datatype="html">
-        <target>Ajouter à Slack</target>
-      </trans-unit>
-      <trans-unit id="administrationMenu" datatype="html">
-        <target>ADMINISTRATION</target>
-      </trans-unit>
-      <trans-unit id="aLotOfPeople" datatype="html">
-        <target>plein de gens </target>
-      </trans-unit>
-      <trans-unit id="budget" datatype="html">
-        <target>Budget</target>
-      </trans-unit>
-      <trans-unit id="budgetAmountPerMember" datatype="html">
-        <target>Montant par membre</target>
-      </trans-unit>
-      <trans-unit id="budgetName" datatype="html">
-        <target>Budget</target>
-      </trans-unit>
-      <trans-unit id="budgetRemainingBegin" datatype="html">
-        <target>Il vous restera </target>
-      </trans-unit>
-      <trans-unit id="budgetRemainingEnd" datatype="html">
-        <target> pour financer d'autres projets.</target>
-      </trans-unit>
-      <trans-unit id="budgetEndDate" datatype="html">
-        <target>Date de fin</target>
-      </trans-unit>
-      <trans-unit id="budgetStartDate" datatype="html">
-        <target>Date de début</target>
-      </trans-unit>
-      <trans-unit id="budgetTermsOfUse" datatype="html">
-        <target>Règles d'utilisation</target>
-      </trans-unit>
-      <trans-unit id="budgetUsage" datatype="html">
-        <target>Utilisation</target>
-      </trans-unit>
-      <trans-unit id="budgetsMenu" datatype="html">
+      <trans-unit id="budgets" datatype="html">
         <target>Budgets</target>
       </trans-unit>
-      <trans-unit id="contentEdit" datatype="html">
-        <target>Editer le contenu</target>
-      </trans-unit>
-      <trans-unit id="contentName" datatype="html">
+      <trans-unit id="name" datatype="html">
         <target>Nom</target>
       </trans-unit>
-      <trans-unit id="contentValue" datatype="html">
-        <target>Contenu</target>
+      <trans-unit id="amountPerMember" datatype="html">
+        <target>Montant par membre</target>
       </trans-unit>
-      <trans-unit id="contributions" datatype="html">
-        <target>Contributions</target>
+      <trans-unit id="startDate" datatype="html">
+        <target>Date de démarrage</target>
       </trans-unit>
-      <trans-unit id="controls" datatype="html">
-        <target>Contrôles</target>
+      <trans-unit id="endDate" datatype="html">
+        <target>Date de fin</target>
       </trans-unit>
-      <trans-unit id="createdAt" datatype="html">
-        <target>Créé le</target>
-      </trans-unit>
-      <trans-unit id="createdBy" datatype="html">
-        <target>Créé par</target>
-      </trans-unit>
-      <trans-unit id="developerMenu" datatype="html">
-        <target>Espace Développeur</target>
-      </trans-unit>
-      <trans-unit id="documentationMenu" datatype="html">
-        <target>DOCUMENTATION</target>
-      </trans-unit>
-      <trans-unit id="donationAmount" datatype="html">
-        <target>Montant (en €)</target>
-      </trans-unit>
-      <trans-unit id="donationContributor" datatype="html">
-        <target>Contributeur</target>
-      </trans-unit>
-      <trans-unit id="donationDate" datatype="html">
-        <target>Date</target>
-      </trans-unit>
-      <trans-unit id="donationsPanelTitle" datatype="html">
-        <target>Liste des dons</target>
-      </trans-unit>
-      <trans-unit id="donationSubmit" datatype="html">
-        <target>Envoyer</target>
-      </trans-unit>
-      <trans-unit id="emailRequired" datatype="html">
-        <target>Email requis</target>
-      </trans-unit>
-      <trans-unit id="findIconCodesAt" datatype="html">
-        <target>Trouvez les codes d'icône sur </target>
-      </trans-unit>
-      <trans-unit id="gettingStartedMenu" datatype="html">
-        <target>Bien démarrer</target>
-      </trans-unit>
-      <trans-unit id="grantUserSponsor" datatype="html">
-        <target>Sponsor</target>
-      </trans-unit>
-      <trans-unit id="grantUserManager" datatype="html">
-        <target>Gestionnaire</target>
-      </trans-unit>
-      <trans-unit id="grantUserOwner" datatype="html">
-        <target>Propriétaire</target>
-      </trans-unit>
-      <trans-unit id="helpUseMarkdown" datatype="html">
-        <target>Pour mettre en forme votre présentation, vous pouvez utiliser la syntaxe Markdown.</target>
-      </trans-unit>
-      <trans-unit id="icon" datatype="html">
-        <target>Icône</target>
-      </trans-unit>
-      <trans-unit id="id" datatype="html">
-        <target>ID</target>
-      </trans-unit>
-      <trans-unit id="ideaHasAnonymousCreator" datatype="html">
-        <target>Publier cette idée anonymement</target>
-      </trans-unit>
-      <trans-unit id="ideaHasLeaderCreator" datatype="html">
-        <target>L'auteur souhaite porter la réalisation</target>
-      </trans-unit>ideaWantToLead
-      <trans-unit id="ideaLongDescription" datatype="html">
-        <target>Description complète</target>
-      </trans-unit>
-      <trans-unit id="ideas" datatype="html">
-        <target>Idées</target>
-      </trans-unit>
-      <trans-unit id="ideaShortDesciption" datatype="html">
-        <target>Courte description</target>
-      </trans-unit>
-      <trans-unit id="ideaWantToLead" datatype="html">
-        <target>Je souhaite porter la réalisation de l'idée</target>
-      </trans-unit>
-      <trans-unit id="informations" datatype="html">
-        <target>Informations</target>
-      </trans-unit>
-      <trans-unit id="loginButton" datatype="html">
-        <target>Se connecter</target>
-      </trans-unit>
-      <trans-unit id="logout" datatype="html">
-        <target>Se déconnecter</target>
-      </trans-unit>
-      <trans-unit id="logs" datatype="html">
-        <target>Logs</target>
-      </trans-unit>
-      <trans-unit id="controlsMenu" datatype="html">
-        <target>Contrôles</target>
-      </trans-unit>
-      <trans-unit id="madePossibleBy" datatype="html">
-        <target>Rendu possible par </target>
-      </trans-unit>
-      <trans-unit id="managementMenu" datatype="html">
-        <target>GESTION</target>
-      </trans-unit>
-      <trans-unit id="memberSince" datatype="html">
-        <target>Inscrit depuis le </target>
-      </trans-unit>
-      <trans-unit id="messengingApp" datatype="html">
-        <target>Application</target>
-      </trans-unit>
-      <trans-unit id="messengingAppStatus" datatype="html">
+      <trans-unit id="status" datatype="html">
         <target>Etat</target>
       </trans-unit>
-      <trans-unit id="messengingApps" datatype="html">
-        <target>Applications tierces</target>
+      <trans-unit id="createdAtInline" datatype="html">
+        <target>Créé le </target>
       </trans-unit>
-      <trans-unit id="moreInfosHere" datatype="html">
-        <target>Plus d'infos ici</target>
+      <trans-unit id="preparing" datatype="html">
+        <target>En préparation</target>
       </trans-unit>
-      <trans-unit id="myBudgets" datatype="html">
-        <target>Mes cagnottes</target>
+      <trans-unit id="distributed" datatype="html">
+        <target>Distribué</target>
       </trans-unit>
-      <trans-unit id="nbEntries" datatype="html">
-        <target>Nombre d'entrées</target>
+      <trans-unit id="distribute" datatype="html">
+        <target>Distribuer</target>
       </trans-unit>
-      <trans-unit id="organization" datatype="html">
-        <target>Organisation</target>
-      </trans-unit>
-      <trans-unit id="organizationContents" datatype="html">
-        <target>Documents</target>
-      </trans-unit>
-      <trans-unit id="organizationLogoUrl" datatype="html">
-        <target>URL Logo</target>
-      </trans-unit>
-      <trans-unit id="organizationMembers" datatype="html">
-        <target>Membres</target>
-      </trans-unit>
-      <trans-unit id="organizationName" datatype="html">
-        <target>Organisation</target>
-      </trans-unit>
-      <trans-unit id="organizations" datatype="html">
-        <target>Organisations</target>
-      </trans-unit>
-      <trans-unit id="organizationsMenu" datatype="html">
-        <target>Organisations</target>
-      </trans-unit>
-      <trans-unit id="orSeparator" datatype="html">
-        <target>- OU -</target>
-      </trans-unit>
-      <trans-unit id="paginationEntries" datatype="html">
-        <target></target>
-      </trans-unit>
-      <trans-unit id="paginationStart" datatype="html">
-        <target>Affichage des entrées </target>
-      </trans-unit>
-      <trans-unit id="paginationTotal" datatype="html">
-        <target> sur </target>
-      </trans-unit>
-      <trans-unit id="passwordRequired" datatype="html">
-        <target>Mot de passe requis</target>
-      </trans-unit>
-      <trans-unit id="profile" datatype="html">
-        <target>Mon compte</target>
-      </trans-unit>
-      <trans-unit id="project" datatype="html">
-        <target>Projet</target>
-      </trans-unit>
-      <trans-unit id="projectContributeFinanciallyAppButton" datatype="html">
-        <target>Contribuer financièrement</target>
-      </trans-unit>
-      <trans-unit id="projectDetailedPresentation" datatype="html">
-        <target>Présentation Détaillée</target>
-      </trans-unit>
-      <trans-unit id="projectDetailedPresentationPlaceholder" datatype="html">
-        <target>Entrez votre présentation détaillée ici</target>
-      </trans-unit>
-      <trans-unit id="projectDonationsOnAllBudgets" datatype="html">
-        <target>Total des dons</target>
-      </trans-unit>
-      <trans-unit id="projectDonationsOnThisBudget" datatype="html">
-        <target>Dons imputés sur ce budget</target>
-      </trans-unit>
-      <trans-unit id="projectEditAppButton" datatype="html">
+      <trans-unit id="edit" datatype="html">
         <target>Editer</target>
       </trans-unit>
-      <trans-unit id="projectFundingDeadline" datatype="html">
-        <target>Date limite</target>
+      <trans-unit id="delete" datatype="html">
+        <target>Supprimer</target>
       </trans-unit>
-      <trans-unit id="projectFundingDeadlineDetailedLabel" datatype="html">
-        <target>Date limite pour constituer l'équipe et financer le projet</target>
+      <trans-unit id="editBudget" datatype="html">
+        <target>Edition d'un budget</target>
       </trans-unit>
-      <trans-unit id="projectFundingDeadlineProgress" datatype="html">
-        <target>Jour(s) restant(s)</target>
-      </trans-unit>
-      <trans-unit id="projectInformationsTitle" datatype="html">
-        <target>Informations</target>
-      </trans-unit>
-      <trans-unit id="projectIsRulesCompliant" datatype="html">
-        <target>Le projet respecte les règles : </target>
-      </trans-unit>
-      <trans-unit id="projectJoinTeamAppButton" datatype="html">
-        <target>Rejoindre l'équipe</target>
-      </trans-unit>
-      <trans-unit id="projectLeader" datatype="html">
-        <target>Porteur du projet</target>
-      </trans-unit>
-      <trans-unit id="projectLeaveTeamAppButton" datatype="html">
-        <target>Quitter l'équipe</target>
-      </trans-unit>
-      <trans-unit id="projectMoneyNeeded" datatype="html">
-        <target>Budget</target>
-      </trans-unit>
-      <trans-unit id="projectMoneyNeededProgress" datatype="html">
-        <target>Budget</target>
-      </trans-unit>
-      <trans-unit id="projectPeopleNeeded" datatype="html">
-        <target>Equipiers</target>
-      </trans-unit>
-      <trans-unit id="projectPeopleNeededDetailedLabel" datatype="html">
-        <target>Equipiers requis hors porteur de projet</target>
-      </trans-unit>
-      <trans-unit id="projectPeopleNeededProgress" datatype="html">
-        <target>Constitution de l'équipe</target>
-      </trans-unit>
-      <trans-unit id="projectShortDescription" datatype="html">
-        <target>Description</target>
-      </trans-unit>
-      <trans-unit id="projectStatus" datatype="html">
-        <target>Etat</target>
-      </trans-unit>
-      <trans-unit id="projectStatusAvorted" datatype="html">
-        <target>Abandonné</target>
-      </trans-unit>
-      <trans-unit id="projectStatusInProgress" datatype="html">
-        <target>En cours</target>
-      </trans-unit>
-      <trans-unit id="projectStatusReady" datatype="html">
-        <target>Prêt</target>
-      </trans-unit>
-      <trans-unit id="projectTeamBoxTitle" datatype="html">
-        <target>Equipe</target>
-      </trans-unit>
-      <trans-unit id="projectTitle" datatype="html">
-        <target>Titre</target>
-      </trans-unit>
-      <trans-unit id="projects" datatype="html">
-        <target>Projets</target>
-      </trans-unit>
-      <trans-unit id="projectsBoxTitle" datatype="html">
-        <target>Projets</target>
-      </trans-unit>
-      <trans-unit id="projectsMenu" datatype="html">
-        <target>PROJETS</target>
-      </trans-unit>
-      <trans-unit id="refresh" datatype="html">
-        <target>Rafraîchir</target>
-      </trans-unit>
-      <trans-unit id="reportingMenu" datatype="html">
-        <target>Où est l'argent ?</target>
+      <trans-unit id="budgetFieldDisabled" datatype="html">
+        <target> Certains champs ont été désactivés car le budget est déjà distribué entre les membres de l'organisation. </target>
       </trans-unit>
       <trans-unit id="save" datatype="html">
         <target>Sauvegarder</target>
       </trans-unit>
-      <trans-unit id="scheduleEnabled" datatype="html">
-        <target>Activé</target>
+      <trans-unit id="create" datatype="html">
+        <target>Créer</target>
       </trans-unit>
-      <trans-unit id="scheduleNextExecution" datatype="html">
-        <target>Prochaine éxécution</target>
+      <trans-unit id="suggestionBox" datatype="html">
+        <target>Boîte à idées</target>
       </trans-unit>
-      <trans-unit id="schedulePlanning" datatype="html">
-        <target>Planification</target>
+      <trans-unit id="refresh" datatype="html">
+        <target>Rafraîchir</target>
       </trans-unit>
-      <trans-unit id="schedules" datatype="html">
-        <target>Programmations</target>
+      <trans-unit id="add" datatype="html">
+        <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="schedulesMenu" datatype="html">
-        <target>Programmations</target>
+      <trans-unit id="nbEntries" datatype="html">
+        <target>Nb d'entrées</target>
       </trans-unit>
-      <trans-unit id="scheduleScheduled" datatype="html">
-        <target>Planifié</target>
+      <trans-unit id="pageShowing" datatype="html">
+        <target>Affichage de </target>
       </trans-unit>
-      <trans-unit id="scheduleType" datatype="html">
-        <target>Type</target>
+      <trans-unit id="pageTo" datatype="html">
+        <source> à </source>
       </trans-unit>
-      <trans-unit id="settings" datatype="html">
-        <target>Mon compte</target>
+      <trans-unit id="pageOf" datatype="html">
+        <source> sur </source>
       </trans-unit>
-      <trans-unit id="slackDisconnectAction" datatype="html">
-        <target>Déconnecter</target>
+      <trans-unit id="pageEntries" datatype="html">
+        <source> entrées</source>
+      </trans-unit>
+      <trans-unit id="icon" datatype="html">
+        <target>Icône</target>
+      </trans-unit>
+      <trans-unit id="findIconCodes" datatype="html">
+        <target>Trouvez des codes d'icône sur </target>
       </trans-unit>
       <trans-unit id="shortDescription" datatype="html">
-        <target>Courte description</target>
+        <target>Description courte</target>
       </trans-unit>
-      <trans-unit id="signInBoxHeader" datatype="html">
-        <target>Connectez-vous pour démarrer votre session</target>
+      <trans-unit id="longDescription" datatype="html">
+        <target>Description longue</target>
       </trans-unit>
-      <trans-unit id="slackLoginButton" datatype="html">
-        <target>Se connecter avec Slack</target>
+      <trans-unit id="publishIdeaAnonymously" datatype="html">
+        <target>Publier cette idée anonymement</target>
       </trans-unit>
-      <trans-unit id="slackNotConnected" datatype="html">
-        <target>Pas encore connecté</target>
+      <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
+        <target>Je veux porter la réalisation de cette idée</target>
       </trans-unit>
-      <trans-unit id="slackConnected" datatype="html">
-        <target>Connecté avec le workspace : </target>
+      <trans-unit id="navNews" datatype="html">
+        <target>ACTUALITES</target>
       </trans-unit>
-      <trans-unit id="slackSyncAction" datatype="html">
-        <target>Synchroniser les membres</target>
+      <trans-unit id="newsfeed" datatype="html">
+        <target> Fil d'actualités </target>
       </trans-unit>
-      <trans-unit id="summary" datatype="html">
-        <target>Table des matières</target>
+      <trans-unit id="navProjects" datatype="html">
+        <target>PROJETS</target>
       </trans-unit>
-      <trans-unit id="userAvatarUrl" datatype="html">
-        <target>URL Photo de profil</target>
+      <trans-unit id="startProject" datatype="html">
+        <target>Lancer mon projet</target>
       </trans-unit>
-      <trans-unit id="userBudgetUsage" datatype="html">
-        <target>Utilisation</target>
+      <trans-unit id="discoverProjects" datatype="html">
+        <target>Découvrir les projets</target>
       </trans-unit>
-      <trans-unit id="userEmail" datatype="html">
-        <target>Email</target>
+      <trans-unit id="projectsInProgress" datatype="html">
+        <source>Projects in progress</source>
+        <target>Projets en cours</target>
       </trans-unit>
-      <trans-unit id="userFirstname" datatype="html">
-        <target>Prénom</target>
+      <trans-unit id="projectsFinished" datatype="html">
+        <target>Projets terminés</target>
       </trans-unit>
-      <trans-unit id="userFullname" datatype="html">
-        <target>Nom complet</target>
+      <trans-unit id="reporting" datatype="html">
+        <target>Où est l'argent ?</target>
       </trans-unit>
-      <trans-unit id="userLastname" datatype="html">
-        <target>Nom de famille</target>
-      </trans-unit>
-      <trans-unit id="userPassword" datatype="html">
-        <target>Mot de passe</target>
-      </trans-unit>
-      <trans-unit id="userPasswordUpdatePlaceholder" datatype="html">
-        <target>Mot de passe - Garder vide pour laisser inchangé</target>
-      </trans-unit>
-      <trans-unit id="userUsageName" datatype="html">
-        <target>Nom</target>
+      <trans-unit id="navAdministration" datatype="html">
+        <target> ADMINISTRATION</target>
       </trans-unit>
       <trans-unit id="users" datatype="html">
         <target>Utilisateurs</target>
       </trans-unit>
-      <trans-unit id="usersBoxTitle" datatype="html">
-        <target>Utilisateurs</target>
-      </trans-unit>
-      <trans-unit id="usersMenu" datatype="html">
-        <target>Utilisateurs</target>
-      </trans-unit>
-      <trans-unit id="yourNewAPIToken" datatype="html">
-        <target>Votre nouveau token API</target>
-      </trans-unit>
-      <trans-unit id="fdf7cbdc140d0aab0f0b6c06065a0fd448ed6a2e" datatype="html">
-        <target>Titre</target>
-      </trans-unit>
-      <trans-unit id="9fdd10c419585216f978e25bd17654aeab14c86e" datatype="html">
-        <target>Découvrir les campagnes</target>
-      </trans-unit>
-      <trans-unit id="b5ad8efc4d2f2695bc4c6f43165588493ec3579c" datatype="html">
-        <target>Démarrer une campagne</target>
-      </trans-unit>
-      <trans-unit id="7454575571a2ca5298c902e25ca3e0d9251d3bed" datatype="html">
-        <target>Lancer mon projet</target>
-      </trans-unit>
-      <trans-unit id="02db1dbcf9cdf15db3202e5ec149f94dd7ec3e3b" datatype="html">
-        <target>Découvrir les projets</target>
-      </trans-unit>
-      <trans-unit id="f50a33d3c339f8f4a465141f8caa5d2d8c005251" datatype="html">
-        <target>Utilisateur activé ?</target>
-      </trans-unit>
-      <trans-unit id="6077409ceec10631c0acb0ea042b84dafe873607" datatype="html">
-        <target>Boîte à idées</target>
-      </trans-unit>
-      <trans-unit id="f4331142b52b54be4f83f5b0976c65bb61ad96f1" datatype="html">
-        <target>Boîte à idées</target>
-      </trans-unit>
-      <trans-unit id="81b1a4de7097512737383e54d2e674be5669ab12" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="0940b2e58b8fbc2d43b2892f01306ebf3074d2f5" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="0caba2e52f453e388dce7f82a724f3cbeafa4bd7" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="b3dcea94803e39a40986c4f9913529855e39388a" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="ea352a1385bffca958e2b480d02697e5878ca448" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="3db0d5f593827233089854f9d3412747016c977c" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="0940b2e58b8fbc2d43b2892f01306ebf3074d2f5" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="0caba2e52f453e388dce7f82a724f3cbeafa4bd7" datatype="html">
-        <target> à </target>
-      </trans-unit>
-      <trans-unit id="6d7752a35339e72ebf721ecbdcaead3ad1fa84e2" datatype="html">
-        <target>Courte description</target>
-      </trans-unit>
-      <trans-unit id="191c251fc6191f828d031695ec209cfc9ea15d0c" datatype="html">
-        <target>Courte description</target>
-      </trans-unit>
-      <trans-unit id="df9eb29f631279e08f154c250dbe97753690baf8" datatype="html">
-        <target>Présentation détaillée</target>
-      </trans-unit>
-      <trans-unit id="da193b77fc90c2d37561f9cb357bd5a1d048bb8a" datatype="html">
-        <target>Informations</target>
-      </trans-unit>
-      <trans-unit id="1fa4cda1c8f0d75d6f3028807c1ff787ba50eac5" datatype="html">
-        <target>Equipiers requis (en plus du porteur de projet)</target>
-      </trans-unit>
-      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
-        <target>Sauvegarder</target>
-      </trans-unit>
-      <trans-unit id="f3a58c8a81b9ffda26a154eae25a422c9f7de37b" datatype="html">
-        <target>Organisation</target>
-      </trans-unit>
-      <trans-unit id="4ba7eb03b854c11f87e6225d36bd91363a991807" datatype="html">
-        <target>Projets terminés</target>
-      </trans-unit>
-      <trans-unit id="36ef1600a183c1f31903d55a27902da7bde5bad8" datatype="html">
-        <target>Projets en cours</target>
-      </trans-unit>
-      <trans-unit id="5dda42411cc1aa71c0cf1184a54af89c5acc1344" datatype="html">
-        <target>Découvrir les projets</target>
-      </trans-unit>
-      <trans-unit id="ad2903b7fc9c1b761d57a2c60444e503bb88ee22" datatype="html">
-        <target>Mes projets</target>
-      </trans-unit>
-      <trans-unit id="edcc19a49c950289ffe5d38be4843cdf194e5622" datatype="html">
-        <target>Terminé</target>
-      </trans-unit>
-      <trans-unit id="5ab9a3c727788f3597870dd7e3546fc0b0624024" datatype="html">
-        <target>En cours</target>
-      </trans-unit>
-      <trans-unit id="86022280b7836d1aff7fdc0182415b041ae3625c" datatype="html">
-        <target>Brouillon</target>
-      </trans-unit>
-      <trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
-        <target>Etat</target>
-      </trans-unit>
-      <trans-unit id="c8d1785038d461ec66b5799db21864182b35900a" datatype="html">
-        <target>Rafraîchir</target>
-      </trans-unit>
-      <trans-unit id="f9f3b3e7ea78b0e4219d6ff1f8e649be8e9d03d7" datatype="html">
-        <target>Actualités</target>
-      </trans-unit>
-      <trans-unit id="71f3915f003004b8b1de201134b4b2bed61e21b0" datatype="html">
-        <target>Financement</target>
-      </trans-unit>
-      <trans-unit id="fb7e9087a573109483bd52ecf3aa3e2e4d73fc6a" datatype="html">
-        <target> entrées</target>
-      </trans-unit>
-      <trans-unit id="c61c4f644388e45053457c90fdfc082852f1a252" datatype="html">
-        <target>Nombre d'entrées</target>
-      </trans-unit>
-      <trans-unit id="e9d24812d3e5e964b62a4f0c1d6bfe73c05b7db2" datatype="html">
-        <target>Equipiers</target>
-      </trans-unit>
-      <trans-unit id="f3f13217303d139905eec79a2535af481a906c15" datatype="html">
-        <target>Affichage de </target>
-      </trans-unit>
-      <trans-unit id="34bc4caea13a2b04d17c84b488fab9a733af5ad8" datatype="html">
-        <target>Equipiers</target>
-      </trans-unit>
-      <trans-unit id="1d0974afae70914072a4fbf19e53328e517bae73" datatype="html">
-        <target>Actualités</target>
-      </trans-unit>
-      <trans-unit id="f76d3c98a8fdd31fd116b8306e5e1a8535df8e0e" datatype="html">
-        <target>Financement</target>
-      </trans-unit>
-      <trans-unit id="7824f44811306a9285fdf85af4ce960ed9c761ce" datatype="html">
-        <target> sur </target>
-      </trans-unit>
-      <trans-unit id="a1f454952d9364b10e1f3c632c321d5c2a387006" datatype="html">
-        <target>Aucune source de financement n'a été définie</target>
-      </trans-unit>
-      <trans-unit id="28f86ffd419b869711aa13f5e5ff54be6d70731c" datatype="html">
-        <target>Editer</target>
-      </trans-unit>
-      <trans-unit id="223aae0477f79f0bc4436c1c57619415f04cbbb3" datatype="html">
-        <target>Publier</target>
-      </trans-unit>
-      <trans-unit id="b1d627be0a3c5f7520930a8c17db1c34eebedf44" datatype="html">
-        <target>Equipiers requis</target>
-      </trans-unit>
-      <trans-unit id="dbb73cfc9375112c8ed02c3925ccee9899cf33d2" datatype="html">
-        <target>Créé le</target>
-      </trans-unit>
-      <trans-unit id="dfc2fb58e2a04ed944a4bd80f0a2087775134068" datatype="html">
-        <target>Montant</target>
-      </trans-unit>
-      <trans-unit id="18fc87718788c70f170043236341762f71fab653" datatype="html">
-        <target>Porteur du projet</target>
-      </trans-unit>
-      <trans-unit id="94635ddb8becde2db746a3c6a791b5bddb81c361" datatype="html">
-        <target>Edition d'une actualité</target>
-      </trans-unit>
-      <trans-unit id="c8ac022dae267e926db44cb2a8481e1927af5f74" datatype="html">
-        <target>Projet</target>
-      </trans-unit>
-      <trans-unit id="7a279068c4f3b698735ed5089c73757ea106c255" datatype="html">
-        <target> a publié le message système </target>
-      </trans-unit>
-      <trans-unit id="509a62d72c3904170f8aa1ae1c34dc74b3d01e66" datatype="html">
-        <target>Voir le projet</target>
-      </trans-unit>
-      <trans-unit id="f4bebf3a00df54d105ab618ac897f82c3f624cf1" datatype="html">
-        <target> a publié l'actualité </target>
-      </trans-unit>
-      <trans-unit id="b757c16cb6aff9e0fada08714467c208c10a9025" datatype="html">
-        <target>Modifier l'actualité</target>
-      </trans-unit>
-      <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
-        <target>Fermer</target>
-      </trans-unit>
-      <trans-unit id="95a7bc17e7b1cd608f95c1860e7ff2dec93e51ed" datatype="html">
-        <target>Budget</target>
-      </trans-unit>
-      <trans-unit id="22cd729d56d38f4c1cf69e9749582120887c52a0" datatype="html">
-        <target>Budget requis (en €)</target>
-      </trans-unit>
-      <trans-unit id="851f66400264fd0c4af33e4350dbe2f100ccfe65" datatype="html">
-        <target>Date limite</target>
-      </trans-unit>
-      <trans-unit id="0b7856c656b9381dcad805ab1e10b36fe9789145" datatype="html">
-        <target>Je certifie que le projet est compatible avec les règles : </target>
-      </trans-unit>
-      <trans-unit id="f8e2d2bbafa226480bd0bd2c091772b03b1c7613" datatype="html">
-        <target>Fil d'actualité</target>
-      </trans-unit>
-      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
-        <target>Mot de passe</target>
-      </trans-unit>
-      <trans-unit id="030b4423b92167200e39519599f9b863b4f7c62c" datatype="html">
-        <target>Actions</target>
-      </trans-unit>
-      <trans-unit id="f6755cff4957d5c3c89bafce5651f1b6fa2b1fd9" datatype="html">
-        <target>Ajouter</target>
-      </trans-unit>
-      <trans-unit id="2134b6a48ca212a75b867cef891f5fe882125c8e" datatype="html">
-        <target>URL de l'avatar</target>
-      </trans-unit>
-      <trans-unit id="adadf996dcd6f06c274f01f9ba766339a7ae6b21" datatype="html">
-        <target>Prénom</target>
-      </trans-unit>
-      <trans-unit id="4d13a9cd5ed3dcee0eab22cb25198d43886942be" datatype="html">
-        <target>Utilisateurs</target>
-      </trans-unit>
-      <trans-unit id="244aae9346da82b0922506c2d2581373a15641cc" datatype="html">
-        <target>Email</target>
-      </trans-unit>
-      <trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
-        <target>Nom d'utilisateur</target>
-      </trans-unit>
-      <trans-unit id="7308e4ae2e673ecb24a05bb841cbdd03340db627" datatype="html">
-        <target>Nombre d'entrées</target>
-      </trans-unit>
-      <trans-unit id="b38714fa958eaae47696e2822d9ba80969385353" datatype="html">
-        <target>Nom de famille</target>
-      </trans-unit>
-      <trans-unit id="45cc8ca94b5a50842a9a8ef804a5ab089a38ae5c" datatype="html">
-        <target>ID</target>
-      </trans-unit>
-      <trans-unit id="51fef9483d278f0a904ffc8b6c1172868c3e83f8" datatype="html">
-        <target>Date de lancement</target>
-      </trans-unit>
-      <trans-unit id="8f7e889d83770d3f90eec318226ae54cac961719" datatype="html">
-        <target>Campagne</target>
-      </trans-unit>
-      <trans-unit id="a3617197cc480fd174ae5c2c49cf25fb8e4a4d10" datatype="html">
-        <target>Créer une actualité</target>
-      </trans-unit>
-      <trans-unit id="45cdd6e34009f2ed9aa2ec3e597c44fa8917d2f8" datatype="html">
-        <target>Date limite de financement</target>
-      </trans-unit>
-      <trans-unit id="c0e89f1410a993b4643d8e2c712e1d75805f6a79" datatype="html">
-        <target>Date limite</target>
-      </trans-unit>
-      <trans-unit id="3f0936244c49b22c13ad0dd41c8116dc79f6360f" datatype="html">
-        <target>Quitter l'équipe</target>
-      </trans-unit>
-      <trans-unit id="764a8a101f8ee5a4b98844e93406182fb078507b" datatype="html">
-        <target>Equipe</target>
-      </trans-unit>
-      <trans-unit id="193be671377bd5d057bc2449fe81d64415477ec8" datatype="html">
-        <target>Type de financement</target>
-      </trans-unit>
-      <trans-unit id="eec715de352a6b114713b30b640d319fa78207a0" datatype="html">
-        <target>Description</target>
-      </trans-unit>
-      <trans-unit id="70a11dccae78c0a4ff1629680f4df9ebec2f9dc1" datatype="html">
-        <target>Rejoindre l'équipe</target>
-      </trans-unit>
-      <trans-unit id="7cabd2c19b7385d160e56e58b2d2ab5d9ab580f1" datatype="html">
-        <target>Validé</target>
-      </trans-unit>
-      <trans-unit id="0e063922a6110e6b68acc5d441c563b5e705cab4" datatype="html">
-        <target>Ajouter un financement</target>
-      </trans-unit>
-      <trans-unit id="4ee32e63944092077ad45dfd014b7704c3103f78" datatype="html">
-        <target>Contribuer financièrement</target>
-      </trans-unit>
-      <trans-unit id="a6d2ee184110732e0761fc74001ac72d1dc75e5c" datatype="html">
-        <target>Abandonné</target>
-      </trans-unit>
-      <trans-unit id="a8233de047500bf0f0d9f9f1712ddb071501a283" datatype="html">
-        <target>Sommaire</target>
-      </trans-unit>
-      <trans-unit id="845381d984a60e09a729c309273fbc1b3c07bb6e" datatype="html">
-        <target>Montant par membre</target>
-      </trans-unit>
-      <trans-unit id="3e6acd589d8b82cafd8546409da0a36469d297a0" datatype="html">
-        <target>Date de début</target>
-      </trans-unit>
-      <trans-unit id="0dd8a3bafea23b5595cfcb897f16acd2cc60cf02" datatype="html">
-        <target>Règles d'utilisation</target>
-      </trans-unit>
-      <trans-unit id="826b25211922a1b46436589233cb6f1a163d89b7" datatype="html">
-        <target>Supprimer</target>
-      </trans-unit>
-      <trans-unit id="0f551576faafbd2806d4af653469655f1b35afe1" datatype="html">
-        <target>Date de fin</target>
-      </trans-unit>
-      <trans-unit id="26fc888f73963e343e37a79ec39517ed4a901a93" datatype="html">
-        <target>Distribuer</target>
-      </trans-unit>
-      <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
-        <target>Nom</target>
-      </trans-unit>
-      <trans-unit id="0b0901877d837d3fda16ba161eb74368d1c75b7a" datatype="html">
-        <target>Validé</target>
-      </trans-unit>
-      <trans-unit id="c8f02342518b6d8bd330180a09692646b2365477" datatype="html">
-        <target>Nombre d'entrées</target>
-      </trans-unit>
-      <trans-unit id="27e12108f723fb33489d025f23a5469bf5441487" datatype="html">
-        <target>Contribuer financièrement</target>
-      </trans-unit>
-      <trans-unit id="d36be8c41638c1e29f458aa9a5c6270ac695b870" datatype="html">
-        <target>Il vous restera </target>
-      </trans-unit>
-      <trans-unit id="2f933b826a570836cab04f683970a2d22068458c" datatype="html">
-        <target>Date</target>
-      </trans-unit>
-      <trans-unit id="d29638b3e2d4d463fd1c0b7ddcbea7581ce5632c" datatype="html">
-        <target>Contributeur</target>
-      </trans-unit>
-      <trans-unit id="2983ed022bdfbd3768adad6978c8846c55937338" datatype="html">
-        <target>Montant (en €)</target>
-      </trans-unit>
-      <trans-unit id="4f2f2c52c073074c5db6378226dd796de7965bf9" datatype="html">
-        <target> pour financer d'autres projets.</target>
-      </trans-unit>
-      <trans-unit id="949e68b7c8a946d88886156ec24bf6a766ae1805" datatype="html">
-        <target> de </target>
-      </trans-unit>
-      <trans-unit id="2c27232a428ffce321c9657ecc36110b2f93e4d2" datatype="html">
-        <target>Jours restants</target>
-      </trans-unit>
-      <trans-unit id="2099bfea237bb42acc192d4316bf35acfbf909ea" datatype="html">
-        <target>Affichage de </target>
-      </trans-unit>
-      <trans-unit id="e055a3638e07f628df08fb17686ca6bbbe5b565d" datatype="html">
-        <target>Contributions</target>
-      </trans-unit>
-      <trans-unit id="414ba921c3432ab715d08b6ef8656bffd287427b" datatype="html">
-        <target>ACTUALITES</target>
-      </trans-unit>
-      <trans-unit id="f0274af6c76ea3f99ceae371d3be887e4db4cf3a" datatype="html">
-        <target>PROJETS</target>
-      </trans-unit>
-      <trans-unit id="d529879defb67d97dea21f10538b1730807110d0" datatype="html">
-        <target> concernant le projet </target>
-      </trans-unit>
-      <trans-unit id="a07e37487c04c2314584df91da67ea0d79c20ca4" datatype="html">
-        <target>Aucun projet n'a été trouvé</target>
-      </trans-unit>
-      <trans-unit id="ff94d2e7b6ac6938a388aa9c4e05e2346d1514ad" datatype="html">
-        <target>Créé le</target>
-      </trans-unit>
-      <trans-unit id="5ddff9ee758b79b22aaa059edf5bd612673e5f9b" datatype="html">
-        <target>Contributions imputées au budget</target>
-      </trans-unit>
-      <trans-unit id="004b222ff9ef9dd4771b777950ca1d0e4cd4348a" datatype="html">
-        <target>A propos</target>
-      </trans-unit>
-      <trans-unit id="4654b791ec4685eeb49f3afd636eebb28000ae58" datatype="html">
-        <target>Contributions</target>
-      </trans-unit>
-      <trans-unit id="50dd9c9a5f371e11e7f5ab7e9fea9fae64510da0" datatype="html">
-        <target>Montant requis</target>
-      </trans-unit>
-      <trans-unit id="84bdefe355211ad738354220743c30d8c8de1b0e" datatype="html">
-        <target>Mot de passe - Garder vide pour laisser inchangé</target>
-      </trans-unit>
-      <trans-unit id="71c77bb8cecdf11ec3eead24dd1ba506573fa9cd" datatype="html">
-        <target>Envoyer</target>
-      </trans-unit>
-      <trans-unit id="abd43a5370cf2938ab1347f38c21396dff8e22a3" datatype="html">
-        <target>Inscrit le </target>
-      </trans-unit>
-      <trans-unit id="80fa90ce67552f3f8a824f756a94327e41d3fc49" datatype="html">
-        <target>Membres</target>
-      </trans-unit>
-      <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
-        <target>Paramètres</target>
-      </trans-unit>
-      <trans-unit id="2fcb6b8fd02e2d5b02c67bc90fc849a7d69156fd" datatype="html">
-        <target>Mes cagnottes</target>
-      </trans-unit>
-      <trans-unit id="1b258b258b4cc475ceb2871305b61756b0134f4a" datatype="html">
-        <target>Générer</target>
-      </trans-unit>
-      <trans-unit id="b368ae813044edbde2b2e59392ee787aeef2ab50" datatype="html">
-        <target>Développeur</target>
-      </trans-unit>
-      <trans-unit id="36c826975a69439fda148f4154e3a1bd5bdca2b6" datatype="html">
-        <target>Contributions</target>
-      </trans-unit>
-      <trans-unit id="05e37ae6a305d0530ad533fb5c5b9ecdd5734c61" datatype="html">
-        <target>Votre nouvelle clé d'API</target>
-      </trans-unit>
-      <trans-unit id="d2a7deb7096cada2c3177157652680fe7e6de0ed" datatype="html">
-        <target>Projets</target>
-      </trans-unit>
-      <trans-unit id="313b17449cbb602beebac84465b5266c6f078d19" datatype="html">
+      <trans-unit id="organizations" datatype="html">
         <target>Organisations</target>
       </trans-unit>
-      <trans-unit id="0314431b7cca7aeb1bddbdff5b5c387ffea8b07c" datatype="html">
-        <target>Contribuer financièrement</target>
+      <trans-unit id="navDocumentation" datatype="html">
+        <target> DOCUMENTATION</target>
       </trans-unit>
-      <trans-unit id="9cf1bfe29153fd519120476b96095ab359c94872" datatype="html">
-        <target>Campagne de financement</target>
+      <trans-unit id="gettingStarted" datatype="html">
+        <target>Bien démarrer</target>
       </trans-unit>
-      <trans-unit id="be69500b4aa16cf576d85273d8dfb5765f8dc57b" datatype="html">
-        <target>Votre contribution peut mettre quelques instants avant d'être prise en compte.</target>
+      <trans-unit id="myOrganizations" datatype="html">
+        <target>Mes organisations</target>
       </trans-unit>
-      <trans-unit id="45f210b96a2a6e91f52f153a4f8dc30662629f8e" datatype="html">
-        <target>Utilisation</target>
+      <trans-unit id="organization" datatype="html">
+        <target>Organisation</target>
       </trans-unit>
-      <trans-unit id="ea304f72008b1e0a174c577262bf83cae277a185" datatype="html">
-        <target>Vue d'ensemble</target>
+      <trans-unit id="members" datatype="html">
+        <target>Membres</target>
       </trans-unit>
-      <trans-unit id="f19ce69a4fd0a576e71b27e67e6528508e3b6569" datatype="html">
+      <trans-unit id="newsEdition" datatype="html">
+        <target>Edition d'une actualité</target>
+      </trans-unit>
+      <trans-unit id="newEditionForProject" datatype="html">
+        <target>Edition d'une actualité pour le projet </target>
+      </trans-unit>
+      <trans-unit id="title" datatype="html">
+        <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="publishedNews" datatype="html">
+        <target> a publié l'actualité </target>
+      </trans-unit>
+      <trans-unit id="publishedNewsSystem" datatype="html">
+        <target> a publié le message système </target>
+      </trans-unit>
+      <trans-unit id="publishedNewInProject" datatype="html">
+        <target> concernant le projet </target>
+      </trans-unit>
+      <trans-unit id="viewProject" datatype="html">
+        <target>Voir le projet</target>
+      </trans-unit>
+      <trans-unit id="editNews" datatype="html">
+        <target>Edition d'une actualité</target>
+      </trans-unit>
+      <trans-unit id="addMember" datatype="html">
+        <target>Ajouter un membre : </target>
+      </trans-unit>
+      <trans-unit id="userEmail" datatype="html">
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="email" datatype="html">
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="isSponsor" datatype="html">
+        <target>Sponsor</target>
+      </trans-unit>
+      <trans-unit id="isManager" datatype="html">
+        <target>Manager</target>
+      </trans-unit>
+      <trans-unit id="isOwner" datatype="html">
+        <target>Propriétaire</target>
+      </trans-unit>
+      <trans-unit id="informations" datatype="html">
+        <target>Informations</target>
+      </trans-unit>
+      <trans-unit id="logoUrl" datatype="html">
+        <target>URL du logo</target>
+      </trans-unit>
+      <trans-unit id="thirdApps" datatype="html">
+        <target>Application tierces</target>
+      </trans-unit>
+      <trans-unit id="app" datatype="html">
+        <target>App</target>
+      </trans-unit>
+      <trans-unit id="appStatus" datatype="html">
+        <target>Etat</target>
+      </trans-unit>
+      <trans-unit id="notConnectedYet" datatype="html">
+        <target>Déconnecté </target>
+      </trans-unit>
+      <trans-unit id="connectedWithSlackTeam" datatype="html">
+        <target>Connecté avec Slack : </target>
+      </trans-unit>
+      <trans-unit id="addToSlack" datatype="html">
+        <target>Ajouter à Slack</target>
+      </trans-unit>
+      <trans-unit id="documents" datatype="html">
+        <target>Documents</target>
+      </trans-unit>
+      <trans-unit id="editContent" datatype="html">
+        <target>Edition d'un contenu</target>
+      </trans-unit>
+      <trans-unit id="content" datatype="html">
+        <target>Contenu</target>
+      </trans-unit>
+      <trans-unit id="createdAt" datatype="html">
+        <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="memberSince" datatype="html">
+        <target>Membre depuis le </target>
+      </trans-unit>
+      <trans-unit id="myAccounts" datatype="html">
+        <target>Mes comptes</target>
+      </trans-unit>
+      <trans-unit id="date" datatype="html">
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="projects" datatype="html">
+        <target>Projets</target>
+      </trans-unit>
+      <trans-unit id="draft" datatype="html">
+        <target>Brouillon</target>
+      </trans-unit>
+      <trans-unit id="inProgress" datatype="html">
+        <target>En cours</target>
+      </trans-unit>
+      <trans-unit id="finished" datatype="html">
+        <target>Terminé</target>
+      </trans-unit>
+      <trans-unit id="contributions" datatype="html">
+        <target>Contributions</target>
+      </trans-unit>
+      <trans-unit id="budget" datatype="html">
+        <target>Budget</target>
+      </trans-unit>
+      <trans-unit id="project" datatype="html">
+        <target>Projet</target>
+      </trans-unit>
+      <trans-unit id="amount" datatype="html">
+        <target>Montant</target>
+      </trans-unit>
+      <trans-unit id="settings" datatype="html">
+        <target>Paramètres</target>
+      </trans-unit>
+      <trans-unit id="password" datatype="html">
+        <target>Mot de passe</target>
+      </trans-unit>
+      <trans-unit id="passwordPlaceholder" datatype="html">
+        <target>Mot de passe - Laisser vide pour ne pas modifier</target>
+      </trans-unit>
+      <trans-unit id="firstname" datatype="html">
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="lastname" datatype="html">
+        <target>Nom de famille</target>
+      </trans-unit>
+      <trans-unit id="avatarUrl" datatype="html">
+        <target>URL de l'avatar</target>
+      </trans-unit>
+      <trans-unit id="developper" datatype="html">
+        <target>Développeur</target>
+      </trans-unit>
+      <trans-unit id="generate" datatype="html">
+        <target>Générer</target>
+      </trans-unit>
+      <trans-unit id="yourNewApiToken" datatype="html">
+        <target>Votre nouveau token API</target>
+      </trans-unit>
+      <trans-unit id="close" datatype="html">
+        <target>Fermer</target>
+      </trans-unit>
+      <trans-unit id="detailedPresentation" datatype="html">
+        <target>Présentation détaillée</target>
+      </trans-unit>
+      <trans-unit id="peopleNeededInAdditionOfProjectLeader" datatype="html">
+        <target>Equipiers requis (en plus du porteur du projet)</target>
+      </trans-unit>
+      <trans-unit id="noProjectFound" datatype="html">
+        <target>Aucun projet trouvé</target>
+      </trans-unit>
+      <trans-unit id="teammates" datatype="html">
         <target>Equipiers</target>
       </trans-unit>
-      <trans-unit id="58cdefc1266b9d4378588aea6cfb38053e7dc634" datatype="html">
+      <trans-unit id="news" datatype="html">
+        <target>Actualités</target>
+      </trans-unit>
+      <trans-unit id="founding" datatype="html">
+        <target>Financement</target>
+      </trans-unit>
+      <trans-unit id="description" datatype="html">
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="noFoundingInProject" datatype="html">
+        <target>Ce projet n'a pas de financement</target>
+      </trans-unit>
+      <trans-unit id="foundingType" datatype="html">
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="cancelled" datatype="html">
+        <target>Annulée</target>
+      </trans-unit>
+      <trans-unit id="completed" datatype="html">
+        <target>Terminée</target>
+      </trans-unit>
+      <trans-unit id="campaign" datatype="html">
+        <target>Campagne</target>
+      </trans-unit>
+      <trans-unit id="contributeFinancially" datatype="html">
+        <target>Contribuer financièrement</target>
+      </trans-unit>
+      <trans-unit id="amountInEuros" datatype="html">
+        <target>Montant (en €)</target>
+      </trans-unit>
+      <trans-unit id="youWillHave" datatype="html">
+        <target>Il vous restera </target>
+      </trans-unit>
+      <trans-unit id="youWillHaveEnd" datatype="html">
+        <target> pour financer d'autres projets.</target>
+      </trans-unit>
+      <trans-unit id="yourContributionMayTakeTime" datatype="html">
+        <target>Votre contribution peut prendre quelques instants avant d'être prise en compte.</target>
+      </trans-unit>
+      <trans-unit id="submit" datatype="html">
+        <target>Soumettre</target>
+      </trans-unit>
+      <trans-unit id="foundingCampaign" datatype="html">
+        <target>Campagne de financement</target>
+      </trans-unit>
+      <trans-unit id="moneyNeededInEuros" datatype="html">
+        <target>Montant requis (en €)</target>
+      </trans-unit>
+      <trans-unit id="fundingDeadline" datatype="html">
+        <target>Date limite de financement</target>
+      </trans-unit>
+      <trans-unit id="thisProjectIsRuleCompliant" datatype="html">
+        <target>Ce projet respecte les règles : </target>
+      </trans-unit>
+      <trans-unit id="publishedTheNews" datatype="html">
+        <target> a publié l'actualité </target>
+      </trans-unit>
+      <trans-unit id="projectLeader" datatype="html">
+        <target>Porteur du projet</target>
+      </trans-unit>
+      <trans-unit id="peopleNeeded" datatype="html">
+        <target>Equipiers requis</target>
+      </trans-unit>
+      <trans-unit id="publish" datatype="html">
+        <target>Publier</target>
+      </trans-unit>
+      <trans-unit id="joinTheTeam" datatype="html">
+        <target>Rejoindre l'équipe</target>
+      </trans-unit>
+      <trans-unit id="leaveTheTeam" datatype="html">
+        <target>Quitter l'équipe</target>
+      </trans-unit>
+      <trans-unit id="team" datatype="html">
+        <target>Equipe</target>
+      </trans-unit>
+      <trans-unit id="usageOverview" datatype="html">
+        <target>Utilisation</target>
+      </trans-unit>
+      <trans-unit id="campaigns" datatype="html">
         <target>Campagnes</target>
       </trans-unit>
-      <trans-unit id="f7de1214db056d8379a676b4c451084601b022e4" datatype="html">
-        <target>Edition d'une actualité pour le projet </target>
+      <trans-unit id="donations" datatype="html">
+        <target>Contributions</target>
+      </trans-unit>
+      <trans-unit id="donationsRequired" datatype="html">
+        <target>Contributions requises</target>
+      </trans-unit>
+      <trans-unit id="usage" datatype="html">
+        <target>Utilisation</target>
+      </trans-unit>
+      <trans-unit id="username" datatype="html">
+        <target>Nom d'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="enabled" datatype="html">
+        <target>Activé</target>
+      </trans-unit>
+      <trans-unit id="signInToStart" datatype="html">
+        <target>Se connecter pour démarrer votre session </target>
+      </trans-unit>
+      <trans-unit id="signIn" datatype="html">
+        <target>Se connecter</target>
+      </trans-unit>
+      <trans-unit id="signInUsingSlack" datatype="html">
+        <target>Se connecter avec Slack</target>
       </trans-unit>
       <trans-unit id="f7de1214db056d8379a676b4c451084601b022e4" datatype="html">
         <target>Edition d'une actualité pour le projet </target>
