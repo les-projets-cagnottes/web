@@ -406,9 +406,6 @@
       <trans-unit id="signInUsingSlack" datatype="html">
         <target>Se connecter avec Slack</target>
       </trans-unit>
-      <trans-unit id="f7de1214db056d8379a676b4c451084601b022e4" datatype="html">
-        <target>Edition d'une actualité pour le projet </target>
-      </trans-unit>
       <trans-unit id="publicationChannelId" datatype="html">
         <target>Identifiant du canal slack</target>
       </trans-unit>
