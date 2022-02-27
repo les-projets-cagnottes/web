@@ -21,4 +21,8 @@ export class MsTeamService {
   delete(id: number) {
     return this.http.delete(`${this.configService.get('apiUrl')}/team/ms/${id}`, {});
   }
+
+  sync(id: number) {
+    return this.http.post(`${this.configService.get('apiUrl')}/team/ms/${id}/sync`, {});
+  }
 }
