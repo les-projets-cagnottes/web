@@ -143,7 +143,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr *ngIf="organization.msTeam.id <= 0">
                                             <td>Slack</td>
                                             <td *ngIf="organization.slackTeam.id <= 0"><span
                                                     i18n="@@notConnectedYet">Not connected Yet
@@ -176,7 +176,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr *ngIf="organization.slackTeam.id <= 0">
                                             <td>Microsoft</td>
                                             <td *ngIf="organization.msTeam.id <= 0">
                                                 <span i18n="@@notConnectedYet">Not connected Yet</span>
@@ -191,6 +191,11 @@
                                                     class="btn btn-social bg-warning">
                                                     <i class="fab fa-microsoft"></i>
                                                     <span i18n="@@addToMicrosoft">Add to Microsoft</span></a>
+                                                <a *ngIf="organization.msTeam.id > 0"
+                                                    [ngClass]="{ 'text-success': microsoftSyncStatus == 'success', 'text-danger': microsoftSyncStatus == 'error', 'disabled': microsoftSyncStatus == 'running' || msDisconnectStatus == 'running' }"
+                                                    (click)="onMsSync()" class="text-muted item-clickable">
+                                                    <i class="fas fa-sync"></i>
+                                                </a>
                                                 <a *ngIf="organization.msTeam.id > 0"
                                                     [ngClass]="{ 'text-success': msDisconnectStatus == 'success', 'text-danger': msDisconnectStatus == 'error' }"
                                                     (click)="onMsDisconnect()" class="text-muted item-clickable">

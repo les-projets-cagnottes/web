@@ -3,7 +3,7 @@
     "apiUrl": "http://localhost:8080/api",
     "slackEnabled": true,
     "slackClientId": "1267900044419.1280463132273",
-    "microsoftEnabled": false,
-    "microsoftTenantId": "",
-    "microsoftClientId": ""
+    "microsoftEnabled": true,
+    "microsoftTenantId": "ab8f3573-a42c-4b8b-a615-f03fd683bbbd",
+    "microsoftClientId": "08a651e0-9f49-4984-9834-2ad26a490f86"
 }
