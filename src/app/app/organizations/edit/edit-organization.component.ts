@@ -379,6 +379,29 @@ export class EditOrganizationComponent implements OnInit {
     }
   }
 
+  onMsSync() {
+    this.microsoftSyncStatus = 'running';
+    if (this.id > 0) {
+      this.msTeamService.sync(this.msTeam.id)
+        .subscribe(
+          () => {
+            this.microsoftSyncStatus = 'success';
+            this.pagerMembers.currentPage = undefined;
+            this.refreshMembers();
+            setTimeout(() => {
+              this.microsoftSyncStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            this.microsoftSyncStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.microsoftSyncStatus = 'idle';
+            }, 2000);
+          });
+    }
+  }
+
   onMsDisconnect() {
     this.msDisconnectStatus = 'running';
     if (this.id > 0 && this.organization.msTeam != null && this.organization.msTeam != undefined) {
