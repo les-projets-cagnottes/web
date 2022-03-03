@@ -213,6 +213,12 @@
       <trans-unit id="addToSlack" datatype="html">
         <target>Ajouter à Slack</target>
       </trans-unit>
+      <trans-unit id="connectedWithMicrosoft" datatype="html">
+        <target>Connecté au tenant Microsoft : </target>
+      </trans-unit>
+      <trans-unit id="addToMicrosoft" datatype="html">
+        <target>Ajouter à mon tenant Microsoft</target>
+      </trans-unit>
       <trans-unit id="documents" datatype="html">
         <target>Documents</target>
       </trans-unit>
