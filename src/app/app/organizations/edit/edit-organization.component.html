@@ -146,8 +146,7 @@
                                         <tr *ngIf="organization.msTeam.id <= 0">
                                             <td>Slack</td>
                                             <td *ngIf="organization.slackTeam.id <= 0"><span
-                                                    i18n="@@notConnectedYet">Not connected Yet
-                                                </span></td>
+                                                    i18n="@@notConnectedYet">Not connected Yet</span></td>
                                             <td *ngIf="organization.slackTeam.id > 0">
                                                 <span i18n="@@connectedWithSlackTeam">Connected with Slack Team :
                                                 </span>
@@ -182,12 +181,13 @@
                                                 <span i18n="@@notConnectedYet">Not connected Yet</span>
                                             </td>
                                             <td *ngIf="organization.msTeam.id > 0">
-                                                <span i18n="@@connectedWithMicrosoft">Connected with Microsoft : 
+                                                <span i18n="@@connectedWithMicrosoft">Connected with Microsoft :
                                                 </span>
                                                 <b>{{ msTeam.displayName }}</b>
                                             </td>
                                             <td class="action-bar">
-                                                <a *ngIf="organization.msTeam.id <= 0" href="https://login.microsoftonline.com/{{ microsoftTenantId }}/adminconsent?client_id={{ microsoftClientId }}&state={{ microsoftState }}&redirect_uri={{ microsoftRedirectUrl }}"
+                                                <a *ngIf="organization.msTeam.id <= 0"
+                                                    href="https://login.microsoftonline.com/{{ microsoftTenantId }}/adminconsent?client_id={{ microsoftClientId }}&state={{ microsoftState }}&redirect_uri={{ microsoftRedirectUrl }}"
                                                     class="btn btn-social bg-warning">
                                                     <i class="fab fa-microsoft"></i>
                                                     <span i18n="@@addToMicrosoft">Add to Microsoft</span></a>
