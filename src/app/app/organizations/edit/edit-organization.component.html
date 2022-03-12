@@ -143,11 +143,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr *ngIf="organization.msTeam.id <= 0">
                                             <td>Slack</td>
                                             <td *ngIf="organization.slackTeam.id <= 0"><span
-                                                    i18n="@@notConnectedYet">Not connected Yet
-                                                </span></td>
+                                                    i18n="@@notConnectedYet">Not connected Yet</span></td>
                                             <td *ngIf="organization.slackTeam.id > 0">
                                                 <span i18n="@@connectedWithSlackTeam">Connected with Slack Team :
                                                 </span>
@@ -159,7 +158,7 @@
                                             </td>
                                             <td class="action-bar">
                                                 <div *ngIf="organization.slackTeam.id <= 0">
-                                                    <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlOAuth }}"
+                                                    <a href="https://slack.com/oauth/authorize?client_id={{ slackClientId }}&scope=bot,commands,team:read,users:read,chat:write:bot&redirect_uri={{ redirectUrlSlackOAuth }}"
                                                         class="btn btn-social bg-maroon">
                                                         <i class="fab fa-slack"></i>
                                                         <span i18n="@@addToSlack">Add to Slack</span></a>
@@ -172,6 +171,34 @@
                                                 <a *ngIf="organization.slackTeam.id > 0"
                                                     [ngClass]="{ 'text-success': slackDisconnectStatus == 'success', 'text-danger': slackDisconnectStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }"
                                                     (click)="onSlackDisconnect()" class="text-muted item-clickable">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="organization.slackTeam.id <= 0">
+                                            <td>Microsoft</td>
+                                            <td *ngIf="organization.msTeam.id <= 0">
+                                                <span i18n="@@notConnectedYet">Not connected Yet</span>
+                                            </td>
+                                            <td *ngIf="organization.msTeam.id > 0">
+                                                <span i18n="@@connectedWithMicrosoft">Connected with Microsoft :
+                                                </span>
+                                                <b>{{ msTeam.displayName }}</b>
+                                            </td>
+                                            <td class="action-bar">
+                                                <a *ngIf="organization.msTeam.id <= 0"
+                                                    href="https://login.microsoftonline.com/{{ microsoftTenantId }}/adminconsent?client_id={{ microsoftClientId }}&state={{ microsoftState }}&redirect_uri={{ microsoftRedirectUrl }}"
+                                                    class="btn btn-social bg-warning">
+                                                    <i class="fab fa-microsoft"></i>
+                                                    <span i18n="@@addToMicrosoft">Add to Microsoft</span></a>
+                                                <a *ngIf="organization.msTeam.id > 0"
+                                                    [ngClass]="{ 'text-success': microsoftSyncStatus == 'success', 'text-danger': microsoftSyncStatus == 'error', 'disabled': microsoftSyncStatus == 'running' || msDisconnectStatus == 'running' }"
+                                                    (click)="onMsSync()" class="text-muted item-clickable">
+                                                    <i class="fas fa-sync"></i>
+                                                </a>
+                                                <a *ngIf="organization.msTeam.id > 0"
+                                                    [ngClass]="{ 'text-success': msDisconnectStatus == 'success', 'text-danger': msDisconnectStatus == 'error' }"
+                                                    (click)="onMsDisconnect()" class="text-muted item-clickable">
                                                     <i class="fas fa-times"></i>
                                                 </a>
                                             </td>
@@ -282,35 +309,33 @@
                         </div>
                     </div>
                 </div>
-                <ng-template #editContentModalTemplate>
-                    <div class="modal-header">
-                        <h4 class="modal-title pull-left" i18n="@@editContent">Edit content</h4>
-                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form [formGroup]="contentForm">
-                            <div class="form-group has-feedback"
-                                [ngClass]="{ 'has-error': contentForm.controls['name'].errors }">
-                                <label for="name" i18n="@@name">Name</label>
-                                <input type="text" formControlName="name" class="form-control" id="name"
-                                    placeholder="Enter content name">
-                            </div>
-                            <div *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback"
-                                [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
-                                <label for="value" i18n="@@content">Content</label>
-                                <textarea id="longDescription" formControlName="value"
-                                    [ngxSummernote]="contentValueConfig"
-                                    (mediaDelete)="onDeleteMedia($event)"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" (click)="onSubmitContent()" i18n="@@save">Save</button>
-                    </div>
-                </ng-template>
             </div>
         </div>
     </div>
 </div>
+<ng-template #editContentModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n="@@editContent">Edit content</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="contentForm">
+            <div class="form-group has-feedback" [ngClass]="{ 'has-error': contentForm.controls['name'].errors }">
+                <label for="name" i18n="@@name">Name</label>
+                <input type="text" formControlName="name" class="form-control" id="name"
+                    placeholder="Enter content name">
+            </div>
+            <div *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback"
+                [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
+                <label for="value" i18n="@@content">Content</label>
+                <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig"
+                    (mediaDelete)="onDeleteMedia($event)"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="onSubmitContent()" i18n="@@save">Save</button>
+    </div>
+</ng-template>

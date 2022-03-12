@@ -214,6 +214,12 @@
       <trans-unit id="addToSlack" datatype="html">
         <target>Ajouter à Slack</target>
       </trans-unit>
+      <trans-unit id="connectedWithMicrosoft" datatype="html">
+        <target>Connecté au tenant Microsoft : </target>
+      </trans-unit>
+      <trans-unit id="addToMicrosoft" datatype="html">
+        <target>Ajouter à mon tenant Microsoft</target>
+      </trans-unit>
       <trans-unit id="documents" datatype="html">
         <target>Documents</target>
       </trans-unit>
@@ -409,7 +415,9 @@
       <trans-unit id="publicationChannelId" datatype="html">
         <target>Identifiant du canal slack</target>
       </trans-unit>
-
+      <trans-unit id="signInUsingMS" datatype="html">
+        <target>Se connecter avec Microsoft</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

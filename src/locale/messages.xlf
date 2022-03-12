@@ -660,21 +660,21 @@
         <source>My organizations</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">160</context>
+          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="organization" datatype="html">
         <source>Organization</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">168</context>
         </context-group>
       </trans-unit>
       <trans-unit id="members" datatype="html">
         <source>Members</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/lesprojetscagnottes.component.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">169</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
@@ -867,24 +867,42 @@
         </context-group>
       </trans-unit>
       <trans-unit id="notConnectedYet" datatype="html">
-        <source>Not connected Yet </source>
+        <source>Not connected Yet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
-          <context context-type="linenumber">149,150</context>
+          <context context-type="linenumber">149</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="connectedWithSlackTeam" datatype="html">
         <source>Connected with Slack Team : </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
-          <context context-type="linenumber">152,153</context>
+          <context context-type="linenumber">151,152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="addToSlack" datatype="html">
         <source>Add to Slack</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">164</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="connectedWithMicrosoft" datatype="html">
+        <source>Connected with Microsoft : </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
+          <context context-type="linenumber">184,185</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addToMicrosoft" datatype="html">
+        <source>Add to Microsoft</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
+          <context context-type="linenumber">193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="publicationChannelId" datatype="html">
@@ -1460,7 +1478,14 @@
         <source>Sign in using Slack</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="signInUsingMS" datatype="html">
+        <source>Sign in using Miscrosoft</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/login/login.component.html</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
     </body>

@@ -5,10 +5,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ContentService, FileService, OrganizationService, PagerService, SlackTeamService, UserService } from 'src/app/_services';
-import { Organization, User, Content, SlackTeam } from 'src/app/_entities';
+import { Organization, User, Content, SlackTeam, MsTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
 import { ContentModel, OrganizationAuthorityModel, OrganizationModel, SlackTeamModel } from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
+import { MsTeamService } from 'src/app/_services/ms-team/ms-team.service';
+import { MsTeamModel } from 'src/app/_models/ms-team/ms-team.model';
 
 @Component({
   selector: 'app-edit-organization',
@@ -20,8 +22,7 @@ export class EditOrganizationComponent implements OnInit {
   // Data
   id: number = 0;
   organization: Organization = new Organization();
-  slackTeam: SlackTeam = new SlackTeam();
-  authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>()
+  authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>();
 
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
@@ -46,12 +47,24 @@ export class EditOrganizationComponent implements OnInit {
   addStatus: string = 'idle';
   submitStatus: string = 'idle';
 
-  // Slack oauth
+  // Slack OAuth
   slackSyncStatus: string = 'idle';
   slackDisconnectStatus: string = 'idle';
   slackClientId: string = '';
-  redirectUrlOAuth: string = '';
+  redirectUrlSlackOAuth: string = '';
   code: string = '';
+
+  // Microsoft OAuth
+  microsoftEnabled: boolean = false;
+  microsoftSyncStatus: string = 'idle';
+  microsoftDisconnectStatus: string = 'idle';
+  microsoftTenantId: string = '';
+  microsoftClientId: string = '';
+  microsoftState: string = '';
+  microsoftRedirectUrl: string = '';
+  microsoftCode: string = '';
+  msDisconnectStatus: string = 'idle';
+  msTeam: MsTeamModel = new MsTeamModel();
 
   // Members card
   private rawResponseMembers: any;
@@ -88,54 +101,73 @@ export class EditOrganizationComponent implements OnInit {
     private contentService: ContentService,
     private fileService: FileService,
     private userService: UserService,
+    private msTeamService: MsTeamService,
     private organizationService: OrganizationService,
     private slackTeamService: SlackTeamService
   ) {
     this.route.params.subscribe(params => this.id = <number>params['id']);
-    this.ngOnInit();
   }
 
-  setRedirectUrlOAuth(id: number) {
+  setredirectUrlSlackOAuth(id: number) {
     var endPointEdit = '/organizations/edit/' + id;
     var slackEndPoint = '/organizations/edit/slack/' + id;
 
     if (this.router.url.startsWith(endPointEdit)
       && !this.router.url.startsWith(slackEndPoint)) {
-      this.redirectUrlOAuth = location.href.replace(endPointEdit, slackEndPoint);
+      this.redirectUrlSlackOAuth = location.href.replace(endPointEdit, slackEndPoint);
     }
     if (this.router.url.startsWith(slackEndPoint)) {
-      this.redirectUrlOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
+      this.redirectUrlSlackOAuth = location.href.replace(/\?code.*/, "").replace(/&code.*/, "");
     }
   }
 
+  setMicrosoftRedirectUrl(id: number) {
+    var currentEndPoint = /\/organizations\/edit\/.*/;
+    var finalEndPoint = '/organizations/edit/microsoft';
+    this.microsoftRedirectUrl = location.href.replace(currentEndPoint, finalEndPoint);
+  }
+
   ngOnInit() {
+    this.route.queryParamMap
+      .subscribe((params) => {
+        var state = Number(params.get('state'));
+        if(state > 0) {
+          var msTeam = new MsTeamModel();
+          msTeam.organization.id = state;
+          msTeam.tenantId = this.configService.get('microsoftTenantId');
+          this.msTeamService.create(msTeam)
+            .subscribe(response => {
+              this.rawResponseMembers = response;
+              this.router.navigate(['/organizations/edit/' + state]);
+            }, error => {
+              console.log(error);
+            });
+        }
+      }
+    );
     if (this.id > 0) {
-      this.setRedirectUrlOAuth(this.id);
+      this.setredirectUrlSlackOAuth(this.id);
       var slackEndPoint = '/organizations/edit/slack/' + this.id;
       if (this.router.url.startsWith(slackEndPoint)) {
         this.code = this.route.snapshot.queryParams['code'];
-        this.organizationService.slack(this.id, this.code, this.redirectUrlOAuth)
+        this.organizationService.slack(this.id, this.code, this.redirectUrlSlackOAuth)
           .subscribe(() => {
-            this.ngOnInit();
+            this.refreshInformations();
+            this.refreshMembers();
           });
       }
       this.slackClientId = this.configService.get('slackClientId');
 
-      this.organizationService.getById(this.id)
-        .subscribe(
-          organization => {
-            this.organization = Organization.fromModel(organization);
-            this.refreshAuthorities();
-            this.refreshForm();
-            this.refreshMembers();
-            this.refreshContents();
-            if (this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-              this.refreshSlackTeam();
-            }
-          },
-          error => {
-            console.log(error);
-          });
+      this.microsoftEnabled = (/true/i).test(this.configService.get('microsoftEnabled'));
+      if (this.microsoftEnabled) {
+        this.microsoftTenantId = this.configService.get('microsoftTenantId');
+        this.microsoftClientId = this.configService.get('microsoftClientId');
+        this.microsoftState = this.id.toString();
+        this.setMicrosoftRedirectUrl(this.id);
+      }
+
+      this.refreshInformations();
+      this.refreshMembers();
     } else {
       this.refreshForm();
     }
@@ -148,9 +180,8 @@ export class EditOrganizationComponent implements OnInit {
           this.organization = Organization.fromModel(organization);
           this.refreshAuthorities();
           this.refreshForm();
-          if (this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-            this.refreshSlackTeam();
-          }
+          this.refreshSlackTeam();
+          this.refreshMsTeam();
         },
         error => {
           console.log(error);
@@ -174,7 +205,7 @@ export class EditOrganizationComponent implements OnInit {
     if (!(this.id > 0)) {
       this.organization.members = [];
       var currentUser = localStorage.getItem('currentUser');
-      if(currentUser !== null) {
+      if (currentUser !== null) {
         var user = JSON.parse(currentUser);
         if (user !== null) {
           this.organization.members.push(JSON.parse(currentUser));
@@ -185,7 +216,7 @@ export class EditOrganizationComponent implements OnInit {
 
   refreshMembers(page: number = 1) {
     if (this.pagerService.canChangePage(this.pagerMembers, page)) {
-      this.organizationService.getMembers(this.organization.id, page - 1, this.pageSizeMembers)
+      this.organizationService.getMembers(this.id, page - 1, this.pageSizeMembers)
         .subscribe(response => {
           this.rawResponseMembers = response;
           this.setMembersPage(page);
@@ -210,15 +241,15 @@ export class EditOrganizationComponent implements OnInit {
       this.pagedItemsMembers[k] = User.fromModel(this.pagedItemsMembers[k]);
       this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => {
         var orgAuthorityFound = this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId);
-        if(orgAuthorityFound !== undefined) {
+        if (orgAuthorityFound !== undefined) {
           this.pagedItemsMembers[k].userOrganizationAuthorities.push(orgAuthorityFound)
         }
       });
-      if(this.pagedItemsMembers[k].userOrganizationAuthorities.length > 0) {
+      if (this.pagedItemsMembers[k].userOrganizationAuthorities.length > 0) {
         var sponsorAuthority = this.authorities.get('ROLE_SPONSOR');
         var managerAuthority = this.authorities.get('ROLE_MANAGER');
         var ownerAuthority = this.authorities.get('ROLE_OWNER');
-        if(sponsorAuthority !== undefined && managerAuthority !== undefined && ownerAuthority !== undefined) {
+        if (sponsorAuthority !== undefined && managerAuthority !== undefined && ownerAuthority !== undefined) {
           var sponsorAuthorityId = sponsorAuthority.id;
           var managerAuthorityId = managerAuthority.id;
           var ownerAuthorityId = ownerAuthority.id;
@@ -231,7 +262,7 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshContents(page: number = 1, force: boolean = false) {
-    if(this.pagerService.canChangePage(this.pagerContents, page) || force) {
+    if (this.pagerService.canChangePage(this.pagerContents, page) || force) {
       this.refreshContentStatus = 'running';
       this.organizationService.getContents(this.organization.id, page - 1, this.pageSizeContents)
         .subscribe(contents => {
@@ -248,7 +279,7 @@ export class EditOrganizationComponent implements OnInit {
             this.refreshContentStatus = 'idle';
           }, 1000);
         }
-      );
+        );
     }
   }
 
@@ -261,11 +292,27 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshSlackTeam() {
-    if(this.organization.slackTeam.id > 0) {
+    if (this.organization.slackTeam != null 
+      && this.organization.slackTeam != undefined 
+      && this.organization.slackTeam.id > 0) {
       this.slackTeamService.getById(this.organization.slackTeam.id)
         .subscribe(
           slackTeam => {
             this.organization.slackTeam = SlackTeam.fromModel(slackTeam);
+          }
+        );
+    }
+  }
+
+  refreshMsTeam() {
+    console.log(this.organization.msTeam);
+    if (this.organization.msTeam != null 
+      && this.organization.msTeam != undefined 
+      && this.organization.msTeam.id > 0) {
+      this.msTeamService.getById(this.organization.msTeam.id)
+        .subscribe(
+          msTeam => {
+            this.msTeam = msTeam;
           }
         );
     }
@@ -328,6 +375,52 @@ export class EditOrganizationComponent implements OnInit {
             console.log(error);
             setTimeout(() => {
               this.slackDisconnectStatus = 'idle';
+            }, 2000);
+          });
+    }
+  }
+
+  onMsSync() {
+    this.microsoftSyncStatus = 'running';
+    if (this.id > 0) {
+      this.msTeamService.sync(this.msTeam.id)
+        .subscribe(
+          () => {
+            this.microsoftSyncStatus = 'success';
+            this.pagerMembers.currentPage = undefined;
+            this.refreshMembers();
+            setTimeout(() => {
+              this.microsoftSyncStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            this.microsoftSyncStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.microsoftSyncStatus = 'idle';
+            }, 2000);
+          });
+    }
+  }
+
+  onMsDisconnect() {
+    this.msDisconnectStatus = 'running';
+    if (this.id > 0 && this.organization.msTeam != null && this.organization.msTeam != undefined) {
+      this.msTeamService.delete(this.organization.msTeam.id)
+        .subscribe(
+          () => {
+            this.msDisconnectStatus = 'success';
+            this.pagerMembers.currentPage = undefined;
+            this.refreshInformations();
+            setTimeout(() => {
+              this.msDisconnectStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            this.msDisconnectStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.msDisconnectStatus = 'idle';
             }, 2000);
           });
     }
@@ -421,7 +514,7 @@ export class EditOrganizationComponent implements OnInit {
 
   grant(userId: number, role: string) {
     var organizationAuthority = this.organization.organizationAuthorities.find(authority => authority.name === role);
-    if(organizationAuthority !== undefined) {
+    if (organizationAuthority !== undefined) {
       this.userService.grant(userId, organizationAuthority)
         .subscribe(() => {
           this.refreshMembers(this.pagerMembers.currentPage);
@@ -441,7 +534,7 @@ export class EditOrganizationComponent implements OnInit {
     var organization = new OrganizationModel();
     organization.name = this.f['name'].value;
     organization.logoUrl = this.f['logoUrl'].value;
-    if(organization.logoUrl === "") {
+    if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
 
@@ -514,7 +607,7 @@ export class EditOrganizationComponent implements OnInit {
   onDeleteMedia(file: any) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => {},
+        () => { },
         error => {
           console.log(error);
         });

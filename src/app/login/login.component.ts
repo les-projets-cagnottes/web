@@ -20,12 +20,18 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string = '';
+
+  // Slack OAuth
   slackEnabled: boolean = false;
   slackClientId: string = '';
-
-  // slack oauth
-  redirectUrlOAuth: string = '';
+  redirectUrlSlackOAuth: string = '';
   code: string = '';
+
+  // Microsoft OAuth
+  microsoftEnabled: boolean = false;
+  microsoftTenantId: string = '';
+  microsoftClientId: string = '';
+  redirectUrlMSOAuth: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,24 +40,40 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private configService: ConfigService
   ) {
-    // redirect to home if alSUCCESSFUL logged in
+    // redirect to home if successful logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
+    console.log(this.router.url);
     if (this.router.url.startsWith('/login')
       && !this.router.url.startsWith('/login/slack')) {
-      this.redirectUrlOAuth = location.href.replace("/login", "/login/slack");
+      this.redirectUrlSlackOAuth = location.href.replace(/\/login/, "/login/slack");
+    }
+    if (this.router.url.startsWith('/login')
+      && !this.router.url.startsWith('/login/ms')) {
+      this.redirectUrlMSOAuth = location.href.replace(/\/login.*/, "/login/ms");
     }
     if(this.router.url.startsWith('/login/slack')) {
-      this.redirectUrlOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
+      this.redirectUrlSlackOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
-      this.authenticationService.slack(this.code, this.redirectUrlOAuth)
+      this.authenticationService.slack(this.code, this.redirectUrlSlackOAuth)
+        .subscribe(() => {
+          this.router.navigate([this.returnUrl]);
+        });
+    }
+    if(this.router.url.startsWith('/login/ms')) {
+      this.redirectUrlMSOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
+      this.code = this.route.snapshot.queryParams['code'];
+      this.authenticationService.microsoft(this.code, this.redirectUrlMSOAuth, this.configService.get('microsoftTenantId'))
         .subscribe(() => {
           this.router.navigate([this.returnUrl]);
         });
     }
     this.slackClientId = this.configService.get('slackClientId');
     this.slackEnabled = (/true/i).test(this.configService.get('slackEnabled'));
+    this.microsoftEnabled = (/true/i).test(this.configService.get('microsoftEnabled'));
+    this.microsoftTenantId = this.configService.get('microsoftTenantId');
+    this.microsoftClientId = this.configService.get('microsoftClientId');
   }
 
   ngOnInit() {

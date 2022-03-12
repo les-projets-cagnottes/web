@@ -5,10 +5,12 @@ import { Content } from '../content/content';
 import { OrganizationAuthority } from '../organization-authority/organization-authority';
 import { User } from '../user/user';
 import { SlackTeam } from '../slack-team/slack-team';
+import { MsTeam } from '..';
 
 export class Organization extends OrganizationModel {
 
     override slackTeam: SlackTeam = new SlackTeam();
+    override msTeam: MsTeam = new MsTeam();
     members: User[] = [];
     budgets: Budget[] = [];
     contents: Content[] = [];
@@ -29,6 +31,8 @@ export class Organization extends OrganizationModel {
         entity.logoUrl = model.logoUrl;
         entity.slackTeam = new SlackTeam();
         entity.slackTeam.id = model.slackTeam.id;
+        entity.msTeam = new MsTeam();
+        entity.msTeam.id = model.msTeam.id;
         entity.contentsRef = model.contentsRef;
         entity.membersRef = model.membersRef;
         return entity;
