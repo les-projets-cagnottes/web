@@ -130,7 +130,7 @@
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['logoUrl'].errors }">
                                 <label for="logoUrl" i18n="@@logoUrl">Logo URL</label>
                                 <input type="url" formControlName="logoUrl" class="form-control" id="logoUrl"
-                                    placeholder="Enter organization logo URL">
+                                    placeholder="Enter organization logo URL" [(ngModel)]="organization.logoUrl">
                             </div>
                             <div *ngIf="id > 0" class="form-group action-bar">
                                 <label i18n="@@thirdApps">Third Apps</label>
@@ -181,7 +181,7 @@
                               <div *ngIf="this.organization.slackTeam && organization.slackTeam.id > 0">
                                 <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['slackPublicationChannelId'].errors }">
                                   <label i18n="@@publicationChannelId">Slack Publication Channel id</label>
-                                  <input type="text" formControlName="slackPublicationChannelId" class="form-control" id="slackPublicationChannelId" placeholder="Enter channel id for slack">
+                                  <input type="text" formControlName="slackPublicationChannelId" [(ngModel)]="organization.slackTeam.publicationChannelId" class="form-control" id="slackPublicationChannelId" placeholder="Enter channel id for slack">
                                 </div>
                               </div>
                             </div>

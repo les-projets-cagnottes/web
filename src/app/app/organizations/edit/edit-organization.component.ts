@@ -27,7 +27,7 @@ export class EditOrganizationComponent implements OnInit {
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
     logoUrl: [this.organization.logoUrl],
-    slackPublicationChannelId: [this.slackTeam.publicationChannelId]
+    slackPublicationChannelId: [this.organization.slackTeam.publicationChannelId]
   });
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
