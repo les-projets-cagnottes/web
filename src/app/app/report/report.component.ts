@@ -14,7 +14,7 @@ export class ReportComponent implements OnInit {
   projects: Map<number, ProjectModel> = new Map<number, ProjectModel>();
   budgets: Budget[] = [];
   budget: Budget = new Budget();
-  budgetUsage: string = "";
+  budgetUsage = "";
 
   // Form
   selectBudgetForm = this.fb.group({
@@ -25,15 +25,15 @@ export class ReportComponent implements OnInit {
   private rawProjectsResponse: any;
   campaignPager: any = {};
   pagedCampaigns: Campaign[] = [];
-  campaignsPageSize: number = 10;
-  campaignsSyncStatus: string = 'idle';
+  campaignsPageSize = 10;
+  campaignsSyncStatus = 'idle';
 
   // Accounts Box
   private rawAccountsResponse: DataPage = new DataPage();
   accountsPager: any = {};
   pagedAccounts: Account[] = [];
-  accountsPageSize: number = 10;
-  accountsSyncStatus: string = 'idle';
+  accountsPageSize = 10;
+  accountsSyncStatus = 'idle';
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -54,7 +54,7 @@ export class ReportComponent implements OnInit {
         this.selectBudgetForm.controls['budget'].setValue(this.budgets[0].id);
       });
     this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
-      var budgetFound = this.budgets.find(budget => budget.id === +val);
+      const budgetFound = this.budgets.find(budget => budget.id === +val);
       if(budgetFound !== undefined) {
         this.budget = budgetFound;
         this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.authenticationService.currentOrganizationValue.membersRef.length * this.budget.amountPerMember) + "%";
@@ -64,14 +64,14 @@ export class ReportComponent implements OnInit {
     });
   }
 
-  refreshCampaigns(page: number = 1, force: boolean = false) {
+  refreshCampaigns(page = 1, force = false) {
     if (this.pagerService.canChangePage(this.campaignPager, page) || force) {
       this.campaignsSyncStatus = 'running';
       this.budgetService.getCampaigns(this.selectBudgetForm.controls['budget'].value, page - 1, this.campaignsPageSize)
         .subscribe(response => {
           this.rawProjectsResponse = response;
           this.setCampaignsPage(page);
-          var projectIds: number[] = [];
+          const projectIds: number[] = [];
           this.pagedCampaigns.forEach(campaign => {
             if(campaign.project.id > 0) {
               projectIds.push(campaign.project.id);
@@ -98,14 +98,14 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  refreshAccounts(page: number = 1, force: boolean = false) {
+  refreshAccounts(page = 1, force = false) {
     if (this.pagerService.canChangePage(this.accountsPager, page) || force) {
       this.accountsSyncStatus = 'running';
       this.budgetService.getAccounts(this.selectBudgetForm.controls['budget'].value, page - 1, this.accountsPageSize)
         .subscribe(response => {
           this.rawAccountsResponse = response;
           this.setAccountsPage(page);
-          var accountUserRef = []
+          const accountUserRef = []
           this.pagedAccounts.forEach(account => accountUserRef.push(account.owner.id));
           this.budgetService.getUsers(this.selectBudgetForm.controls['budget'].value)
             .subscribe(users => {
@@ -134,14 +134,14 @@ export class ReportComponent implements OnInit {
     this.accountsPager = this.pagerService.getPager(this.rawAccountsResponse.totalElements, page, this.accountsPageSize);
     this.pagedAccounts = [];
     this.rawAccountsResponse.content.forEach(model => {
-      var account = Account.fromModel(model);
+      const account = Account.fromModel(model);
       account.usage = this.computeNumberPercent(account.initialAmount - account.amount, account.initialAmount) + "%";
       this.pagedAccounts.push(account);
     });
   }
 
   getProject(id: number): ProjectModel {
-    var entity = this.projects.get(id);
+    let entity = this.projects.get(id);
     if(entity === undefined) {
       entity = new ProjectModel();
     }

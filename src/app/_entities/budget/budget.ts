@@ -15,7 +15,7 @@ export class Budget extends BudgetModel {
     donations: Donation[] = [];
 
     static fromModel(model: BudgetModel): Budget {
-        var entity = new Budget();
+        const entity = new Budget();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -39,13 +39,13 @@ export class Budget extends BudgetModel {
     }
 
     static fromModels(models: BudgetModel[]): Budget[] {
-        var entities: Budget[] = [];
+        const entities: Budget[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
     
     setOrganization(organizations: Organization[]) {
-        var result = organizations.find(organization => this.organization.id === organization.id);
+        const result = organizations.find(organization => this.organization.id === organization.id);
         result !== undefined ? this.organization = result : null;
     }
 

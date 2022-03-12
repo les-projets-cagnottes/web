@@ -16,7 +16,7 @@ export class BudgetsComponent implements OnInit {
   budgets: Map<number, BudgetModel> = new Map<number, BudgetModel>();
 
   // Refresh Status
-  refreshStatus: string = 'idle';
+  refreshStatus = 'idle';
 
   // Selected Budget
   selectedBudget: BudgetModel = new BudgetModel();
@@ -110,7 +110,7 @@ export class BudgetsComponent implements OnInit {
       return;
     }
 
-    var budget = new BudgetModel();
+    const budget = new BudgetModel();
     budget.id = this.selectedBudget.id;
     budget.name = this.editBudgetForm.controls['name'].value;
     budget.amountPerMember = this.editBudgetForm.controls['amountPerMember'].value;

@@ -8,7 +8,7 @@ export class Donation extends DonationModel {
     override campaign: Campaign = new Campaign();
 
     static fromModel(model: DonationModel): Donation {
-        var entity = new Donation();
+        const entity = new Donation();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -23,13 +23,13 @@ export class Donation extends DonationModel {
     }
 
     static fromModels(models: DonationModel[]): Donation[] {
-        var entities: Donation[] = [];
+        const entities: Donation[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     setCampaign(campaigns: CampaignModel[] ) {
-        var result = campaigns.find(user => this.campaign.id === user.id);
+        const result = campaigns.find(user => this.campaign.id === user.id);
         result !== undefined ? this.campaign = Campaign.fromModel(result) : null;
     }
 

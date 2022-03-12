@@ -16,12 +16,12 @@ export class ListProjectsComponent implements OnInit {
   private status: any;
 
   // Refreshing state
-  refreshStatus: string = "no-refresh";
+  refreshStatus = "no-refresh";
 
   // Pagination
   projectsPager: any = {};
   projectsPaged: ProjectModel[] = [];
-  projectsLength: number = 10;
+  projectsLength = 10;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,7 +38,7 @@ export class ListProjectsComponent implements OnInit {
     });
   }
 
-  refresh(page: number = 1, force: boolean = false): void {
+  refresh(page = 1, force = false): void {
     if (this.pagerService.canChangePage(this.projectsPager, page) || force) {
       this.organizationService.getProjects(this.authenticationService.currentOrganizationValue.id, page - 1, this.projectsLength, [this.status])
         .subscribe(response => {

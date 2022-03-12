@@ -9,15 +9,15 @@ import { OrganizationModel } from 'src/app/_models';
 })
 export class OrganizationsComponent implements OnInit {
 
-  closeResult: string = '';
-  editUserModalLabel: string = '';
-  submitting: boolean = false;
-  refreshStatus: string = "no-refresh";
+  closeResult = '';
+  editUserModalLabel = '';
+  submitting = false;
+  refreshStatus = "no-refresh";
 
   private rawResponse: any;
   pager: any = {};
   pagedItems: OrganizationModel[] = [];
-  pageSize: number = 10;
+  pageSize = 10;
 
   constructor(
     private pagerService: PagerService,
@@ -28,7 +28,7 @@ export class OrganizationsComponent implements OnInit {
     this.refresh();
   }
 
-  refresh(page: number = 1): void {
+  refresh(page = 1): void {
     if(this.authenticationService.currentUserValue !== null && this.pagerService.canChangePage(this.pager, page)) {
       this.organizationService.list(page - 1, this.pageSize)
         .subscribe(response => {

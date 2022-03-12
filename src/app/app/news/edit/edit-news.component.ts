@@ -13,8 +13,8 @@ import { AuthenticationService, FileService, NewsService, ProjectService } from 
 export class EditNewsComponent implements OnInit {
 
   // Data
-  id: number = 0;
-  idProject: number = 0;
+  id = 0;
+  idProject = 0;
   private news: NewsModel = new NewsModel();
   project: ProjectModel = new ProjectModel();
 
@@ -23,7 +23,7 @@ export class EditNewsComponent implements OnInit {
     title: ['', [Validators.required, Validators.maxLength(255)]],
     content: ['', [Validators.required]]
   });
-  submitting: boolean = false;
+  submitting = false;
 
   // Long Description editor config
   contentConfig = {
@@ -81,7 +81,7 @@ export class EditNewsComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
-    var submittedNews = new NewsModel();
+    const submittedNews = new NewsModel();
     submittedNews.title = this.form.controls['title'].value;
     submittedNews.content = this.form.controls['content'].value;
     submittedNews.organization.id = this.authenticationService.currentOrganizationValue.id;
@@ -116,7 +116,7 @@ export class EditNewsComponent implements OnInit {
   }
 
   get isAdmin() {
-    var isAdmin = this.authenticationService.currentUserValue != null && this.authenticationService.currentUserValue.userAuthorities != null;
+    const isAdmin = this.authenticationService.currentUserValue != null && this.authenticationService.currentUserValue.userAuthorities != null;
     return isAdmin && this.authenticationService.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
   }
 

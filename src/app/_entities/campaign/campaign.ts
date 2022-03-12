@@ -11,7 +11,7 @@ export class Campaign extends CampaignModel {
     donations: Donation[] = [];
 
     static fromModel(model: CampaignModel): Campaign {
-        var entity = new Campaign();
+        const entity = new Campaign();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -30,19 +30,19 @@ export class Campaign extends CampaignModel {
     }
 
     static valuesOf(models: CampaignModel[]): Campaign[] {
-        var entities: Campaign[] = [];
+        const entities: Campaign[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     static fromModels(models: CampaignModel[]): Campaign[] {
-        var entities: Campaign[] = [];
+        const entities: Campaign[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     setProject(projects: Project[] ) {
-        var result = projects.find(project => this.project.id === project.id);
+        const result = projects.find(project => this.project.id === project.id);
         result !== undefined ? this.project = result : null;
     }
 }

@@ -80,7 +80,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
       .subscribe(organizations => {
         this.userOrganizations = Organization.fromModels(organizations);
         this.currentOrganization = this.authenticationService.currentOrganizationValue;
-        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
+        const currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
         if(currentOrganizationIndex >= 0) {
           this.userOrganizations[currentOrganizationIndex].isCurrent = true;
         }
@@ -100,7 +100,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   }
 
   isManager(organization?: Organization): boolean {
-    var isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
+    let isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
     if(organization !== undefined) {
       isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
     } else {
@@ -110,7 +110,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   }
 
   isOwner(organization?: Organization): boolean {
-    var isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
+    let isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
     if(organization !== undefined) {
       isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);
     } else {
@@ -120,7 +120,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   }
 
   get isAdmin() {
-    var isAdmin = this.currentUser != null && this.currentUser.userAuthorities != null;
+    const isAdmin = this.currentUser != null && this.currentUser.userAuthorities != null;
     return isAdmin && this.currentUser.userAuthorities.some(a => a.name === Role.Admin);
   }
 

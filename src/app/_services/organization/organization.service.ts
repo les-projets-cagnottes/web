@@ -102,7 +102,7 @@ export class OrganizationService {
     return this.http.get<ContentModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/contents`, { params });
   }
 
-  getOrganizationAuthorities(organizationsId: Number) {
+  getOrganizationAuthorities(organizationsId: number) {
     return this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/organization/${organizationsId}/authorities`, {});
   }
 
@@ -111,7 +111,7 @@ export class OrganizationService {
   }
 
   removeMember(organizationId: number, userId: number) {
-    let httpParams = new HttpParams().set('aaa', '111');
+    const httpParams = new HttpParams().set('aaa', '111');
     httpParams.set('bbb', '222');
     return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/members/${userId}`);
   }

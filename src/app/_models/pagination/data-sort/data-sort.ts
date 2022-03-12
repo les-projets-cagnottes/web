@@ -1,5 +1,5 @@
 export class DataSort {
-    sorted: boolean = false;
-    unsorted: boolean = true;
-    empty: boolean = true;
+    sorted = false;
+    unsorted = true;
+    empty = true;
 }

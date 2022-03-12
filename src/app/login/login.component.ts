@@ -19,19 +19,19 @@ export class LoginComponent implements OnInit {
   });;
   loading = false;
   submitted = false;
-  returnUrl: string = '';
+  returnUrl = '';
 
   // Slack OAuth
-  slackEnabled: boolean = false;
-  slackClientId: string = '';
-  redirectUrlSlackOAuth: string = '';
-  code: string = '';
+  slackEnabled = false;
+  slackClientId = '';
+  redirectUrlSlackOAuth = '';
+  code = '';
 
   // Microsoft OAuth
-  microsoftEnabled: boolean = false;
-  microsoftTenantId: string = '';
-  microsoftClientId: string = '';
-  redirectUrlMSOAuth: string = '';
+  microsoftEnabled = false;
+  microsoftTenantId = '';
+  microsoftClientId = '';
+  redirectUrlMSOAuth = '';
 
   constructor(
     private formBuilder: FormBuilder,

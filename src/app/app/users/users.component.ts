@@ -21,11 +21,12 @@ export class UsersComponent implements OnInit {
     isActivated: [''],
     avatarUrl: [''],
     color: ['']
-  });;
-  closeResult: string = '';
-  userEdited: UserModel = new UserModel();;
-  submitting: boolean = false;
-  refreshStatus: string = "no-refresh";
+  });
+
+  closeResult = '';
+  userEdited: UserModel = new UserModel();
+  submitting = false;
+  refreshStatus = "no-refresh";
 
   // Modal
   modalRef: BsModalRef = new BsModalRef();
@@ -34,7 +35,7 @@ export class UsersComponent implements OnInit {
   private rawResponse: any;
   pager: any = {};
   pagedItems: any[] = [];
-  pageSize: number = 10;
+  pageSize = 10;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,7 +49,7 @@ export class UsersComponent implements OnInit {
   }
 
 
-  refresh(page: number = 1): void {
+  refresh(page = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
       this.userService.list(page - 1, this.pageSize)
         .subscribe(response => {

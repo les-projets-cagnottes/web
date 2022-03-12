@@ -7,7 +7,7 @@ export class Content extends ContentModel {
     override organization: Organization = new Organization();
     
     static fromModel(model: ContentModel): Content {
-        var entity = new Content();
+        const entity = new Content();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -22,7 +22,7 @@ export class Content extends ContentModel {
     }
 
     static fromModels(models: ContentModel[]): Content[] {
-        var entities: Content[] = [];
+        const entities: Content[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class ConfigService {
 
   private appConfig: any;
-  private apiUrl: string = '';
+  private apiUrl = '';
 
   constructor(private _http: HttpClient) { }
 

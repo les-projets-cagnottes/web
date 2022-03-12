@@ -11,7 +11,7 @@ export class Idea extends IdeaModel {
     tags: any[] = [];
 
     static fromModel(model: IdeaModel): Idea {
-        var entity = new Idea();
+        const entity = new Idea();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -31,13 +31,13 @@ export class Idea extends IdeaModel {
     }
 
     static valuesOf(models: IdeaModel[]): Idea[] {
-        var entities: Idea[] = [];
+        const entities: Idea[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     setSubmitter(submitters: User[]) {
-        var result = submitters.find(submitter => this.submitter.id === submitter.id);
+        const result = submitters.find(submitter => this.submitter.id === submitter.id);
         result !== undefined ? this.submitter = result : null;
     }
 

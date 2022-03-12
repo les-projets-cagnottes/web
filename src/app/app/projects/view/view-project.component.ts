@@ -14,17 +14,17 @@ import { AccountService, AuthenticationService, BudgetService, CampaignService, 
 export class ViewProjectComponent implements OnInit {
 
   // Data
-  id: number = 0;
+  id = 0;
   userLoggedIn: User = new User();
   project: Project = new Project();
   leader: User = new User();
 
   // Informations Card
-  isUserInTeam: boolean = false;
+  isUserInTeam = false;
 
   // Campaigns Card
   campaigns: Campaign[] = [];
-  campaignsSyncStatus: string = 'idle';
+  campaignsSyncStatus = 'idle';
   campaignsBudgets: any = {};
 
   // Contributing Modal
@@ -45,8 +45,8 @@ export class ViewProjectComponent implements OnInit {
     donationsRequired: [0, [Validators.required, Validators.min(0.01)]],
     rulesCompliant: [false, Validators.pattern("true")]
   });
-  submittingFunding: boolean = false;
-  minDonations: string = "0.00";
+  submittingFunding = false;
+  minDonations = "0.00";
 
   // Rules Modal
   viewRulesModal: BsModalRef = new BsModalRef();
@@ -59,15 +59,15 @@ export class ViewProjectComponent implements OnInit {
 
   // Members Box
   members: User[] = [];
-  membersSyncStatus: string = 'idle';
-  organizationSocialName: string = '';
+  membersSyncStatus = 'idle';
+  organizationSocialName = '';
   
   // News Box
   news: any = {};
   newsPager: any = {};
   newsPaged: NewsModel[] = [];
-  newsLength: number = 10;
-  newsSyncStatus: string = 'idle';
+  newsLength = 10;
+  newsSyncStatus = 'idle';
 
   constructor(
     private route: ActivatedRoute,
@@ -150,9 +150,9 @@ export class ViewProjectComponent implements OnInit {
               return 0;
             }
           });
-          var budgetsId: number[] = [];
+          let budgetsId: number[] = [];
           this.campaigns.forEach(campaign => {
-            var remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
+            const remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
             campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
             budgetsId.push(campaign.budget.id);
           });
@@ -179,7 +179,7 @@ export class ViewProjectComponent implements OnInit {
       });
   }
 
-  refreshNews(page: number = 1, force: boolean = false): void {
+  refreshNews(page = 1, force = false): void {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     if (this.pagerService.canChangePage(this.newsPager, page) || force) {
       this.projectService.getNews(this.id, page - 1, this.newsLength)
@@ -217,7 +217,7 @@ export class ViewProjectComponent implements OnInit {
       return;
     }
     this.contributeFinanciallyModalRef.hide();
-    var donation = new DonationModel();
+    const donation = new DonationModel();
     donation.amount = this.donationForm.controls['amount'].value;
     donation.campaign = GenericModel.valueOf(this.selectedCampaign.id);
     donation.account = this.account;
@@ -292,7 +292,7 @@ export class ViewProjectComponent implements OnInit {
     // Set submitting state as true
     this.submittingFunding = true;
 
-    var campaignToSave = new CampaignModel();
+    const campaignToSave = new CampaignModel();
     campaignToSave.donationsRequired = this.formFunding.controls['donationsRequired'].value;
     campaignToSave.budget.id = this.budgets[this.formFunding.controls['budget'].value].id;
     campaignToSave.project.id = this.project.id;

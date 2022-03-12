@@ -19,12 +19,12 @@ export class ListNewsComponent implements OnInit {
   dates: string[] = [];
 
   // Refreshing state
-  refreshStatus: string = "no-refresh";
+  refreshStatus = "no-refresh";
 
   // Pagination
   newsPager: any = {};
   newsPaged: NewsModel[] = [];
-  newsLength: number = 10;
+  newsLength = 10;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -39,7 +39,7 @@ export class ListNewsComponent implements OnInit {
     this.refresh();
   }
 
-  refresh(page: number = 1, force: boolean = false): void {
+  refresh(page = 1, force = false): void {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     if (this.pagerService.canChangePage(this.newsPager, page) || force) {
       this.organizationService.getNews(this.authenticationService.currentOrganizationValue.id, page - 1, this.newsLength)
@@ -58,9 +58,9 @@ export class ListNewsComponent implements OnInit {
     this.newsPager = this.pagerService.getPager(this.news.totalElements, page, this.newsLength);
     this.newsPaged = this.news.content;
     this.data = {};
-    var projectIds: number[] = [];
+    const projectIds: number[] = [];
     this.newsPaged.forEach(news => {
-      var stringDate = formatDate(news.createdAt, 'dd/MM/yyyy', this.locale);
+      const stringDate = formatDate(news.createdAt, 'dd/MM/yyyy', this.locale);
       if(!this.dates.find(date => date === stringDate)) {
         this.dates.push(stringDate);
       }
@@ -91,7 +91,7 @@ export class ListNewsComponent implements OnInit {
   }
   
   getProject(id: number): Project {
-    var entity = this.projects.get(id);
+    let entity = this.projects.get(id);
     if(entity === undefined) {
       entity = new Project();
     }

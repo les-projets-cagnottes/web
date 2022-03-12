@@ -3,6 +3,6 @@ import { GenericModel } from '../generic/generic.model';
 
 export class ApiTokenModel extends AuditModel {
     expiration: Date = new Date();
-    token: string = '';
+    token = '';
     user: GenericModel = new GenericModel();
 }

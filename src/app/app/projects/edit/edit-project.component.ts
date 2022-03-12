@@ -14,7 +14,7 @@ import { AuthenticationService, FileService, ProjectService } from 'src/app/_ser
 export class EditProjectComponent implements OnInit {
 
   // Data
-  id: number = 0;
+  id = 0;
   project: Project = new Project();
 
   // Form
@@ -24,7 +24,7 @@ export class EditProjectComponent implements OnInit {
     longDescription: ['', [Validators.required]],
     peopleRequired: [2, [Validators.required, Validators.min(2)]]
   });
-  submitting: boolean = false;
+  submitting = false;
 
   // Long Description editor config
   longDescriptionConfig = {
@@ -74,7 +74,7 @@ export class EditProjectComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
-    var submittedProject = new ProjectModel();
+    const submittedProject = new ProjectModel();
     submittedProject.title = this.form.controls['title'].value;
     submittedProject.shortDescription = this.form.controls['shortDescription'].value;
     submittedProject.longDescription = this.form.controls['longDescription'].value;

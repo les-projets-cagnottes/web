@@ -18,12 +18,12 @@ export class ListIdeasComponent implements OnInit {
   currentUser: User = this.authenticationService.currentUserValue;
   ideas: Idea[] = [];
   selectedIdea: IdeaModel = new IdeaModel();
-  longDescription: string = "";
+  longDescription = "";
 
   // Paginations
   private pagedIdeas: DataPage = new DataPage();
   pager: any = {};
-  pageSize: number = 20;
+  pageSize = 20;
 
   // Forms
   form: FormGroup = this.formBuilder.group({
@@ -35,8 +35,8 @@ export class ListIdeasComponent implements OnInit {
   });
 
   // Statuses
-  refreshStatus: string = "idle";
-  submitting: boolean = false;
+  refreshStatus = "idle";
+  submitting = false;
 
   // Modals
   modal: BsModalRef = new BsModalRef();
@@ -60,7 +60,7 @@ export class ListIdeasComponent implements OnInit {
     this.refresh();
   }
 
-  refresh(page: number = 1) {
+  refresh(page = 1) {
     if (this.pagerService.canChangePage(this.pager, page)) {
       this.ideas = [];
       this.organizationService.getIdeas(this.authenticationService.currentOrganizationValue.id, page - 1, this.pageSize)
@@ -77,7 +77,7 @@ export class ListIdeasComponent implements OnInit {
   setPage(page: number) {
     this.pager = this.pagerService.getPager(this.pagedIdeas.totalElements, page, this.pageSize);
     this.pagedIdeas.content.forEach(model => this.ideas.push(Idea.fromModel(model)));
-    var ids: number[] = [];
+    const ids: number[] = [];
     this.ideas.forEach(idea => {
       if(idea.submitter.id > 0) {
         ids.push(idea.submitter.id);
@@ -86,7 +86,7 @@ export class ListIdeasComponent implements OnInit {
     this.userService.getAllByIds(ids)
       .subscribe(response => {
         this.refreshStatus = 'success';
-        var users = User.fromModels(response);
+        const users = User.fromModels(response);
         this.ideas.forEach(idea => idea.setSubmitter(users));
         setTimeout(() => {
           this.refreshStatus = 'idle';

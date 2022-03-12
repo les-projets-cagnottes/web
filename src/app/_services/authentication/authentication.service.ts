@@ -19,7 +19,7 @@ export class AuthenticationService {
     public currentOrganization: Observable<Organization>;
   
     constructor(private http: HttpClient, private configService: ConfigService) {
-        var userInLocalStorage = localStorage.getItem('currentUser');
+        const userInLocalStorage = localStorage.getItem('currentUser');
         if(userInLocalStorage !== null) {
             this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(userInLocalStorage));
         } else {
@@ -27,7 +27,7 @@ export class AuthenticationService {
         }
         this.currentUser = this.currentUserSubject.asObservable();
 
-        var organizationInLocalStorage = localStorage.getItem('currentOrganization');
+        const organizationInLocalStorage = localStorage.getItem('currentOrganization');
         if(organizationInLocalStorage != null) {
             this.currentOrganizationSubject = new BehaviorSubject<Organization>(JSON.parse(organizationInLocalStorage));
         } else {
@@ -66,8 +66,8 @@ export class AuthenticationService {
         const organizations = this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/organizations`);
         return forkJoin([principal, authorities, orgauthorities, organizations])
             .pipe(map(responses =>{
-                var user = User.fromModel(responses[0]);
-                var userInLocalStorage = localStorage.getItem('currentUser');
+                const user = User.fromModel(responses[0]);
+                const userInLocalStorage = localStorage.getItem('currentUser');
                 if(userInLocalStorage !== null) {
                     user.token = JSON.parse(userInLocalStorage).token;
                 }

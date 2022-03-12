@@ -17,10 +17,10 @@ export class Organization extends OrganizationModel {
     organizationAuthorities: OrganizationAuthority[] = [];
 
     // Defines if this organization is the current one for the logged in user
-    isCurrent: boolean = false;
+    isCurrent = false;
 
     static fromModel(model: OrganizationModel): Organization {
-        var entity = new Organization();
+        const entity = new Organization();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -39,7 +39,7 @@ export class Organization extends OrganizationModel {
     }
 
     static fromModels(models: OrganizationModel[]): Organization[] {
-        var entities: Organization[] = [];
+        const entities: Organization[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
