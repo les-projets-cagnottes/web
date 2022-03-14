@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ContentService, FileService, OrganizationService, PagerService, SlackTeamService, UserService } from 'src/app/_services';
 import { Organization, User, Content, SlackTeam, MsTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
-import { ContentModel, OrganizationAuthorityModel, OrganizationModel } from 'src/app/_models';
+import {ContentModel, OrganizationAuthorityModel, OrganizationModel, SlackTeamModel} from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
 import { MsTeamService } from 'src/app/_services/ms-team/ms-team.service';
 import { MsTeamModel } from 'src/app/_models/ms-team/ms-team.model';
@@ -27,7 +27,8 @@ export class EditOrganizationComponent implements OnInit {
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
-    logoUrl: [this.organization.logoUrl]
+    logoUrl: [this.organization.logoUrl],
+    slackPublicationChannelId: [this.organization.slackTeam.publicationChannelId]
   });
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
@@ -291,8 +292,8 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshSlackTeam() {
-    if (this.organization.slackTeam != null 
-      && this.organization.slackTeam != undefined 
+    if (this.organization.slackTeam != null
+      && this.organization.slackTeam != undefined
       && this.organization.slackTeam.id > 0) {
       this.slackTeamService.getById(this.organization.slackTeam.id)
         .subscribe(
@@ -305,8 +306,8 @@ export class EditOrganizationComponent implements OnInit {
 
   refreshMsTeam() {
     console.log(this.organization.msTeam);
-    if (this.organization.msTeam != null 
-      && this.organization.msTeam != undefined 
+    if (this.organization.msTeam != null
+      && this.organization.msTeam != undefined
       && this.organization.msTeam.id > 0) {
       this.msTeamService.getById(this.organization.msTeam.id)
         .subscribe(
@@ -535,6 +536,29 @@ export class EditOrganizationComponent implements OnInit {
     organization.logoUrl = this.f['logoUrl'].value;
     if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
+    }
+    if (this.organization.slackTeam) {
+      var slackTeam = new SlackTeamModel();
+      slackTeam.teamName = this.organization.slackTeam.teamName;
+      slackTeam.teamId = this.organization.slackTeam.teamId;
+      slackTeam.publicationChannelId = this.f['slackPublicationChannelId'].value;
+      this.slackTeamService.update(slackTeam)
+        .subscribe(
+          () => {
+            this.submitting = false;
+            this.submitStatus = 'success';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            console.log(error);
+            this.submitting = false;
+            this.submitStatus = 'error';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
+          });
     }
 
     if (this.id > 0) {
