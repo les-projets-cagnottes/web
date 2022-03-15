@@ -27,7 +27,8 @@ export class EditOrganizationComponent implements OnInit {
   // Forms
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
-    logoUrl: [this.organization.logoUrl]
+    logoUrl: [this.organization.logoUrl],
+    socialOrganizationName: [this.organization.socialName]
   });
   addMemberOrgForm: FormGroup = this.formBuilder.group({
     email: ['', Validators.required]
@@ -200,7 +201,6 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshForm() {
-    this.editOrgForm.controls['name'].setValue(this.organization.name);
     if (!(this.id > 0)) {
       this.organization.members = [];
       var currentUser = localStorage.getItem('currentUser');
@@ -291,8 +291,8 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshSlackTeam() {
-    if (this.organization.slackTeam != null 
-      && this.organization.slackTeam != undefined 
+    if (this.organization.slackTeam != null
+      && this.organization.slackTeam != undefined
       && this.organization.slackTeam.id > 0) {
       this.slackTeamService.getById(this.organization.slackTeam.id)
         .subscribe(
@@ -305,8 +305,8 @@ export class EditOrganizationComponent implements OnInit {
 
   refreshMsTeam() {
     console.log(this.organization.msTeam);
-    if (this.organization.msTeam != null 
-      && this.organization.msTeam != undefined 
+    if (this.organization.msTeam != null
+      && this.organization.msTeam != undefined
       && this.organization.msTeam.id > 0) {
       this.msTeamService.getById(this.organization.msTeam.id)
         .subscribe(
@@ -533,6 +533,7 @@ export class EditOrganizationComponent implements OnInit {
     var organization = new OrganizationModel();
     organization.name = this.f['name'].value;
     organization.logoUrl = this.f['logoUrl'].value;
+    organization.socialName = this.f['socialOrganizationName'].value;
     if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
