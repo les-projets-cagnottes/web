@@ -55,10 +55,13 @@ mklink /d dist\fr\img <core-directory>\files\img
 npm run ng build -- --configuration production --output-path=dist
 ```
 
-#### Run a debug HTTP server
+#### Run a debug HTTP server with certificates
 
 ```cmd
-angular-http-server -p 4200 --path dist\fr
+mkcert -install
+cd dist\fr
+mkcert localhost
+angular-http-server --https --cert localhost.pem --key localhost-key.pem -p 4200
 ```
 
 ### Run with Docker
