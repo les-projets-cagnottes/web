@@ -149,7 +149,7 @@ export class EditOrganizationComponent implements OnInit {
       var slackEndPoint = '/organizations/edit/slack/' + this.id;
       if (this.router.url.startsWith(slackEndPoint)) {
         this.code = this.route.snapshot.queryParams['code'];
-        this.organizationService.slack(this.id, this.code, this.redirectUrlSlackOAuth)
+        this.slackTeamService.create(this.id, this.code, this.redirectUrlSlackOAuth)
           .subscribe(() => {
             this.refreshInformations();
             this.refreshMembers();
@@ -181,6 +181,7 @@ export class EditOrganizationComponent implements OnInit {
           this.refreshForm();
           this.refreshSlackTeam();
           this.refreshMsTeam();
+          this.refreshContents();
         },
         error => {
           console.log(error);
@@ -335,8 +336,8 @@ export class EditOrganizationComponent implements OnInit {
 
   onSlackSync() {
     this.slackSyncStatus = 'running';
-    if (this.id > 0) {
-      this.organizationService.slackSync(this.id)
+    if (this.organization.slackTeam.id > 0) {
+      this.slackTeamService.sync(this.organization.slackTeam.id)
         .subscribe(
           () => {
             this.slackSyncStatus = 'success';
@@ -359,7 +360,7 @@ export class EditOrganizationComponent implements OnInit {
   onSlackDisconnect() {
     this.slackDisconnectStatus = 'running';
     if (this.id > 0 && this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-      this.organizationService.slackDisconnect(this.id)
+      this.slackTeamService.delete(this.organization.slackTeam.id)
         .subscribe(
           () => {
             this.slackDisconnectStatus = 'success';

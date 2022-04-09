@@ -116,16 +116,4 @@ export class OrganizationService {
     return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/members/${userId}`);
   }
 
-  slack(organizationId: number, code: string, redirect_uri: string) {
-    return this.http.post(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack?code=${code}&redirect_uri=${redirect_uri}`, {});
-  }
-
-  slackSync(organizationId: number) {
-    return this.http.post(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack/sync`, {});
-  }
-
-  slackDisconnect(organizationId: number) {
-    return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/slack`, {});
-  }
-
 }
