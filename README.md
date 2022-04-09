@@ -55,7 +55,17 @@ mklink /d dist\fr\img <core-directory>\files\img
 npm run ng build -- --configuration production --output-path=dist
 ```
 
-#### Run a debug HTTP server with certificates
+#### Run a debug HTTPS server with certificates
+
+Update the file `src/assets/config.json` with an HTTP URL :
+
+```json
+{
+    "webUrl": "https://localhost:4200"
+}
+```
+
+Then run the following commands :
 
 ```cmd
 mkcert -install
