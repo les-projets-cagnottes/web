@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Budget, Campaign, Content, Project, User } from 'src/app/_entities';
 import { AccountModel, CampaignModel, DonationModel, GenericModel, NewsModel } from 'src/app/_models';
+import { ProjectStatus } from 'src/app/_models/project/project-status';
 import { AccountService, AuthenticationService, BudgetService, CampaignService, ContentService, DonationService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
 
 @Component({
@@ -12,6 +13,8 @@ import { AccountService, AuthenticationService, BudgetService, CampaignService, 
   styleUrls: ['./view-project.component.css']
 })
 export class ViewProjectComponent implements OnInit {
+
+  projectStatus = ProjectStatus;
 
   // Data
   id: number = 0;
@@ -353,7 +356,18 @@ export class ViewProjectComponent implements OnInit {
   }
 
   publish() {
-    this.projectService.publish(this.id)
+    this.projectService.updateStatus(this.id, ProjectStatus.IN_PROGRESS)
+      .subscribe(() => {
+        this.refresh();
+      })
+  }
+
+  reopen() {
+    this.publish();
+  }
+
+  finish() {
+    this.projectService.updateStatus(this.id, ProjectStatus.FINISHED)
       .subscribe(() => {
         this.refresh();
       })

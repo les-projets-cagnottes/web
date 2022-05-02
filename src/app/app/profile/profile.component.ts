@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiTokenService, AuthenticationService, OrganizationService, DonationService, CampaignService, UserService, ProjectService } from 'src/app/_services';
 import { Account, ApiToken, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
 import { AccountModel, BudgetModel, CampaignModel } from 'src/app/_models';
+import { ProjectStatus } from 'src/app/_models/project/project-status';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,8 @@ export class ProfileComponent implements OnInit {
   donations: Map<number, Donation> = new Map<number, Donation>();
   organizations: Map<number, Organization> = new Map<number, Organization>();
   projects: Map<number, Project> = new Map<number, Project>();
+
+  projectStatus: typeof ProjectStatus = ProjectStatus;
 
   // Project Tab
   userProjects: Project[] = [];
