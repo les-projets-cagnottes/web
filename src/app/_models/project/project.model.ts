@@ -15,10 +15,4 @@ export class ProjectModel extends AuditModel {
     campaignsRef: number[] = [];
     newsRef: number[] = [];
 
-    // Only in this component
-    peopleRequiredPercent: string = '';
-
-    get statusStr() {
-        return this.status.toString();
-    }
 }
