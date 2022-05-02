@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { ConfigService } from '../config/config.service';
 
-import { AuthorityModel, OrganizationAuthorityModel, UserModel, OrganizationModel } from '../../_models';
+import { AuthorityModel, OrganizationAuthorityModel, UserModel, OrganizationModel, Role } from '../../_models';
 
 import { Authority, OrganizationAuthority, User, Organization } from '../../_entities';
 
@@ -119,4 +119,36 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(new User());
     }
+    
+    isSponsor(): boolean {
+        return (this.currentUserValue != null 
+          && this.currentUserValue.userOrganizationAuthorities != null
+          && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === this.currentOrganizationValue.id))
+          || this.isAdmin;
+      }
+    
+      isManager(organization?: Organization): boolean {
+        var isManager = this.currentUserValue != null && this.currentUserValue.userOrganizationAuthorities != null;
+        if(organization !== undefined) {
+          isManager = isManager && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
+        } else {
+          isManager = isManager && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Manager);
+        }
+        return isManager || this.isAdmin;
+      }
+    
+      isOwner(organization?: Organization): boolean {
+        var isOwner = this.currentUserValue != null && this.currentUserValue.userOrganizationAuthorities != null;
+        if(organization !== undefined) {
+          isOwner = isOwner && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);
+        } else {
+          isOwner = isOwner && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Owner);
+        }
+        return isOwner || this.isAdmin;
+      }
+    
+      get isAdmin() {
+        var isAdmin = this.currentUserValue != null && this.currentUserValue.userAuthorities != null;
+        return isAdmin && this.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
+      }
 }

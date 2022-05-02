@@ -84,5 +84,4 @@ export class UserService {
     grant(id: number, organizationAuthority: OrganizationAuthorityModel) {
         return this.http.post(`${this.configService.get('apiUrl')}/user/${id}/orgauthorities`, organizationAuthority);
     }
-
 }
