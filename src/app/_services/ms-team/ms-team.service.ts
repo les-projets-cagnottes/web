@@ -18,6 +18,10 @@ export class MsTeamService {
     return this.http.post(`${this.configService.get('apiUrl')}/team/ms`, team);
   }
   
+  update(team: MsTeamModel) {
+    return this.http.put(`${this.configService.get('apiUrl')}/team/ms`, team);
+  }
+  
   delete(id: number) {
     return this.http.delete(`${this.configService.get('apiUrl')}/team/ms/${id}`, {});
   }

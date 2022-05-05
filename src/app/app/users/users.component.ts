@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { UserModel } from 'src/app/_models';
-import { UserService, PagerService } from 'src/app/_services';
+import { AuthorityModel, UserModel } from 'src/app/_models';
+import { UserService, PagerService, AuthorityService } from 'src/app/_services';
+import { Authority, User } from 'src/app/_entities';
 
 @Component({
   selector: 'app-users',
@@ -23,9 +24,10 @@ export class UsersComponent implements OnInit {
     color: ['']
   });;
   closeResult: string = '';
-  userEdited: UserModel = new UserModel();;
+  userEdited: UserModel = new UserModel();
   submitting: boolean = false;
   refreshStatus: string = "no-refresh";
+  adminAuthority: AuthorityModel = new AuthorityModel();
 
   // Modal
   modalRef: BsModalRef = new BsModalRef();
@@ -37,16 +39,25 @@ export class UsersComponent implements OnInit {
   pageSize: number = 10;
 
   constructor(
+    private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
-    private userService: UserService,
-    private modalService: BsModalService) {
+    private authorityService: AuthorityService,
+    private userService: UserService) {
   }
 
   ngOnInit() {
+    this.refreshAuthorities();
     this.refresh();
   }
 
+  refreshAuthorities() {
+    this.authorityService.list()
+      .subscribe(response => {
+          var authority = response.find(element => element.name == 'ROLE_ADMIN');
+          this.adminAuthority = authority != null ? authority : new AuthorityModel();
+      });
+  }
 
   refresh(page: number = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
@@ -150,6 +161,22 @@ export class UsersComponent implements OnInit {
           });
     }
 
+  }
+
+  isAdmin(user: UserModel) {
+    var userAdminAuthority = user.userAuthoritiesRef.find(element => element == this.adminAuthority.id)
+    console.log(user.userAuthoritiesRef);
+    console.log(this.adminAuthority.id);
+    return userAdminAuthority != null;
+  }
+
+  grant(userId: number) {
+    if (this.adminAuthority !== undefined) {
+      this.userService.grant(userId, this.adminAuthority)
+        .subscribe(() => {
+          this.refresh(this.pager.currentPage);
+        });
+    }
   }
 
 }

@@ -61,7 +61,7 @@ export class AuthenticationService {
 
     whoami(): Observable<User> {
         const principal = this.http.get<UserModel>(`${this.configService.get('apiUrl')}/whoami`);
-        const authorities = this.http.get<AuthorityModel[]>(`${this.configService.get('apiUrl')}/authority`);
+        const authorities = this.http.get<AuthorityModel[]>(`${this.configService.get('apiUrl')}/authority/me`);
         const orgauthorities = this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/orgauthorities`);
         const organizations = this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/organizations`);
         return forkJoin([principal, authorities, orgauthorities, organizations])

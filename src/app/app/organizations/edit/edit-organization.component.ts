@@ -24,28 +24,6 @@ export class EditOrganizationComponent implements OnInit {
   organization: Organization = new Organization();
   authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>();
 
-  // Forms
-  editOrgForm: FormGroup = this.formBuilder.group({
-    name: [this.organization.name, Validators.required],
-    logoUrl: [this.organization.logoUrl]
-  });
-  addMemberOrgForm: FormGroup = this.formBuilder.group({
-    email: ['', Validators.required]
-  });
-  editMemberRolesForm: FormGroup = this.formBuilder.group({
-    isUserSponsor: [false, Validators.required],
-    isUserManager: [false, Validators.required],
-    iserUserOwner: [false, Validators.required]
-  });
-  contentForm: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    value: ['']
-  });
-  submitting: boolean = false;
-  submittingEmail: boolean = false;
-  addStatus: string = 'idle';
-  submitStatus: string = 'idle';
-
   // Slack OAuth
   slackSyncStatus: string = 'idle';
   slackDisconnectStatus: string = 'idle';
@@ -64,6 +42,31 @@ export class EditOrganizationComponent implements OnInit {
   microsoftCode: string = '';
   msDisconnectStatus: string = 'idle';
   msTeam: MsTeamModel = new MsTeamModel();
+
+  // Forms
+  editOrgForm: FormGroup = this.formBuilder.group({
+    name: [this.organization.name, Validators.required],
+    logoUrl: [this.organization.logoUrl],
+    msPublicationGroupId: [this.msTeam.groupId],
+    msPublicationChannelId: [this.msTeam.channelId],
+    msCompanyFilter: [this.msTeam.companyFilter]
+  });
+  addMemberOrgForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required]
+  });
+  editMemberRolesForm: FormGroup = this.formBuilder.group({
+    isUserSponsor: [false, Validators.required],
+    isUserManager: [false, Validators.required],
+    iserUserOwner: [false, Validators.required]
+  });
+  contentForm: FormGroup = this.formBuilder.group({
+    name: ['', Validators.required],
+    value: ['']
+  });
+  submitting: boolean = false;
+  submittingEmail: boolean = false;
+  addStatus: string = 'idle';
+  submitStatus: string = 'idle';
 
   // Members card
   private rawResponseMembers: any;
@@ -515,7 +518,7 @@ export class EditOrganizationComponent implements OnInit {
   grant(userId: number, role: string) {
     var organizationAuthority = this.organization.organizationAuthorities.find(authority => authority.name === role);
     if (organizationAuthority !== undefined) {
-      this.userService.grant(userId, organizationAuthority)
+      this.userService.grantOrgAuthority(userId, organizationAuthority)
         .subscribe(() => {
           this.refreshMembers(this.pagerMembers.currentPage);
         });
@@ -536,6 +539,16 @@ export class EditOrganizationComponent implements OnInit {
     organization.logoUrl = this.f['logoUrl'].value;
     if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
+    }
+
+    if(this.msTeam.id > 0) {
+      this.msTeamService.update(this.msTeam)
+        .subscribe(
+          () => {},
+          error => {
+            console.log(error);
+          }
+        )
     }
 
     if (this.id > 0) {
