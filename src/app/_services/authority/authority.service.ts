@@ -10,8 +10,8 @@ export class AuthorityService {
 
     constructor(private http: HttpClient, private configService: ConfigService) { }
   
-    getUserAuthorities() {
-      return this.http.get<AuthorityModel[]>(`${this.configService.get('apiUrl')}/authorities`);
+    list() {
+      return this.http.get<AuthorityModel[]>(`${this.configService.get('apiUrl')}/authority`);
     }
   
 }

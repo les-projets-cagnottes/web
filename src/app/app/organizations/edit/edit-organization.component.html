@@ -132,6 +132,18 @@
                                 <input type="url" formControlName="logoUrl" class="form-control" id="logoUrl"
                                     placeholder="Enter organization logo URL">
                             </div>
+                            <div *ngIf="msTeam && msTeam.id > 0" class="form-group has-feedback" [ngClass]="{ 'has-error': f['msPublicationGroupId'].errors }">
+                                <label for="msPublicationGroupId" i18n="@@msPublicationGroupId">Microsoft Publication Group ID</label>
+                                <input type="text" formControlName="msPublicationGroupId" [(ngModel)]="msTeam.groupId" class="form-control" id="msPublicationGroupId" placeholder="Microsoft Team Group ID">
+                            </div>
+                            <div *ngIf="msTeam && msTeam.id > 0" class="form-group has-feedback" [ngClass]="{ 'has-error': f['msPublicationChannelId'].errors }">
+                                <label for="msPublicationChannelId" i18n="@@msPublicationChannelId">Microsoft Publication Channel ID</label>
+                                <input type="text" formControlName="msPublicationChannelId" [(ngModel)]="msTeam.channelId" class="form-control" id="msPublicationChannelId" placeholder="Microsoft Team Channel ID">
+                            </div>
+                            <div *ngIf="msTeam && msTeam.id > 0" class="form-group has-feedback" [ngClass]="{ 'has-error': f['msCompanyFilter'].errors }">
+                                <label for="msCompanyFilter" i18n="@@msCompanyFilter">Microsoft Company Filter</label>
+                                <input type="text" formControlName="msCompanyFilter" [(ngModel)]="msTeam.companyFilter" class="form-control" id="msCompanyFilter" placeholder="Microsoft Company Filter">
+                            </div>
                             <div *ngIf="id > 0" class="form-group action-bar">
                                 <label i18n="@@thirdApps">Third Apps</label>
                                 <table class="table table-striped table-valign-middle">

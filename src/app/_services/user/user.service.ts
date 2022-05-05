@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ConfigService } from '../config/config.service';
 
-import { AccountModel, DonationModel, UserModel, OrganizationModel, OrganizationAuthorityModel } from '../../_models';
+import { AccountModel, DonationModel, UserModel, OrganizationModel, OrganizationAuthorityModel, AuthorityModel } from '../../_models';
 
 import { ProjectModel } from '../../_models/project/project.model';
 
@@ -81,7 +81,11 @@ export class UserService {
         return this.http.delete(`${this.configService.get('apiUrl')}/user/${id}`);
     }
 
-    grant(id: number, organizationAuthority: OrganizationAuthorityModel) {
+    grant(id: number, authority: AuthorityModel) {
+        return this.http.post(`${this.configService.get('apiUrl')}/user/${id}/authorities`, authority);
+    }
+
+    grantOrgAuthority(id: number, organizationAuthority: OrganizationAuthorityModel) {
         return this.http.post(`${this.configService.get('apiUrl')}/user/${id}/orgauthorities`, organizationAuthority);
     }
 }
