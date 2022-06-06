@@ -11,7 +11,7 @@ export class News extends NewsModel {
     override project: Project = new Project();
 
     static fromModel(model: NewsModel): News {
-        var entity = new News();
+        const entity = new News();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -30,7 +30,7 @@ export class News extends NewsModel {
     }
 
     static fromModels(models: NewsModel[]): News[] {
-        var entities: News[] = [];
+        const entities: News[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

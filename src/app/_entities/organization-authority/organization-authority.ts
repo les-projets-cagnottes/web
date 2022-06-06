@@ -7,7 +7,7 @@ export class OrganizationAuthority extends OrganizationAuthorityModel {
     override organization: Organization = new Organization();
     
     static fromModel(model: OrganizationAuthorityModel): OrganizationAuthority {
-        var entity = new OrganizationAuthority();
+        const entity = new OrganizationAuthority();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -20,7 +20,7 @@ export class OrganizationAuthority extends OrganizationAuthorityModel {
     }
 
     static fromModels(models: OrganizationAuthorityModel[]): OrganizationAuthority[] {
-        var entities: OrganizationAuthority[] = [];
+        const entities: OrganizationAuthority[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

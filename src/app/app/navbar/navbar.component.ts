@@ -17,6 +17,7 @@ export class AppNavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.debug('Navbar component initialized');
   }
 
   logout() {

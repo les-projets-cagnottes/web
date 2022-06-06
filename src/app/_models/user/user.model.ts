@@ -1,22 +1,22 @@
 ﻿import { AuditModel } from '..';
 
 export class UserModel extends AuditModel {
-    username: string = '';
-    email: string = '';
-    password: string = '';
-    firstname: string = '';
-    lastname: string = '';
-    avatarUrl: string = '';
-    enabled: boolean = true;
-    token: string = '';
+    username = '';
+    email = '';
+    password = '';
+    firstname = '';
+    lastname = '';
+    avatarUrl = '';
+    enabled = true;
+    token = '';
     userAuthoritiesRef: number[] = [];
     userOrganizationAuthoritiesRef: number[] = [];
 
     // Only in web component
-    budgetUsage: string = '';
-    isUserSponsor: boolean = false;
-    isUserManager: boolean = false;
-    isUserOwner: boolean = false;
-    hasLeftTheOrganization: boolean = false;
+    budgetUsage = '';
+    isUserSponsor = false;
+    isUserManager = false;
+    isUserOwner = false;
+    hasLeftTheOrganization = false;
 
 }

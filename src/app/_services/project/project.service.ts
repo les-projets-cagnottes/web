@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NewsModel, UserModel } from 'src/app/_models';
+import { DataPage, NewsModel, UserModel } from 'src/app/_models';
 import { ProjectStatus } from 'src/app/_models/project/project-status';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { ConfigService } from '../config/config.service';
@@ -26,7 +26,7 @@ export class ProjectService {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-    return this.http.get<NewsModel[]>(`${this.configService.get('apiUrl')}/project/${id}/news`, { params });
+    return this.http.get<DataPage<NewsModel>>(`${this.configService.get('apiUrl')}/project/${id}/news`, { params });
   }
 
   getTeammates(id: number) {
