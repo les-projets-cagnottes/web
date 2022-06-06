@@ -6,7 +6,7 @@
                     <h3 i18n="@@detailedPresentation" class="card-title">Detailed Presentation</h3>
                 </div>
                 <div class="card-body">
-                    <div *ngIf="longDescriptionConfig.uploadImagePath != ''" class="form-group">
+                    <div *ngIf="longDescriptionConfig.uploadImagePath !== ''" class="form-group">
                         <textarea id="longDescription" [ngxSummernote]="longDescriptionConfig"
                             (mediaDelete)="onDeleteMedia($event)" formControlName="longDescription"></textarea>
                     </div>
