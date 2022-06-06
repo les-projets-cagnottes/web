@@ -94,10 +94,11 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         () => {
-          console.log(this.returnUrl);
+          console.debug(this.returnUrl);
           this.router.navigate([this.returnUrl]);
         },
         error => {
+          console.error(error)
           this.loading = false;
         });
   }

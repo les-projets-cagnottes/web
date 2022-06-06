@@ -1,9 +1,10 @@
 import { AuditModel, GenericModel } from '..';
+import { ProjectStatus } from './project-status';
 
 export class ProjectModel extends AuditModel {
     
     title = '';
-    status = 'DRAFT';
+    status: ProjectStatus = ProjectStatus.DRAFT;
     shortDescription = '';
     longDescription = '';
     peopleRequired = 2;
@@ -14,6 +15,4 @@ export class ProjectModel extends AuditModel {
     campaignsRef: number[] = [];
     newsRef: number[] = [];
 
-    // Only in this component
-    peopleRequiredPercent = '';
 }

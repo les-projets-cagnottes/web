@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { UserModel } from 'src/app/_models';
-import { UserService, PagerService } from 'src/app/_services';
+import { AuthorityModel, DataPage, UserModel } from 'src/app/_models';
+import { UserService, PagerService, AuthorityService } from 'src/app/_services';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 
 @Component({
   selector: 'app-users',
@@ -21,33 +22,42 @@ export class UsersComponent implements OnInit {
     isActivated: [''],
     avatarUrl: [''],
     color: ['']
-  });
-
+  });;
   closeResult = '';
   userEdited: UserModel = new UserModel();
   submitting = false;
   refreshStatus = "no-refresh";
+  adminAuthority: AuthorityModel = new AuthorityModel();
 
   // Modal
   modalRef: BsModalRef = new BsModalRef();
 
   // Pagination
-  private rawResponse: any;
-  pager: any = {};
-  pagedItems: any[] = [];
+  private rawResponse = new DataPage<UserModel>();
+  pager = new Pager();
+  pagedItems: UserModel[] = [];
   pageSize = 10;
 
   constructor(
+    private modalService: BsModalService,
     private formBuilder: FormBuilder,
     private pagerService: PagerService,
-    private userService: UserService,
-    private modalService: BsModalService) {
+    private authorityService: AuthorityService,
+    private userService: UserService) {
   }
 
   ngOnInit() {
+    this.refreshAuthorities();
     this.refresh();
   }
 
+  refreshAuthorities() {
+    this.authorityService.list()
+      .subscribe(response => {
+          const authority = response.find(element => element.name == 'ROLE_ADMIN');
+          this.adminAuthority = authority != null ? authority : new AuthorityModel();
+      });
+  }
 
   refresh(page = 1): void {
     if (this.pagerService.canChangePage(this.pager, page)) {
@@ -63,7 +73,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  openModalCreateUser(template: TemplateRef<any>): void {
+  openModalCreateUser(template: TemplateRef<string>): void {
     this.userEdited = new UserModel();
     this.f['email'].setValue("");
     this.f['firstname'].setValue("");
@@ -74,7 +84,7 @@ export class UsersComponent implements OnInit {
     this.openModal(template);
   }
 
-  openModalEditUser(template: TemplateRef<any>, user: UserModel): void {
+  openModalEditUser(template: TemplateRef<string>, user: UserModel): void {
     this.userEdited = user;
     this.f['email'].setValue(user.email);
     this.f['firstname'].setValue(user.firstname);
@@ -84,7 +94,7 @@ export class UsersComponent implements OnInit {
     this.openModal(template);
   }
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(template: TemplateRef<string>): void {
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-xl' })
@@ -151,6 +161,20 @@ export class UsersComponent implements OnInit {
           });
     }
 
+  }
+
+  isAdmin(user: UserModel) {
+    const userAdminAuthority = user.userAuthoritiesRef.find(element => element == this.adminAuthority.id);
+    return userAdminAuthority != null;
+  }
+
+  grant(userId: number) {
+    if (this.adminAuthority !== undefined) {
+      this.userService.grant(userId, this.adminAuthority)
+        .subscribe(() => {
+          this.refresh(this.pager.currentPage);
+        });
+    }
   }
 
 }

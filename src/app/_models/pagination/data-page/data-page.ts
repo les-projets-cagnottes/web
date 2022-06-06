@@ -1,7 +1,7 @@
 import { DataSort } from "../data-sort/data-sort";
 
-export class DataPage {
-    content: any[] = [];
+export class DataPage<Type> {
+    content: Type[] = [];
     totalPages = 0;
     totalElements = 0;
     number = 0;

@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { PagerService, OrganizationService, AuthenticationService, UserService, IdeaService, FileService } from 'src/app/_services';
 import { DataPage, IdeaModel } from 'src/app/_models';
 import { Organization, User, Idea } from 'src/app/_entities';
+import { Media } from 'src/app/_models/media/media';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 
 @Component({
   selector: 'app-list-ideas',
@@ -21,8 +23,8 @@ export class ListIdeasComponent implements OnInit {
   longDescription = "";
 
   // Paginations
-  private pagedIdeas: DataPage = new DataPage();
-  pager: any = {};
+  private pagedIdeas: DataPage<IdeaModel> = new DataPage<IdeaModel>();
+  pager = new Pager();
   pageSize = 20;
 
   // Forms
@@ -101,7 +103,7 @@ export class ListIdeasComponent implements OnInit {
       });
   }
 
-  openModalCreateIdea(template: TemplateRef<any>): void {
+  openModalCreateIdea(template: TemplateRef<string>): void {
     this.selectedIdea = new IdeaModel();
     this.longDescription = "";
     this.selectedIdea.workspace = uuidv4();
@@ -117,7 +119,7 @@ export class ListIdeasComponent implements OnInit {
     );
   }
 
-  openModalEditIdea(template: TemplateRef<any>, idea: IdeaModel): void {
+  openModalEditIdea(template: TemplateRef<string>, idea: IdeaModel): void {
     this.selectedIdea = idea;
     this.longDescription = idea.longDescription;
     this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
@@ -178,10 +180,12 @@ export class ListIdeasComponent implements OnInit {
     }
   }
 
-  onDeleteMedia(file: any) {
+  onDeleteMedia(file: Media) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => {},
+        response => {
+          console.debug('Media deleted : ' + response);
+        },
         error => {
           console.log(error);
         });

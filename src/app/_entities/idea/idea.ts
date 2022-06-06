@@ -8,7 +8,6 @@ export class Idea extends IdeaModel {
     override submitter: User = new User();
     override organization: Organization = new Organization();
     followers: User[] = [];
-    tags: any[] = [];
 
     static fromModel(model: IdeaModel): Idea {
         const entity = new Idea();

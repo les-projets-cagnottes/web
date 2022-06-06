@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Account, Budget, Campaign, User } from 'src/app/_entities';
-import { CampaignModel, DataPage, ProjectModel } from 'src/app/_models';
-import { AuthenticationService, BudgetService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
+import { Account, Budget, User } from 'src/app/_entities';
+import { AccountModel, CampaignModel, DataPage, ProjectModel } from 'src/app/_models';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
+import { AuthenticationService, BudgetService, OrganizationService, PagerService, ProjectService } from 'src/app/_services';
 
 @Component({
   selector: 'app-report',
@@ -22,15 +23,15 @@ export class ReportComponent implements OnInit {
   });
 
   // Campaigns Box
-  private rawProjectsResponse: any;
-  campaignPager: any = {};
-  pagedCampaigns: Campaign[] = [];
+  private rawProjectsResponse = new DataPage<CampaignModel>();
+  campaignPager = new Pager();
+  pagedCampaigns: CampaignModel[] = [];
   campaignsPageSize = 10;
   campaignsSyncStatus = 'idle';
 
   // Accounts Box
-  private rawAccountsResponse: DataPage = new DataPage();
-  accountsPager: any = {};
+  private rawAccountsResponse: DataPage<AccountModel> = new DataPage<AccountModel>();
+  accountsPager = new Pager();
   pagedAccounts: Account[] = [];
   accountsPageSize = 10;
   accountsSyncStatus = 'idle';
@@ -58,14 +59,14 @@ export class ReportComponent implements OnInit {
       if(budgetFound !== undefined) {
         this.budget = budgetFound;
         this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.authenticationService.currentOrganizationValue.membersRef.length * this.budget.amountPerMember) + "%";
-        this.refreshCampaigns(this.campaignPager.page, true);
-        this.refreshAccounts(this.accountsPager.page, true);
+        this.refreshCampaigns(this.campaignPager.currentPage);
+        this.refreshAccounts(this.accountsPager.currentPage);
       }
     });
   }
 
-  refreshCampaigns(page = 1, force = false) {
-    if (this.pagerService.canChangePage(this.campaignPager, page) || force) {
+  refreshCampaigns(page = 1) {
+    if (this.pagerService.canChangePage(this.campaignPager, page)) {
       this.campaignsSyncStatus = 'running';
       this.budgetService.getCampaigns(this.selectBudgetForm.controls['budget'].value, page - 1, this.campaignsPageSize)
         .subscribe(response => {
@@ -98,8 +99,8 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  refreshAccounts(page = 1, force = false) {
-    if (this.pagerService.canChangePage(this.accountsPager, page) || force) {
+  refreshAccounts(page = 1) {
+    if (this.pagerService.canChangePage(this.accountsPager, page)) {
       this.accountsSyncStatus = 'running';
       this.budgetService.getAccounts(this.selectBudgetForm.controls['budget'].value, page - 1, this.accountsPageSize)
         .subscribe(response => {

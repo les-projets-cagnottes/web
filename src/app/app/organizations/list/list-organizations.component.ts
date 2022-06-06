@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PagerService, AuthenticationService, OrganizationService } from 'src/app/_services';
-import { OrganizationModel } from 'src/app/_models';
+import { PagerService, OrganizationService } from 'src/app/_services';
+import { DataPage, OrganizationModel } from 'src/app/_models';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 
 @Component({
   selector: 'app-organizations',
@@ -14,14 +15,13 @@ export class OrganizationsComponent implements OnInit {
   submitting = false;
   refreshStatus = "no-refresh";
 
-  private rawResponse: any;
-  pager: any = {};
+  private rawResponse = new DataPage<OrganizationModel>();
+  pager = new Pager();
   pagedItems: OrganizationModel[] = [];
   pageSize = 10;
 
   constructor(
     private pagerService: PagerService,
-    private authenticationService: AuthenticationService,
     private organizationService: OrganizationService) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class OrganizationsComponent implements OnInit {
   }
 
   refresh(page = 1): void {
-    if(this.authenticationService.currentUserValue !== null && this.pagerService.canChangePage(this.pager, page)) {
+    if(this.pagerService.canChangePage(this.pager, page)) {
       this.organizationService.list(page - 1, this.pageSize)
         .subscribe(response => {
           this.rawResponse = response;
@@ -40,19 +40,6 @@ export class OrganizationsComponent implements OnInit {
           }, 2000);
         });
     }
-  }
-
-  delete(org: OrganizationModel): void {
-    this.organizationService.delete(org.id)
-      .subscribe(
-        () => {
-          this.refresh();
-          this.submitting = false;
-        },
-        error => {
-          console.log(error);
-          this.submitting = false;
-        });
   }
 
   setPage(page: number) {

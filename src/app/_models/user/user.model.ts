@@ -9,6 +9,7 @@ export class UserModel extends AuditModel {
     avatarUrl = '';
     enabled = true;
     token = '';
+    userAuthoritiesRef: number[] = [];
     userOrganizationAuthoritiesRef: number[] = [];
 
     // Only in web component

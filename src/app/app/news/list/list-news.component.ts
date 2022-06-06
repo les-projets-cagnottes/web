@@ -1,7 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { Project, User } from 'src/app/_entities';
-import { NewsModel } from 'src/app/_models';
+import { DataPage, NewsModel } from 'src/app/_models';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 import { AuthenticationService, OrganizationService, PagerService, ProjectService } from 'src/app/_services';
 
 @Component({
@@ -12,19 +13,19 @@ import { AuthenticationService, OrganizationService, PagerService, ProjectServic
 export class ListNewsComponent implements OnInit {
 
   // Data
-  projects: Map<number, Project> = new Map<number, Project>();
-  private news: any;
+  projects = new Map<number, Project>();
   userLoggedIn: User = new User();
-  data: any = {};
-  dates: string[] = [];
 
   // Refreshing state
   refreshStatus = "no-refresh";
 
   // Pagination
-  newsPager: any = {};
+  private news = new DataPage<NewsModel>();
+  newsPager = new Pager();
   newsPaged: NewsModel[] = [];
   newsLength = 10;
+  newsByDate = new Map<string, NewsModel[]>();
+  dates: string[] = [];
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -33,15 +34,16 @@ export class ListNewsComponent implements OnInit {
     private organizationService: OrganizationService,
     private projectService: ProjectService
   ) {
+    
   }
 
   ngOnInit() {
     this.refresh();
   }
 
-  refresh(page = 1, force = false): void {
+  refresh(page = 1): void {
     this.userLoggedIn = this.authenticationService.currentUserValue;
-    if (this.pagerService.canChangePage(this.newsPager, page) || force) {
+    if (this.pagerService.canChangePage(this.newsPager, page)) {
       this.organizationService.getNews(this.authenticationService.currentOrganizationValue.id, page - 1, this.newsLength)
         .subscribe(response => {
           this.news = response;
@@ -57,20 +59,19 @@ export class ListNewsComponent implements OnInit {
   setPage(page: number) {
     this.newsPager = this.pagerService.getPager(this.news.totalElements, page, this.newsLength);
     this.newsPaged = this.news.content;
-    this.data = {};
     const projectIds: number[] = [];
+    this.newsByDate = new Map<string, NewsModel[]>();
     this.newsPaged.forEach(news => {
       const stringDate = formatDate(news.createdAt, 'dd/MM/yyyy', this.locale);
       if(!this.dates.find(date => date === stringDate)) {
         this.dates.push(stringDate);
       }
-      if(this.data[stringDate] === undefined) {
-        this.data[stringDate] = [];
-      }
       if(news.project.id > 0) {
         projectIds.push(news.project.id);
       }
-      this.data[stringDate].push(news);
+      const newsForDate = this.newsByDate.get(stringDate) || [];
+      newsForDate.push(news);
+      this.newsByDate.set(stringDate, newsForDate);
     });
     this.projectService.getAllByIds(projectIds)
       .subscribe(projectModels => {

@@ -5,12 +5,14 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ContentService, FileService, OrganizationService, PagerService, SlackTeamService, UserService } from 'src/app/_services';
-import { Organization, User, Content, SlackTeam, MsTeam } from 'src/app/_entities';
+import { Organization, User, SlackTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
-import { ContentModel, OrganizationAuthorityModel, OrganizationModel } from 'src/app/_models';
+import { ContentModel, DataPage, OrganizationAuthorityModel, OrganizationModel, UserModel } from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
 import { MsTeamService } from 'src/app/_services/ms-team/ms-team.service';
 import { MsTeamModel } from 'src/app/_models/ms-team/ms-team.model';
+import { Media } from 'src/app/_models/media/media';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 
 @Component({
   selector: 'app-edit-organization',
@@ -23,28 +25,6 @@ export class EditOrganizationComponent implements OnInit {
   id = 0;
   organization: Organization = new Organization();
   authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>();
-
-  // Forms
-  editOrgForm: FormGroup = this.formBuilder.group({
-    name: [this.organization.name, Validators.required],
-    logoUrl: [this.organization.logoUrl]
-  });
-  addMemberOrgForm: FormGroup = this.formBuilder.group({
-    email: ['', Validators.required]
-  });
-  editMemberRolesForm: FormGroup = this.formBuilder.group({
-    isUserSponsor: [false, Validators.required],
-    isUserManager: [false, Validators.required],
-    iserUserOwner: [false, Validators.required]
-  });
-  contentForm: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    value: ['']
-  });
-  submitting = false;
-  submittingEmail = false;
-  addStatus = 'idle';
-  submitStatus = 'idle';
 
   // Slack OAuth
   slackSyncStatus = 'idle';
@@ -65,17 +45,42 @@ export class EditOrganizationComponent implements OnInit {
   msDisconnectStatus = 'idle';
   msTeam: MsTeamModel = new MsTeamModel();
 
+  // Forms
+  editOrgForm: FormGroup = this.formBuilder.group({
+    name: [this.organization.name, Validators.required],
+    logoUrl: [this.organization.logoUrl],
+    msPublicationGroupId: [this.msTeam.groupId],
+    msPublicationChannelId: [this.msTeam.channelId],
+    msCompanyFilter: [this.msTeam.companyFilter]
+  });
+  addMemberOrgForm: FormGroup = this.formBuilder.group({
+    email: ['', Validators.required]
+  });
+  editMemberRolesForm: FormGroup = this.formBuilder.group({
+    isUserSponsor: [false, Validators.required],
+    isUserManager: [false, Validators.required],
+    iserUserOwner: [false, Validators.required]
+  });
+  contentForm: FormGroup = this.formBuilder.group({
+    name: ['', Validators.required],
+    value: ['']
+  });
+  submitting = false;
+  submittingEmail = false;
+  addStatus = 'idle';
+  submitStatus = 'idle';
+
   // Members card
-  private rawResponseMembers: any;
-  pagerMembers: any = {};
+  private rawResponseMembers: DataPage<UserModel> = new DataPage<UserModel>();
+  pagerMembers = new Pager();
   pagedItemsMembers: User[] = [];
   pageSizeMembers = 10;
   refreshMembersStatus = 'idle';
 
   // Contents card
-  private rawResponseContents: any;
-  pagerContents: any = {};
-  pagedItemsContents: any[] = [];
+  private rawResponseContents: DataPage<ContentModel> = new DataPage<ContentModel>();
+  pagerContents = new Pager();
+  pagedItemsContents: ContentModel[] = [];
   pageSizeContents = 10;
   refreshContentStatus = 'idle';
 
@@ -120,7 +125,7 @@ export class EditOrganizationComponent implements OnInit {
     }
   }
 
-  setMicrosoftRedirectUrl(id: number) {
+  setMicrosoftRedirectUrl() {
     const currentEndPoint = /\/organizations\/edit\/.*/;
     const finalEndPoint = '/organizations/edit/microsoft';
     this.microsoftRedirectUrl = location.href.replace(currentEndPoint, finalEndPoint);
@@ -135,8 +140,7 @@ export class EditOrganizationComponent implements OnInit {
           msTeam.organization.id = state;
           msTeam.tenantId = this.configService.get('microsoftTenantId');
           this.msTeamService.create(msTeam)
-            .subscribe(response => {
-              this.rawResponseMembers = response;
+            .subscribe(() => {
               this.router.navigate(['/organizations/edit/' + state]);
             }, error => {
               console.log(error);
@@ -149,10 +153,11 @@ export class EditOrganizationComponent implements OnInit {
       const slackEndPoint = '/organizations/edit/slack/' + this.id;
       if (this.router.url.startsWith(slackEndPoint)) {
         this.code = this.route.snapshot.queryParams['code'];
-        this.organizationService.slack(this.id, this.code, this.redirectUrlSlackOAuth)
+        this.slackTeamService.create(this.id, this.code, this.redirectUrlSlackOAuth)
           .subscribe(() => {
             this.refreshInformations();
             this.refreshMembers();
+            this.refreshContents();
           });
       }
       this.slackClientId = this.configService.get('slackClientId');
@@ -162,11 +167,12 @@ export class EditOrganizationComponent implements OnInit {
         this.microsoftTenantId = this.configService.get('microsoftTenantId');
         this.microsoftClientId = this.configService.get('microsoftClientId');
         this.microsoftState = this.id.toString();
-        this.setMicrosoftRedirectUrl(this.id);
+        this.setMicrosoftRedirectUrl();
       }
 
       this.refreshInformations();
       this.refreshMembers();
+      this.refreshContents();
     } else {
       this.refreshForm();
     }
@@ -235,8 +241,8 @@ export class EditOrganizationComponent implements OnInit {
 
   setMembersPage(page: number) {
     this.pagerMembers = this.pagerService.getPager(this.rawResponseMembers.totalElements, page, this.pageSizeMembers);
-    this.pagedItemsMembers = this.rawResponseMembers.content;
-    for (var k = 0; k < this.pagedItemsMembers.length; k++) {
+    this.pagedItemsMembers = User.fromModels(this.rawResponseMembers.content);
+    for (let k = 0; k < this.pagedItemsMembers.length; k++) {
       this.pagedItemsMembers[k] = User.fromModel(this.pagedItemsMembers[k]);
       this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.forEach(userOrganizationAuthorityId => {
         const orgAuthorityFound = this.organization.organizationAuthorities.find(authority => authority.id === userOrganizationAuthorityId);
@@ -249,9 +255,9 @@ export class EditOrganizationComponent implements OnInit {
         const managerAuthority = this.authorities.get('ROLE_MANAGER');
         const ownerAuthority = this.authorities.get('ROLE_OWNER');
         if (sponsorAuthority !== undefined && managerAuthority !== undefined && ownerAuthority !== undefined) {
-          var sponsorAuthorityId = sponsorAuthority.id;
-          var managerAuthorityId = managerAuthority.id;
-          var ownerAuthorityId = ownerAuthority.id;
+          const sponsorAuthorityId = sponsorAuthority.id;
+          const managerAuthorityId = managerAuthority.id;
+          const ownerAuthorityId = ownerAuthority.id;
           this.pagedItemsMembers[k].isUserSponsor = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => sponsorAuthorityId == authorityId) !== undefined
           this.pagedItemsMembers[k].isUserManager = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => managerAuthorityId == authorityId) !== undefined
           this.pagedItemsMembers[k].isUserOwner = this.pagedItemsMembers[k].userOrganizationAuthoritiesRef.find(authorityId => ownerAuthorityId == authorityId) !== undefined
@@ -260,10 +266,10 @@ export class EditOrganizationComponent implements OnInit {
     }
   }
 
-  refreshContents(page = 1, force = false) {
-    if (this.pagerService.canChangePage(this.pagerContents, page) || force) {
+  refreshContents(page = 1) {
+    if (this.pagerService.canChangePage(this.pagerContents, page)) {
       this.refreshContentStatus = 'running';
-      this.organizationService.getContents(this.organization.id, page - 1, this.pageSizeContents)
+      this.organizationService.getContents(this.id, page - 1, this.pageSizeContents)
         .subscribe(contents => {
           this.rawResponseContents = contents;
           this.setContentsPage(page);
@@ -273,7 +279,7 @@ export class EditOrganizationComponent implements OnInit {
           }, 1000);
         }, error => {
           this.refreshContentStatus = 'error';
-          console.log(error);
+          console.error(error);
           setTimeout(() => {
             this.refreshContentStatus = 'idle';
           }, 1000);
@@ -304,7 +310,6 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshMsTeam() {
-    console.log(this.organization.msTeam);
     if (this.organization.msTeam != null 
       && this.organization.msTeam != undefined 
       && this.organization.msTeam.id > 0) {
@@ -317,11 +322,11 @@ export class EditOrganizationComponent implements OnInit {
     }
   }
 
-  openNewContentModal(template: TemplateRef<any>) {
-    this.openContentModal(template, new Content());
+  openNewContentModal(template: TemplateRef<string>) {
+    this.openContentModal(template, new ContentModel());
   }
 
-  openContentModal(template: TemplateRef<any>, content: Content) {
+  openContentModal(template: TemplateRef<string>, content: ContentModel) {
     this.modalRef = this.modalService.show(
       template,
       Object.assign({}, { class: 'modal-xl' })
@@ -335,12 +340,12 @@ export class EditOrganizationComponent implements OnInit {
 
   onSlackSync() {
     this.slackSyncStatus = 'running';
-    if (this.id > 0) {
-      this.organizationService.slackSync(this.id)
+    if (this.organization.slackTeam.id > 0) {
+      this.slackTeamService.sync(this.organization.slackTeam.id)
         .subscribe(
           () => {
             this.slackSyncStatus = 'success';
-            this.pagerMembers.currentPage = undefined;
+            this.pagerMembers.currentPage = 0;
             this.refreshMembers();
             setTimeout(() => {
               this.slackSyncStatus = 'idle';
@@ -359,11 +364,11 @@ export class EditOrganizationComponent implements OnInit {
   onSlackDisconnect() {
     this.slackDisconnectStatus = 'running';
     if (this.id > 0 && this.organization.slackTeam != null && this.organization.slackTeam != undefined) {
-      this.organizationService.slackDisconnect(this.id)
+      this.slackTeamService.delete(this.organization.slackTeam.id)
         .subscribe(
           () => {
             this.slackDisconnectStatus = 'success';
-            this.pagerMembers.currentPage = undefined;
+            this.pagerMembers.currentPage = 0;
             this.refreshInformations();
             setTimeout(() => {
               this.slackDisconnectStatus = 'idle';
@@ -386,7 +391,7 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           () => {
             this.microsoftSyncStatus = 'success';
-            this.pagerMembers.currentPage = undefined;
+            this.pagerMembers.currentPage = 0;
             this.refreshMembers();
             setTimeout(() => {
               this.microsoftSyncStatus = 'idle';
@@ -409,7 +414,7 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           () => {
             this.msDisconnectStatus = 'success';
-            this.pagerMembers.currentPage = undefined;
+            this.pagerMembers.currentPage = 0;
             this.refreshInformations();
             setTimeout(() => {
               this.msDisconnectStatus = 'idle';
@@ -441,7 +446,7 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           () => {
             this.modalRef.hide();
-            this.refreshContents(this.pagerContents.page, true);
+            this.refreshContents(this.pagerContents.currentPage);
           },
           error => {
             console.log(error);
@@ -451,7 +456,7 @@ export class EditOrganizationComponent implements OnInit {
         .subscribe(
           () => {
             this.modalRef.hide();
-            this.refreshContents(this.pagerContents.page, true);
+            this.refreshContents(this.pagerContents.currentPage);
           },
           error => {
             console.log(error);
@@ -500,21 +505,21 @@ export class EditOrganizationComponent implements OnInit {
   onRemoveMember(user: User) {
     this.organizationService.removeMember(this.organization.id, user.id)
       .subscribe(() => {
-        this.refreshMembers(this.pagerMembers.page);
+        this.refreshMembers(this.pagerMembers.currentPage);
       });
   }
 
-  onRemoveContent(content: Content) {
+  onRemoveContent(content: ContentModel) {
     this.contentService.delete(content.id)
       .subscribe(() => {
-        this.refreshContents(this.pagerContents.page);
+        this.refreshContents(this.pagerContents.currentPage);
       });
   }
 
   grant(userId: number, role: string) {
     const organizationAuthority = this.organization.organizationAuthorities.find(authority => authority.name === role);
     if (organizationAuthority !== undefined) {
-      this.userService.grant(userId, organizationAuthority)
+      this.userService.grantOrgAuthority(userId, organizationAuthority)
         .subscribe(() => {
           this.refreshMembers(this.pagerMembers.currentPage);
         });
@@ -537,11 +542,24 @@ export class EditOrganizationComponent implements OnInit {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
 
+    if(this.msTeam.id > 0) {
+      this.msTeamService.update(this.msTeam)
+        .subscribe(
+          response => {
+            console.debug('MS Team updated : ' + response);
+          },
+          error => {
+            console.log(error);
+          }
+        )
+    }
+
     if (this.id > 0) {
       organization.id = this.id;
       this.organizationService.update(organization)
         .subscribe(
-          () => {
+          response => {
+            console.debug('Organization updated : ' + response);
             this.submitting = false;
             this.submitStatus = 'success';
             setTimeout(() => {
@@ -560,6 +578,7 @@ export class EditOrganizationComponent implements OnInit {
       this.organizationService.create(organization)
         .subscribe(
           response => {
+            console.debug('Organization created : ' + response);
             this.submitting = false;
             this.submitStatus = 'success';
             window.location.href = "/organizations/edit/" + response.id
@@ -579,10 +598,13 @@ export class EditOrganizationComponent implements OnInit {
 
   }
 
-  onDeleteMedia(file: any) {
+  onDeleteMedia(file: Media) {
+    console.debug(file);
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => { },
+        response => {
+          console.debug('Media deleted : ' + response);
+        },
         error => {
           console.log(error);
         });

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { NewsModel, ProjectModel, Role } from 'src/app/_models';
 import { AuthenticationService, FileService, NewsService, ProjectService } from 'src/app/_services';
+import { Media } from 'src/app/_models/media/media';
 
 @Component({
   selector: 'app-edit-news',
@@ -94,22 +95,24 @@ export class EditNewsComponent implements OnInit {
       this.newsService.update(submittedNews)
         .subscribe(
           response => {
+            console.debug('News updated : ' + response);
             this.submitting = false;
             this.router.navigate(['/news/']);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
           });
     } else {
       this.newsService.create(submittedNews)
         .subscribe(
           response => {
+            console.debug('News created : ' + response);
             this.submitting = false;
             this.router.navigate(['/news/']);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
           });
     }
@@ -120,12 +123,14 @@ export class EditNewsComponent implements OnInit {
     return isAdmin && this.authenticationService.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
   }
 
-  onDeleteMedia(file: any) {
+  onDeleteMedia(file: Media) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => {},
+        response => {
+          console.debug('Media deleted : ' + response)
+        },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 }

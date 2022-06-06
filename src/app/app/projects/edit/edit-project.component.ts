@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
+import { Media } from 'src/app/_models/media/media';
 
 @Component({
   selector: 'app-edit-project',
@@ -93,7 +94,7 @@ export class EditProjectComponent implements OnInit {
             this.router.navigate(['/projects/' + response.id]);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
           });
     } else {
@@ -105,18 +106,20 @@ export class EditProjectComponent implements OnInit {
             this.router.navigate(['/projects/' + response.id]);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
           });
     }
   }
 
-  onDeleteMedia(file: any) {
+  onDeleteMedia(file: Media) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => {},
+        response => {
+          console.debug('Media deleted : ' + response)
+        },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 }

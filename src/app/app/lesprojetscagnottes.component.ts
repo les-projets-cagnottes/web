@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
-import { Role } from '../_models';
 import { Organization, User } from '../_entities';
 import { AuthenticationService, OrganizationService, UserService } from '../_services';
-import { ConfigService } from '../_services/config/config.service';
 import { Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -75,7 +71,7 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     this.currentOrganizationSubscription.unsubscribe();
   }
 
-  openChangeCurrentOrgModal(template: TemplateRef<any>): void {
+  openChangeCurrentOrgModal(template: TemplateRef<string>): void {
     this.userService.getOrganizations(this.currentUser.id)
       .subscribe(organizations => {
         this.userOrganizations = Organization.fromModels(organizations);
@@ -93,35 +89,19 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
   }
 
   isSponsor(): boolean {
-    return (this.currentUser != null 
-      && this.currentUser.userOrganizationAuthorities != null
-      && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Sponsor && a.organization.id === this.currentOrganization.id))
-      || this.isAdmin;
+    return this.authenticationService.isSponsor();
   }
 
   isManager(organization?: Organization): boolean {
-    let isManager = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    if(organization !== undefined) {
-      isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
-    } else {
-      isManager = isManager && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Manager);
-    }
-    return isManager || this.isAdmin;
+    return this.authenticationService.isManager(organization);
   }
 
   isOwner(organization?: Organization): boolean {
-    let isOwner = this.currentUser != null && this.currentUser.userOrganizationAuthorities != null;
-    if(organization !== undefined) {
-      isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);
-    } else {
-      isOwner = isOwner && this.currentUser.userOrganizationAuthorities.some(a => a.name === Role.Owner);
-    }
-    return isOwner || this.isAdmin;
+    return this.authenticationService.isOwner(organization);
   }
 
   get isAdmin() {
-    const isAdmin = this.currentUser != null && this.currentUser.userAuthorities != null;
-    return isAdmin && this.currentUser.userAuthorities.some(a => a.name === Role.Admin);
+    return this.authenticationService.isAdmin;
   }
 
 }

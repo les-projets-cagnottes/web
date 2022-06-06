@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Project, User } from 'src/app/_entities';
+import { DataPage } from 'src/app/_models';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, OrganizationService, PagerService } from 'src/app/_services';
 
@@ -12,14 +13,14 @@ import { AuthenticationService, OrganizationService, PagerService } from 'src/ap
 export class ListProjectsComponent implements OnInit {
 
   // Data
-  private projects: any;
-  private status: any;
+  private projects = new DataPage<ProjectModel>();
+  private status = 'in_progress';
 
   // Refreshing state
   refreshStatus = "no-refresh";
 
   // Pagination
-  projectsPager: any = {};
+  projectsPager = new Pager();
   projectsPaged: ProjectModel[] = [];
   projectsLength = 10;
 
@@ -33,13 +34,13 @@ export class ListProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
-      this.status = params.get('status');
-      this.refresh(1, true);
+      this.status = params.get('status') || 'in_progress';
+      this.refresh();
     });
   }
 
-  refresh(page = 1, force = false): void {
-    if (this.pagerService.canChangePage(this.projectsPager, page) || force) {
+  refresh(page = 1): void {
+    if (this.pagerService.canChangePage(this.projectsPager, page)) {
       this.organizationService.getProjects(this.authenticationService.currentOrganizationValue.id, page - 1, this.projectsLength, [this.status])
         .subscribe(response => {
           this.projects = response;

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 
 @Injectable({
     providedIn: 'root'
 })
 export class PagerService {
 
-    constructor() { }
-
-    getPager(totalItems: number, currentPage = 1, pageSize = 10) {
+    getPager(totalItems: number, currentPage = 1, pageSize = 10): Pager {
         // calculate total pages
         const totalPages = Math.ceil(totalItems / pageSize);
 
@@ -45,23 +44,22 @@ export class PagerService {
         const pages = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
 
         // return object with all pager properties required by the view
-        return {
-            totalItems: totalItems,
-            currentPage: currentPage,
-            pageSize: pageSize,
-            totalPages: totalPages,
-            startPage: startPage,
-            endPage: endPage,
-            startIndex: startIndex,
-            endIndex: endIndex,
-            pages: pages
-        };
+        const pager = new Pager();
+        pager.totalItems = totalItems;
+        pager.currentPage = currentPage;
+        pager.pageSize = pageSize;
+        pager.totalPages = totalPages;
+        pager.startPage = startPage;
+        pager.endPage = endPage;
+        pager.startIndex = startIndex;
+        pager.endIndex = endIndex;
+        pager.pages = pages;
+
+        return pager;
     }
 
-    canChangePage(pager: any, newPage: any): boolean {
-        return pager.currentPage == undefined || (
-            newPage >= pager.startPage
-            && newPage <= pager.endPage);
+    canChangePage(pager: Pager, newPage: number): boolean {
+        return newPage >= pager.startPage && newPage <= pager.endPage;
     }
 
 }

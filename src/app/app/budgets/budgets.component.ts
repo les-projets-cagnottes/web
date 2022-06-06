@@ -65,11 +65,11 @@ export class BudgetsComponent implements OnInit {
       });
   }
 
-  openNewBudgetModal(template: TemplateRef<any>) {
+  openNewBudgetModal(template: TemplateRef<string>) {
     this.openBudgetModal(template, new BudgetModel());
   }
 
-  openBudgetModal(template: TemplateRef<any>, budget: BudgetModel) {
+  openBudgetModal(template: TemplateRef<string>, budget: BudgetModel) {
     this.rules = new Map<number, ContentModel>();
     this.organizationService.getAllContents(this.authenticationService.currentOrganizationValue.id)
       .subscribe(contents => {
@@ -152,8 +152,8 @@ export class BudgetsComponent implements OnInit {
   }
 
   dateToString(date: Date) {
-    var date = new Date(date);
-    return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    const dateParsed = new Date(date)
+    return dateParsed.getFullYear() + "-" + ("0" + (dateParsed.getMonth() + 1)).slice(-2) + "-" + ("0" + dateParsed.getDate()).slice(-2);
   }
 
 }

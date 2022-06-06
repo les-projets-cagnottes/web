@@ -6,22 +6,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ConfigService {
 
-  private appConfig: any;
-  private apiUrl = '';
+  private appConfig = new Map<string, string>();
 
   constructor(private _http: HttpClient) { }
 
   loadConfig() {
     return this._http
-      .get('./assets/config.json')
+      .get<MapType>('./assets/config.json')
       .toPromise()
       .then((res) => {
-        this.appConfig = res;
+        for (const i in res) {
+          this.appConfig.set(i, res[i]);
+        }
       });
   }
 
   get(key: string): string {
-    return this.appConfig[key];
+    return this.appConfig.get(key) || '';
   }
 
+}
+
+type MapType = { 
+  [id: string]: string; 
 }

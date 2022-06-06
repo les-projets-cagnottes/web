@@ -1,6 +1,6 @@
 {
   "name": "les-projets-cagnottes",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -27,7 +27,7 @@
     "@angular/router": "^13.1.1",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@types/uuid": "^8.3.3",
-    "admin-lte": "^3.1.0",
+    "admin-lte": "^3.2.0",
     "bootstrap": "^4.6.0",
     "core-js": "^3.20.2",
     "ionicons": "^6.0.0",
@@ -61,6 +61,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.7.0",
+    "protractor": "^7.0.0",
     "typescript": "~4.5.4"
   }
 }
