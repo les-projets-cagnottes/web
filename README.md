@@ -43,22 +43,29 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 
 ### Debug locally in production mode
 
-#### Create junction to serve images stored in `core` component
-
-```cmd
-mklink /d dist\fr\img <core-directory>\files\img
-```
-
 #### Build in production mode
 
 ```cmd
 npm run ng build -- --configuration production --output-path=dist
 ```
 
-#### Run a debug HTTP server
+#### Run a debug HTTPS server with certificates
+
+Update the file `src/assets/config.json` with an HTTP URL :
+
+```json
+{
+    "webUrl": "https://localhost:4200"
+}
+```
+
+Then run the following commands :
 
 ```cmd
-angular-http-server -p 4200 --path dist\fr
+mkcert -install
+cd dist\fr
+mkcert localhost
+angular-http-server --https --cert localhost.pem --key localhost-key.pem -p 4200
 ```
 
 ### Run with Docker

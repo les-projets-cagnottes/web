@@ -24,7 +24,7 @@
                 <h3 class="card-title" i18n="@@campaigns">Campaigns</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshCampaigns(campaignPager.currentPage)"
-                        [ngClass]="{ 'text-success': campaignsSyncStatus == 'success'}">
+                        [ngClass]="{ 'text-success': campaignsSyncStatus === 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
                 </div>
@@ -56,18 +56,18 @@
                             <td>{{ campaign.totalDonations.toFixed(2) }} €</td>
                             <td>{{ campaign.donationsRequired.toFixed(2) }} €</td>
                             <td>
-                                <span *ngIf="campaign.status == 'IN_PROGRESS'" class="badge bg-yellow"
+                                <span *ngIf="campaign.status === 'IN_PROGRESS'" class="badge bg-yellow"
                                     i18n="@@inProgress">In Progress</span>
-                                <span *ngIf="campaign.status == 'FAILED'" class="badge bg-gray"
+                                <span *ngIf="campaign.status === 'FAILED'" class="badge bg-gray"
                                     i18n="@@cancelled">Cancelled</span>
-                                <span *ngIf="campaign.status == 'SUCCESSFUL'" class="badge bg-green"
+                                <span *ngIf="campaign.status === 'SUCCESSFUL'" class="badge bg-green"
                                     i18n="@@completed">Completed</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="campaignsSyncStatus == 'running'" class="overlay">
+            <div *ngIf="campaignsSyncStatus === 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
             <!-- /.card-body -->
@@ -121,7 +121,7 @@
                 <h3 class="card-title" i18n="@@users">Users</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshAccounts(accountsPager.currentPage)"
-                        [ngClass]="{ 'text-success': accountsSyncStatus == 'success'}">
+                        [ngClass]="{ 'text-success': accountsSyncStatus === 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
                 </div>
@@ -150,7 +150,7 @@
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="accountsSyncStatus == 'running'" class="overlay">
+            <div *ngIf="accountsSyncStatus === 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
             <!-- /.card-body -->

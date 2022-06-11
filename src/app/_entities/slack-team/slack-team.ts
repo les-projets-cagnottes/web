@@ -1,9 +1,9 @@
-import {SlackTeamModel} from '../../_models';
+import { SlackTeamModel } from '../../_models';
 
 export class SlackTeam extends SlackTeamModel {
 
   static fromModel(model: SlackTeamModel): SlackTeam {
-    var entity = new SlackTeam();
+    const entity = new SlackTeam();
     entity.id = model.id;
     entity.createdAt = model.createdAt;
     entity.createdBy = model.createdBy;

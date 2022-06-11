@@ -56,9 +56,9 @@
                             <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
                             <td>{{ project.shortDescription }}</td>
                             <td>
-                                <span *ngIf="project.status == 'DRAFT'" class="badge bg-gray" i18n="@@draft">Draft</span>
-                                <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow" i18n="@@inProgress">In Progress</span>
-                                <span *ngIf="project.status == 'FINISHED'" class="badge bg-green" i18n="@@finished">Finished</span>
+                                <span *ngIf="project.status === projectStatus.DRAFT" class="badge bg-gray" i18n="@@draft">Draft</span>
+                                <span *ngIf="project.status === projectStatus.IN_PROGRESS" class="badge bg-yellow" i18n="@@inProgress">In Progress</span>
+                                <span *ngIf="project.status === projectStatus.FINISHED" class="badge bg-green" i18n="@@finished">Finished</span>
                             </td>
                         </tr>
                     </tbody>
@@ -82,7 +82,7 @@
                             <td><a *ngIf="campaigns.get(donation.value.campaign.id) !== undefined" [routerLink]="['/projects/', getCampaign(donation.value.campaign.id).project.id]">{{ getProject(getCampaign(donation.value.campaign.id).project.id).title }}</a></td>
                             <td>{{ donation.value.amount }} €</td>
                             <td>
-                                <a *ngIf="campaigns.get(donation.value.campaign.id) !== undefined && getCampaign(donation.value.campaign.id).status == 'IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.value.id] == 'error' }" (click)="deleteDonations(donation.value)">
+                                <a *ngIf="campaigns.get(donation.value.campaign.id) !== undefined && getCampaign(donation.value.campaign.id).status === 'IN_PROGRESS'" class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteDonationsStatus[donation.value.id] === 'error' }" (click)="deleteDonations(donation.value)">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
@@ -112,7 +112,7 @@
                         <label for="inputAvatarUrl" class="control-label" i18n="@@avatarUrl">Avatar URL</label>
                         <input formControlName="avatarUrl" type="url" class="form-control" id="inputAvatarUrl" placeholder="Avatar URL" i18n-placeholder="@@avatarUrl">
                     </div>
-                    <button type="submit" [disabled]="submitting" class="btn btn-primary" [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }" (click)="submit()" i18n="@@save">Save</button>
+                    <button type="submit" [disabled]="submitting" class="btn btn-primary" [ngClass]="{ 'btn-success': submitStatus === 'success', 'btn-danger': submitStatus === 'error' }" (click)="submit()" i18n="@@save">Save</button>
                 </form>
             </tab>
             <tab heading="Developper" id="dev" i18n-heading="@@developper">
@@ -127,7 +127,7 @@
                         <tr *ngFor="let apiToken of apiTokens | keyvalue">
                             <td>{{ apiToken.value.id }}</td>
                             <td>
-                                <a class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteApiTokenStatus[apiToken.value.id] == 'error' }" (click)="deleteApiToken(apiToken.value)">
+                                <a class="text-muted item-clickable" [ngClass]="{ 'text-danger': deleteApiTokenStatus[apiToken.value.id] === 'error' }" (click)="deleteApiToken(apiToken.value)">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
@@ -135,7 +135,7 @@
                     </tbody>
                 </table>
                 <div class="bottom-bar">
-                    <button type="button" class="btn btn-primary" (click)="generateApiToken(template)" [ngClass]="{ 'btn-success': generateApiTokenStatus == 'success', 'btn-danger': generateApiTokenStatus == 'error' }">
+                    <button type="button" class="btn btn-primary" (click)="generateApiToken(template)" [ngClass]="{ 'btn-success': generateApiTokenStatus === 'success', 'btn-danger': generateApiTokenStatus === 'error' }">
                         <i class="fa fa-plus"></i> <span i18n="@@generate">Generate</span>
                     </button>
                 </div>

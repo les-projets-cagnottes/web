@@ -1,9 +1,9 @@
 
 export class GenericModel {
-    id: number = 0;
+    id = 0;
     
     static valueOf(id: number): GenericModel {
-        var generic = new GenericModel();
+        const generic = new GenericModel();
         generic.id = id;
         return generic;
     }

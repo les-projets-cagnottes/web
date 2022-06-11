@@ -195,6 +195,15 @@
       <trans-unit id="logoUrl" datatype="html">
         <target>URL du logo</target>
       </trans-unit>
+      <trans-unit id="msPublicationGroupId" datatype="html">
+        <target>Group ID Microsoft Teams</target>
+      </trans-unit>
+      <trans-unit id="msPublicationChannelId" datatype="html">
+        <target>Channel ID Microsoft Teams</target>
+      </trans-unit>
+      <trans-unit id="msCompanyFilter" datatype="html">
+        <target>Filtre sur l'entreprisen Microsoft Active Directory</target>
+      </trans-unit>
       <trans-unit id="thirdApps" datatype="html">
         <target>Application tierces</target>
       </trans-unit>
@@ -372,6 +381,12 @@
       <trans-unit id="publish" datatype="html">
         <target>Publier</target>
       </trans-unit>
+      <trans-unit id="reopen" datatype="html">
+        <target>Réouvrir</target>
+      </trans-unit>
+      <trans-unit id="finish" datatype="html">
+        <target>Terminer</target>
+      </trans-unit>
       <trans-unit id="joinTheTeam" datatype="html">
         <target>Rejoindre l'équipe</target>
       </trans-unit>
@@ -399,6 +414,9 @@
       <trans-unit id="username" datatype="html">
         <target>Nom d'utilisateur</target>
       </trans-unit>
+      <trans-unit id="isAdmin" datatype="html">
+        <target>Est admin</target>
+      </trans-unit>
       <trans-unit id="enabled" datatype="html">
         <target>Activé</target>
       </trans-unit>
@@ -414,8 +432,8 @@
       <trans-unit id="signInUsingMS" datatype="html">
         <target>Se connecter avec Microsoft</target>
       </trans-unit>
-      <trans-unit id="publicationChannelId" datatype="html">
-        <target>Identifiant du canal slack</target>
+      <trans-unit id="slackPublicationChannelId" datatype="html">
+        <target>Channel ID Slack</target>
       </trans-unit>
     </body>
   </file>

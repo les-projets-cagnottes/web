@@ -16,7 +16,7 @@ export class User extends UserModel {
     slackUsers: SlackUser[] = [];
 
     static fromModel(model: UserModel): User {
-        var entity = new User();
+        const entity = new User();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -35,7 +35,7 @@ export class User extends UserModel {
     }
 
     static fromModels(models: UserModel[]): User[] {
-        var entities: User[] = [];
+        const entities: User[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }

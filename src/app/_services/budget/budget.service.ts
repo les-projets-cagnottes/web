@@ -25,18 +25,18 @@ export class BudgetService {
     const params = new HttpParams()
         .set('offset', offset)
         .set('limit', limit);
-    return this.http.get<DataPage>(`${this.configService.get('apiUrl')}/budget/${budgetId}/accounts`, { params });
+    return this.http.get<DataPage<AccountModel>>(`${this.configService.get('apiUrl')}/budget/${budgetId}/accounts`, { params });
   }
   
   getUsers(budgetId: number) {
     return this.http.get<UserModel[]>(`${this.configService.get('apiUrl')}/budget/${budgetId}/users`);
   }
   
-  getCampaigns(budgetId: any, offset: number, limit: number) {
+  getCampaigns(budgetId: number, offset: number, limit: number) {
     const params = new HttpParams()
         .set('offset', offset)
         .set('limit', limit);
-    return this.http.get<CampaignModel[]>(`${this.configService.get('apiUrl')}/budget/${budgetId}/campaigns`, { params });
+    return this.http.get<DataPage<CampaignModel>>(`${this.configService.get('apiUrl')}/budget/${budgetId}/campaigns`, { params });
   }
 
   create(budget: BudgetModel) {
