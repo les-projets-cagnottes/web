@@ -1,7 +1,8 @@
 import { AuditModel } from '..';
 
 export class SlackTeamModel extends AuditModel {
-    teamId = '';
-    teamName = '';
-    publicationChannel = '';
+  teamId = '';
+  teamName = '';
+  publicationChannel = '';
+  publicationChannelId = '';
 }

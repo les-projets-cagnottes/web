@@ -432,6 +432,9 @@
       <trans-unit id="signInUsingMS" datatype="html">
         <target>Se connecter avec Microsoft</target>
       </trans-unit>
+      <trans-unit id="slackPublicationChannelId" datatype="html">
+        <target>Channel ID Slack</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

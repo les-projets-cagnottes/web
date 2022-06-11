@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ContentService, FileService, OrganizationService, PagerService, SlackTeamService, UserService } from 'src/app/_services';
 import { Organization, User, SlackTeam } from 'src/app/_entities';
 import { OrganizationAuthority } from 'src/app/_entities/organization-authority/organization-authority';
-import { ContentModel, DataPage, OrganizationAuthorityModel, OrganizationModel, UserModel } from 'src/app/_models';
+import { ContentModel, DataPage, OrganizationAuthorityModel, OrganizationModel, SlackTeamModel, UserModel } from 'src/app/_models';
 import { ConfigService } from 'src/app/_services/config/config.service';
 import { MsTeamService } from 'src/app/_services/ms-team/ms-team.service';
 import { MsTeamModel } from 'src/app/_models/ms-team/ms-team.model';
@@ -49,6 +49,7 @@ export class EditOrganizationComponent implements OnInit {
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
     logoUrl: [this.organization.logoUrl],
+    slackPublicationChannelId: [this.organization.slackTeam.publicationChannelId],
     msPublicationGroupId: [this.msTeam.groupId],
     msPublicationChannelId: [this.msTeam.channelId],
     msCompanyFilter: [this.msTeam.companyFilter]
@@ -135,7 +136,7 @@ export class EditOrganizationComponent implements OnInit {
     this.route.queryParamMap
       .subscribe((params) => {
         const state = Number(params.get('state'));
-        if(state > 0) {
+        if (state > 0) {
           const msTeam = new MsTeamModel();
           msTeam.organization.id = state;
           msTeam.tenantId = this.configService.get('microsoftTenantId');
@@ -147,7 +148,7 @@ export class EditOrganizationComponent implements OnInit {
             });
         }
       }
-    );
+      );
     if (this.id > 0) {
       this.setredirectUrlSlackOAuth(this.id);
       const slackEndPoint = '/organizations/edit/slack/' + this.id;
@@ -297,8 +298,8 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshSlackTeam() {
-    if (this.organization.slackTeam != null 
-      && this.organization.slackTeam != undefined 
+    if (this.organization.slackTeam != null
+      && this.organization.slackTeam != undefined
       && this.organization.slackTeam.id > 0) {
       this.slackTeamService.getById(this.organization.slackTeam.id)
         .subscribe(
@@ -310,8 +311,8 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshMsTeam() {
-    if (this.organization.msTeam != null 
-      && this.organization.msTeam != undefined 
+    if (this.organization.msTeam != null
+      && this.organization.msTeam != undefined
       && this.organization.msTeam.id > 0) {
       this.msTeamService.getById(this.organization.msTeam.id)
         .subscribe(
@@ -353,7 +354,7 @@ export class EditOrganizationComponent implements OnInit {
           },
           error => {
             this.slackSyncStatus = 'error';
-            console.log(error);
+            console.error(error);
             setTimeout(() => {
               this.slackSyncStatus = 'idle';
             }, 2000);
@@ -376,7 +377,7 @@ export class EditOrganizationComponent implements OnInit {
           },
           error => {
             this.slackDisconnectStatus = 'error';
-            console.log(error);
+            console.error(error);
             setTimeout(() => {
               this.slackDisconnectStatus = 'idle';
             }, 2000);
@@ -399,7 +400,7 @@ export class EditOrganizationComponent implements OnInit {
           },
           error => {
             this.microsoftSyncStatus = 'error';
-            console.log(error);
+            console.error(error);
             setTimeout(() => {
               this.microsoftSyncStatus = 'idle';
             }, 2000);
@@ -422,7 +423,7 @@ export class EditOrganizationComponent implements OnInit {
           },
           error => {
             this.msDisconnectStatus = 'error';
-            console.log(error);
+            console.error(error);
             setTimeout(() => {
               this.msDisconnectStatus = 'idle';
             }, 2000);
@@ -449,7 +450,7 @@ export class EditOrganizationComponent implements OnInit {
             this.refreshContents(this.pagerContents.currentPage);
           },
           error => {
-            console.log(error);
+            console.error(error);
           });
     } else {
       this.contentService.create(content)
@@ -459,7 +460,7 @@ export class EditOrganizationComponent implements OnInit {
             this.refreshContents(this.pagerContents.currentPage);
           },
           error => {
-            console.log(error);
+            console.error(error);
           }
         );
     }
@@ -483,7 +484,7 @@ export class EditOrganizationComponent implements OnInit {
                 }, 2000);
               },
               error => {
-                console.log(error);
+                console.error(error);
                 this.submitting = false;
                 this.addStatus = 'error';
                 setTimeout(() => {
@@ -493,7 +494,7 @@ export class EditOrganizationComponent implements OnInit {
             );
         },
         error => {
-          console.log(error);
+          console.error(error);
           this.submitting = false;
           this.addStatus = 'error';
           setTimeout(() => {
@@ -541,15 +542,38 @@ export class EditOrganizationComponent implements OnInit {
     if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }
+    if (this.organization.slackTeam && this.organization.slackTeam.id > 0) {
+      const slackTeam = new SlackTeamModel();
+      slackTeam.teamName = this.organization.slackTeam.teamName;
+      slackTeam.teamId = this.organization.slackTeam.teamId;
+      slackTeam.publicationChannelId = this.f['slackPublicationChannelId'].value;
+      this.slackTeamService.update(slackTeam)
+        .subscribe(
+          () => {
+            this.submitting = false;
+            this.submitStatus = 'success';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
+          },
+          error => {
+            console.error(error);
+            this.submitting = false;
+            this.submitStatus = 'error';
+            setTimeout(() => {
+              this.submitStatus = 'idle';
+            }, 2000);
+          });
+    }
 
-    if(this.msTeam.id > 0) {
+    if (this.msTeam.id > 0) {
       this.msTeamService.update(this.msTeam)
         .subscribe(
           response => {
             console.debug('MS Team updated : ' + response);
           },
           error => {
-            console.log(error);
+            console.error(error);
           }
         )
     }
@@ -567,7 +591,7 @@ export class EditOrganizationComponent implements OnInit {
             }, 2000);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
             this.submitStatus = 'error';
             setTimeout(() => {
@@ -587,7 +611,7 @@ export class EditOrganizationComponent implements OnInit {
             }, 2000);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
             this.submitStatus = 'error';
             setTimeout(() => {
@@ -606,7 +630,7 @@ export class EditOrganizationComponent implements OnInit {
           console.debug('Media deleted : ' + response);
         },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 
