@@ -4,7 +4,7 @@
 
         <div class="card-tools">
             <a class="btn btn-tool btn-sm" (click)="refresh()"
-                [ngClass]="{ 'text-success': refreshStatus == 'success', 'text-danger': refreshStatus == 'error'}">
+                [ngClass]="{ 'text-success': refreshStatus === 'success', 'text-danger': refreshStatus === 'error'}">
                 <i class="fas fa-sync"></i>
             </a>
             <a class="btn btn-tool btn-sm" (click)="openNewBudgetModal(editBudgetModalTemplate)">
@@ -67,7 +67,7 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="refreshStatus == 'running'" class="overlay">
+    <div *ngIf="refreshStatus === 'running'" class="overlay">
         <i class="fas fa-sync fa-spin"></i>
     </div>
 </div>

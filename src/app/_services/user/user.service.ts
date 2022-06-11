@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ConfigService } from '../config/config.service';
 
-import { AccountModel, DonationModel, UserModel, OrganizationModel, OrganizationAuthorityModel } from '../../_models';
+import { AccountModel, DonationModel, UserModel, OrganizationModel, OrganizationAuthorityModel, AuthorityModel, DataPage } from '../../_models';
 
 import { ProjectModel } from '../../_models/project/project.model';
 
@@ -16,7 +16,7 @@ export class UserService {
         const params = new HttpParams()
             .set('offset', offset.toString())
             .set('limit', limit.toString());
-        return this.http.get<UserModel[]>(`${this.configService.get('apiUrl')}/user`, { params });
+        return this.http.get<DataPage<UserModel>>(`${this.configService.get('apiUrl')}/user`, { params });
     }
 
     getById(id: number) {
@@ -33,7 +33,7 @@ export class UserService {
         return this.http.get<UserModel>(`${this.configService.get('apiUrl')}/user?email=${email}`);
     }
 
-    getByBudgetId(budgetId: any, offset: number, limit: number) {
+    getByBudgetId(budgetId: number, offset: number, limit: number) {
         const params = new HttpParams()
             .set('budgetId', budgetId)
             .set('offset', offset)
@@ -81,8 +81,11 @@ export class UserService {
         return this.http.delete(`${this.configService.get('apiUrl')}/user/${id}`);
     }
 
-    grant(id: number, organizationAuthority: OrganizationAuthorityModel) {
-        return this.http.post(`${this.configService.get('apiUrl')}/user/${id}/orgauthorities`, organizationAuthority);
+    grant(id: number, authority: AuthorityModel) {
+        return this.http.post(`${this.configService.get('apiUrl')}/user/${id}/authorities`, authority);
     }
 
+    grantOrgAuthority(id: number, organizationAuthority: OrganizationAuthorityModel) {
+        return this.http.post(`${this.configService.get('apiUrl')}/user/${id}/orgauthorities`, organizationAuthority);
+    }
 }

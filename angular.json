@@ -1,184 +1,196 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "version": 1,
-    "newProjectRoot": "projects",
-    "projects": {
-        "web": {
-            "i18n": {
-                "sourceLocale": "en-US",
-                "locales": {
-                    "fr": {
-                        "translation": "src/locale/messages.fr.xlf",
-                        "baseHref": ""
-                    }
-                }
-            },
-            "projectType": "application",
-            "schematics": {},
-            "root": "",
-            "sourceRoot": "src",
-            "prefix": "app",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "outputPath": "dist/web",
-                        "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "tsconfig.app.json",
-                        "localize": true,
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets",
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/bootstrap/dist/",
-                                "output": "./assets/lib/bootstrap"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/@fortawesome/fontawesome-free",
-                                "output": "./assets/lib/font-awesome"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/ionicons/dist/",
-                                "output": "./assets/lib/ionicons"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/admin-lte/dist/",
-                                "output": "./assets/lib/admin-lte"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/jquery/dist/",
-                                "output": "./assets/lib/jquery"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/icheck/",
-                                "output": "./assets/lib/icheck"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/chart.js/dist/",
-                                "output": "./assets/lib/chartjs"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/summernote/dist/",
-                                "output": "./assets/lib/summernote/"
-                            },
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/ace-builds/src-min",
-                                "output": "./assets/ace-builds/"
-                            }
-                        ],
-                        "styles": [
-                            "src/styles.css",
-                            "node_modules/summernote/dist/summernote-lite.min.css"
-                        ],
-                        "scripts": [
-                            "node_modules/summernote/dist/summernote-lite.min.js"
-                        ],
-                        "vendorChunk": true,
-                        "extractLicenses": false,
-                        "buildOptimizer": false,
-                        "sourceMap": true,
-                        "optimization": false,
-                        "namedChunks": true
-                    },
-                    "configurations": {
-                        "production": {
-                            "budgets": [
-                                {
-                                    "type": "initial",
-                                    "maximumWarning": "1mb",
-                                    "maximumError": "4mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "3kb",
-                                    "maximumError": "5kb"
-                                }
-                            ],
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "outputHashing": "all",
-                            "localize": [
-                                "fr"
-                            ]
-                        },
-                        "development": {
-                            "buildOptimizer": false,
-                            "optimization": false,
-                            "vendorChunk": true,
-                            "extractLicenses": false,
-                            "sourceMap": true,
-                            "namedChunks": true,
-                            "localize": [
-                                "fr"
-                            ]
-                        }
-                    },
-                    "defaultConfiguration": ""
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "web:build:production"
-                        },
-                        "development": {
-                            "browserTarget": "web:build:development"
-                        }
-                    },
-                    "defaultConfiguration": "development"
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "web:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "tsconfig.spec.json",
-                        "karmaConfig": "karma.conf.js",
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
-                        ],
-                        "styles": [
-                            "./node_modules/bootstrap/dist/css/bootstrap.min.css"
-                        ],
-                        "scripts": []
-                    }
-                },
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "web:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "web:serve:production"
-                        }
-                    }
-                }
-            }
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "web": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf",
+            "baseHref": ""
+          }
         }
-    },
-    "defaultProject": "web"
+      },
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/web",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "localize": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/bootstrap/dist/",
+                "output": "./assets/lib/bootstrap"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@fortawesome/fontawesome-free",
+                "output": "./assets/lib/font-awesome"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ionicons/dist/",
+                "output": "./assets/lib/ionicons"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/admin-lte/dist/",
+                "output": "./assets/lib/admin-lte"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/jquery/dist/",
+                "output": "./assets/lib/jquery"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/icheck/",
+                "output": "./assets/lib/icheck"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/chart.js/dist/",
+                "output": "./assets/lib/chartjs"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/summernote/dist/",
+                "output": "./assets/lib/summernote/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ace-builds/src-min",
+                "output": "./assets/ace-builds/"
+              }
+            ],
+            "styles": [
+              "src/styles.css",
+              "node_modules/summernote/dist/summernote-lite.min.css"
+            ],
+            "scripts": [
+              "node_modules/summernote/dist/summernote-lite.min.js"
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "4mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "3kb",
+                  "maximumError": "5kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "localize": [
+                "fr"
+              ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "localize": [
+                "fr"
+              ]
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "web:build:production"
+            },
+            "development": {
+              "browserTarget": "web:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "web:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "web",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

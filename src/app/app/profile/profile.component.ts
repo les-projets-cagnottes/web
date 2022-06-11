@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiTokenService, AuthenticationService, OrganizationService, DonationService, CampaignService, UserService, ProjectService } from 'src/app/_services';
 import { Account, ApiToken, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
-import { AccountModel, BudgetModel, CampaignModel } from 'src/app/_models';
+import { ProjectStatus } from 'src/app/_models/project/project-status';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +22,8 @@ export class ProfileComponent implements OnInit {
   donations: Map<number, Donation> = new Map<number, Donation>();
   organizations: Map<number, Organization> = new Map<number, Organization>();
   projects: Map<number, Project> = new Map<number, Project>();
+
+  projectStatus: typeof ProjectStatus = ProjectStatus;
 
   // Project Tab
   userProjects: Project[] = [];
@@ -78,30 +80,30 @@ export class ProfileComponent implements OnInit {
 
     this.organizationService.getBudgets(this.organization.id)
       .subscribe(budgetModels => {
-        var budgetIds: number[] = [];
+        const budgetIds: number[] = [];
         budgetModels.forEach(budgetModel => {
           this.budgets.set(budgetModel.id, Budget.fromModel(budgetModel));
           budgetIds.push(budgetModel.id);
         });
         this.userService.getAccountsByBudgetIds(this.user.id, budgetIds)
           .subscribe(accountModels => {
-            var accountIds: number[] = [];
+            const accountIds: number[] = [];
             accountModels.forEach(accountModel => {
-              var account = Account.fromModel(accountModel);
+              const account = Account.fromModel(accountModel);
               account.usage = this.computeNumberPercent(account.amount, account.initialAmount) + "%";
               this.accounts.set(accountModel.id, account);
               accountIds.push(accountModel.id);
             });
             this.userService.getDonationsByAccountIds(this.user.id, accountIds)
               .subscribe(donationModels => {
-                var campaignIds: number[] = [];
+                const campaignIds: number[] = [];
                 donationModels.forEach(donationModel => {
                   this.donations.set(donationModel.id, Donation.fromModel(donationModel));
                   campaignIds.push(donationModel.campaign.id);
                 });
                 this.campaignService.getAllByIds(campaignIds)
                   .subscribe(campaignModels => {
-                    var projectIds: number[] = [];
+                    const projectIds: number[] = [];
                     campaignModels.forEach(campaignModel => {
                       this.campaigns.set(campaignModel.id, Campaign.fromModel(campaignModel));
                       projectIds.push(campaignModel.project.id);
@@ -119,7 +121,7 @@ export class ProfileComponent implements OnInit {
     this.userService.getProjects(this.user.id)
       .subscribe(projectModels => {
         projectModels.forEach(projectModel => {
-          var project = Project.fromModel(projectModel);
+          const project = Project.fromModel(projectModel);
           this.projects.set(projectModel.id, project);
           this.userProjects.push(project);
         });
@@ -153,7 +155,7 @@ export class ProfileComponent implements OnInit {
         });
   }
 
-  generateApiToken(template: TemplateRef<any>) {
+  generateApiToken(template: TemplateRef<string>) {
     this.apiTokenService.generateApiToken()
       .subscribe((apiTokenModel) => {
         this.generatedApiToken = ApiToken.fromModel(apiTokenModel);
@@ -187,7 +189,7 @@ export class ProfileComponent implements OnInit {
     // starting submitting
     this.submitting = true;
 
-    var user = new User();
+    const user = new User();
     user.id = this.user.id;
     user.email = this.editUserForm.controls['email'].value;
     user.firstname = this.editUserForm.controls['firstname'].value;
@@ -215,9 +217,9 @@ export class ProfileComponent implements OnInit {
   }
 
   computeDatePercent(start: Date, deadline: Date) {
-    var now = new Date();
-    var totalDuration = deadline.getTime() - start.getTime();
-    var expiredDuration = now.getTime() - start.getTime();
+    const now = new Date();
+    const totalDuration = deadline.getTime() - start.getTime();
+    const expiredDuration = now.getTime() - start.getTime();
     return this.computeNumberPercent(expiredDuration, totalDuration);
   }
 
@@ -232,7 +234,7 @@ export class ProfileComponent implements OnInit {
 
   
   getAccount(id: number): Account {
-    var entity = this.accounts.get(id);
+    let entity = this.accounts.get(id);
     if(entity === undefined) {
       entity = new Account();
     }
@@ -240,7 +242,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getBudget(id: number): Budget {
-    var entity = this.budgets.get(id);
+    let entity = this.budgets.get(id);
     if(entity === undefined) {
       entity = new Budget();
     }
@@ -248,7 +250,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getCampaign(id: number): Campaign {
-    var entity = this.campaigns.get(id);
+    let entity = this.campaigns.get(id);
     if(entity === undefined) {
       entity = new Campaign();
     }
@@ -256,7 +258,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProject(id: number): Project {
-    var entity = this.projects.get(id);
+    let entity = this.projects.get(id);
     if(entity === undefined) {
       entity = new Project();
     }

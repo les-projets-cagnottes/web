@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NewsModel } from 'src/app/_models';
-import { ProjectModel } from 'src/app/_models/project/project.model';
 import { ConfigService } from '../config/config.service';
 
 @Injectable({

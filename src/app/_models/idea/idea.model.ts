@@ -1,12 +1,12 @@
 import { AuditModel, GenericModel } from '..';
 
 export class IdeaModel extends AuditModel {
-    icon: string = '';
-    shortDescription: string = '';
-    longDescription: string = '';
-    hasAnonymousCreator: boolean = false;
-    hasLeaderCreator: boolean = false;
-    workspace: string = '';
+    icon = '';
+    shortDescription = '';
+    longDescription = '';
+    hasAnonymousCreator = false;
+    hasLeaderCreator = false;
+    workspace = '';
     submitter: GenericModel = new GenericModel();
     organization: GenericModel = new GenericModel();
 }

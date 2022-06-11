@@ -21,7 +21,7 @@
                         <i class="fas fa-plus-circle"></i>
                     </a>
                     <a class="btn btn-tool btn-sm" (click)="refreshCampaigns()"
-                        [ngClass]="{ 'text-success': campaignsSyncStatus == 'success'}">
+                        [ngClass]="{ 'text-success': campaignsSyncStatus === 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -54,21 +54,21 @@
                                 <span *ngIf="campaign.status === 'SUCCESSFUL'" class="badge bg-green" i18n="@@completed">Completed</span>
                             </td>
                             <td i18n="@@campaign">Campaign</td>
-                            <td><span *ngIf="campaignsBudgets[campaign.budget.id] !== undefined">{{
-                                    campaignsBudgets[campaign.budget.id].name }}</span></td>
+                            <td><span *ngIf="campaignsBudgets.get(campaign.budget.id) !== undefined">{{
+                                    campaignsBudgets.get(campaign.budget.id)?.name }}</span></td>
                             <td>{{ campaign.createdAt | date:'medium' }}</td>
                             <td>{{ campaign.fundingDeadline | date:'medium' }}</td>
                             <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }}
                                 €</td>
                             <td class="action-bar">
-                                <a *ngIf="campaign.status == 'IN_PROGRESS' && campaign.totalDonations < campaign.donationsRequired"
+                                <a *ngIf="campaign.status === 'IN_PROGRESS' && campaign.totalDonations < campaign.donationsRequired"
                                     class="btn btn-default btn-sm"
                                     (click)="openContributingModal(contributeFinanciallyModalTemplate, campaign)">
                                     <i class="fas fa-hand-holding-usd">
                                     </i>
                                     <span i18n="@@contributeFinancially">Contribute financially</span>
                                 </a>
-                                <a *ngIf="campaign.status == 'IN_PROGRESS' && userLoggedIn.id === project.leader.id"
+                                <a *ngIf="campaign.status === 'IN_PROGRESS' && userLoggedIn.id === project.leader.id"
                                     class="btn btn-default btn-sm"
                                     (click)="editFundingModal(addFundintModalTemplate, campaign.id)">
                                     <i class="fas fa-edit">
@@ -80,7 +80,7 @@
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="campaignsSyncStatus == 'running'" class="overlay">
+            <div *ngIf="campaignsSyncStatus === 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
         </div>
@@ -93,7 +93,7 @@
                         <i class="fas fa-plus-circle"></i>
                     </a>
                     <a class="btn btn-tool btn-sm" (click)="refreshNews()"
-                        [ngClass]="{ 'text-success': newsSyncStatus == 'success'}">
+                        [ngClass]="{ 'text-success': newsSyncStatus === 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -117,7 +117,7 @@
                     <div [innerHTML]="news.content"></div>
                 </div>
             </div>
-            <div *ngIf="newsSyncStatus == 'running'" class="overlay">
+            <div *ngIf="newsSyncStatus === 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
         </div>
@@ -134,12 +134,10 @@
                     <dt i18n="@@createdAt">Created at</dt>
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt i18n="@@status">Status</dt>
-                    <dd>
-                        <span *ngIf="project.status == 'DRAFT'" class="badge bg-gray" i18n="@@draft">Draft</span>
-                        <span *ngIf="project.status == 'IN_PROGRESS'" class="badge bg-yellow" i18n="@@inProgress">In
-                            Progress</span>
-                        <span *ngIf="project.status == 'FINISHED'" class="badge bg-green"
-                            i18n="@@finished">Finished</span>
+                    <dd [ngSwitch]="project.status">
+                        <span *ngSwitchCase="projectStatus.DRAFT" class="badge bg-gray" i18n="@@draft">Draft</span>
+                        <span *ngSwitchCase="projectStatus.IN_PROGRESS" class="badge bg-yellow" i18n="@@inProgress">In Progress</span>
+                        <span *ngSwitchCase="projectStatus.FINISHED" class="badge bg-green" i18n="@@finished">Finished</span>
                     </dd>
                     <dt i18n="@@peopleNeeded">People needed</dt>
                     <dd>{{ members.length }} / {{ 1 + project.peopleRequired }}</dd>
@@ -151,17 +149,27 @@
                     <span i18n="@@edit">Edit</span>
                 </a>
                 <a class="btn btn-app" (click)="publish()"
-                    *ngIf="leader.id === userLoggedIn.id && project.status == 'DRAFT'">
+                    *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.DRAFT">
                     <i class="fas fa-rocket"></i>
                     <span i18n="@@publish">Publish</span>
                 </a>
+                <a class="btn btn-app" (click)="reopen()"
+                    *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.FINISHED">
+                    <i class="fas fa-undo"></i>
+                    <span i18n="@@reopen">Reopen</span>
+                </a>
+                <a class="btn btn-app" (click)="finish()"
+                    *ngIf="leader.id === userLoggedIn.id && project.status !== projectStatus.FINISHED">
+                    <i class="fas fa-check"></i>
+                    <span i18n="@@finish">Finish</span>
+                </a>
                 <a class="btn btn-app" (click)="join()"
-                    *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
+                    *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status === projectStatus.IN_PROGRESS">
                     <i class="fas fa-user-plus"></i>
                     <span i18n="@@joinTheTeam">Join the team</span>
                 </a>
                 <a class="btn btn-app" (click)="join()"
-                    *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status == 'IN_PROGRESS'">
+                    *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status === projectStatus.IN_PROGRESS">
                     <i class="fas fa-user-minus"></i>
                     <span i18n="@@leaveTheTeam">Leave the team</span>
                 </a>
@@ -172,7 +180,7 @@
                 <h3 class="card-title" i18n="@@team">Team</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshMembers()"
-                        [ngClass]="{ 'text-success': membersSyncStatus == 'success'}">
+                        [ngClass]="{ 'text-success': membersSyncStatus === 'success'}">
                         <i class="fas fa-sync"></i>
                     </a>
                 </div>
@@ -188,7 +196,7 @@
                     </li>
                 </ul>
             </div>
-            <div *ngIf="membersSyncStatus == 'running'" class="overlay">
+            <div *ngIf="membersSyncStatus === 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
         </div>
@@ -208,7 +216,7 @@
             <div class="form-group">
                 <label for="amount" i18n="@@budget">Budget</label>
                 <select class="form-control select-border" style="width: 100%;" disabled>
-                    <option>{{ campaignsBudgets[account.budget.id].name }}</option>
+                    <option>{{ campaignsBudgets.get(account.budget.id)?.name }}</option>
                 </select>
             </div>
             <div class="form-group">

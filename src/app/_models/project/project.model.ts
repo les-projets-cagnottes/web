@@ -1,19 +1,18 @@
 import { AuditModel, GenericModel } from '..';
+import { ProjectStatus } from './project-status';
 
 export class ProjectModel extends AuditModel {
     
-    title: string = '';
-    status: string = 'DRAFT';
-    shortDescription: string = '';
-    longDescription: string = '';
-    peopleRequired: number = 2;
-    workspace: string = '';
+    title = '';
+    status: ProjectStatus = ProjectStatus.DRAFT;
+    shortDescription = '';
+    longDescription = '';
+    peopleRequired = 2;
+    workspace = '';
     leader: GenericModel = new GenericModel();
     organization: GenericModel = new GenericModel();
     peopleGivingTimeRef: number[] = [];
     campaignsRef: number[] = [];
     newsRef: number[] = [];
 
-    // Only in this component
-    peopleRequiredPercent: string = '';
 }

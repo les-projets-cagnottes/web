@@ -2,8 +2,8 @@
     <div class="col-md-6">
         <div class="form-horizontal">
             <button type="button" class="btn btn-default"
-                [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
-                (click)="refresh()">
+                [ngClass]="{ 'btn-success': refreshStatus === 'success', 'btn-danger': refreshStatus === 'error' }"
+                (click)="refresh(projectsPager.currentPage)">
                 <i class="fas fa-sync"></i>
                 <span i18n="@@refresh">Refresh</span>
             </button>

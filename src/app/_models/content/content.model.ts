@@ -1,8 +1,8 @@
 import { AuditModel, GenericModel } from '..';
 
 export class ContentModel extends AuditModel {
-    name: string = '';
-    value: string = '';
-    workspace: string = '';
+    name = '';
+    value = '';
+    workspace = '';
     organization: GenericModel = new GenericModel();
 }

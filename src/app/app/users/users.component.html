@@ -8,11 +8,12 @@
                 <div class="row action-bar">
                     <div class="col-6">
                         <button type="button" class="btn btn-default"
-                            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
+                            [ngClass]="{ 'btn-success': refreshStatus === 'success', 'btn-danger': refreshStatus === 'error' }"
                             (click)="refresh(pager.currentPage)"><i class="fas fa-sync"></i>
                             <span i18n="@@refresh">Refresh</span></button>
-                        <button type="button" class="btn btn-default" (click)="openModalCreateUser(editUserModalTemplate)"><i
-                                class="fa fa-plus"></i> <span i18n="@@add">Add</span></button>
+                        <button type="button" class="btn btn-default"
+                            (click)="openModalCreateUser(editUserModalTemplate)"><i class="fa fa-plus"></i> <span
+                                i18n="@@add">Add</span></button>
                     </div>
                     <div class="col-6">
                         <div class="dataTables_length text-right">
@@ -36,6 +37,7 @@
                                     <th i18n="@@username">Username</th>
                                     <th i18n="@@email">Email</th>
                                     <th i18n="@@createdAt">Created at</th>
+                                    <th i18n="@@isAdmin">Is Admin</th>
                                     <th i18n="@@enabled">Enabled</th>
                                     <th></th>
                                 </tr>
@@ -46,6 +48,10 @@
                                     <td>{{ user.firstname }} {{ user.lastname }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.createdAt | date:'medium' }}</td>
+                                    <td *ngIf="isAdmin(user)" class="item-clickable text-green" (click)="grant(user.id)">
+                                        <i class="far fa-check-square"></i></td>
+                                    <td *ngIf="!isAdmin(user)" class="item-clickable text-red" (click)="grant(user.id)">
+                                        <i class="far fa-square"></i></td>
                                     <td *ngIf="user.enabled" class="text-green"><i class="far fa-check-square"></i></td>
                                     <td *ngIf="!user.enabled" class="text-red"><i class="far fa-square"></i></td>
                                     <td class="action-bar">

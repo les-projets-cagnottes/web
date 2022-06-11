@@ -10,7 +10,7 @@ export class Project extends ProjectModel {
     news: News[] = [];
 
     static fromModel(model: ProjectModel): Project {
-        var entity = new Project();
+        const entity = new Project();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -32,13 +32,13 @@ export class Project extends ProjectModel {
     }
 
     static valuesOf(models: ProjectModel[]): Project[] {
-        var entities: Project[] = [];
+        const entities: Project[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     static fromModels(models: ProjectModel[]): Project[] {
-        var entities: Project[] = [];
+        const entities: Project[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
