@@ -14,7 +14,7 @@ export class FileService {
     private configService: ConfigService) { }
 
   getUploadPath(directory: string, isInOrg: boolean): string {
-    var path = `${ this.configService.get('apiUrl') }/files/image?directory=orgs/`
+    let path = `${ this.configService.get('apiUrl') }/files/image?directory=orgs/`
     if(isInOrg) {
       path+= this.authenticationService.currentOrganizationValue.id + '/'
     }

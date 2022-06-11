@@ -5,7 +5,7 @@
                 <h3 class="card-title" i18n="@@members">Members</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshMembers(pagerMembers.currentPage)"
-                        [ngClass]="{ 'text-success': refreshMembersStatus == 'success', 'text-danger': refreshMembersStatus == 'error'}">
+                        [ngClass]="{ 'text-success': refreshMembersStatus === 'success', 'text-danger': refreshMembersStatus === 'error'}">
                         <i class="fas fa-sync"></i>
                     </a>
                 </div>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-1">
                             <button type="button" class="btn btn-flat btn-default"
-                                [ngClass]="{ 'btn-success': addStatus == 'success', 'btn-danger': addStatus == 'error', 'btn-default': addStatus == 'idle' }"
+                                [ngClass]="{ 'btn-success': addStatus === 'success', 'btn-danger': addStatus === 'error', 'btn-default': addStatus === 'idle' }"
                                 (click)="onSubmitEmail()" [disabled]="submittingEmail"><i class="fa fa-plus"></i>
                                 <span i18n="@@add">Add</span></button>
                         </div>
@@ -67,7 +67,7 @@
                     </table>
                 </div>
             </div>
-            <div *ngIf="slackSyncStatus == 'running' || refreshMembersStatus == 'running'" class="overlay">
+            <div *ngIf="slackSyncStatus === 'running' || refreshMembersStatus === 'running'" class="overlay">
                 <i class="fas fa-sync fa-spin"></i>
             </div>
             <!-- /.card-body -->
@@ -125,12 +125,23 @@
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['name'].errors }">
                                 <label for="name" i18n="@@name">Name</label>
                                 <input type="text" formControlName="name" class="form-control" id="name"
-                                    placeholder="Enter organization name">
+                                    placeholder="Enter organization name" [(ngModel)]="organization.name">
+                            </div>
+                            <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['name'].errors }">
+                              <label for="name" i18n="@@socialOrganizationName">Name with pronoun</label>
+                              <input type="text" formControlName="socialName" class="form-control" id="social-organization-name"
+                                     placeholder="Enter social organization name" [(ngModel)]="organization.socialName">
                             </div>
                             <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['logoUrl'].errors }">
                                 <label for="logoUrl" i18n="@@logoUrl">Logo URL</label>
                                 <input type="url" formControlName="logoUrl" class="form-control" id="logoUrl"
-                                    placeholder="Enter organization logo URL">
+                                    placeholder="Enter organization logo URL" [(ngModel)]="organization.logoUrl">
+                            </div>
+                            <div *ngIf="this.organization.slackTeam && organization.slackTeam.id > 0">
+                              <div class="form-group has-feedback" [ngClass]="{ 'has-error': f['slackPublicationChannelId'].errors }">
+                                <label i18n="@@slackPublicationChannelId">Slack Publication Channel ID</label>
+                                <input type="text" formControlName="slackPublicationChannelId" [(ngModel)]="organization.slackTeam.publicationChannelId" class="form-control" id="slackPublicationChannelId" placeholder="Enter channel id for slack">
+                              </div>
                             </div>
                             <div *ngIf="msTeam && msTeam.id > 0" class="form-group has-feedback" [ngClass]="{ 'has-error': f['msPublicationGroupId'].errors }">
                                 <label for="msPublicationGroupId" i18n="@@msPublicationGroupId">Microsoft Publication Group ID</label>
@@ -176,12 +187,12 @@
                                                         <span i18n="@@addToSlack">Add to Slack</span></a>
                                                 </div>
                                                 <a *ngIf="organization.slackTeam.id > 0"
-                                                    [ngClass]="{ 'text-success': slackSyncStatus == 'success', 'text-danger': slackSyncStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }"
+                                                    [ngClass]="{ 'text-success': slackSyncStatus === 'success', 'text-danger': slackSyncStatus === 'error', 'disabled': slackSyncStatus === 'running' || slackDisconnectStatus === 'running' }"
                                                     (click)="onSlackSync()" class="text-muted item-clickable">
                                                     <i class="fas fa-sync"></i>
                                                 </a>
                                                 <a *ngIf="organization.slackTeam.id > 0"
-                                                    [ngClass]="{ 'text-success': slackDisconnectStatus == 'success', 'text-danger': slackDisconnectStatus == 'error', 'disabled': slackSyncStatus == 'running' || slackDisconnectStatus == 'running' }"
+                                                    [ngClass]="{ 'text-success': slackDisconnectStatus === 'success', 'text-danger': slackDisconnectStatus === 'error', 'disabled': slackSyncStatus === 'running' || slackDisconnectStatus === 'running' }"
                                                     (click)="onSlackDisconnect()" class="text-muted item-clickable">
                                                     <i class="fas fa-times"></i>
                                                 </a>
@@ -204,12 +215,12 @@
                                                     <i class="fab fa-microsoft"></i>
                                                     <span i18n="@@addToMicrosoft">Add to Microsoft</span></a>
                                                 <a *ngIf="organization.msTeam.id > 0"
-                                                    [ngClass]="{ 'text-success': microsoftSyncStatus == 'success', 'text-danger': microsoftSyncStatus == 'error', 'disabled': microsoftSyncStatus == 'running' || msDisconnectStatus == 'running' }"
+                                                    [ngClass]="{ 'text-success': microsoftSyncStatus === 'success', 'text-danger': microsoftSyncStatus === 'error', 'disabled': microsoftSyncStatus === 'running' || msDisconnectStatus === 'running' }"
                                                     (click)="onMsSync()" class="text-muted item-clickable">
                                                     <i class="fas fa-sync"></i>
                                                 </a>
                                                 <a *ngIf="organization.msTeam.id > 0"
-                                                    [ngClass]="{ 'text-success': msDisconnectStatus == 'success', 'text-danger': msDisconnectStatus == 'error' }"
+                                                    [ngClass]="{ 'text-success': msDisconnectStatus === 'success', 'text-danger': msDisconnectStatus === 'error' }"
                                                     (click)="onMsDisconnect()" class="text-muted item-clickable">
                                                     <i class="fas fa-times"></i>
                                                 </a>
@@ -221,7 +232,7 @@
                         </div>
                         <div class="card-footer" style="text-align: center">
                             <button type="submit" class="btn btn-primary"
-                                [ngClass]="{ 'btn-success': submitStatus == 'success', 'btn-danger': submitStatus == 'error' }"
+                                [ngClass]="{ 'btn-success': submitStatus === 'success', 'btn-danger': submitStatus === 'error' }"
                                 (click)="onSubmit()" [disabled]="submitting">
                                 <i class="fas fa-save"></i>
                                 <span i18n="@@save">Save</span>
@@ -241,7 +252,7 @@
                                 <i class="fa fa-plus"></i>
                             </a>
                             <a class="btn btn-tool btn-sm" (click)="refreshContents(pagerContents.currentPage)"
-                                [ngClass]="{ 'text-success': refreshContentStatus == 'success', 'text-danger': refreshContentStatus == 'error'}">
+                                [ngClass]="{ 'text-success': refreshContentStatus === 'success', 'text-danger': refreshContentStatus === 'error'}">
                                 <i class="fas fa-sync"></i>
                             </a>
                         </div>
@@ -270,7 +281,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div *ngIf="refreshContentStatus == 'running'" class="overlay">
+                    <div *ngIf="refreshContentStatus === 'running'" class="overlay">
                         <i class="fas fa-sync fa-spin"></i>
                     </div>
                     <div class="card-footer">
@@ -333,7 +344,7 @@
                 <input type="text" formControlName="name" class="form-control" id="name"
                     placeholder="Enter content name">
             </div>
-            <div *ngIf="this.contentValueConfig.uploadImagePath != ''" class="form-group has-feedback"
+            <div *ngIf="this.contentValueConfig.uploadImagePath !== ''" class="form-group has-feedback"
                 [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
                 <label for="value" i18n="@@content">Content</label>
                 <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig"

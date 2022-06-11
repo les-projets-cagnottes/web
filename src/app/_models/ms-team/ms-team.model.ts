@@ -1,10 +1,10 @@
 import { AuditModel, GenericModel } from "..";
 
 export class MsTeamModel extends AuditModel {
-    displayName: string = '';
-    tenantId: string = '';
-    groupId: string = '';
-    channelId: string = '';
-    companyFilter: string = '';
+    displayName = '';
+    tenantId = '';
+    groupId = '';
+    channelId = '';
+    companyFilter = '';
     organization: GenericModel = new GenericModel();
 }

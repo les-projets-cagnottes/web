@@ -3,12 +3,12 @@ import { ProjectStatus } from './project-status';
 
 export class ProjectModel extends AuditModel {
     
-    title: string = '';
+    title = '';
     status: ProjectStatus = ProjectStatus.DRAFT;
-    shortDescription: string = '';
-    longDescription: string = '';
-    peopleRequired: number = 2;
-    workspace: string = '';
+    shortDescription = '';
+    longDescription = '';
+    peopleRequired = 2;
+    workspace = '';
     leader: GenericModel = new GenericModel();
     organization: GenericModel = new GenericModel();
     peopleGivingTimeRef: number[] = [];

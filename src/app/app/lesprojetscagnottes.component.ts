@@ -1,13 +1,9 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
-import { Role } from '../_models';
 import { Organization, User } from '../_entities';
 import { AuthenticationService, OrganizationService, UserService } from '../_services';
-import { ConfigService } from '../_services/config/config.service';
 import { Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-lesprojetscagnottes',
@@ -75,12 +71,12 @@ export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
     this.currentOrganizationSubscription.unsubscribe();
   }
 
-  openChangeCurrentOrgModal(template: TemplateRef<any>): void {
+  openChangeCurrentOrgModal(template: TemplateRef<string>): void {
     this.userService.getOrganizations(this.currentUser.id)
       .subscribe(organizations => {
         this.userOrganizations = Organization.fromModels(organizations);
         this.currentOrganization = this.authenticationService.currentOrganizationValue;
-        var currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
+        const currentOrganizationIndex = organizations.findIndex(org => org.id === this.currentOrganization.id);
         if(currentOrganizationIndex >= 0) {
           this.userOrganizations[currentOrganizationIndex].isCurrent = true;
         }

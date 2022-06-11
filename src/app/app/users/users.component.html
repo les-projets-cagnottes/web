@@ -8,7 +8,7 @@
                 <div class="row action-bar">
                     <div class="col-6">
                         <button type="button" class="btn btn-default"
-                            [ngClass]="{ 'btn-success': refreshStatus == 'success', 'btn-danger': refreshStatus == 'error' }"
+                            [ngClass]="{ 'btn-success': refreshStatus === 'success', 'btn-danger': refreshStatus === 'error' }"
                             (click)="refresh(pager.currentPage)"><i class="fas fa-sync"></i>
                             <span i18n="@@refresh">Refresh</span></button>
                         <button type="button" class="btn btn-default"

@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Budget, Campaign, Content, Project, User } from 'src/app/_entities';
-import { AccountModel, CampaignModel, DonationModel, GenericModel, NewsModel } from 'src/app/_models';
+import { AccountModel, BudgetModel, CampaignModel, DataPage, DonationModel, GenericModel, NewsModel } from 'src/app/_models';
+import { Pager } from 'src/app/_models/pagination/pager/pager';
 import { ProjectStatus } from 'src/app/_models/project/project-status';
 import { AccountService, AuthenticationService, BudgetService, CampaignService, ContentService, DonationService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
 
@@ -17,18 +18,18 @@ export class ViewProjectComponent implements OnInit {
   projectStatus = ProjectStatus;
 
   // Data
-  id: number = 0;
+  id = 0;
   userLoggedIn: User = new User();
   project: Project = new Project();
   leader: User = new User();
 
   // Informations Card
-  isUserInTeam: boolean = false;
+  isUserInTeam = false;
 
   // Campaigns Card
   campaigns: Campaign[] = [];
-  campaignsSyncStatus: string = 'idle';
-  campaignsBudgets: any = {};
+  campaignsSyncStatus = 'idle';
+  campaignsBudgets: Map<number, BudgetModel> = new Map<number, BudgetModel>();
 
   // Contributing Modal
   selectedCampaign: Campaign = new Campaign();
@@ -48,8 +49,8 @@ export class ViewProjectComponent implements OnInit {
     donationsRequired: [0, [Validators.required, Validators.min(0.01)]],
     rulesCompliant: [false, Validators.pattern("true")]
   });
-  submittingFunding: boolean = false;
-  minDonations: string = "0.00";
+  submittingFunding = false;
+  minDonations = "0.00";
 
   // Rules Modal
   viewRulesModal: BsModalRef = new BsModalRef();
@@ -62,15 +63,15 @@ export class ViewProjectComponent implements OnInit {
 
   // Members Box
   members: User[] = [];
-  membersSyncStatus: string = 'idle';
-  organizationSocialName: string = '';
+  membersSyncStatus = 'idle';
+  organizationSocialName = '';
   
   // News Box
-  news: any = {};
-  newsPager: any = {};
+  news = new DataPage<NewsModel>();
+  newsPager = new Pager();
   newsPaged: NewsModel[] = [];
-  newsLength: number = 10;
-  newsSyncStatus: string = 'idle';
+  newsLength = 100;
+  newsSyncStatus = 'idle';
 
   constructor(
     private route: ActivatedRoute,
@@ -153,9 +154,9 @@ export class ViewProjectComponent implements OnInit {
               return 0;
             }
           });
-          var budgetsId: number[] = [];
+          let budgetsId: number[] = [];
           this.campaigns.forEach(campaign => {
-            var remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
+            const remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
             campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
             budgetsId.push(campaign.budget.id);
           });
@@ -163,7 +164,7 @@ export class ViewProjectComponent implements OnInit {
           this.budgetService.getAllByIds(budgetsId)
             .subscribe(response => {
               response.forEach(budget => {
-                this.campaignsBudgets[budget.id] = budget;
+                this.campaignsBudgets.set(budget.id, budget);
               });
             });
           this.isUserInTeam = this.members.find(user => {
@@ -175,6 +176,7 @@ export class ViewProjectComponent implements OnInit {
           }, 1000);
         }, error => {
           this.campaignsSyncStatus = 'error';
+          console.error(error);
           setTimeout(() => {
             this.campaignsSyncStatus = 'idle';
           }, 1000);
@@ -182,7 +184,7 @@ export class ViewProjectComponent implements OnInit {
       });
   }
 
-  refreshNews(page: number = 1, force: boolean = false): void {
+  refreshNews(page = 1, force = false): void {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     if (this.pagerService.canChangePage(this.newsPager, page) || force) {
       this.projectService.getNews(this.id, page - 1, this.newsLength)
@@ -203,7 +205,7 @@ export class ViewProjectComponent implements OnInit {
     }
   }
 
-  openContributingModal(template: TemplateRef<any>, campaign: Campaign) {
+  openContributingModal(template: TemplateRef<string>, campaign: Campaign) {
     this.selectedCampaign = campaign;
     this.accountService.getByBudgetAndUser(this.selectedCampaign.budget.id, this.userLoggedIn.id)
       .subscribe(account => {
@@ -220,7 +222,7 @@ export class ViewProjectComponent implements OnInit {
       return;
     }
     this.contributeFinanciallyModalRef.hide();
-    var donation = new DonationModel();
+    const donation = new DonationModel();
     donation.amount = this.donationForm.controls['amount'].value;
     donation.campaign = GenericModel.valueOf(this.selectedCampaign.id);
     donation.account = this.account;
@@ -243,14 +245,14 @@ export class ViewProjectComponent implements OnInit {
       });
   }
   
-  openFundingModal(template: TemplateRef<any>) {
+  openFundingModal(template: TemplateRef<string>) {
     this.refreshBudgets();
     this.formFunding.controls['fundingDeadline'].setValue(this.dateToString(this.campaign.fundingDeadline));
     this.formFunding.controls['donationsRequired'].setValue(this.campaign.donationsRequired);
     this.addFundingModal = this.modalService.show(template);
   }
 
-  openAddFundingModal(template: TemplateRef<any>) {
+  openAddFundingModal(template: TemplateRef<string>) {
     this.campaign = new Campaign();
     this.formFunding.controls['budget'].enable();
     this.formFunding.controls['fundingDeadline'].enable();
@@ -260,7 +262,7 @@ export class ViewProjectComponent implements OnInit {
     this.openFundingModal(template);
   }
 
-  editFundingModal(template: TemplateRef<any>, id: number) {
+  editFundingModal(template: TemplateRef<string>, id: number) {
     this.formFunding.controls['budget'].disable();
     this.formFunding.controls['fundingDeadline'].disable();
     this.formFunding.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.campaign.donationsRequired)]);
@@ -272,7 +274,7 @@ export class ViewProjectComponent implements OnInit {
       });
   }
 
-  onViewTermsOfUse(template: TemplateRef<any>) {
+  onViewTermsOfUse(template: TemplateRef<string>) {
     this.contentService.getById(this.budgets[this.formFunding.controls['budget'].value].rules.id)
       .subscribe(content => {
         this.rules = Content.fromModel(content);
@@ -295,7 +297,7 @@ export class ViewProjectComponent implements OnInit {
     // Set submitting state as true
     this.submittingFunding = true;
 
-    var campaignToSave = new CampaignModel();
+    const campaignToSave = new CampaignModel();
     campaignToSave.donationsRequired = this.formFunding.controls['donationsRequired'].value;
     campaignToSave.budget.id = this.budgets[this.formFunding.controls['budget'].value].id;
     campaignToSave.project.id = this.project.id;
@@ -305,7 +307,7 @@ export class ViewProjectComponent implements OnInit {
       campaignToSave.id = this.campaign.id
       this.campaignService.update(campaignToSave)
         .subscribe(
-          response => {
+          () => {
             this.submittingFunding = false;
             this.addFundingModal.hide();
             this.refreshCampaigns();
@@ -318,7 +320,7 @@ export class ViewProjectComponent implements OnInit {
       campaignToSave.fundingDeadline = this.getFundingDeadlineValue()
       this.campaignService.create(campaignToSave)
         .subscribe(
-          response => {
+          () => {
             this.submittingFunding = false;
             this.addFundingModal.hide();
             this.refreshCampaigns();
@@ -331,8 +333,8 @@ export class ViewProjectComponent implements OnInit {
   }
 
   dateToString(date: Date) {
-    var date = new Date(date);
-    return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+    const dateParsed = new Date(date)
+    return dateParsed.getFullYear() + "-" + ("0" + (dateParsed.getMonth() + 1)).slice(-2) + "-" + ("0" + dateParsed.getDate()).slice(-2);
   }
 
   getFundingDeadlineValue() {

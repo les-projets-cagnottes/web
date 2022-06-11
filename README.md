@@ -43,12 +43,6 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 
 ### Debug locally in production mode
 
-#### Create junction to serve images stored in `core` component
-
-```cmd
-mklink /d dist\fr\img <core-directory>\files\img
-```
-
 #### Build in production mode
 
 ```cmd

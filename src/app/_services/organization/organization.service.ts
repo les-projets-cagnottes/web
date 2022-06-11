@@ -6,7 +6,6 @@ import { ConfigService } from '../config/config.service';
 import { OrganizationModel } from '../../_models/organization/organization.model';
 import { OrganizationAuthorityModel } from '../../_models/organization-authority/organization-authority.model';
 
-import { User } from '../../_entities/user/user';
 import { ContentModel, CampaignModel, IdeaModel, NewsModel, BudgetModel, ProjectModel, UserModel, DataPage } from '../../_models';
 
 @Injectable({
@@ -31,7 +30,7 @@ export class OrganizationService {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
-    return this.http.get<UserModel[]>(`${this.configService.get('apiUrl')}/organization`, { params });
+    return this.http.get<DataPage<OrganizationModel>>(`${this.configService.get('apiUrl')}/organization`, { params });
   }
 
   create(organization: OrganizationModel) {
@@ -67,28 +66,28 @@ export class OrganizationService {
       .set('offset', offset.toString())
       .set('limit', limit.toString())
       .set('filters', filter.toString());
-    return this.http.get<ProjectModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/projects`, { params });
+    return this.http.get<DataPage<ProjectModel>>(`${this.configService.get('apiUrl')}/organization/${id}/projects`, { params });
   }
 
   getIdeas(id: number, offset: number, limit: number) {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
-    return this.http.get<DataPage>(`${this.configService.get('apiUrl')}/organization/${id}/ideas`, { params });
+    return this.http.get<DataPage<IdeaModel>>(`${this.configService.get('apiUrl')}/organization/${id}/ideas`, { params });
   }
 
   getMembers(organizationId: number, offset: number, limit: number) {
     const params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit);
-    return this.http.get<User[]>(`${this.configService.get('apiUrl')}/organization/${organizationId}/members`, { params });
+    return this.http.get<DataPage<UserModel>>(`${this.configService.get('apiUrl')}/organization/${organizationId}/members`, { params });
   }
 
   getNews(id: number, offset: number, limit: number) {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-    return this.http.get<NewsModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/news`, { params });
+    return this.http.get<DataPage<NewsModel>>(`${this.configService.get('apiUrl')}/organization/${id}/news`, { params });
   }
 
   getAllContents(id: number) {
@@ -99,10 +98,10 @@ export class OrganizationService {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-    return this.http.get<ContentModel[]>(`${this.configService.get('apiUrl')}/organization/${id}/contents`, { params });
+    return this.http.get<DataPage<ContentModel>>(`${this.configService.get('apiUrl')}/organization/${id}/contents`, { params });
   }
 
-  getOrganizationAuthorities(organizationsId: Number) {
+  getOrganizationAuthorities(organizationsId: number) {
     return this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/organization/${organizationsId}/authorities`, {});
   }
 
@@ -111,7 +110,7 @@ export class OrganizationService {
   }
 
   removeMember(organizationId: number, userId: number) {
-    let httpParams = new HttpParams().set('aaa', '111');
+    const httpParams = new HttpParams().set('aaa', '111');
     httpParams.set('bbb', '222');
     return this.http.delete(`${this.configService.get('apiUrl')}/organization/${organizationId}/members/${userId}`);
   }

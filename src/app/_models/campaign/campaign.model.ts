@@ -2,18 +2,18 @@
 
 export class CampaignModel extends AuditModel {
     
-    title: string = '';
-    status: string = 'IN_PROGRESS';
-    donationsRequired: number = 0.00;
+    title = '';
+    status = 'IN_PROGRESS';
+    donationsRequired = 0.00;
     fundingDeadline: Date = new Date();
-    totalDonations: number = 0;
+    totalDonations = 0;
     project: GenericModel = new GenericModel();
     budget: GenericModel = new GenericModel();
 
     // Only in this component
-    remainingDays: number = 0;
-    fundingDeadlinePercent: string = '';
-    donationsRequiredPercent: string = '';
+    remainingDays = 0;
+    fundingDeadlinePercent = '';
+    donationsRequiredPercent = '';
 
 }
 

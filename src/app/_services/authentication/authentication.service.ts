@@ -19,7 +19,7 @@ export class AuthenticationService {
     public currentOrganization: Observable<Organization>;
   
     constructor(private http: HttpClient, private configService: ConfigService) {
-        var userInLocalStorage = localStorage.getItem('currentUser');
+        const userInLocalStorage = localStorage.getItem('currentUser');
         if(userInLocalStorage !== null) {
             this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(userInLocalStorage));
         } else {
@@ -27,7 +27,7 @@ export class AuthenticationService {
         }
         this.currentUser = this.currentUserSubject.asObservable();
 
-        var organizationInLocalStorage = localStorage.getItem('currentOrganization');
+        const organizationInLocalStorage = localStorage.getItem('currentOrganization');
         if(organizationInLocalStorage != null) {
             this.currentOrganizationSubject = new BehaviorSubject<Organization>(JSON.parse(organizationInLocalStorage));
         } else {
@@ -45,7 +45,7 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<any>(`${this.configService.get('apiUrl')}/auth/login`,
+        return this.http.post<User>(`${this.configService.get('apiUrl')}/auth/login`,
             {
                 email,
                 password
@@ -66,8 +66,8 @@ export class AuthenticationService {
         const organizations = this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/organizations`);
         return forkJoin([principal, authorities, orgauthorities, organizations])
             .pipe(map(responses =>{
-                var user = User.fromModel(responses[0]);
-                var userInLocalStorage = localStorage.getItem('currentUser');
+                const user = User.fromModel(responses[0]);
+                const userInLocalStorage = localStorage.getItem('currentUser');
                 if(userInLocalStorage !== null) {
                     user.token = JSON.parse(userInLocalStorage).token;
                 }
@@ -89,7 +89,7 @@ export class AuthenticationService {
     }
 
     slack(code: string, redirect_uri: string) {
-        return this.http.get<any>(`${this.configService.get('apiUrl')}/auth/login/slack?code=${code}&redirect_uri=${redirect_uri}`)
+        return this.http.get<User>(`${this.configService.get('apiUrl')}/auth/login/slack?code=${code}&redirect_uri=${redirect_uri}`)
         .pipe(map(user => {
             // login successful if there's a jwt token in the response
             if (user && user.token) {
@@ -102,7 +102,7 @@ export class AuthenticationService {
     }
 
     microsoft(code: string, redirect_uri: string, tenant_id: string) {
-        return this.http.get<any>(`${this.configService.get('apiUrl')}/auth/login/microsoft?code=${code}&redirect_uri=${redirect_uri}&tenant_id=${tenant_id}`)
+        return this.http.get<User>(`${this.configService.get('apiUrl')}/auth/login/microsoft?code=${code}&redirect_uri=${redirect_uri}&tenant_id=${tenant_id}`)
         .pipe(map(user => {
             // login successful if there's a jwt token in the response
             if (user && user.token) {
@@ -128,7 +128,7 @@ export class AuthenticationService {
       }
     
       isManager(organization?: Organization): boolean {
-        var isManager = this.currentUserValue != null && this.currentUserValue.userOrganizationAuthorities != null;
+        let isManager = this.currentUserValue != null && this.currentUserValue.userOrganizationAuthorities != null;
         if(organization !== undefined) {
           isManager = isManager && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Manager && a.organization.id === organization.id);
         } else {
@@ -138,7 +138,7 @@ export class AuthenticationService {
       }
     
       isOwner(organization?: Organization): boolean {
-        var isOwner = this.currentUserValue != null && this.currentUserValue.userOrganizationAuthorities != null;
+        let isOwner = this.currentUserValue != null && this.currentUserValue.userOrganizationAuthorities != null;
         if(organization !== undefined) {
           isOwner = isOwner && this.currentUserValue.userOrganizationAuthorities.some(a => a.name === Role.Owner && a.organization.id === organization.id);
         } else {
@@ -148,7 +148,7 @@ export class AuthenticationService {
       }
     
       get isAdmin() {
-        var isAdmin = this.currentUserValue != null && this.currentUserValue.userAuthorities != null;
+        const isAdmin = this.currentUserValue != null && this.currentUserValue.userAuthorities != null;
         return isAdmin && this.currentUserValue.userAuthorities.some(a => a.name === Role.Admin);
       }
 }

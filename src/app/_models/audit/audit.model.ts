@@ -2,7 +2,7 @@ import { GenericModel } from '../generic/generic.model';
 
 export class AuditModel extends GenericModel {
     createdAt: Date = new Date();
-    createdBy: string = '';
+    createdBy = '';
     updatedAt: Date = new Date();
-    updatedBy: string = '';
+    updatedBy = '';
 }

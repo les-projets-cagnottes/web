@@ -9,10 +9,10 @@ export class Account extends AccountModel {
     override budget: Budget = new Budget();
 
     // Front only
-    usage: string = "0%";
+    usage = "0%";
 
     static fromModel(model: AccountModel): Account {
-        var entity = new Account();
+        const entity = new Account();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
@@ -28,18 +28,18 @@ export class Account extends AccountModel {
     }
 
     static fromModels(models: AccountModel[]): Account[] {
-        var entities: Account[] = [];
+        const entities: Account[] = [];
         models.forEach(model => entities.push(this.fromModel(model)));
         return entities;
     }
 
     setBudget(budgets: Budget[] ) {
-        var result = budgets.find(budget => this.budget.id === budget.id);
+        const result = budgets.find(budget => this.budget.id === budget.id);
         result !== undefined ? this.budget = result : null;
     }
 
     setOwner(users: User[] ) {
-        var result = users.find(user => this.owner.id === user.id);
+        const result = users.find(user => this.owner.id === user.id);
         result !== undefined ? this.owner = result : null;
     }
 }

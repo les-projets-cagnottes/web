@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
+import { Media } from 'src/app/_models/media/media';
 
 @Component({
   selector: 'app-edit-project',
@@ -14,7 +15,7 @@ import { AuthenticationService, FileService, ProjectService } from 'src/app/_ser
 export class EditProjectComponent implements OnInit {
 
   // Data
-  id: number = 0;
+  id = 0;
   project: Project = new Project();
 
   // Form
@@ -24,7 +25,7 @@ export class EditProjectComponent implements OnInit {
     longDescription: ['', [Validators.required]],
     peopleRequired: [2, [Validators.required, Validators.min(2)]]
   });
-  submitting: boolean = false;
+  submitting = false;
 
   // Long Description editor config
   longDescriptionConfig = {
@@ -74,7 +75,7 @@ export class EditProjectComponent implements OnInit {
     // Set submitting state as true
     this.submitting = true;
 
-    var submittedProject = new ProjectModel();
+    const submittedProject = new ProjectModel();
     submittedProject.title = this.form.controls['title'].value;
     submittedProject.shortDescription = this.form.controls['shortDescription'].value;
     submittedProject.longDescription = this.form.controls['longDescription'].value;
@@ -93,7 +94,7 @@ export class EditProjectComponent implements OnInit {
             this.router.navigate(['/projects/' + response.id]);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
           });
     } else {
@@ -105,18 +106,20 @@ export class EditProjectComponent implements OnInit {
             this.router.navigate(['/projects/' + response.id]);
           },
           error => {
-            console.log(error);
+            console.error(error);
             this.submitting = false;
           });
     }
   }
 
-  onDeleteMedia(file: any) {
+  onDeleteMedia(file: Media) {
     this.fileService.deleteByUrl(file.url)
       .subscribe(
-        () => {},
+        response => {
+          console.debug('Media deleted : ' + response)
+        },
         error => {
-          console.log(error);
+          console.error(error);
         });
   }
 }

@@ -6,7 +6,7 @@ export class ApiToken extends ApiTokenModel {
     override user: User = new User();
     
     static fromModel(model: ApiTokenModel): ApiToken {
-        var entity = new ApiToken();
+        const entity = new ApiToken();
         entity.id = model.id;
         entity.createdAt = model.createdAt;
         entity.createdBy = model.createdBy;
