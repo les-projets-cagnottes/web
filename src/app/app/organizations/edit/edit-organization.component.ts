@@ -49,6 +49,7 @@ export class EditOrganizationComponent implements OnInit {
   editOrgForm: FormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
     logoUrl: [this.organization.logoUrl],
+    socialName: [this.organization.socialName],
     slackPublicationChannelId: [this.organization.slackTeam.publicationChannelId],
     msPublicationGroupId: [this.msTeam.groupId],
     msPublicationChannelId: [this.msTeam.channelId],
@@ -207,7 +208,6 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshForm() {
-    this.editOrgForm.controls['name'].setValue(this.organization.name);
     if (!(this.id > 0)) {
       this.organization.members = [];
       const currentUser = localStorage.getItem('currentUser');
@@ -539,6 +539,7 @@ export class EditOrganizationComponent implements OnInit {
     const organization = new OrganizationModel();
     organization.name = this.f['name'].value;
     organization.logoUrl = this.f['logoUrl'].value;
+    organization.socialName = this.f['socialName'].value;
     if (organization.logoUrl === "") {
       organization.logoUrl = "https://eu.ui-avatars.com/api/?name=" + organization.name;
     }

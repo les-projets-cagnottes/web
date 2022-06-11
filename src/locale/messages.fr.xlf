@@ -14,6 +14,9 @@
       <trans-unit id="name" datatype="html">
         <target>Nom</target>
       </trans-unit>
+       <trans-unit id="socialOrganizationName" datatype="html">
+          <target>Nom avec pronom</target>
+        </trans-unit>
       <trans-unit id="amountPerMember" datatype="html">
         <target>Montant par membre</target>
       </trans-unit>
