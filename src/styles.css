@@ -4,6 +4,7 @@
 
 .action-bar .form-horizontal label,
 .action-bar .btn,
+.action-bar select,
 td.action-bar a {
     margin-right: 1em;
 }
