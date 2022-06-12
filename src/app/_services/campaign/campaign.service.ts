@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CampaignModel, DonationModel } from '../../_models';
+import { CampaignModel, DataPage, DonationModel } from '../../_models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ConfigService } from '../config/config.service';
@@ -25,7 +25,7 @@ export class CampaignService {
     const params = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString());
-    return this.http.get<DonationModel[]>(`${this.configService.get('apiUrl')}/campaign/${CampaignId}/donations`, { params });
+    return this.http.get<DataPage<DonationModel>>(`${this.configService.get('apiUrl')}/campaign/${CampaignId}/donations`, { params });
   }
 
   create(Campaign: CampaignModel) {

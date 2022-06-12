@@ -1,9 +1,10 @@
 ﻿import { AuditModel, GenericModel } from '..';
+import { CampaignStatus } from './campaign-status';
 
 export class CampaignModel extends AuditModel {
     
     title = '';
-    status = 'IN_PROGRESS';
+    status: CampaignStatus = CampaignStatus.IN_PROGRESS;
     donationsRequired = 0.00;
     fundingDeadline: Date = new Date();
     totalDonations = 0;
