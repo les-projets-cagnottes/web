@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuidv4 } from 'uuid';
 import { PagerService, OrganizationService, AuthenticationService, UserService, IdeaService, FileService } from 'src/app/_services';
@@ -28,7 +28,7 @@ export class ListIdeasComponent implements OnInit {
   pageSize = 20;
 
   // Forms
-  form: FormGroup = this.formBuilder.group({
+  form: UntypedFormGroup = this.formBuilder.group({
     icon: ['', Validators.required],
     shortDescription: ['', Validators.required],
     longDescription: [''],
@@ -49,7 +49,7 @@ export class ListIdeasComponent implements OnInit {
     uploadImagePath: ''
   }
   
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private modalService: BsModalService,
     private pagerService: PagerService,
     private authenticationService: AuthenticationService,

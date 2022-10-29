@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { v4 as uuidv4 } from 'uuid';
@@ -46,7 +46,7 @@ export class EditOrganizationComponent implements OnInit {
   msTeam: MsTeamModel = new MsTeamModel();
 
   // Forms
-  editOrgForm: FormGroup = this.formBuilder.group({
+  editOrgForm: UntypedFormGroup = this.formBuilder.group({
     name: [this.organization.name, Validators.required],
     logoUrl: [this.organization.logoUrl],
     socialName: [this.organization.socialName],
@@ -55,15 +55,15 @@ export class EditOrganizationComponent implements OnInit {
     msPublicationChannelId: [this.msTeam.channelId],
     msCompanyFilter: [this.msTeam.companyFilter]
   });
-  addMemberOrgForm: FormGroup = this.formBuilder.group({
+  addMemberOrgForm: UntypedFormGroup = this.formBuilder.group({
     email: ['', Validators.required]
   });
-  editMemberRolesForm: FormGroup = this.formBuilder.group({
+  editMemberRolesForm: UntypedFormGroup = this.formBuilder.group({
     isUserSponsor: [false, Validators.required],
     isUserManager: [false, Validators.required],
     iserUserOwner: [false, Validators.required]
   });
-  contentForm: FormGroup = this.formBuilder.group({
+  contentForm: UntypedFormGroup = this.formBuilder.group({
     name: ['', Validators.required],
     value: ['']
   });
@@ -100,7 +100,7 @@ export class EditOrganizationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalService: BsModalService,
     private pagerService: PagerService,
     private configService: ConfigService,

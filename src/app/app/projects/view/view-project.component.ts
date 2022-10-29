@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Budget, Campaign, Content, Donation, Project, User } from 'src/app/_entities';
@@ -47,7 +47,7 @@ export class ViewProjectComponent implements OnInit {
   private campaign = new CampaignModel();
   budgets: Budget[] = [];
   addFundingModal: BsModalRef = new BsModalRef();
-  formFunding: FormGroup = this.formBuilder.group({
+  formFunding: UntypedFormGroup = this.formBuilder.group({
     budget: [0],
     fundingDeadline: ['', Validators.pattern("\\d{4}-\\d{2}-\\d{2}")],
     donationsRequired: [0, [Validators.required, Validators.min(0.01)]],
@@ -89,7 +89,7 @@ export class ViewProjectComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private modalService: BsModalService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private pagerService: PagerService,
     private authenticationService: AuthenticationService,
     private accountService: AccountService,

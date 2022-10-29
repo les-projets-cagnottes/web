@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { NewsModel, ProjectModel, Role } from 'src/app/_models';
@@ -20,7 +20,7 @@ export class EditNewsComponent implements OnInit {
   project: ProjectModel = new ProjectModel();
 
   // Form
-  form: FormGroup = this.formBuilder.group({
+  form: UntypedFormGroup = this.formBuilder.group({
     title: ['', [Validators.required, Validators.maxLength(255)]],
     content: ['', [Validators.required]]
   });
@@ -35,7 +35,7 @@ export class EditNewsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
     private fileService: FileService,
     private newsService: NewsService,

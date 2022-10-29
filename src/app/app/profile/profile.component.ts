@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ApiTokenService, AuthenticationService, OrganizationService, DonationService, CampaignService, UserService, ProjectService } from 'src/app/_services';
 import { Account, ApiToken, Budget, Campaign, Donation, Organization, Project, User } from 'src/app/_entities';
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit {
     private projectService: ProjectService,
     private userService: UserService,
     private modalService: BsModalService,
-    private fb: FormBuilder) {
+    private fb: UntypedFormBuilder) {
   }
 
   ngOnInit() {

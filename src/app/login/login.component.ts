@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../_services';
@@ -13,7 +13,7 @@ import { ConfigService } from '../_services/config/config.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup = this.formBuilder.group({
+  loginForm: UntypedFormGroup = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required]
   });;
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   redirectUrlMSOAuth = '';
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
