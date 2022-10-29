@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BudgetService, AuthenticationService, OrganizationService } from 'src/app/_services';
 import { BudgetModel, ContentModel } from 'src/app/_models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -25,7 +25,7 @@ export class BudgetsComponent implements OnInit {
   editBudgetModal: BsModalRef = new BsModalRef();
 
   // Edit Budget Form
-  editBudgetForm: FormGroup = this.formBuilder.group({
+  editBudgetForm: UntypedFormGroup = this.formBuilder.group({
     name: [this.selectedBudget.name, Validators.required],
     amountPerMember: [this.selectedBudget.amountPerMember, [Validators.required, Validators.min(0.01)]],
     startDate: [this.selectedBudget.startDate, Validators.required],
@@ -34,7 +34,7 @@ export class BudgetsComponent implements OnInit {
   });
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalService: BsModalService,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Account, Budget, User } from 'src/app/_entities';
 import { AccountModel, CampaignModel, DataPage, ProjectModel } from 'src/app/_models';
 import { Pager } from 'src/app/_models/pagination/pager/pager';
@@ -42,7 +42,7 @@ export class ReportComponent implements OnInit {
     private organizationService: OrganizationService,
     private projectService: ProjectService,
     private pagerService: PagerService,
-    private fb: FormBuilder) { }
+    private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.refresh();

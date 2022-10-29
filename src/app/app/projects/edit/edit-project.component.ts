@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { Project } from 'src/app/_entities';
@@ -19,7 +19,7 @@ export class EditProjectComponent implements OnInit {
   project: Project = new Project();
 
   // Form
-  form: FormGroup = this.formBuilder.group({
+  form: UntypedFormGroup = this.formBuilder.group({
     title: ['', [Validators.required, Validators.maxLength(255)]],
     shortDescription: ['', [Validators.required, Validators.maxLength(255)]],
     longDescription: ['', [Validators.required]],
@@ -36,7 +36,7 @@ export class EditProjectComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
     private fileService: FileService,
     private projectService: ProjectService) {

@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NgxSummernoteModule } from 'ngx-summernote';
+import { NgxSummernoteModule } from '@scompiler/ngx-summernote';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

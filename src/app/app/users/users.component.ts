@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -14,7 +14,7 @@ import { Pager } from 'src/app/_models/pagination/pager/pager';
 })
 export class UsersComponent implements OnInit {
 
-  editUserForm: FormGroup = this.formBuilder.group({
+  editUserForm: UntypedFormGroup = this.formBuilder.group({
     email: ['', Validators.required],
     password: [''],
     firstname: [''],
@@ -40,7 +40,7 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private pagerService: PagerService,
     private authorityService: AuthorityService,
     private userService: UserService) {
