@@ -181,7 +181,7 @@
                                             </td>
                                             <td class="action-bar">
                                                 <div *ngIf="organization.slackTeam.id <= 0">
-                                                    <a href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&scope=chat:write,app_mentions:read,team:read,users:read,im:write,im:history,commands&user_scope=channels:write,users:read&redirect_uri={{ redirectUrlSlackOAuth }}"
+                                                    <a href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&scope=app_mentions:read,chat:write,commands,im:history,im:write,team:read,users:read,users:read.email&user_scope=team:read,users:read,users:read.email&redirect_uri={{ redirectUrlSlackOAuth }}"
                                                         class="btn btn-social bg-maroon">
                                                         <i class="fab fa-slack"></i>
                                                         <span i18n="@@addToSlack">Add to Slack</span></a>
