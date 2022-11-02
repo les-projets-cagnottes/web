@@ -39,7 +39,7 @@
                 </form>
                 <div class="social-auth-links text-center mt-2 mb-3">
                     <a *ngIf="slackEnabled"
-                        href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&user_scope=identity.basic,identity.email,identity.avatar,identity.team&redirect_uri={{ redirectUrlSlackOAuth }}"
+                        href="https://slack.com/oauth/v2/authorize?client_id={{ slackClientId }}&user_scope=team:read,users:read,users:read.email&redirect_uri={{ redirectUrlSlackOAuth }}"
                         class="btn btn-block bg-maroon">
                         <i class="fab fa-slack"></i>
                         <span i18n="@@signInUsingSlack">Sign in using Slack</span>
