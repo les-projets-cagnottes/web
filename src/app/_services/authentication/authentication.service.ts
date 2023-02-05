@@ -45,6 +45,7 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
+        this.logout();
         return this.http.post<User>(`${this.configService.get('apiUrl')}/auth/login`,
             {
                 email,
@@ -118,6 +119,8 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(new User());
+        localStorage.removeItem('currentOrganization');
+        this.currentOrganizationSubject.next(new Organization());
     }
     
     isSponsor(): boolean {

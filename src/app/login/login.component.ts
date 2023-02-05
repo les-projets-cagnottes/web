@@ -91,14 +91,22 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     this.authenticationService.login(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
-      .pipe(first())
       .subscribe(
         () => {
           console.debug(this.returnUrl);
-          this.router.navigate([this.returnUrl]);
+          this.authenticationService.whoami()
+          .subscribe(
+            () => {
+              this.router.navigate([this.returnUrl]);
+              this.loading = false;
+            },
+            error => {
+              console.error(error);
+              this.loading = false;
+            })
         },
         error => {
-          console.error(error)
+          console.error(error);
           this.loading = false;
         });
   }
