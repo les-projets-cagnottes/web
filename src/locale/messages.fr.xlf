@@ -438,6 +438,12 @@
       <trans-unit id="slackPublicationChannelId" datatype="html">
         <target>Channel ID Slack</target>
       </trans-unit>
+      <trans-unit id="contributor" datatype="html">
+        <target>Contributeur</target>
+      </trans-unit>
+      <trans-unit id="viewDonations" datatype="html">
+        <target>Voir Contributions</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
