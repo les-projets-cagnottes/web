@@ -8,6 +8,7 @@ export * from './content/content.model';
 export * from './pagination/data-page/data-page'
 export * from './pagination/data-sort/data-sort'
 export * from './donation/donation.model';
+export * from './file/file.model';
 export * from './generic/generic.model';
 export * from './idea/idea.model';
 export * from './news/news.model';

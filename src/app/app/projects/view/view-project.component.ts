@@ -365,13 +365,16 @@ export class ViewProjectComponent implements OnInit {
 
   deleteDonations(donation: Donation) {
     this.donationService.delete(donation.id)
-      .subscribe(() => {
-        this.refreshDonations(this.viewDonationsSelectedCampaign.id, this.donationsPager.currentPage);
-      },
-        error => {
+      .subscribe({
+        next: () => {},
+        complete: () => {
+          this.refreshDonations(this.viewDonationsSelectedCampaign.id, this.donationsPager.currentPage);
+        },
+        error: error => {
           console.log(error);
           this.deleteDonationsStatus[donation.id] = 'error';
-        });
+        }
+      });
   }
 
   get fFunding() { return this.formFunding.controls; }

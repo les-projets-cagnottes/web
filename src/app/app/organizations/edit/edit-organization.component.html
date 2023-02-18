@@ -347,8 +347,8 @@
             <div *ngIf="this.contentValueConfig.uploadImagePath !== ''" class="form-group has-feedback"
                 [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
                 <label for="value" i18n="@@content">Content</label>
-                <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig"
-                    (mediaDelete)="onDeleteMedia($event)"></textarea>
+                <!-- <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig"
+                    (mediaDelete)="onDeleteMedia($event)"></textarea> -->
             </div>
         </form>
     </div>
