@@ -69,7 +69,7 @@ const appConfig = (config: ConfigService) => {
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule.forRoot(),
-    RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+    RouterModule.forRoot([], {})
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

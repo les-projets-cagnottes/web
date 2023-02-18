@@ -15,7 +15,7 @@ describe('AppNavbarComponent', () => {
       imports: [
         HttpClientModule,
         ReactiveFormsModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })]
+        RouterModule.forRoot([], {})]
     })
       .compileComponents();
   }));
