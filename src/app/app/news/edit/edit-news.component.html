@@ -15,8 +15,8 @@
                             [ngClass]="{ 'is-invalid': this.form.controls['title'].errors }" />
                     </div>
                     <div *ngIf="contentConfig.uploadImagePath !== ''" class="form-group">
-                        <textarea id="content" formControlName="content" [ngxSummernote]="contentConfig"
-                            (mediaDelete)="onDeleteMedia($event)"></textarea>
+                        <!-- <textarea id="content" formControlName="content" [ngxSummernote]="contentConfig"
+                            (mediaDelete)="onDeleteMedia($event)"></textarea> -->
                     </div>
                 </div>
                 <div class="card-footer">

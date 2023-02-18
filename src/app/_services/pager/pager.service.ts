@@ -8,7 +8,8 @@ export class PagerService {
 
     getPager(totalItems: number, currentPage = 1, pageSize = 10): Pager {
         // calculate total pages
-        const totalPages = Math.ceil(totalItems / pageSize);
+        let totalPages = Math.ceil(totalItems / pageSize);
+        if(totalItems == 0) totalPages = 1;
 
         // ensure current page isn't out of range
         if (currentPage < 1) {

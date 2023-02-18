@@ -71,21 +71,22 @@
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/summernote/dist/",
-                "output": "./assets/lib/summernote/"
-              },
-              {
-                "glob": "**/*",
                 "input": "node_modules/ace-builds/src-min",
                 "output": "./assets/ace-builds/"
               }
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/summernote/dist/summernote-lite.min.css"
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
+              "./node_modules/quill-emoji/dist/quill-emoji.css",
+              "src/styles.css"
             ],
             "scripts": [
-              "node_modules/summernote/dist/summernote-lite.min.js"
+              "./node_modules/quill/dist/quill.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "quill"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

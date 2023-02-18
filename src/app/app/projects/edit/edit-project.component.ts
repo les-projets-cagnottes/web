@@ -7,6 +7,8 @@ import { ProjectModel } from 'src/app/_models/project/project.model';
 import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
 import { Media } from 'src/app/_models/media/media';
 
+import 'quill-emoji/dist/quill-emoji.js'
+
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
@@ -32,6 +34,7 @@ export class EditProjectComponent implements OnInit {
     height: 600,
     uploadImagePath: '',
   }
+  editor: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,11 +61,42 @@ export class EditProjectComponent implements OnInit {
   }
 
   refresh() {
-    this.longDescriptionConfig.uploadImagePath = this.fileService.getUploadPath("projects/" + this.project.workspace, true);
     this.form.controls['title'].setValue(this.project.title);
     this.form.controls['shortDescription'].setValue(this.project.shortDescription);
     this.form.controls['longDescription'].setValue(this.project.longDescription);
     this.form.controls['peopleRequired'].setValue(this.project.peopleRequired);
+  }
+
+  onImageUpload(editor: any) {
+    this.editor = editor;
+    const toolbar = this.editor.getModule('toolbar');
+    toolbar.addHandler('image', () => {
+      console.log("Root image handler", this.editor);
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+      input.onchange = async () => {
+        const file = input.files?.length ? input.files[0] : null;
+  
+        console.log('User trying to uplaod this:', file);
+  
+        console.log("editor", this.editor);
+        const range = this.editor.getSelection();
+        if(file != null) {
+          this.fileService.uploadImage(file, this.fileService.getUploadPath("projects/" + this.project.workspace, true))
+          .subscribe({
+            next: (data) => {
+              this.editor.insertEmbed(range.index, 'image', data.path);
+            },
+            complete: () => {},
+            error: error => {
+              console.log(error);
+            }
+          });
+        }
+      }
+    });
   }
 
   onSubmit() {

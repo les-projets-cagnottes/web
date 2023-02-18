@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NgxSummernoteModule } from '@scompiler/ngx-summernote';
+import { QuillModule } from 'ngx-quill';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,13 +63,35 @@ const appConfig = (config: ConfigService) => {
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    NgxSummernoteModule,
     ReactiveFormsModule,
     HttpClientModule,
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule.forRoot(),
-    RouterModule.forRoot([], {})
+    RouterModule.forRoot([], {}),
+    QuillModule.forRoot({
+      modules: {
+        'emoji-shortname': true,
+        'emoji-toolbar': true,
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ 'header': 1 }, { 'header': 2 }],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],
+          [{ 'indent': '-1'}, { 'indent': '+1' }],
+          [{ 'direction': 'rtl' }],
+          [{ 'size': ['small', false, 'large', 'huge'] }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          ['clean'],
+          ['link', 'image', 'video'],
+          ['emoji']
+        ]
+      }
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
