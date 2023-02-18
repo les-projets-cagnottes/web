@@ -13,7 +13,7 @@ describe('ProfileComponent', () => {
       declarations: [ProfileComponent],
       imports: [
         HttpClientModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })]
+        RouterModule.forRoot([], {})]
     })
       .compileComponents();
   }));

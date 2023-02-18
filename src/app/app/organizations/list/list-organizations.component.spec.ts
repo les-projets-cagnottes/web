@@ -16,7 +16,7 @@ describe('OrganizationsComponent', () => {
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })]
+        RouterModule.forRoot([], {})]
     })
     .compileComponents();
   }));
