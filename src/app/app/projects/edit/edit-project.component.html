@@ -7,8 +7,6 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <!-- <textarea id="longDescription" [ngxSummernote]="longDescriptionConfig"
-                            (mediaDelete)="onDeleteMedia($event)" formControlName="longDescription"></textarea> -->
                         <quill-editor id="longDescription" formControlName="longDescription" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
                     </div>
                 </div>

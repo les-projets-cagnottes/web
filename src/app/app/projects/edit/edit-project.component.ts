@@ -30,10 +30,6 @@ export class EditProjectComponent implements OnInit {
   submitting = false;
 
   // Long Description editor config
-  longDescriptionConfig = {
-    height: 600,
-    uploadImagePath: '',
-  }
   editor: any;
 
   constructor(
