@@ -88,11 +88,8 @@ export class EditOrganizationComponent implements OnInit {
 
   // Content modal
   modalRef: BsModalRef = new BsModalRef();
-  contentId = 0;
-  contentValueConfig = {
-    height: 600,
-    uploadImagePath: ''
-  }
+  content: ContentModel = new ContentModel();
+  editor: any;
 
   endPointEdit = '';
   slackEndPoint = '';
@@ -333,10 +330,9 @@ export class EditOrganizationComponent implements OnInit {
       Object.assign({}, { class: 'modal-xl' })
     );
     content.workspace = uuidv4();
-    this.contentValueConfig.uploadImagePath = this.fileService.getUploadPath("contents/" + content.workspace, true);
     this.contentForm.controls['name'].setValue(content.name);
     this.contentForm.controls['value'].setValue(content.value);
-    this.contentId = content.id;
+    this.content = content;
   }
 
   onSlackSync() {
@@ -431,6 +427,38 @@ export class EditOrganizationComponent implements OnInit {
     }
   }
 
+  onImageUpload(editor: any) {
+    this.editor = editor;
+    const toolbar = this.editor.getModule('toolbar');
+    toolbar.addHandler('image', () => {
+      console.log("Root image handler", this.editor);
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+      input.onchange = async () => {
+        const file = input.files?.length ? input.files[0] : null;
+  
+        console.log('User trying to uplaod this:', file);
+  
+        console.log("editor", this.editor);
+        const range = this.editor.getSelection();
+        if(file != null) {
+          this.fileService.uploadImage(file, this.fileService.getUploadPath("contents/" + this.content.workspace, true))
+          .subscribe({
+            next: (data) => {
+              this.editor.insertEmbed(range.index, 'image', data.path);
+            },
+            complete: () => {},
+            error: error => {
+              console.log(error);
+            }
+          });
+        }
+      }
+    });
+  }
+
   onSubmitContent() {
     if (this.contentForm.invalid) {
       return;
@@ -441,8 +469,8 @@ export class EditOrganizationComponent implements OnInit {
     content.value = this.contentForm.controls['value'].value;
     content.organization.id = this.organization.id;
 
-    if (this.contentId > 0) {
-      content.id = this.contentId;
+    if (this.content.id > 0) {
+      content.id = this.content.id;
       this.contentService.update(content)
         .subscribe(
           () => {

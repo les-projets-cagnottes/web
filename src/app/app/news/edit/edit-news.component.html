@@ -15,8 +15,7 @@
                             [ngClass]="{ 'is-invalid': this.form.controls['title'].errors }" />
                     </div>
                     <div *ngIf="contentConfig.uploadImagePath !== ''" class="form-group">
-                        <!-- <textarea id="content" formControlName="content" [ngxSummernote]="contentConfig"
-                            (mediaDelete)="onDeleteMedia($event)"></textarea> -->
+                        <quill-editor id="content" formControlName="content" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
                     </div>
                 </div>
                 <div class="card-footer">

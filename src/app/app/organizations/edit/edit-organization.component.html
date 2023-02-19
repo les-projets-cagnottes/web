@@ -347,8 +347,7 @@
             <div *ngIf="this.contentValueConfig.uploadImagePath !== ''" class="form-group has-feedback"
                 [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
                 <label for="value" i18n="@@content">Content</label>
-                <!-- <textarea id="longDescription" formControlName="value" [ngxSummernote]="contentValueConfig"
-                    (mediaDelete)="onDeleteMedia($event)"></textarea> -->
+                <quill-editor id="content" formControlName="content" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
             </div>
         </form>
     </div>

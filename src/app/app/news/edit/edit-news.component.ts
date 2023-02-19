@@ -27,10 +27,7 @@ export class EditNewsComponent implements OnInit {
   submitting = false;
 
   // Long Description editor config
-  contentConfig = {
-    height: 600,
-    uploadImagePath: ''
-  }
+  editor: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,7 +58,6 @@ export class EditNewsComponent implements OnInit {
   }
 
   refresh() {
-    this.contentConfig.uploadImagePath = this.fileService.getUploadPath("news/" + this.news.workspace, true);
     this.form.controls['title'].setValue(this.news.title);
     this.form.controls['content'].setValue(this.news.content);
     if(this.idProject > 0) {
@@ -70,6 +66,38 @@ export class EditNewsComponent implements OnInit {
           this.project = project;
         })
     }
+  }
+
+  onImageUpload(editor: any) {
+    this.editor = editor;
+    const toolbar = this.editor.getModule('toolbar');
+    toolbar.addHandler('image', () => {
+      console.log("Root image handler", this.editor);
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+      input.onchange = async () => {
+        const file = input.files?.length ? input.files[0] : null;
+  
+        console.log('User trying to uplaod this:', file);
+  
+        console.log("editor", this.editor);
+        const range = this.editor.getSelection();
+        if(file != null) {
+          this.fileService.uploadImage(file, this.fileService.getUploadPath("news/" + this.news.workspace, true))
+          .subscribe({
+            next: (data) => {
+              this.editor.insertEmbed(range.index, 'image', data.path);
+            },
+            complete: () => {},
+            error: error => {
+              console.log(error);
+            }
+          });
+        }
+      }
+    });
   }
 
   onSubmit() {

@@ -44,10 +44,7 @@ export class ListIdeasComponent implements OnInit {
   modal: BsModalRef = new BsModalRef();
 
   // Editors
-  config = {
-    height: 200,
-    uploadImagePath: ''
-  }
+  editor: any;
   
   constructor(private formBuilder: UntypedFormBuilder,
     private modalService: BsModalService,
@@ -107,7 +104,6 @@ export class ListIdeasComponent implements OnInit {
     this.selectedIdea = new IdeaModel();
     this.longDescription = "";
     this.selectedIdea.workspace = uuidv4();
-    this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
     this.form.controls['icon'].setValue("far fa-lightbulb");
     this.form.controls['shortDescription'].setValue("");
     this.form.controls['longDescription'].setValue("");
@@ -122,7 +118,6 @@ export class ListIdeasComponent implements OnInit {
   openModalEditIdea(template: TemplateRef<string>, idea: IdeaModel): void {
     this.selectedIdea = idea;
     this.longDescription = idea.longDescription;
-    this.config.uploadImagePath = this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true);
     this.form.controls['icon'].setValue(idea.icon);
     this.form.controls['shortDescription'].setValue(idea.shortDescription);
     this.form.controls['longDescription'].setValue(idea.longDescription);
@@ -136,6 +131,38 @@ export class ListIdeasComponent implements OnInit {
 
   closeModalEditIdea() {
     this.modal.hide();
+  }
+
+  onImageUpload(editor: any) {
+    this.editor = editor;
+    const toolbar = this.editor.getModule('toolbar');
+    toolbar.addHandler('image', () => {
+      console.log("Root image handler", this.editor);
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+      input.onchange = async () => {
+        const file = input.files?.length ? input.files[0] : null;
+  
+        console.log('User trying to uplaod this:', file);
+  
+        console.log("editor", this.editor);
+        const range = this.editor.getSelection();
+        if(file != null) {
+          this.fileService.uploadImage(file, this.fileService.getUploadPath("ideas/" + this.selectedIdea.workspace, true))
+          .subscribe({
+            next: (data) => {
+              this.editor.insertEmbed(range.index, 'image', data.path);
+            },
+            complete: () => {},
+            error: error => {
+              console.log(error);
+            }
+          });
+        }
+      }
+    });
   }
 
   onSubmit() {

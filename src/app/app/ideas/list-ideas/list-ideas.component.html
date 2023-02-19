@@ -110,8 +110,7 @@
             </div>
             <div *ngIf="config.uploadImagePath !== ''" class="form-group">
                 <label for="longDescription" i18n="@@longDescription">Long Description</label>
-                <!-- <textarea formControlName="longDescription" [ngxSummernote]="config"
-                    (mediaDelete)="onDeleteMedia($event)"></textarea> -->
+                <quill-editor id="longDescription" formControlName="longDescription" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
             </div>
             <div class="form-group" *ngIf="selectedIdea.id <= 0 || currentUser.email === selectedIdea.createdBy">
                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
