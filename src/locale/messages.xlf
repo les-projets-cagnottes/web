@@ -17,7 +17,7 @@
         <source>Summary</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/about/about.component.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">142</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/documentation/getting-started/getting-started.component.html</context>
@@ -221,11 +221,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">135</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/news/edit/edit-news.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
@@ -233,7 +233,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/organizations/edit/edit-organization.component.html</context>
-          <context context-type="linenumber">356</context>
+          <context context-type="linenumber">355</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
@@ -241,7 +241,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -320,7 +320,7 @@
         <source>Nb entries</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">18,19</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/news/list/list-news.component.html</context>
@@ -523,7 +523,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">102,101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="findIconCodes" datatype="html">
@@ -549,11 +549,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="longDescription" datatype="html">
@@ -567,14 +567,14 @@
         <source>Publish this idea anonymously</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
         <source>I want to lead the realization of the idea</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/ideas/list-ideas/list-ideas.component.html</context>
-          <context context-type="linenumber">129,130</context>
+          <context context-type="linenumber">128,129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navNews" datatype="html">
@@ -727,7 +727,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/news/edit/edit-news.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">14,13</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/profile/profile.component.html</context>
@@ -735,11 +735,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">25,24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
@@ -855,7 +855,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -1247,7 +1247,7 @@
         <source>People needed (in addition of the project leader)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">36,38</context>
+          <context context-type="linenumber">35,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="noProjectFound" datatype="html">

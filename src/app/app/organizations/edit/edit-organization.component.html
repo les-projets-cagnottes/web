@@ -344,7 +344,7 @@
                 <input type="text" formControlName="name" class="form-control" id="name"
                     placeholder="Enter content name">
             </div>
-            <div *ngIf="this.contentValueConfig.uploadImagePath !== ''" class="form-group has-feedback"
+            <div class="form-group has-feedback"
                 [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
                 <label for="value" i18n="@@content">Content</label>
                 <quill-editor id="content" formControlName="content" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>

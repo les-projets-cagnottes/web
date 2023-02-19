@@ -1,4 +1,4 @@
-FROM node:14-stretch as builder
+FROM node:18-slim as builder
 
 ARG configuration
 
