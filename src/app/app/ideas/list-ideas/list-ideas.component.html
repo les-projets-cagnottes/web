@@ -108,7 +108,7 @@
                 <input id="shortDescription" type="text" formControlName="shortDescription" class="form-control"
                     placeholder="Short Description" i18n-placeholder="@@shortDescription">
             </div>
-            <div *ngIf="config.uploadImagePath !== ''" class="form-group">
+            <div class="form-group">
                 <label for="longDescription" i18n="@@longDescription">Long Description</label>
                 <quill-editor id="longDescription" formControlName="longDescription" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
             </div>

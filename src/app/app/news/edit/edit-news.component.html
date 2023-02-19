@@ -14,7 +14,7 @@
                             i18n-placeholder="@@title"
                             [ngClass]="{ 'is-invalid': this.form.controls['title'].errors }" />
                     </div>
-                    <div *ngIf="contentConfig.uploadImagePath !== ''" class="form-group">
+                    <div class="form-group">
                         <quill-editor id="content" formControlName="content" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
                     </div>
                 </div>

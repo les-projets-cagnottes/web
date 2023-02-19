@@ -33,49 +33,12 @@
             "localize": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/bootstrap/dist/",
-                "output": "./assets/lib/bootstrap"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/@fortawesome/fontawesome-free",
-                "output": "./assets/lib/font-awesome"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/ionicons/dist/",
-                "output": "./assets/lib/ionicons"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/admin-lte/dist/",
-                "output": "./assets/lib/admin-lte"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/jquery/dist/",
-                "output": "./assets/lib/jquery"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/icheck/",
-                "output": "./assets/lib/icheck"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/chart.js/dist/",
-                "output": "./assets/lib/chartjs"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/ace-builds/src-min",
-                "output": "./assets/ace-builds/"
-              }
+              "src/assets"
             ],
             "styles": [
+              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "./node_modules/admin-lte/dist/css/adminlte.min.css",
+              "./node_modules/quill/dist/quill.core.css",
               "./node_modules/quill/dist/quill.core.css",
               "./node_modules/quill/dist/quill.bubble.css",
               "./node_modules/quill/dist/quill.snow.css",
@@ -83,10 +46,14 @@
               "src/styles.css"
             ],
             "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/admin-lte/dist/js/adminlte.min.js",
+              "./node_modules/admin-lte/node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/quill/dist/quill.min.js"
             ],
             "allowedCommonJsDependencies": [
-              "quill"
+              "quill",
+              "quill-emoji/dist/quill-emoji.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -100,13 +67,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "4mb"
+                  "maximumWarning": "8mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "3kb",
-                  "maximumError": "5kb"
+                  "maximumWarning": "8kb",
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
