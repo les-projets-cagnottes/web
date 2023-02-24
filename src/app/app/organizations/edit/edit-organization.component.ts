@@ -431,23 +431,19 @@ export class EditOrganizationComponent implements OnInit {
     this.editor = editor;
     const toolbar = this.editor.getModule('toolbar');
     toolbar.addHandler('image', () => {
-      console.log("Root image handler", this.editor);
       const input = document.createElement('input');
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
       input.click();
       input.onchange = async () => {
         const file = input.files?.length ? input.files[0] : null;
-  
-        console.log('User trying to uplaod this:', file);
-  
-        console.log("editor", this.editor);
         const range = this.editor.getSelection();
         if(file != null) {
           this.fileService.uploadImage(file, this.fileService.getUploadPath("contents/" + this.content.workspace, true))
           .subscribe({
             next: (data) => {
               this.editor.insertEmbed(range.index, 'image', data.path);
+              this.contentForm.controls['value'].setValue(this.editor.root.innerHTML);
             },
             complete: () => {},
             error: error => {
