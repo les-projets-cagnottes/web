@@ -166,7 +166,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngIf="organization.msTeam.id <= 0">
+                                        <tr *ngIf="slackEnabled && organization.msTeam.id <= 0">
                                             <td>Slack</td>
                                             <td *ngIf="organization.slackTeam.id <= 0"><span
                                                     i18n="@@notConnectedYet">Not connected Yet</span></td>
@@ -198,7 +198,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr *ngIf="organization.slackTeam.id <= 0">
+                                        <tr *ngIf="microsoftEnabled && organization.msTeam.id <= 0">
                                             <td>Microsoft</td>
                                             <td *ngIf="organization.msTeam.id <= 0">
                                                 <span i18n="@@notConnectedYet">Not connected Yet</span>

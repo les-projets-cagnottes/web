@@ -27,6 +27,7 @@ export class EditOrganizationComponent implements OnInit {
   authorities: Map<string, OrganizationAuthorityModel> = new Map<string, OrganizationAuthorityModel>();
 
   // Slack OAuth
+  slackEnabled = false;
   slackSyncStatus = 'idle';
   slackDisconnectStatus = 'idle';
   slackClientId = '';
@@ -111,7 +112,7 @@ export class EditOrganizationComponent implements OnInit {
     this.route.params.subscribe(params => this.id = <number>params['id']);
   }
 
-  setredirectUrlSlackOAuth(id: number) {
+  setRedirectUrlSlackOAuth(id: number) {
     const endPointEdit = '/organizations/edit/' + id;
     const slackEndPoint = '/organizations/edit/slack/' + id;
 
@@ -148,7 +149,21 @@ export class EditOrganizationComponent implements OnInit {
       }
       );
     if (this.id > 0) {
-      this.setredirectUrlSlackOAuth(this.id);
+      
+      this.slackEnabled = (/true/i).test(this.configService.get('slackEnabled'));
+      if (this.slackEnabled) {
+        this.slackClientId = this.configService.get('slackClientId');
+        this.setRedirectUrlSlackOAuth(this.id);
+      }
+
+      this.microsoftEnabled = (/true/i).test(this.configService.get('microsoftEnabled'));
+      if (this.microsoftEnabled) {
+        this.microsoftTenantId = this.configService.get('microsoftTenantId');
+        this.microsoftClientId = this.configService.get('microsoftClientId');
+        this.microsoftState = this.id.toString();
+        this.setMicrosoftRedirectUrl();
+      }
+
       const slackEndPoint = '/organizations/edit/slack/' + this.id;
       if (this.router.url.startsWith(slackEndPoint)) {
         this.code = this.route.snapshot.queryParams['code'];
@@ -159,16 +174,7 @@ export class EditOrganizationComponent implements OnInit {
             this.refreshContents();
           });
       }
-      this.slackClientId = this.configService.get('slackClientId');
-
-      this.microsoftEnabled = (/true/i).test(this.configService.get('microsoftEnabled'));
-      if (this.microsoftEnabled) {
-        this.microsoftTenantId = this.configService.get('microsoftTenantId');
-        this.microsoftClientId = this.configService.get('microsoftClientId');
-        this.microsoftState = this.id.toString();
-        this.setMicrosoftRedirectUrl();
-      }
-
+      
       this.refreshInformations();
       this.refreshMembers();
       this.refreshContents();
@@ -205,7 +211,7 @@ export class EditOrganizationComponent implements OnInit {
   }
 
   refreshForm() {
-    if (!(this.id > 0)) {
+    if (this.id <= 0) {
       this.organization.members = [];
       const currentUser = localStorage.getItem('currentUser');
       if (currentUser !== null) {
@@ -219,6 +225,7 @@ export class EditOrganizationComponent implements OnInit {
 
   refreshMembers(page = 1) {
     if (this.pagerService.canChangePage(this.pagerMembers, page)) {
+      this.refreshMembersStatus = 'running';
       this.organizationService.getMembers(this.id, page - 1, this.pageSizeMembers)
         .subscribe(response => {
           this.rawResponseMembers = response;
