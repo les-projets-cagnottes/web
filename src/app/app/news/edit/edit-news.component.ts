@@ -108,6 +108,7 @@ export class EditNewsComponent implements OnInit {
 
     const submittedNews = new NewsModel();
     submittedNews.title = this.form.controls['title'].value;
+    submittedNews.workspace = this.news.workspace;
     submittedNews.content = this.form.controls['content'].value;
     submittedNews.organization.id = this.authenticationService.currentOrganizationValue.id;
     submittedNews.project.id = this.project.id;
