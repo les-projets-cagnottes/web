@@ -63,9 +63,8 @@ Then run the following commands :
 
 ```cmd
 mkcert -install
-cd dist\fr
 mkcert localhost
-angular-http-server --https --cert localhost.pem --key localhost-key.pem -p 4200
+angular-http-server --path dist\fr --https --cert localhost.pem --key localhost-key.pem -p 4200
 ```
 
 ### Run with Docker
