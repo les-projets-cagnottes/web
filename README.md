@@ -6,8 +6,8 @@
 ## Prerequisites
 
 - Les Projets Cagnottes - core - [Install Guide here](https://github.com/les-projets-cagnottes/core#getting-started)
-- NodeJS 12 - [Download here](https://nodejs.org)
-- Angular CLI 13+ - [Download here](https://cli.angular.io)
+- NodeJS 18 - [Download here](https://nodejs.org)
+- Angular CLI 16+ - [Download here](https://cli.angular.io)
 
 ## Build
 
