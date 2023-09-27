@@ -5,6 +5,9 @@ export class ProjectModel extends AuditModel {
     
     title = '';
     status: ProjectStatus = ProjectStatus.DRAFT;
+    isPublished = false;
+    ideaHasAnonymousCreator = false;
+    ideaHasLeaderCreator = false;
     shortDescription = '';
     longDescription = '';
     peopleRequired = 2;

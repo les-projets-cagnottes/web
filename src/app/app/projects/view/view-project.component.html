@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@description">Description</h3>
+                <h3 class="card-title">{{ project.title }}</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -12,7 +12,7 @@
             <div id="long-description" class="card-body" [innerHTML]="project.longDescription">
             </div>
         </div>
-        <div class="card card-default">
+        <div class="card card-default" *ngIf="project.status !== 'DRAFT' && project.status !== 'IDEA'">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@founding">Founding</h3>
                 <div class="card-tools">
@@ -92,7 +92,7 @@
                 <i class="fas fa-sync fa-spin"></i>
             </div>
         </div>
-        <div class="card card-default">
+        <div class="card card-default" *ngIf="project.status !== 'DRAFT' && project.status !== 'IDEA'">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@news">News</h3>
                 <div class="card-tools">
@@ -137,13 +137,16 @@
             </div>
             <div class="card-body">
                 <dl class="dl-horizontal">
-                    <dt i18n="@@projectLeader">Project Leader</dt>
-                    <dd>{{ leader.firstname }} {{ leader.lastname }}</dd>
+                    <dt i18n="@@projectLeader" *ngIf="project.status !== 'IDEA'">Project Leader</dt>
+                    <dt i18n="@@ideaCreator" *ngIf="project.status === 'IDEA'">Idea Creator</dt>
+                    <dd *ngIf="!project.ideaHasAnonymousCreator">{{ leader.firstname }} {{ leader.lastname }}</dd>
+                    <dd *ngIf="project.ideaHasAnonymousCreator" i18n="@@anonymous">Anonymous</dd>
                     <dt i18n="@@createdAt">Created at</dt>
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt i18n="@@status">Status</dt>
                     <dd [ngSwitch]="project.status">
                         <span *ngSwitchCase="projectStatus.DRAFT" class="badge bg-gray" i18n="@@draft">Draft</span>
+                        <span *ngSwitchCase="projectStatus.IDEA" class="badge bg-blue" i18n="@@idea">Idea</span>
                         <span *ngSwitchCase="projectStatus.IN_PROGRESS" class="badge bg-yellow" i18n="@@inProgress">In
                             Progress</span>
                         <span *ngSwitchCase="projectStatus.FINISHED" class="badge bg-green"
@@ -152,11 +155,21 @@
                     <dt i18n="@@peopleNeeded">People needed</dt>
                     <dd>{{ members.length }} / {{ 1 + project.peopleRequired }}</dd>
                 </dl>
+                <div class="callout callout-info" *ngIf="project.ideaHasLeaderCreator">
+                    <p>{{ leader.firstname }} {{ leader.lastname }}<span> whishes
+                            to lead the project.</span></p>
+                </div>
             </div>
             <div class="card-footer text-center">
-                <a class="btn btn-app" routerLink="/projects/{{ id }}/edit" *ngIf="leader.id === userLoggedIn.id">
+                <a class="btn btn-app" routerLink="/projects/{{ id }}/edit" 
+                    *ngIf="leader.id === userLoggedIn.id || (project.ideaHasAnonymousCreator && project.status === projectStatus.IDEA)">
                     <i class="fas fa-edit"></i>
                     <span i18n="@@edit">Edit</span>
+                </a>
+                <a class="btn btn-app" (click)="publish()"
+                    *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.DRAFT">
+                    <i class="fas fa-rocket"></i>
+                    <span i18n="@@publish">Publish</span>
                 </a>
                 <a class="btn btn-app" (click)="publish()"
                     *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.DRAFT">
@@ -185,7 +198,7 @@
                 </a>
             </div>
         </div>
-        <div class="card">
+        <div class="card" *ngIf="project.status !== 'DRAFT' && project.status !== 'IDEA'">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@team">Team</h3>
                 <div class="card-tools">

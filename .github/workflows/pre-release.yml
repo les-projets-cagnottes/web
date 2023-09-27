@@ -16,7 +16,7 @@ jobs:
       is_snapshot: ${{ steps.test_version.outputs.IS_SNAPSHOT }}
       version: ${{ steps.get_version.outputs.VERSION }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         ref: '${{ github.head_ref }}'
     - name: Get the version
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.verify-version.outputs.is_snapshot == 1
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         ref: '${{ github.head_ref }}'
     - name: Get previous version
@@ -48,7 +48,7 @@ jobs:
     - name: Replace version without snapshot
       run: "sed -i 's/\"version\": \"${{ steps.get_previous_version.outputs.VERSION }}\"/\"version\": \"${{ steps.get_released_version.outputs.VERSION }}\"/g' package.json"
     - name: Use Node.js 18.x
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: 18.x
     - run: npm i

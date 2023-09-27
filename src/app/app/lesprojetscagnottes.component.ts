@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 })
 export class LesProjetsCagnottesComponent implements OnInit, OnDestroy {
 
-  public isCollapsed = false;
   currentOrganization: Organization = new Organization();
   currentOrganizationSubscription: Subscription;
   currentUser: User = new User();

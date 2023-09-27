@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: '', component: LesProjetsCagnottesComponent, canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/news', pathMatch: 'full' },
+      { path: '', redirectTo: '/projects', pathMatch: 'full' },
       { path: 'news/new', component: EditNewsComponent },
       { path: 'news/:id/edit', component: EditNewsComponent },
       { path: 'news', component: ListNewsComponent },
@@ -47,8 +47,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'login/slack', component: LoginComponent },
-  { path: 'login/ms', component: LoginComponent },
-  { path: '**', redirectTo: '' }
+  { path: 'login/ms', component: LoginComponent }
 ];
 
 @NgModule({

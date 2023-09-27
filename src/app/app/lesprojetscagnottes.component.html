@@ -36,7 +36,19 @@
             <nav id="main-nav" class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <li class="nav-header" i18n="@@navNews">NEWS</li>
+                    <li class="nav-header" i18n="@@navProjects">PROJECTS</li>
+                    <li class="nav-item">
+                        <a routerLink="/projects/new" class="nav-link">
+                            <i class="nav-icon far fa-paper-plane"></i>
+                            <p i18n="@@startProject">Create an idea or project</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a routerLink="/projects" class="nav-link">
+                            <i class="nav-icon fas fa-book"></i>
+                            <span i18n="@@discoverProjects">Discover Projects</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a routerLink="/news" class="nav-link">
                             <i class="nav-icon fas fa-newspaper"></i>
@@ -45,42 +57,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-header" i18n="@@navProjects">PROJECTS</li>
-                    <li class="nav-item">
-                        <a routerLink="/ideas" class="nav-link">
-                            <i class="nav-icon far fa-lightbulb"></i>
-                            <p i18n="@@suggestionBox">Suggestion Box</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a routerLink="/projects/new" class="nav-link">
-                            <i class="nav-icon far fa-paper-plane"></i>
-                            <p i18n="@@startProject">Start my project</p>
-                        </a>
-                    </li>
-                    <li class="nav-item item-clickable">
-                        <a class="nav-link" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-                            aria-controls="collapseBasic">
-                            <i class="nav-icon fas fa-book"></i>
-                            <p>
-                                <span i18n="@@discoverProjects">Discover Projects</span>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview" [collapse]="isCollapsed" [isAnimated]="true">
-                            <li class="nav-item nav-subitem">
-                                <a routerLink="/projects" [queryParams]="{ status: 'in_progress'}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p i18n="@@projectsInProgress">Projects in progress</p>
-                                </a>
-                            </li>
-                            <li class="nav-item nav-subitem">
-                                <a routerLink="/projects" [queryParams]="{ status: 'finished'}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p i18n="@@projectsFinished">Projects finished</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="nav-header" i18n="@@navBudgets">BUDGETS</li>
                     <li class="nav-item">
                         <a routerLink="/report" class="nav-link">
                             <i class="nav-icon fas fa-clipboard"></i>
@@ -90,7 +67,7 @@
                     <li *ngIf="isSponsor()" class="nav-item">
                         <a routerLink="/budgets" class="nav-link">
                             <i class="nav-icon fas fa-money-bill"></i>
-                            <p i18n="@@budgets">Budgets</p>
+                            <p i18n="@@manageBudget">Manage budgets</p>
                         </a>
                     </li>
                     <li *ngIf="isAdmin" class="nav-header" i18n="@@navAdministration">

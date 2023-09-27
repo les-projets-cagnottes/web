@@ -101,17 +101,18 @@
       <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
         <target>Je veux porter la réalisation de cette idée</target>
       </trans-unit>
-      <trans-unit id="navNews" datatype="html">
-        <target>ACTUALITES</target>
-      </trans-unit>
       <trans-unit id="newsfeed" datatype="html">
         <target> Fil d'actualités </target>
+      </trans-unit>
+      <trans-unit id="navBudgets" datatype="html">
+        <source>BUDGETS</source>
+        <target>BUDGETS</target>
       </trans-unit>
       <trans-unit id="navProjects" datatype="html">
         <target>PROJETS</target>
       </trans-unit>
       <trans-unit id="startProject" datatype="html">
-        <target>Lancer mon projet</target>
+        <target>J'ai une idée</target>
       </trans-unit>
       <trans-unit id="discoverProjects" datatype="html">
         <target>Découvrir les projets</target>
@@ -124,7 +125,10 @@
         <target>Projets terminés</target>
       </trans-unit>
       <trans-unit id="reporting" datatype="html">
-        <target>Où est l'argent ?</target>
+        <target>Etat des cagnottes</target>
+      </trans-unit>
+      <trans-unit id="manageBudget" datatype="html">
+        <target>Gérer les budgets</target>
       </trans-unit>
       <trans-unit id="navAdministration" datatype="html">
         <target> ADMINISTRATION</target>
@@ -312,8 +316,14 @@
       <trans-unit id="peopleNeededInAdditionOfProjectLeader" datatype="html">
         <target>Equipiers requis (en plus du porteur du projet)</target>
       </trans-unit>
+      <trans-unit id="ideas" datatype="html">
+        <target>Idées</target>
+      </trans-unit>
       <trans-unit id="noProjectFound" datatype="html">
         <target>Aucun projet trouvé</target>
+      </trans-unit>
+      <trans-unit id="funding" datatype="html">
+        <target>Financement</target>
       </trans-unit>
       <trans-unit id="teammates" datatype="html">
         <target>Equipiers</target>
@@ -377,6 +387,15 @@
       </trans-unit>
       <trans-unit id="projectLeader" datatype="html">
         <target>Porteur du projet</target>
+      </trans-unit>
+      <trans-unit id="ideaCreator" datatype="html">
+        <target>Créateur</target>
+      </trans-unit>
+      <trans-unit id="anonymous" datatype="html">
+        <target>Anonyme</target>
+      </trans-unit>
+      <trans-unit id="idea" datatype="html">
+        <target>Idée</target>
       </trans-unit>
       <trans-unit id="peopleNeeded" datatype="html">
         <target>Equipiers requis</target>

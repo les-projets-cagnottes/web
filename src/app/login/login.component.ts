@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     private configService: ConfigService
   ) {
     // redirect to home if successful logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.authenticationService.currentUserValue.token) {
       this.router.navigate(['/']);
     }
     console.log(this.router.url);
