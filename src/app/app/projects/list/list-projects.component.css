@@ -1,0 +1,22 @@
+.missingBudget {
+    color: #007bff;
+    font-weight: bold;
+    animation-duration: .8s;
+    animation-name: clignoter;
+    animation-iteration-count: 4;
+    transition: none;
+}
+
+@keyframes clignoter {
+    0% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

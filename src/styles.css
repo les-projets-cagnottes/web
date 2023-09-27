@@ -2,6 +2,10 @@
     margin-bottom: 1em;
 }
 
+.action-bar .form-horizontal .btn-group .btn {
+    margin-right: 0;
+}
+
 .action-bar .form-horizontal label,
 .action-bar .btn,
 .action-bar select,

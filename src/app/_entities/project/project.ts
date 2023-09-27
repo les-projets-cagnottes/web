@@ -18,6 +18,9 @@ export class Project extends ProjectModel {
         entity.updatedBy = model.updatedBy;
         entity.title = model.title;
         entity.status = model.status;
+        entity.isPublished = model.isPublished;
+        entity.ideaHasAnonymousCreator = model.ideaHasAnonymousCreator;
+        entity.ideaHasLeaderCreator = model.ideaHasLeaderCreator;
         entity.shortDescription = model.shortDescription;
         entity.longDescription = model.longDescription;
         entity.peopleRequired = model.peopleRequired;
