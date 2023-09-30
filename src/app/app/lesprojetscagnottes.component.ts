@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Organization, User } from '../_entities';
 import { AuthenticationService, OrganizationService, UserService } from '../_services';
 import { Router } from '@angular/router';
+import { NavService } from '../_services/nav/nav.service';
 
 @Component({
   selector: 'app-lesprojetscagnottes',

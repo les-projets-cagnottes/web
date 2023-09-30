@@ -7,7 +7,8 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <quill-editor id="longDescription" formControlName="longDescription" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
+                        <quill-editor id="longDescription" formControlName="longDescription"
+                            (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
                     </div>
                 </div>
             </div>
@@ -31,18 +32,21 @@
                             placeholder="Short Description" i18n-placeholder="@@shortDescription"
                             [ngClass]="{ 'is-invalid': this.form.controls['shortDescription'].errors }" />
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="id > 0 && project.status === projectStatus.IN_PROGRESS" >
                         <label for="peopleRequired" i18n="@@peopleNeededInAdditionOfProjectLeader">People needed (in
-                            addition
-                            of the project leader)</label>
+                            addition of the project leader)</label>
                         <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired"
                             min="2" [ngClass]="{ 'is-invalid': this.form.controls['peopleRequired'].errors }" />
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="text-center">
-                        <button [disabled]="submitting" type="button" class="btn btn-primary" (click)="onSubmit()"
-                            i18n="@@save">Save</button>
+                        <a *ngIf="id == 0" class="btn btn-app bg-secondary" (click)="onSubmit()">
+                            <i class="fas fa-save"></i> <span i18n="@@saveAsDraft">Save as draft</span>
+                        </a>
+                        <a *ngIf="id > 0" class="btn btn-app bg-secondary" (click)="onSubmit()">
+                            <i class="fas fa-save"></i> <span i18n="@@save">Save</span>
+                        </a>
                     </div>
                 </div>
             </div>

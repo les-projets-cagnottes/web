@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title">{{ project.title }}</h3>
+                <h3 class="card-title" i18n="@@description">Description</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -137,8 +137,7 @@
             </div>
             <div class="card-body">
                 <dl class="dl-horizontal">
-                    <dt i18n="@@projectLeader" *ngIf="project.status !== 'IDEA'">Project Leader</dt>
-                    <dt i18n="@@ideaCreator" *ngIf="project.status === 'IDEA'">Idea Creator</dt>
+                    <dt i18n="@@creator">Creator</dt>
                     <dd *ngIf="!project.ideaHasAnonymousCreator">{{ leader.firstname }} {{ leader.lastname }}</dd>
                     <dd *ngIf="project.ideaHasAnonymousCreator" i18n="@@anonymous">Anonymous</dd>
                     <dt i18n="@@createdAt">Created at</dt>
@@ -152,46 +151,54 @@
                         <span *ngSwitchCase="projectStatus.FINISHED" class="badge bg-green"
                             i18n="@@finished">Finished</span>
                     </dd>
-                    <dt i18n="@@peopleNeeded">People needed</dt>
-                    <dd>{{ members.length }} / {{ 1 + project.peopleRequired }}</dd>
+                    <dt *ngIf="project.status === projectStatus.IN_PROGRESS || project.status === projectStatus.FINISHED"
+                        i18n="@@peopleNeeded">People needed</dt>
+                    <dd
+                        *ngIf="project.status === projectStatus.IN_PROGRESS || project.status === projectStatus.FINISHED">
+                        {{ members.length }} / {{ 1 + project.peopleRequired }}</dd>
                 </dl>
                 <div class="callout callout-info" *ngIf="project.ideaHasLeaderCreator">
-                    <p>{{ leader.firstname }} {{ leader.lastname }}<span> whishes
-                            to lead the project.</span></p>
+                    <p><span i18n="@@atIdeaSubmission">At the idea submission, </span>{{ leader.firstname }} {{
+                        leader.lastname }}<span i18n="@@wishedToLeadProject"> wished to lead the project.</span></p>
                 </div>
             </div>
             <div class="card-footer text-center">
-                <a class="btn btn-app" routerLink="/projects/{{ id }}/edit" 
-                    *ngIf="leader.id === userLoggedIn.id || (project.ideaHasAnonymousCreator && project.status === projectStatus.IDEA)">
+                <a class="btn btn-app bg-yellow" routerLink="/projects/{{ id }}/edit"
+                    *ngIf="leader.id === userLoggedIn.id || (!project.ideaHasLeaderCreator && project.status === projectStatus.IDEA)">
                     <i class="fas fa-edit"></i>
                     <span i18n="@@edit">Edit</span>
                 </a>
-                <a class="btn btn-app" (click)="publish()"
-                    *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.DRAFT">
-                    <i class="fas fa-rocket"></i>
-                    <span i18n="@@publish">Publish</span>
+                <a class="btn btn-app bg-pink" (click)="openModal(publishIdeaModalRef)"
+                    *ngIf="(leader.id === userLoggedIn.id || !project.ideaHasLeaderCreator) && project.status === projectStatus.DRAFT">
+                    <i class="fas fa-lightbulb"></i>
+                    <span i18n="@@publishAsIdea">Publish as Idea</span>
                 </a>
-                <a class="btn btn-app" (click)="publish()"
-                    *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.DRAFT">
+                <a class="btn btn-app bg-purple" (click)="openModal(startProjectModalRef)"
+                    *ngIf="(leader.id === userLoggedIn.id || !project.ideaHasLeaderCreator) && project.status === projectStatus.DRAFT">
                     <i class="fas fa-rocket"></i>
-                    <span i18n="@@publish">Publish</span>
+                    <span i18n="@@publishAsProject">Publish as Project</span>
                 </a>
-                <a class="btn btn-app" (click)="reopen()"
+                <a class="btn btn-app bg-purple" (click)="openModal(startProjectModalRef)"
+                    *ngIf="(leader.id === userLoggedIn.id || !project.ideaHasLeaderCreator) && project.status === projectStatus.IDEA">
+                    <i class="fas fa-rocket"></i>
+                    <span i18n="@@startProject">Start the project</span>
+                </a>
+                <a class="btn btn-app bg-purple" (click)="reopen()"
                     *ngIf="leader.id === userLoggedIn.id && project.status === projectStatus.FINISHED">
                     <i class="fas fa-undo"></i>
                     <span i18n="@@reopen">Reopen</span>
                 </a>
-                <a class="btn btn-app" (click)="finish()"
+                <a class="btn btn-app bg-green" (click)="finish()"
                     *ngIf="leader.id === userLoggedIn.id && project.status !== projectStatus.FINISHED">
                     <i class="fas fa-check"></i>
                     <span i18n="@@finish">Finish</span>
                 </a>
-                <a class="btn btn-app" (click)="join()"
+                <a class="btn btn-app bg-blue" (click)="join()"
                     *ngIf="isUserInTeam === false && leader.id !== userLoggedIn.id && project.status === projectStatus.IN_PROGRESS">
                     <i class="fas fa-user-plus"></i>
                     <span i18n="@@joinTheTeam">Join the team</span>
                 </a>
-                <a class="btn btn-app" (click)="join()"
+                <a class="btn btn-app bg-indigo" (click)="join()"
                     *ngIf="isUserInTeam === true && leader.id !== userLoggedIn.id && project.status === projectStatus.IN_PROGRESS">
                     <i class="fas fa-user-minus"></i>
                     <span i18n="@@leaveTheTeam">Leave the team</span>
@@ -225,6 +232,60 @@
         </div>
     </div>
 </div>
+
+<ng-template #publishIdeaModalRef>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n="@@publishIdea">Publish the idea</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="viewRulesModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="publishIdeaForm">
+            <div class="form-group">
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="ideaHasAnonymousCreator"
+                        formControlName="ideaHasAnonymousCreator">
+                    <label class="custom-control-label" for="ideaHasAnonymousCreator"
+                        i18n="@@publishIdeaAnonymously">Publish this idea anonymously</label>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="!publishIdeaForm.controls['ideaHasAnonymousCreator'].value">
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="ideaHasLeaderCreator"
+                        formControlName="hasLeaderCreator">
+                    <label class="custom-control-label" for="hasLeaderCreator" i18n="@@userWhantToLeadRealOfIdea">I want
+                        to lead the realization of the idea</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="publishIdeaSubmit()" i18n="@@submit">Submit</button>
+    </div>
+</ng-template>
+
+<ng-template #startProjectModalRef>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n="@@startProject">Start the project</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="viewRulesModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="startProjectForm">
+            <div class="form-group">
+                <label for="peopleRequired" i18n="@@peopleNeededInAdditionOfProjectLeader">People needed (in
+                    addition of the project leader)</label>
+                <input formControlName="peopleRequired" type="number" class="form-control" id="peopleRequired" min="2"
+                    [ngClass]="{ 'is-invalid': this.startProjectForm.controls['peopleRequired'].errors }" />
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="startProjectSubmit()" i18n="@@submit">Submit</button>
+    </div>
+</ng-template>
 
 <ng-template #contributeFinanciallyModalTemplate>
     <div class="modal-header">
@@ -345,6 +406,7 @@
         </div>
     </div>
 </ng-template>
+
 <ng-template #viewRulesModalTemplate>
     <div class="modal-header">
         <h4 class="modal-title pull-left">{{ rules.name }}</h4>
@@ -358,6 +420,7 @@
         <button class="btn btn-primary" (click)="viewRulesModal.hide()" i18n="@@close">Close</button>
     </div>
 </ng-template>
+
 <ng-template #viewDonationsModalTemplate>
     <div *ngIf="donationsSyncStatus === 'running'" class="overlay">
         <i class="fas fa-2x fa-sync fa-spin"></i>

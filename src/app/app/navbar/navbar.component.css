@@ -1,0 +1,13 @@
+.main-header .navbar-left {
+  width: 100%;
+  text-align: center;
+}
+
+.main-header .navbar-nav .nav-title {
+  height: 2.5rem;
+  position: relative;
+  padding: .5rem 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+}

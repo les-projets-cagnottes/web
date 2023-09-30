@@ -3,11 +3,12 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Budget, Campaign, Content, Donation, Project, User } from 'src/app/_entities';
-import { AccountModel, BudgetModel, CampaignModel, DataPage, DonationModel, GenericModel, NewsModel, UserModel } from 'src/app/_models';
+import { AccountModel, BudgetModel, CampaignModel, DataPage, DonationModel, GenericModel, NewsModel, ProjectModel, UserModel } from 'src/app/_models';
 import { CampaignStatus } from 'src/app/_models/campaign/campaign-status';
 import { Pager } from 'src/app/_models/pagination/pager/pager';
 import { ProjectStatus } from 'src/app/_models/project/project-status';
 import { AccountService, AuthenticationService, BudgetService, CampaignService, ContentService, DonationService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
+import { NavService } from 'src/app/_services/nav/nav.service';
 
 @Component({
   selector: 'app-view-project',
@@ -34,6 +35,19 @@ export class ViewProjectComponent implements OnInit {
   campaigns: Campaign[] = [];
   campaignsSyncStatus = 'idle';
   campaignsBudgets = new Map<number, BudgetModel>();
+
+  // Publish Idea Modal
+  publishIdeaModalRef = new BsModalRef();
+  publishIdeaForm: UntypedFormGroup = this.formBuilder.group({
+    ideaHasAnonymousCreator: [false],
+    ideaHasLeaderCreator: [false]
+  });
+
+  // Start Project Modal
+  startProjectModalRef = new BsModalRef();
+  startProjectForm: UntypedFormGroup = this.formBuilder.group({
+    peopleRequired: [2, [Validators.required, Validators.min(2)]]
+  });
 
   // Contributing Modal
   selectedCampaign = new Campaign();
@@ -97,6 +111,7 @@ export class ViewProjectComponent implements OnInit {
     private campaignService: CampaignService,
     private contentService: ContentService,
     private donationService: DonationService,
+    public navService: NavService,
     private organizationService: OrganizationService,
     private projectService: ProjectService,
     private userService: UserService) {
@@ -113,6 +128,7 @@ export class ViewProjectComponent implements OnInit {
     this.projectService.getById(this.id)
       .subscribe(response => {
         this.project = Project.fromModel(response);
+        this.navService.setTitle(this.project.title);
         this.refreshLeader();
         this.refreshMembers();
         this.refreshCampaigns();
@@ -452,15 +468,82 @@ export class ViewProjectComponent implements OnInit {
       })
   }
 
-  publish() {
-    this.projectService.updateStatus(this.id, ProjectStatus.IN_PROGRESS)
-      .subscribe(() => {
+  openModal(template: TemplateRef<string>) {
+    this.startProjectModalRef = this.modalService.show(template);
+  }
+
+  publishIdeaSubmit() {
+    
+    const submittedProject = new ProjectModel();
+    submittedProject.id = this.id;
+    submittedProject.title = this.project.title;
+    submittedProject.shortDescription = this.project.shortDescription;
+    submittedProject.longDescription = this.project.longDescription;
+    submittedProject.workspace = this.project.workspace;
+    submittedProject.ideaHasAnonymousCreator = this.publishIdeaForm.controls['ideaHasAnonymousCreator'].value;
+    submittedProject.ideaHasLeaderCreator = this.publishIdeaForm.controls['ideaHasLeaderCreator'].value;
+    submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
+    submittedProject.status = ProjectStatus.IDEA;
+
+    if(!submittedProject.ideaHasAnonymousCreator) {
+      submittedProject.leader.id = this.project.leader.id;
+    } else {
+      submittedProject.leader.id = 0;
+    }
+
+    this.projectService.update(submittedProject)
+    .subscribe({
+      next: () => {
+        this.startProjectModalRef.hide();
         this.refresh();
-      })
+      },
+      complete: () => { },
+      error: error => {
+        console.error(error);
+      }
+    });
+  }
+
+  startProjectSubmit() {
+    
+    const submittedProject = new ProjectModel();
+    submittedProject.id = this.id;
+    submittedProject.title = this.project.title;
+    submittedProject.shortDescription = this.project.shortDescription;
+    submittedProject.longDescription = this.project.longDescription;
+    submittedProject.workspace = this.project.workspace;
+    submittedProject.ideaHasAnonymousCreator = this.project.ideaHasAnonymousCreator;
+    submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
+    submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
+
+    if(this.project.leader.id > 0) {
+      submittedProject.leader.id = this.project.leader.id;
+    } else {
+      submittedProject.leader.id = this.authenticationService.currentUserValue.id;
+    }
+
+    if(this.project.status != ProjectStatus.FINISHED) {
+      submittedProject.peopleRequired = this.startProjectForm.controls['peopleRequired'].value;
+    } else {
+      submittedProject.peopleRequired = this.project.peopleRequired;
+    }
+    submittedProject.status = ProjectStatus.IN_PROGRESS;
+
+    this.projectService.update(submittedProject)
+    .subscribe({
+      next: () => {
+        this.startProjectModalRef.hide();
+        this.refresh();
+      },
+      complete: () => { },
+      error: error => {
+        console.error(error);
+      }
+    });
   }
 
   reopen() {
-    this.publish();
+    this.startProjectSubmit();
   }
 
   finish() {
