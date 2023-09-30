@@ -25,7 +25,6 @@ import { ProfileComponent } from './app/profile/profile.component';
 import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 import { ConfigService } from './_services/config/config.service';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
 import { ListNewsComponent } from './app/news/list/list-news.component';
@@ -51,7 +50,6 @@ const appConfig = (config: ConfigService) => {
     ReportComponent,
     GettingStartedComponent,
     AboutComponent,
-    ListIdeasComponent,
     EditProjectComponent,
     ListProjectsComponent,
     ViewProjectComponent,

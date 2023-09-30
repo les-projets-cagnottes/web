@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
 import { Project } from 'src/app/_entities';
 import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
+import { ProjectStatus } from 'src/app/_models/project/project-status';
 import { Media } from 'src/app/_models/media/media';
+import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
 
 import 'quill-emoji/dist/quill-emoji.js'
 
@@ -16,6 +17,8 @@ import 'quill-emoji/dist/quill-emoji.js'
 })
 export class EditProjectComponent implements OnInit {
 
+  projectStatus = ProjectStatus;
+  
   // Data
   id = 0;
   project: Project = new Project();
@@ -40,6 +43,9 @@ export class EditProjectComponent implements OnInit {
     private fileService: FileService,
     private projectService: ProjectService) {
     this.route.params.subscribe(params => this.id = params['id']);
+    if (this.id == undefined) {
+      this.id = 0;
+    }
   }
 
   ngOnInit(): void {
@@ -51,7 +57,7 @@ export class EditProjectComponent implements OnInit {
         });
     } else {
       this.project.workspace = uuidv4();
-      this.project.longDescription = "<blockquote><h1>Ceci est un modèle par défaut. N'hésitez pas à l'embellir pour montrer votre projet sous son meilleur jour ;-)<br></h1></blockquote><h1>Mon super projet</h1>\n<h2>De quoi s'agit-il ?</h2>\n<h2>Qui est concerné ?</h2><h2>A quoi va servir le budget ?<br></h2>\n<h2>Pourquoi ça me tient à cœur</h2><p><br></p><p><br></p>\n"
+      this.project.longDescription = "<h1>De quoi s'agit-il ?</h1>\n<h1>Qui est concerné ?</h1><h1>A quoi va servir le budget ?<br></h1>\n<h1>Pourquoi ça me tient à cœur</h1><p><br></p><p><br></p>\n"
       this.refresh();
     }
   }
@@ -74,18 +80,18 @@ export class EditProjectComponent implements OnInit {
       input.onchange = async () => {
         const file = input.files?.length ? input.files[0] : null;
         const range = this.editor.getSelection();
-        if(file != null) {
+        if (file != null) {
           this.fileService.uploadImage(file, this.fileService.getUploadPath("projects/" + this.project.workspace, true))
-          .subscribe({
-            next: (data) => {
-              this.editor.insertEmbed(range.index, 'image', data.path);
-              this.form.controls['longDescription'].setValue(this.editor.root.innerHTML);
-            },
-            complete: () => {},
-            error: error => {
-              console.log(error);
-            }
-          });
+            .subscribe({
+              next: (data) => {
+                this.editor.insertEmbed(range.index, 'image', data.path);
+                this.form.controls['longDescription'].setValue(this.editor.root.innerHTML);
+              },
+              complete: () => { },
+              error: error => {
+                console.log(error);
+              }
+            });
         }
       }
     });
@@ -107,45 +113,55 @@ export class EditProjectComponent implements OnInit {
     submittedProject.longDescription = this.form.controls['longDescription'].value;
     submittedProject.peopleRequired = this.form.controls['peopleRequired'].value;
     submittedProject.workspace = this.project.workspace;
+    submittedProject.ideaHasAnonymousCreator = this.project.ideaHasAnonymousCreator;
+    submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
 
     // Submit item to backend
     if (this.id > 0) {
       submittedProject.id = this.id;
       submittedProject.leader.id = this.project.leader.id;
+      submittedProject.status = this.project.status;
       this.projectService.update(submittedProject)
-        .subscribe(
-          response => {
+        .subscribe({
+          next: (response) => {
             this.submitting = false;
             this.router.navigate(['/projects/' + response.id]);
           },
-          error => {
+          complete: () => { },
+          error: error => {
             console.error(error);
             this.submitting = false;
-          });
+          }
+        });
     } else {
       submittedProject.leader.id = this.authenticationService.currentUserValue.id;
+      submittedProject.status = ProjectStatus.DRAFT;
       this.projectService.create(submittedProject)
-        .subscribe(
-          response => {
+        .subscribe({
+          next: (response) => {
             this.submitting = false;
             this.router.navigate(['/projects/' + response.id]);
           },
-          error => {
+          complete: () => { },
+          error: error => {
             console.error(error);
             this.submitting = false;
-          });
+          }
+        });
     }
   }
 
   onDeleteMedia(file: Media) {
     this.fileService.deleteByUrl(file.url)
-      .subscribe(
-        response => {
-          console.debug('Media deleted : ' + response)
+      .subscribe({
+        next: (response) => {
+          console.debug('Media deleted : ' + response);
         },
-        error => {
+        complete: () => { },
+        error: error => {
           console.error(error);
-        });
+        }
+      });
   }
 }

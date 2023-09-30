@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router"
 
 import { AuthenticationService } from '../../_services';
+import { NavService } from 'src/app/_services/nav/nav.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,13 +13,12 @@ export class AppNavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    public navService: NavService
   ) {
   }
 
-  ngOnInit() {
-    console.debug('Navbar component initialized');
-  }
+  ngOnInit() {}
 
   logout() {
     this.authenticationService.logout();

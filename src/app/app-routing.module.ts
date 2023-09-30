@@ -11,7 +11,6 @@ import { ProfileComponent } from './app/profile/profile.component';
 import { ReportComponent } from './app/report/report.component';
 import { GettingStartedComponent } from './app/documentation/getting-started/getting-started.component';
 import { AboutComponent } from './about/about.component';
-import { ListIdeasComponent } from './app/ideas/list-ideas/list-ideas.component';
 import { EditProjectComponent } from './app/projects/edit/edit-project.component';
 import { ListProjectsComponent } from './app/projects/list/list-projects.component';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
@@ -36,7 +35,6 @@ const routes: Routes = [
       { path: 'projects/:id/edit', component: EditProjectComponent },
       { path: 'projects/:id', component: ViewProjectComponent },
       { path: 'projects', component: ListProjectsComponent },
-      { path: 'ideas', component: ListIdeasComponent },
       { path: 'budgets', component: BudgetsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'report', component: ReportComponent },

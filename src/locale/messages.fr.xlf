@@ -59,9 +59,6 @@
       <trans-unit id="create" datatype="html">
         <target>Créer</target>
       </trans-unit>
-      <trans-unit id="suggestionBox" datatype="html">
-        <target>Boîte à idées</target>
-      </trans-unit>
       <trans-unit id="refresh" datatype="html">
         <target>Rafraîchir</target>
       </trans-unit>
@@ -83,23 +80,8 @@
       <trans-unit id="pageEntries" datatype="html">
         <source> entrées</source>
       </trans-unit>
-      <trans-unit id="icon" datatype="html">
-        <target>Icône</target>
-      </trans-unit>
-      <trans-unit id="findIconCodes" datatype="html">
-        <target>Trouvez des codes d'icône sur </target>
-      </trans-unit>
       <trans-unit id="shortDescription" datatype="html">
         <target>Description courte</target>
-      </trans-unit>
-      <trans-unit id="longDescription" datatype="html">
-        <target>Description longue</target>
-      </trans-unit>
-      <trans-unit id="publishIdeaAnonymously" datatype="html">
-        <target>Publier cette idée anonymement</target>
-      </trans-unit>
-      <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
-        <target>Je veux porter la réalisation de cette idée</target>
       </trans-unit>
       <trans-unit id="newsfeed" datatype="html">
         <target> Fil d'actualités </target>
@@ -111,7 +93,7 @@
       <trans-unit id="navProjects" datatype="html">
         <target>PROJETS</target>
       </trans-unit>
-      <trans-unit id="startProject" datatype="html">
+      <trans-unit id="iHaveAnIdea" datatype="html">
         <target>J'ai une idée</target>
       </trans-unit>
       <trans-unit id="discoverProjects" datatype="html">
@@ -316,6 +298,9 @@
       <trans-unit id="peopleNeededInAdditionOfProjectLeader" datatype="html">
         <target>Equipiers requis (en plus du porteur du projet)</target>
       </trans-unit>
+      <trans-unit id="saveAsDraft" datatype="html">
+        <target>Créer Brouillon</target>
+      </trans-unit>
       <trans-unit id="ideas" datatype="html">
         <target>Idées</target>
       </trans-unit>
@@ -388,7 +373,7 @@
       <trans-unit id="projectLeader" datatype="html">
         <target>Porteur du projet</target>
       </trans-unit>
-      <trans-unit id="ideaCreator" datatype="html">
+      <trans-unit id="creator" datatype="html">
         <target>Créateur</target>
       </trans-unit>
       <trans-unit id="anonymous" datatype="html">
@@ -400,8 +385,20 @@
       <trans-unit id="peopleNeeded" datatype="html">
         <target>Equipiers requis</target>
       </trans-unit>
-      <trans-unit id="publish" datatype="html">
-        <target>Publier</target>
+      <trans-unit id="atIdeaSubmission" datatype="html">
+        <target>Lors de la création de l'idée, </target>
+      </trans-unit>
+      <trans-unit id="wishedToLeadProject" datatype="html">
+        <target> souhaitait en porter la réalisation.</target>
+      </trans-unit>
+      <trans-unit id="publishAsIdea" datatype="html">
+        <target>C'est juste une idée</target>
+      </trans-unit>
+      <trans-unit id="publishAsProject" datatype="html">
+        <target>Lancer le projet</target>
+      </trans-unit>
+      <trans-unit id="startProject" datatype="html">
+        <target>Lancer le projet</target>
       </trans-unit>
       <trans-unit id="reopen" datatype="html">
         <target>Réouvrir</target>
@@ -417,6 +414,15 @@
       </trans-unit>
       <trans-unit id="team" datatype="html">
         <target>Equipe</target>
+      </trans-unit>
+      <trans-unit id="publishIdea" datatype="html">
+        <target>Publier l'idée</target>
+      </trans-unit>
+      <trans-unit id="publishIdeaAnonymously" datatype="html">
+        <target>Publier l'idée anonymement</target>
+      </trans-unit>
+      <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
+        <target>Je souhaite porter la réalisation de cette idée</target>
       </trans-unit>
       <trans-unit id="usageOverview" datatype="html">
         <target>Utilisation</target>
