@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,7 +19,10 @@ export class AuthenticationService {
     private currentOrganizationSubject: BehaviorSubject<Organization>;
     public currentOrganization: Observable<Organization>;
 
-    constructor(private http: HttpClient, private configService: ConfigService) {
+    constructor(
+        private http: HttpClient, 
+        private router: Router,
+        private configService: ConfigService) {
         const userInLocalStorage = localStorage.getItem('currentUser');
         if (userInLocalStorage !== null) {
             this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(userInLocalStorage));
@@ -121,6 +125,7 @@ export class AuthenticationService {
         this.currentUserSubject.next(new User());
         localStorage.removeItem('currentOrganization');
         this.currentOrganizationSubject.next(new Organization());
+        this.router.navigate(['login']);
     }
 
     isSponsor(): boolean {

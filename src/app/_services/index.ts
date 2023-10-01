@@ -7,7 +7,6 @@ export * from './campaign/campaign.service';
 export * from './content/content.service';
 export * from './donation/donation.service';
 export * from './file/file.service';
-export * from './idea/idea.service';
 export * from './news/news.service';
 export * from './organization/organization.service';
 export * from './pager/pager.service';
