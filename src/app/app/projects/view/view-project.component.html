@@ -163,12 +163,12 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <a class="btn btn-app bg-yellow" routerLink="/projects/{{ id }}/edit"
+                <a class="btn btn-app bg-pink" routerLink="/projects/{{ id }}/edit"
                     *ngIf="leader.id === userLoggedIn.id || (!project.ideaHasLeaderCreator && project.status === projectStatus.IDEA)">
                     <i class="fas fa-edit"></i>
                     <span i18n="@@edit">Edit</span>
                 </a>
-                <a class="btn btn-app bg-pink" (click)="openModal(publishIdeaModalRef)"
+                <a class="btn btn-app bg-yellow" (click)="openModal(publishIdeaModalRef)"
                     *ngIf="(leader.id === userLoggedIn.id || !project.ideaHasLeaderCreator) && project.status === projectStatus.DRAFT">
                     <i class="fas fa-lightbulb"></i>
                     <span i18n="@@publishAsIdea">Publish as Idea</span>
@@ -253,8 +253,8 @@
             <div class="form-group" *ngIf="!publishIdeaForm.controls['ideaHasAnonymousCreator'].value">
                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                     <input type="checkbox" class="custom-control-input" id="ideaHasLeaderCreator"
-                        formControlName="hasLeaderCreator">
-                    <label class="custom-control-label" for="hasLeaderCreator" i18n="@@userWhantToLeadRealOfIdea">I want
+                        formControlName="ideaHasLeaderCreator">
+                    <label class="custom-control-label" for="ideaHasLeaderCreator" i18n="@@userWhantToLeadRealOfIdea">I want
                         to lead the realization of the idea</label>
                 </div>
             </div>

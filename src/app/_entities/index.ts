@@ -5,7 +5,6 @@ export * from './budget/budget';
 export * from './campaign/campaign';
 export * from './content/content';
 export * from './donation/donation';
-export * from './idea/idea';
 export * from './news/news';
 export * from './ms-team/ms-team';
 export * from './organization/organization';

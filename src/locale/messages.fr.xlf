@@ -148,6 +148,15 @@
       <trans-unit id="publishedNews" datatype="html">
         <target> a publié l'actualité </target>
       </trans-unit>
+      <trans-unit id="newsTitleIdeaPublished" datatype="html">
+        <target> a une idée : </target>
+      </trans-unit>
+      <trans-unit id="newsTitleProjectPublished" datatype="html">
+        <target> a lancé le projet : </target>
+      </trans-unit>
+      <trans-unit id="newsTitleProject" datatype="html">
+        <target> concernant le projet </target>
+      </trans-unit>
       <trans-unit id="publishedNewsSystem" datatype="html">
         <target> a publié le message système </target>
       </trans-unit>

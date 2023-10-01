@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
     if (this.authenticationService.currentUserValue.token) {
       this.router.navigate(['/']);
     }
-    console.log(this.router.url);
     if (this.router.url.startsWith('/login')
       && !this.router.url.startsWith('/login/slack')) {
       this.redirectUrlSlackOAuth = location.href.replace(/\/login/, "/login/slack");

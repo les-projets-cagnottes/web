@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class NavService {
 
   private title = ""
+  private path = ""
 
   constructor() { }
 
@@ -15,6 +16,14 @@ export class NavService {
 
   public getTitle(): string {
     return this.title;
+  }
+
+  public setPath(path: string) {
+    this.path = path;
+  }
+
+  public getPath(): string {
+    return this.path;
   }
 
 }

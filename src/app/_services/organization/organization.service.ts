@@ -6,7 +6,7 @@ import { ConfigService } from '../config/config.service';
 import { OrganizationModel } from '../../_models/organization/organization.model';
 import { OrganizationAuthorityModel } from '../../_models/organization-authority/organization-authority.model';
 
-import { ContentModel, CampaignModel, IdeaModel, NewsModel, BudgetModel, ProjectModel, UserModel, DataPage } from '../../_models';
+import { ContentModel, CampaignModel, NewsModel, BudgetModel, ProjectModel, UserModel, DataPage } from '../../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -67,13 +67,6 @@ export class OrganizationService {
       .set('limit', limit.toString())
       .set('filters', filter.toString());
     return this.http.get<DataPage<ProjectModel>>(`${this.configService.get('apiUrl')}/organization/${id}/projects`, { params });
-  }
-
-  getIdeas(id: number, offset: number, limit: number) {
-    const params = new HttpParams()
-      .set('offset', offset.toString())
-      .set('limit', limit.toString())
-    return this.http.get<DataPage<IdeaModel>>(`${this.configService.get('apiUrl')}/organization/${id}/ideas`, { params });
   }
 
   getMembers(organizationId: number, offset: number, limit: number) {

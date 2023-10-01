@@ -10,7 +10,6 @@ export * from './pagination/data-sort/data-sort'
 export * from './donation/donation.model';
 export * from './file/file.model';
 export * from './generic/generic.model';
-export * from './idea/idea.model';
 export * from './news/news.model';
 export * from './organization/organization.model';
 export * from './organization-authority/organization-authority.model';

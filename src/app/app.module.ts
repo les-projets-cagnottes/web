@@ -29,6 +29,8 @@ import { ConfigService } from './_services/config/config.service';
 import { ViewProjectComponent } from './app/projects/view/view-project.component';
 import { ListNewsComponent } from './app/news/list/list-news.component';
 import { EditNewsComponent } from './app/news/edit/edit-news.component';
+import { SidebarComponent } from './app/sidebar/sidebar.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const appConfig = (config: ConfigService) => {
   return () => {
@@ -54,7 +56,8 @@ const appConfig = (config: ConfigService) => {
     ListProjectsComponent,
     ViewProjectComponent,
     ListNewsComponent,
-    EditNewsComponent
+    EditNewsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ const appConfig = (config: ConfigService) => {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    InfiniteScrollModule,
     CollapseModule.forRoot(),
     TabsModule.forRoot(),
     ModalModule.forRoot(),
