@@ -3,6 +3,9 @@ import { AuditModel, GenericModel } from '..';
 export class BudgetModel extends AuditModel {
     name = '';
     amountPerMember = 0;
+    canFinanceTime = false;
+    costOfDay = 0;
+    costOfHour = 0;
     isDistributed = false;
     startDate: Date = new Date();
     endDate: Date = new Date();
@@ -15,4 +18,5 @@ export class BudgetModel extends AuditModel {
     usage = '';
     totalDonationsPercent = '';
     remaining = '';
+    isUsable = false;
 }

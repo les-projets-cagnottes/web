@@ -57,3 +57,11 @@ a.disabled {
 .page-link {
     cursor: pointer;
 }
+
+.custom-checkbox {
+    margin-bottom: 1em;;
+}
+
+.bold {
+    font-weight: bold;
+}

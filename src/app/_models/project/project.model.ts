@@ -4,7 +4,7 @@ import { ProjectStatus } from './project-status';
 export class ProjectModel extends AuditModel {
     
     title = '';
-    status: ProjectStatus = ProjectStatus.DRAFT;
+    status: ProjectStatus = ProjectStatus.NEW;
     isPublished = false;
     ideaHasAnonymousCreator = false;
     ideaHasLeaderCreator = false;

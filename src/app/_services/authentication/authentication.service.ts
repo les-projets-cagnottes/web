@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { ConfigService } from '../config/config.service';
 
@@ -64,8 +64,12 @@ export class AuthenticationService {
             }));
     }
 
-    whoami(): Observable<User> {
-        const principal = this.http.get<UserModel>(`${this.configService.get('apiUrl')}/whoami`);
+    whoami() {
+        return this.http.get<UserModel>(`${this.configService.get('apiUrl')}/whoami`);
+    }
+
+    refresh(): Observable<User> {
+        const principal = this.whoami();
         const authorities = this.http.get<AuthorityModel[]>(`${this.configService.get('apiUrl')}/authority/me`);
         const orgauthorities = this.http.get<OrganizationAuthorityModel[]>(`${this.configService.get('apiUrl')}/orgauthorities`);
         const organizations = this.http.get<OrganizationModel[]>(`${this.configService.get('apiUrl')}/organizations`);

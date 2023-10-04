@@ -21,7 +21,6 @@ export class AppComponent {
       .subscribe((e) => {
         this.navService.setTitle("");
         this.navService.setPath(e.urlAfterRedirects);
-        console.log(e.urlAfterRedirects);
       });
   }
 

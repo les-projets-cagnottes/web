@@ -24,7 +24,7 @@ export class ListNewsComponent implements OnInit {
   private news = new DataPage<NewsModel>();
   newsPager = new Pager();
   newsPaged: NewsModel[] = [];
-  newsLength = 10;
+  newsLength = 20;
   newsByDate = new Map<string, NewsModel[]>();
   dates: string[] = [];
 

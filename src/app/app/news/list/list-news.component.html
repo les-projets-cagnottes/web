@@ -1,4 +1,5 @@
-<div class="timeline" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+<div class="timeline" infiniteScroll [infiniteScrollDistance]="5" [infiniteScrollThrottle]="50" [fromRoot]="true"
+    (scrolled)="onScroll()">
     <div *ngFor="let item of dates">
         <div class="time-label">
             <span class="bg-red">{{ item }}</span>
@@ -11,15 +12,16 @@
             <div class="timeline-item">
                 <span class="time"><i class="fas fa-clock"></i> {{ news.createdAt | date:'medium' }}</span>
                 <h3 class="timeline-header">
-                    <b>{{ getUser(news.author.id).getFullname() }}</b>
+                    <b>{{ getUser(news.author.id).fullname }}</b>
 
                     <span *ngIf="news.type =='SYSTEM'" i18n="@@publishedNewsSystem"> published the system
                         message
                     </span>
                     <span *ngIf="news.type =='ARTICLE'" i18n="@@publishedNews"> published the news </span>
                     <span *ngIf="news.type =='IDEA_PUBLISHED'" i18n="@@newsTitleIdeaPublished"> has an idea : </span>
-                    <span *ngIf="news.type =='PROJECT_PUBLISHED'" i18n="@@newsTitleProjectPublished"> launched the project </span>
-                    
+                    <span *ngIf="news.type =='PROJECT_PUBLISHED'" i18n="@@newsTitleProjectPublished"> launched the
+                        project </span>
+
                     <a *ngIf="news.project.id > 0" routerLink="/projects/{{ news.project.id }}">
                         <b>{{ news.title }}</b>
                     </a>
@@ -31,10 +33,12 @@
                     </div>
 
                 </h3>
-                <div *ngIf="news.content != null && news.content != ''" class="timeline-body" [innerHTML]="news.content"></div>
-                <div *ngIf="news.type =='ARTICLE' && news.author.id === userLoggedIn.id" class="timeline-footer action-bar">
-                    <a *ngIf="news.type =='ARTICLE' && news.author.id === userLoggedIn.id" class="btn btn-warning btn-sm"
-                        routerLink="/news/{{ news.id }}/edit">
+                <div *ngIf="news.content != null && news.content != ''" class="timeline-body"
+                    [innerHTML]="news.content"></div>
+                <div *ngIf="news.type =='ARTICLE' && news.author.id === userLoggedIn.id"
+                    class="timeline-footer action-bar">
+                    <a *ngIf="news.type =='ARTICLE' && news.author.id === userLoggedIn.id"
+                        class="btn btn-warning btn-sm" routerLink="/news/{{ news.id }}/edit">
                         <i class="fas fa-pen"></i>
                         <span i18n="@@editNews">Edit News</span>
                     </a>

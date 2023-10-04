@@ -19,6 +19,7 @@
                     <th style="width: 1%">#</th>
                     <th i18n="@@name">Name</th>
                     <th i18n="@@amountPerMember">Amount per member</th>
+                    <th i18n="@@timeFounding">Time Founding</th>
                     <th i18n="@@startDate">Starting Date</th>
                     <th i18n="@@endDate">Ending Date</th>
                     <th i18n="@@status" class="project-state">Status</th>
@@ -37,6 +38,8 @@
                         </small>
                     </td>
                     <td> {{ item.value.amountPerMember.toFixed(2) }} € </td>
+                    <td *ngIf="!item.value.canFinanceTime">❌</td>
+                    <td *ngIf="item.value.canFinanceTime"> {{ item.value.costOfDay }} € / <span i18n="@@day">day</span><br/>{{ item.value.costOfHour }} € / <span i18n="@@hour">hour</span></td>
                     <td> {{ item.value.startDate | date:'longDate' }} </td>
                     <td> {{ item.value.endDate | date:'longDate' }} </td>
                     <td class="project-state">
@@ -94,6 +97,42 @@
                         [ngClass]="{ 'is-invalid': editBudgetForm.controls['amountPerMember'].errors }">
                     <div class="input-group-append">
                         <span class="input-group-text">€</span>
+                    </div>
+                </div>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input formControlName="canFinanceTime" type="checkbox" id="canFinanceTime"
+                    class="custom-control-input" name="canFinanceTime"
+                    [ngClass]="{ 'is-invalid': editBudgetForm.controls['canFinanceTime'].errors }" />
+                <label for="canFinanceTime" class="custom-control-label">
+                    <span i18n="@@canFinanceTime">This budget can finance time</span>
+                </label>
+            </div>
+            <div *ngIf="this.editBudgetForm.controls['canFinanceTime'].value" class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="costOfDay" i18n="@@costOfDay">Cost of a day</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number" min="0.00" step="0.01" formControlName="costOfDay"
+                                id="costOfDay"
+                                [ngClass]="{ 'is-invalid': editBudgetForm.controls['costOfDay'].errors }">
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="costOfHour" i18n="@@costOfHour">Cost of an hour</label>
+                        <div class="input-group">
+                            <input class="form-control" type="number" min="0.00" step="0.01" formControlName="costOfHour"
+                                id="costOfHour"
+                                [ngClass]="{ 'is-invalid': editBudgetForm.controls['costOfHour'].errors }">
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
