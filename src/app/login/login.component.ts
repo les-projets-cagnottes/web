@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         () => {
           console.debug(this.returnUrl);
-          this.authenticationService.whoami()
+          this.authenticationService.refresh()
           .subscribe(
             () => {
               this.router.navigate([this.returnUrl]);

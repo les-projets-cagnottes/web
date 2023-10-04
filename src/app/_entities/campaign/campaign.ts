@@ -20,6 +20,9 @@ export class Campaign extends CampaignModel {
         entity.title = model.title;
         entity.status = model.status;
         entity.donationsRequired = model.donationsRequired;
+        entity.daysRequired = model.daysRequired;
+        entity.hoursRequired = model.hoursRequired;
+        entity.totalRequired = model.totalRequired;
         entity.fundingDeadline = model.fundingDeadline;
         entity.totalDonations = model.totalDonations;
         entity.project = new Project();

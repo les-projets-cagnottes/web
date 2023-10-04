@@ -28,6 +28,9 @@ export class BudgetsComponent implements OnInit {
   editBudgetForm: UntypedFormGroup = this.formBuilder.group({
     name: [this.selectedBudget.name, Validators.required],
     amountPerMember: [this.selectedBudget.amountPerMember, [Validators.required, Validators.min(0.01)]],
+    canFinanceTime: [this.selectedBudget.canFinanceTime],
+    costOfDay: [this.selectedBudget.costOfDay, [Validators.min(0.00)]],
+    costOfHour: [this.selectedBudget.costOfHour, [Validators.min(0.00)]],
     startDate: [this.selectedBudget.startDate, Validators.required],
     endDate: [this.selectedBudget.endDate, Validators.required],
     rules: [this.selectedBudget.rules.id, Validators.required]
@@ -78,6 +81,9 @@ export class BudgetsComponent implements OnInit {
         });
         this.editBudgetForm.controls['name'].setValue(budget.name);
         this.editBudgetForm.controls['amountPerMember'].setValue(budget.amountPerMember);
+        this.editBudgetForm.controls['canFinanceTime'].setValue(budget.canFinanceTime);
+        this.editBudgetForm.controls['costOfDay'].setValue(budget.costOfDay);
+        this.editBudgetForm.controls['costOfHour'].setValue(budget.costOfHour);
         this.editBudgetForm.controls['startDate'].setValue(this.dateToString(budget.startDate));
         this.editBudgetForm.controls['endDate'].setValue(this.dateToString(budget.endDate));
         if(contents.length > 0) {
@@ -89,11 +95,17 @@ export class BudgetsComponent implements OnInit {
         }
         if(budget.isDistributed) {
           this.editBudgetForm.controls['amountPerMember'].disable();
+          this.editBudgetForm.controls['canFinanceTime'].disable();
+          this.editBudgetForm.controls['costOfDay'].disable();
+          this.editBudgetForm.controls['costOfHour'].disable();
           this.editBudgetForm.controls['startDate'].disable();
           this.editBudgetForm.controls['endDate'].disable();
           this.editBudgetForm.controls['rules'].disable();
         } else {
           this.editBudgetForm.controls['amountPerMember'].enable();
+          this.editBudgetForm.controls['canFinanceTime'].enable();
+          this.editBudgetForm.controls['costOfDay'].enable();
+          this.editBudgetForm.controls['costOfHour'].enable();
           this.editBudgetForm.controls['startDate'].enable();
           this.editBudgetForm.controls['endDate'].enable();
           this.editBudgetForm.controls['rules'].enable();
@@ -114,6 +126,9 @@ export class BudgetsComponent implements OnInit {
     budget.id = this.selectedBudget.id;
     budget.name = this.editBudgetForm.controls['name'].value;
     budget.amountPerMember = this.editBudgetForm.controls['amountPerMember'].value;
+    budget.canFinanceTime = this.editBudgetForm.controls['canFinanceTime'].value;
+    budget.costOfDay = this.editBudgetForm.controls['costOfDay'].value;
+    budget.costOfHour = this.editBudgetForm.controls['costOfHour'].value;
     budget.startDate = this.editBudgetForm.controls['startDate'].value;
     budget.endDate = this.editBudgetForm.controls['endDate'].value;
     budget.rules.id = this.editBudgetForm.controls['rules'].value;

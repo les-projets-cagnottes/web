@@ -20,6 +20,9 @@
       <trans-unit id="amountPerMember" datatype="html">
         <target>Montant par membre</target>
       </trans-unit>
+      <trans-unit id="timeFounding" datatype="html">
+        <target>Financement de temps de travail</target>
+      </trans-unit>
       <trans-unit id="startDate" datatype="html">
         <target>Date de démarrage</target>
       </trans-unit>
@@ -31,6 +34,12 @@
       </trans-unit>
       <trans-unit id="createdAtInline" datatype="html">
         <target>Créé le </target>
+      </trans-unit>
+      <trans-unit id="day" datatype="html">
+        <target>jour</target>
+      </trans-unit>
+      <trans-unit id="hour" datatype="html">
+        <target>heure</target>
       </trans-unit>
       <trans-unit id="preparing" datatype="html">
         <target>En préparation</target>
@@ -49,6 +58,15 @@
       </trans-unit>
       <trans-unit id="editBudget" datatype="html">
         <target>Edition d'un budget</target>
+      </trans-unit>
+      <trans-unit id="canFinanceTime" datatype="html">
+        <target>Ce budget peut financer du temps</target>
+      </trans-unit>
+      <trans-unit id="costOfDay" datatype="html">
+        <target>Coût d'un jour</target>
+      </trans-unit>
+      <trans-unit id="costOfHour" datatype="html">
+        <target>Coût d'une heure</target>
       </trans-unit>
       <trans-unit id="budgetFieldDisabled" datatype="html">
         <target> Certains champs ont été désactivés car le budget est déjà distribué entre les membres de l'organisation. </target>
@@ -337,6 +355,12 @@
       <trans-unit id="foundingType" datatype="html">
         <target>Type</target>
       </trans-unit>
+      <trans-unit id="campaignListBegin" datatype="html">
+        <target>Début</target>
+      </trans-unit>
+      <trans-unit id="campaignListEnd" datatype="html">
+        <target>Fin</target>
+      </trans-unit>
       <trans-unit id="cancelled" datatype="html">
         <target>Annulée</target>
       </trans-unit>
@@ -364,11 +388,50 @@
       <trans-unit id="submit" datatype="html">
         <target>Soumettre</target>
       </trans-unit>
+      <trans-unit id="campaignGoals" datatype="html">
+        <target>Objectifs de campagne</target>
+      </trans-unit>
+      <trans-unit id="contributeFinanciallyExpenses" datatype="html">
+        <target>Dépenses : </target>
+      </trans-unit>
+      <trans-unit id="contributeFinanciallyDaysAbbr" datatype="html">
+        <target>j </target>
+      </trans-unit>
+      <trans-unit id="contributeFinanciallyHoursAbbr" datatype="html">
+        <target>h </target>
+      </trans-unit>
+      <trans-unit id="contributeFinanciallyOfWork" datatype="html">
+        <target>de travail</target>
+      </trans-unit>
+      <trans-unit id="contributeFinanciallyTotal" datatype="html">
+        <target>Total : </target>
+      </trans-unit>
+      <trans-unit id="contributeFinanciallyAlreadyCollected" datatype="html">
+        <target>Déjà collecté : </target>
+      </trans-unit>
+      <trans-unit id="myContribution" datatype="html">
+        <target>Ma contribution</target>
+      </trans-unit>
       <trans-unit id="foundingCampaign" datatype="html">
         <target>Campagne de financement</target>
       </trans-unit>
       <trans-unit id="moneyNeededInEuros" datatype="html">
         <target>Montant requis (en €)</target>
+      </trans-unit>
+      <trans-unit id="addFundingDaysRequired" datatype="html">
+        <target>Jours requis</target>
+      </trans-unit>
+      <trans-unit id="days" datatype="html">
+        <target>jour(s)</target>
+      </trans-unit>
+      <trans-unit id="addFundingHoursRequired" datatype="html">
+        <target>Heures requises</target>
+      </trans-unit>
+      <trans-unit id="hours" datatype="html">
+        <target>heure(s)</target>
+      </trans-unit>
+      <trans-unit id="addFundingTotalRequired" datatype="html">
+        <target>Total requis (en €)</target>
       </trans-unit>
       <trans-unit id="fundingDeadline" datatype="html">
         <target>Date limite de financement</target>

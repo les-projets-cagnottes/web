@@ -65,6 +65,8 @@ export class ViewProjectComponent implements OnInit {
     budget: [0],
     fundingDeadline: ['', Validators.pattern("\\d{4}-\\d{2}-\\d{2}")],
     donationsRequired: [0, [Validators.required, Validators.min(0.01)]],
+    daysRequired: [0],
+    hoursRequired: [0],
     rulesCompliant: [false, Validators.pattern("true")]
   });
   submittingFunding = false;
@@ -92,7 +94,7 @@ export class ViewProjectComponent implements OnInit {
   members: User[] = [];
   membersSyncStatus = 'idle';
   organizationSocialName = '';
-  
+
   // News Box
   news = new DataPage<NewsModel>();
   newsPager = new Pager();
@@ -146,25 +148,25 @@ export class ViewProjectComponent implements OnInit {
   refreshMembers() {
     this.membersSyncStatus = 'running';
     this.projectService.getTeammates(this.project.id)
-    .subscribe(members => {
-      this.membersSyncStatus = 'success';
-      this.members = User.fromModels(members);
-      this.members.forEach(member => {
-        member.hasLeftTheOrganization = !this.authenticationService.currentOrganizationValue.membersRef.some(orgMemberId => orgMemberId == member.id);
+      .subscribe(members => {
+        this.membersSyncStatus = 'success';
+        this.members = User.fromModels(members);
+        this.members.forEach(member => {
+          member.hasLeftTheOrganization = !this.authenticationService.currentOrganizationValue.membersRef.some(orgMemberId => orgMemberId == member.id);
+        });
+        this.isUserInTeam = this.members.find(user => {
+          return this.userLoggedIn.id === user.id;
+        }) !== undefined;
+        setTimeout(() => {
+          this.membersSyncStatus = 'idle';
+        }, 1000);
+      }, error => {
+        console.log(error);
+        this.membersSyncStatus = 'error';
+        setTimeout(() => {
+          this.membersSyncStatus = 'idle';
+        }, 1000);
       });
-      this.isUserInTeam = this.members.find(user => {
-        return this.userLoggedIn.id === user.id;
-      }) !== undefined;
-      setTimeout(() => {
-        this.membersSyncStatus = 'idle';
-      }, 1000);
-    }, error => {
-      console.log(error);
-      this.membersSyncStatus = 'error';
-      setTimeout(() => {
-        this.membersSyncStatus = 'idle';
-      }, 1000);
-    });
   }
 
   refreshCampaigns() {
@@ -173,43 +175,43 @@ export class ViewProjectComponent implements OnInit {
       .subscribe(response => {
         this.project = Project.fromModel(response);
         this.campaignService.getAllByIds(this.project.campaignsRef)
-        .subscribe(campaignModels => {
-          this.campaigns = Campaign.fromModels(campaignModels).sort((a, b) => {
-            if(a.createdAt > b.createdAt) {
-              return -1;
-            } else if(a.createdAt < b.createdAt) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-          let budgetsId: number[] = [];
-          this.campaigns.forEach(campaign => {
-            const remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
-            campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
-            budgetsId.push(campaign.budget.id);
-          });
-          budgetsId = [... new Set(budgetsId)];
-          this.budgetService.getAllByIds(budgetsId)
-            .subscribe(response => {
-              response.forEach(budget => {
-                this.campaignsBudgets.set(budget.id, budget);
-              });
+          .subscribe(campaignModels => {
+            this.campaigns = Campaign.fromModels(campaignModels).sort((a, b) => {
+              if (a.createdAt > b.createdAt) {
+                return -1;
+              } else if (a.createdAt < b.createdAt) {
+                return 1;
+              } else {
+                return 0;
+              }
             });
-          this.isUserInTeam = this.members.find(user => {
-            return this.userLoggedIn.id === user.id;
-          }) !== undefined;
-          this.campaignsSyncStatus = 'success';
-          setTimeout(() => {
-            this.campaignsSyncStatus = 'idle';
-          }, 1000);
-        }, error => {
-          this.campaignsSyncStatus = 'error';
-          console.error(error);
-          setTimeout(() => {
-            this.campaignsSyncStatus = 'idle';
-          }, 1000);
-        });
+            let budgetsId: number[] = [];
+            this.campaigns.forEach(campaign => {
+              const remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
+              campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+              budgetsId.push(campaign.budget.id);
+            });
+            budgetsId = [... new Set(budgetsId)];
+            this.budgetService.getAllByIds(budgetsId)
+              .subscribe(response => {
+                response.forEach(budget => {
+                  this.campaignsBudgets.set(budget.id, budget);
+                });
+              });
+            this.isUserInTeam = this.members.find(user => {
+              return this.userLoggedIn.id === user.id;
+            }) !== undefined;
+            this.campaignsSyncStatus = 'success';
+            setTimeout(() => {
+              this.campaignsSyncStatus = 'idle';
+            }, 1000);
+          }, error => {
+            this.campaignsSyncStatus = 'error';
+            console.error(error);
+            setTimeout(() => {
+              this.campaignsSyncStatus = 'idle';
+            }, 1000);
+          });
       });
   }
 
@@ -217,19 +219,45 @@ export class ViewProjectComponent implements OnInit {
     this.userLoggedIn = this.authenticationService.currentUserValue;
     if (this.pagerService.canChangePage(this.newsPager, page) || force) {
       this.projectService.getNews(this.id, page - 1, this.newsLength)
-        .subscribe(response => {
-          this.news = response;
-          this.setNewsPage(page);
-          this.newsSyncStatus = 'success';
-          setTimeout(() => {
-            this.newsSyncStatus = 'idle';
-          }, 2000);
-        }, error => {
-          this.newsSyncStatus = 'error';
-          console.log(error);
-          setTimeout(() => {
-            this.newsSyncStatus = 'idle';
-          }, 1000)
+        .subscribe({
+          next: (response) => {
+            this.news = response;
+            this.setNewsPage(page);
+            const userIds: number[] = [];
+            response.content.forEach(news => {
+              if (!userIds.find(id => id === news.author.id)) {
+                userIds.push(news.author.id);
+              }
+            });
+            this.userService.getAllByIds(userIds)
+              .subscribe({
+                next: (response) => {
+                  response.forEach(user => {
+                    this.users.set(user.id, user);
+                  });
+                  this.newsSyncStatus = 'success';
+                  setTimeout(() => {
+                    this.newsSyncStatus = 'idle';
+                  }, 2000);
+                },
+                complete: () => { },
+                error: error => {
+                  this.newsSyncStatus = 'error';
+                  console.log(error);
+                  setTimeout(() => {
+                    this.newsSyncStatus = 'idle';
+                  }, 1000);
+                }
+              });
+          },
+          complete: () => { },
+          error: error => {
+            this.newsSyncStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.newsSyncStatus = 'idle';
+            }, 1000)
+          }
         });
     }
   }
@@ -246,7 +274,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   onSubmitDonation() {
-
     if (this.donationForm.invalid) {
       return;
     }
@@ -273,11 +300,13 @@ export class ViewProjectComponent implements OnInit {
         this.formFunding.controls['budget'].setValue(0);
       });
   }
-  
+
   openFundingModal(template: TemplateRef<string>) {
     this.refreshBudgets();
     this.formFunding.controls['fundingDeadline'].setValue(this.dateToString(this.campaign.fundingDeadline));
     this.formFunding.controls['donationsRequired'].setValue(this.campaign.donationsRequired);
+    this.formFunding.controls['daysRequired'].setValue(this.campaign.daysRequired);
+    this.formFunding.controls['hoursRequired'].setValue(this.campaign.hoursRequired);
     this.addFundingModal = this.modalService.show(template);
   }
 
@@ -286,6 +315,8 @@ export class ViewProjectComponent implements OnInit {
     this.formFunding.controls['budget'].enable();
     this.formFunding.controls['fundingDeadline'].enable();
     this.formFunding.controls['donationsRequired'].setValidators([Validators.required, Validators.min(0.01)]);
+    this.formFunding.controls['daysRequired'].setValue(0);
+    this.formFunding.controls['hoursRequired'].setValue(0);
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
     this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
     this.openFundingModal(template);
@@ -295,6 +326,8 @@ export class ViewProjectComponent implements OnInit {
     this.formFunding.controls['budget'].disable();
     this.formFunding.controls['fundingDeadline'].disable();
     this.formFunding.controls['donationsRequired'].setValidators([Validators.required, Validators.min(this.campaign.donationsRequired)]);
+    this.formFunding.controls['daysRequired'].setValue(this.campaign.daysRequired);
+    this.formFunding.controls['hoursRequired'].setValue(this.campaign.hoursRequired);
     this.minDonations = this.campaign.donationsRequired.toString();
     this.campaignService.getById(id)
       .subscribe(response => {
@@ -328,7 +361,7 @@ export class ViewProjectComponent implements OnInit {
           this.setDonationsPage(page, response);
           const accountIds: number[] = [];
           this.donationsPaged.forEach(donation => {
-            if(!accountIds.find(id => id === donation.account.id)) {
+            if (!accountIds.find(id => id === donation.account.id)) {
               accountIds.push(donation.account.id);
             }
           });
@@ -337,26 +370,30 @@ export class ViewProjectComponent implements OnInit {
               const userIds: number[] = [];
               response.forEach(account => {
                 this.accounts.set(account.id, account);
-                if(!userIds.find(id => id === account.owner.id)) {
+                if (!userIds.find(id => id === account.owner.id)) {
                   userIds.push(account.owner.id);
                 }
               });
               this.userService.getAllByIds(userIds)
-                .subscribe(response => {
-                  response.forEach(user => {
-                    this.users.set(user.id, user);
-                  });
-                  this.donationsSyncStatus = 'success';
-                  setTimeout(() => {
-                    this.donationsSyncStatus = 'idle';
-                  }, 2000);
-                }, error => {
-                  this.donationsSyncStatus = 'error';
-                  console.log(error);
-                  setTimeout(() => {
-                    this.donationsSyncStatus = 'idle';
-                  }, 1000);
-                })
+                .subscribe({
+                  next: (response) => {
+                    response.forEach(user => {
+                      this.users.set(user.id, user);
+                    });
+                    this.donationsSyncStatus = 'success';
+                    setTimeout(() => {
+                      this.donationsSyncStatus = 'idle';
+                    }, 2000);
+                  },
+                  complete: () => { },
+                  error: error => {
+                    this.donationsSyncStatus = 'error';
+                    console.log(error);
+                    setTimeout(() => {
+                      this.donationsSyncStatus = 'idle';
+                    }, 1000);
+                  }
+                });
             }, error => {
               this.donationsSyncStatus = 'error';
               console.log(error);
@@ -373,7 +410,7 @@ export class ViewProjectComponent implements OnInit {
         });
     }
   }
-  
+
   setDonationsPage(page: number, donations: DataPage<DonationModel>) {
     this.donationsPager = this.pagerService.getPager(donations.totalElements, page, this.donationsLength);
     this.donationsPaged = Donation.fromModels(donations.content);
@@ -382,7 +419,7 @@ export class ViewProjectComponent implements OnInit {
   deleteDonations(donation: Donation) {
     this.donationService.delete(donation.id)
       .subscribe({
-        next: () => {},
+        next: () => { },
         complete: () => {
           this.refreshDonations(this.viewDonationsSelectedCampaign.id, this.donationsPager.currentPage);
         },
@@ -401,7 +438,7 @@ export class ViewProjectComponent implements OnInit {
     if (this.formFunding.invalid) {
       return;
     }
-    if(this.id == 0 && this.getFundingDeadlineValue().getTime() > this.nowPlus3Months.getTime() ) {
+    if (this.id == 0 && this.getFundingDeadlineValue().getTime() > this.nowPlus3Months.getTime()) {
       return;
     }
 
@@ -410,6 +447,8 @@ export class ViewProjectComponent implements OnInit {
 
     const campaignToSave = new CampaignModel();
     campaignToSave.donationsRequired = this.formFunding.controls['donationsRequired'].value;
+    campaignToSave.daysRequired = this.formFunding.controls['daysRequired'].value;
+    campaignToSave.hoursRequired = this.formFunding.controls['hoursRequired'].value;
     campaignToSave.budget.id = this.budgets[this.formFunding.controls['budget'].value].id;
     campaignToSave.project.id = this.project.id;
 
@@ -449,7 +488,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   getFundingDeadlineValue() {
-    if(this.formFunding.controls['fundingDeadline'].value == "NaN-aN-aN") {
+    if (this.formFunding.controls['fundingDeadline'].value == "NaN-aN-aN") {
       return new Date(this.fundingDeadlineValue);
     } else {
       return new Date(this.formFunding.controls['fundingDeadline'].value);
@@ -473,7 +512,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   publishIdeaSubmit() {
-    
+
     const submittedProject = new ProjectModel();
     submittedProject.id = this.id;
     submittedProject.title = this.project.title;
@@ -485,27 +524,27 @@ export class ViewProjectComponent implements OnInit {
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
     submittedProject.status = ProjectStatus.IDEA;
 
-    if(!submittedProject.ideaHasAnonymousCreator) {
+    if (!submittedProject.ideaHasAnonymousCreator) {
       submittedProject.leader.id = this.project.leader.id;
     } else {
       submittedProject.leader.id = 0;
     }
 
     this.projectService.update(submittedProject)
-    .subscribe({
-      next: () => {
-        this.startProjectModalRef.hide();
-        this.refresh();
-      },
-      complete: () => { },
-      error: error => {
-        console.error(error);
-      }
-    });
+      .subscribe({
+        next: () => {
+          this.startProjectModalRef.hide();
+          this.refresh();
+        },
+        complete: () => { },
+        error: error => {
+          console.error(error);
+        }
+      });
   }
 
   startProjectSubmit() {
-    
+
     const submittedProject = new ProjectModel();
     submittedProject.id = this.id;
     submittedProject.title = this.project.title;
@@ -516,13 +555,13 @@ export class ViewProjectComponent implements OnInit {
     submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
 
-    if(this.project.leader.id > 0) {
+    if (this.project.leader.id > 0) {
       submittedProject.leader.id = this.project.leader.id;
     } else {
       submittedProject.leader.id = this.authenticationService.currentUserValue.id;
     }
 
-    if(this.project.status != ProjectStatus.FINISHED) {
+    if (this.project.status != ProjectStatus.FINISHED) {
       submittedProject.peopleRequired = this.startProjectForm.controls['peopleRequired'].value;
     } else {
       submittedProject.peopleRequired = this.project.peopleRequired;
@@ -530,16 +569,16 @@ export class ViewProjectComponent implements OnInit {
     submittedProject.status = ProjectStatus.IN_PROGRESS;
 
     this.projectService.update(submittedProject)
-    .subscribe({
-      next: () => {
-        this.startProjectModalRef.hide();
-        this.refresh();
-      },
-      complete: () => { },
-      error: error => {
-        console.error(error);
-      }
-    });
+      .subscribe({
+        next: () => {
+          this.startProjectModalRef.hide();
+          this.refresh();
+        },
+        complete: () => { },
+        error: error => {
+          console.error(error);
+        }
+      });
   }
 
   reopen() {
@@ -554,19 +593,35 @@ export class ViewProjectComponent implements OnInit {
   }
 
   min(val1: number, val2: number): number {
-    if(val1 > val2) {
+    if (val1 > val2) {
       return val2;
     } else {
       return val1;
     }
   }
 
+  getBudget(id: number): BudgetModel {
+    let entity = this.campaignsBudgets.get(id);
+    if (entity === undefined) {
+      entity = new BudgetModel();
+    }
+    return entity;
+  }
+
+  getUser(id: number): UserModel {
+    let entity = this.users.get(id);
+    if (entity === undefined) {
+      entity = new User();
+    }
+    return entity;
+  }
+
   getContributorFromAccountId(accountId: number): UserModel {
     const account = this.accounts.get(accountId);
     let user;
-    if(account !== undefined) {
+    if (account !== undefined) {
       user = this.users.get(account.owner.id);
-      if(user !== undefined) {
+      if (user !== undefined) {
         return user;
       }
     }
@@ -574,4 +629,3 @@ export class ViewProjectComponent implements OnInit {
   }
 
 }
- 

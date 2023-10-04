@@ -27,8 +27,10 @@
             <div class="card-body">
                 <div class="project_progress" *ngFor="let account of accounts | keyvalue">
                     <span class="progress-text">{{ getBudget(account.value.budget.id).name }}</span>
+                    {{ getBudget(account.value.budget.id).isUsable }}
                     <div class="progress sm" title="{{ account.value.usage }}">
-                        <div class="progress-bar progress-bar-aqua" [ngStyle]="{'width': account.value.usage }"></div>
+                        <div class="progress-bar bg-aqua" *ngIf="getBudget(account.value.budget.id).isUsable" [ngStyle]="{'width': account.value.usage }"></div>
+                        <div class="progress-bar bg-gray" *ngIf="!getBudget(account.value.budget.id).isUsable" [ngStyle]="{'width': account.value.usage }"></div>
                     </div>
                     <small>
                         {{ account.value.amount }} € / {{ account.value.initialAmount }} €

@@ -39,8 +39,8 @@
                             <th i18n="@@status">Status</th>
                             <th i18n="@@foundingType">Funding type</th>
                             <th i18n="@@budget">Budget</th>
-                            <th i18n="@@startDate">Starting Date</th>
-                            <th i18n="@@endDate">Ending Date</th>
+                            <th i18n="@@campaignListBegin">Starts</th>
+                            <th i18n="@@campaignListEnd">Ends</th>
                             <th i18n="@@amount">Amount</th>
                             <th></th>
                         </tr>
@@ -58,10 +58,12 @@
                             <td i18n="@@campaign">Campaign</td>
                             <td><span *ngIf="campaignsBudgets.get(campaign.budget.id) !== undefined">{{
                                     campaignsBudgets.get(campaign.budget.id)?.name }}</span></td>
-                            <td>{{ campaign.createdAt | date:'medium' }}</td>
-                            <td>{{ campaign.fundingDeadline | date:'medium' }}</td>
-                            <td>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.donationsRequired.toFixed(2) }}
-                                €</td>
+                            <td>{{ campaign.createdAt | date:'d MMM y' }}</td>
+                            <td>{{ campaign.fundingDeadline | date:'d MMM y' }}</td>
+                            <td class="text-center">
+                                <span>{{ campaign.totalDonations.toFixed(2) }} € / {{ campaign.totalRequired.toFixed(2)
+                                    }} €</span>
+                            </td>
                             <td>
                                 <a *ngIf="campaign.status === campaignStatus.IN_PROGRESS && campaign.totalDonations < campaign.donationsRequired"
                                     class="btn btn-block btn-default btn-sm"
@@ -112,14 +114,19 @@
             <div class="card-body">
                 <div class="post clearfix" *ngFor="let news of newsPaged">
                     <div class="user-block">
-                        <img class="img-circle img-bordered-sm"
-                            src="https://gravatar.com/avatar/fa46b143207c691b0d6378d4c00fc774?s=400&d=robohash&r=x"
+                        <img class="img-circle img-bordered-sm" [src]="getUser(news.author.id).avatarUrl"
                             alt="user image">
                         <span class="username">
-                            <b>{{ news.createdBy }}</b><span i18n="@@publishedTheNews"> published the news
-                            </span><span>{{ news.title
-                                }}</span>
+                            <b>{{ getUser(news.author.id).fullname }}</b>
+                            <span *ngIf="news.type =='ARTICLE'" i18n="@@publishedNews"> published the news </span>
+                            <span *ngIf="news.type =='IDEA_PUBLISHED'" i18n="@@newsTitleIdeaPublished"> has an idea :
+                            </span>
+                            <span *ngIf="news.type =='PROJECT_PUBLISHED'" i18n="@@newsTitleProjectPublished"> launched
+                                the
+                                project </span>
+                            <span>{{ news.title }}</span>
                         </span>
+
                         <span class="description">{{ news.createdAt | date:'medium' }}</span>
                     </div>
                     <div [innerHTML]="news.content"></div>
@@ -157,7 +164,8 @@
                         *ngIf="project.status === projectStatus.IN_PROGRESS || project.status === projectStatus.FINISHED">
                         {{ members.length }} / {{ 1 + project.peopleRequired }}</dd>
                 </dl>
-                <div class="callout callout-info" *ngIf="project.ideaHasLeaderCreator">
+                <div class="callout callout-info"
+                    *ngIf="project.ideaHasLeaderCreator && project.status === projectStatus.IDEA">
                     <p><span i18n="@@atIdeaSubmission">At the idea submission, </span>{{ leader.firstname }} {{
                         leader.lastname }}<span i18n="@@wishedToLeadProject"> wished to lead the project.</span></p>
                 </div>
@@ -254,7 +262,8 @@
                 <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                     <input type="checkbox" class="custom-control-input" id="ideaHasLeaderCreator"
                         formControlName="ideaHasLeaderCreator">
-                    <label class="custom-control-label" for="ideaHasLeaderCreator" i18n="@@userWhantToLeadRealOfIdea">I want
+                    <label class="custom-control-label" for="ideaHasLeaderCreator" i18n="@@userWhantToLeadRealOfIdea">I
+                        want
                         to lead the realization of the idea</label>
                 </div>
             </div>
@@ -296,6 +305,37 @@
         </button>
     </div>
     <div class="modal-body">
+        <h5 i18n="@@campaignGoals" style="text-align: center;">Campaign Goals</h5>
+        <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <td i18n="@@contributeFinanciallyExpenses">Expenses : </td>
+                    <td class="text-right">{{ selectedCampaign.donationsRequired.toFixed(2) }} €</td>
+                </tr>
+                <tr *ngIf="getBudget(account.budget.id).canFinanceTime && (selectedCampaign.daysRequired > 0 || selectedCampaign.hoursRequired > 0)">
+                    <td>
+                        <span>{{ selectedCampaign.daysRequired }}</span>
+                        <span i18n="@@contributeFinanciallyDaysAbbr">d </span>
+                        <span>{{ selectedCampaign.hoursRequired }}</span>
+                        <span i18n="@@contributeFinanciallyHoursAbbr">h </span>
+                        <span i18n="@@contributeFinanciallyOfWork">of work</span>
+                        <span> : </span>
+                    </td>
+                    <td class="text-right">{{ (selectedCampaign.daysRequired * getBudget(account.budget.id).costOfDay +
+                        selectedCampaign.hoursRequired * getBudget(account.budget.id).costOfHour).toFixed(2) }}
+                        €</td>
+                </tr>
+                <tr class="bold">
+                    <td i18n="@@contributeFinanciallyTotal">Total : </td>
+                    <td class="text-right">{{ selectedCampaign.totalRequired.toFixed(2) }} €</td>
+                </tr>
+                <tr class="bold">
+                    <td i18n="@@contributeFinanciallyAlreadyCollected">Already collected : </td>
+                    <td class="text-right">{{ selectedCampaign.totalDonations.toFixed(2) }} €</td>
+                </tr>
+            </tbody>
+        </table>
+        <h5 i18n="@@myContribution" style="text-align: center;">My contribution</h5>
         <form [formGroup]="donationForm">
             <div class="form-group">
                 <label for="amount" i18n="@@budget">Budget</label>
@@ -306,7 +346,7 @@
             <div class="form-group">
                 <label for="amount" i18n="@@amountInEuros">Amount (in €)</label>
                 <input type="number" formControlName="amount" class="form-control" id="amount" min="0.00" step="0.01"
-                    max="{{ (min(account.amount, selectedCampaign.donationsRequired - selectedCampaign.totalDonations)).toFixed(2) }}"
+                    max="{{ (min(account.amount, selectedCampaign.totalRequired - selectedCampaign.totalDonations)).toFixed(2) }}"
                     [ngClass]="{ 'is-invalid': donationForm.controls['amount'].errors }" />
             </div>
             <div class="callout callout-info">
@@ -347,8 +387,6 @@
                                         item.name }}</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="donationsRequired" i18n="@@moneyNeededInEuros">Money needed (in
                                     €)</label>
@@ -361,8 +399,46 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
+                            <div *ngIf="this.budgets.length > 0 && fFunding['budget'].value !== undefined && budgets[fFunding['budget'].value].canFinanceTime"
+                                class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="daysRequired" i18n="@@addFundingDaysRequired">Days needed</label>
+                                        <div class="input-group">
+                                            <input formControlName="daysRequired" type="number" class="form-control"
+                                                id="daysRequired" min="0" step="1"
+                                                [ngClass]="{ 'is-invalid': fFunding['daysRequired'].errors }" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" i18n="@@days">days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="hoursRequired" i18n="@@addFundingHoursRequired">Hours needed</label>
+                                        <div class="input-group">
+                                            <input formControlName="hoursRequired" type="number" class="form-control"
+                                                id="hoursRequired" min="0" step="1"
+                                                [ngClass]="{ 'is-invalid': fFunding['hoursRequired'].errors }" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" i18n="@@hours">hour(s)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="this.budgets.length > 0 && fFunding['budget'].value !== undefined && budgets[fFunding['budget'].value].canFinanceTime"
+                                class="form-group">
+                                <label for="donationsRequired" i18n="@@addFundingTotalRequired">Total needed (in
+                                    €)</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control"
+                                        [value]="fFunding['donationsRequired'].value + budgets[fFunding['budget'].value].costOfDay * fFunding['daysRequired'].value + budgets[fFunding['budget'].value].costOfHour * fFunding['hoursRequired'].value"
+                                        disabled />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">€</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="fundingDeadline" i18n="@@fundingDeadline" style="display: block;">Funding
                                     Deadline</label>

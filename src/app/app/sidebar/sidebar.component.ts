@@ -48,7 +48,7 @@ export class SidebarComponent {
   }
 
   refresh() {
-    this.authenticationService.whoami()
+    this.authenticationService.refresh()
       .subscribe(() => {
         this.organizationService.getById(this.currentOrganization.id)
           .subscribe(organizationModel => {

@@ -18,8 +18,5 @@ export class UserModel extends AuditModel {
     isUserManager = false;
     isUserOwner = false;
     hasLeftTheOrganization = false;
-
-    getFullname(): string {
-        return this.firstname + " " + this.lastname;
-    }
+    fullname = '';
 }

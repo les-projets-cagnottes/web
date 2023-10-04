@@ -23,6 +23,9 @@ export class Budget extends BudgetModel {
         entity.updatedBy = model.updatedBy;
         entity.name = model.name;
         entity.amountPerMember = model.amountPerMember;
+        entity.canFinanceTime = model.canFinanceTime;
+        entity.costOfDay = model.costOfDay;
+        entity.costOfHour = model.costOfHour;
         entity.isDistributed = model.isDistributed;
         entity.startDate = model.startDate;
         entity.endDate = model.endDate;

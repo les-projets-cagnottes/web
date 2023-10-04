@@ -77,12 +77,16 @@ export class ProfileComponent implements OnInit {
     this.donations = new Map<number, Donation>();
     this.projects = new Map<number, Project>();
     this.organizations = new Map<number, Organization>();
+    
+    var now = new Date();
 
     this.organizationService.getBudgets(this.organization.id)
       .subscribe(budgetModels => {
         const budgetIds: number[] = [];
         budgetModels.forEach(budgetModel => {
-          this.budgets.set(budgetModel.id, Budget.fromModel(budgetModel));
+          var budget = Budget.fromModel(budgetModel);
+          budget.isUsable = new Date(budgetModel.startDate) < now && new Date(budgetModel.endDate) > now;
+          this.budgets.set(budgetModel.id, budget);
           budgetIds.push(budgetModel.id);
         });
         this.userService.getAccountsByBudgetIds(this.user.id, budgetIds)
