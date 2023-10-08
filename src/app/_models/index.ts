@@ -18,3 +18,5 @@ export * from './role';
 export * from './slack-team/slack-team.model';
 export * from './slack-user/slack-user.model';
 export * from './user/user.model';
+export * from './vote/score.model';
+export * from './vote/vote.model';

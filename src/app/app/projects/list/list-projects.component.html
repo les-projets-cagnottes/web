@@ -56,6 +56,12 @@
                             <th i18n="@@description">
                                 Description
                             </th>
+                            <th i18n="@@listProjectsUpVotes" *ngIf="status == 'idea'">
+                                Up Votes
+                            </th>
+                            <th i18n="@@listProjectsDownVotes" *ngIf="status == 'idea'">
+                                Down Votes
+                            </th>
                             <th style="width: 20%" i18n="@@funding" *ngIf="status != 'idea'">
                                 Founding
                             </th>
@@ -84,7 +90,16 @@
                             <td>
                                 {{ item.shortDescription }}
                             </td>
-                            <td [ngClass]="{'missingBudget': projectMissingBudget.get(item.id)}" *ngIf="status != 'idea'">
+                            <td *ngIf="status == 'idea'">
+                                <i class="fa fa-arrow-up"></i>
+                                <span>{{ projectsScores.get(item.id)?.up }}</span>
+                            </td>
+                            <td *ngIf="status == 'idea'">
+                                <i class="fa fa-arrow-down"></i>
+                                <span>{{ projectsScores.get(item.id)?.down }}</span>
+                            </td>
+                            <td [ngClass]="{'missingBudget': projectsMissingBudget.get(item.id)}"
+                                *ngIf="status != 'idea'">
                                 {{ projectsTotalDonations.get(item.id)?.toFixed(2) }} € / {{
                                 projectsDonationsRequired.get(item.id)?.toFixed(2) }} €
                             </td>

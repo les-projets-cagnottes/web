@@ -97,7 +97,7 @@ export class EditProjectComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(status?: ProjectStatus ) {
 
     // If form is invalid, avort
     if (this.form.invalid) {
@@ -117,11 +117,16 @@ export class EditProjectComponent implements OnInit {
     submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
 
+    if(status !== undefined) {
+      submittedProject.status = status;
+    } else {
+      submittedProject.status = this.project.status;
+    }
+
     // Submit item to backend
     if (this.id > 0) {
       submittedProject.id = this.id;
       submittedProject.leader.id = this.project.leader.id;
-      submittedProject.status = this.project.status;
       this.projectService.update(submittedProject)
         .subscribe({
           next: (response) => {
@@ -136,7 +141,6 @@ export class EditProjectComponent implements OnInit {
         });
     } else {
       submittedProject.leader.id = this.authenticationService.currentUserValue.id;
-      submittedProject.status = ProjectStatus.DRAFT;
       this.projectService.create(submittedProject)
         .subscribe({
           next: (response) => {

@@ -12,6 +12,39 @@
             <div id="long-description" class="card-body" [innerHTML]="project.longDescription">
             </div>
         </div>
+        <div class="card card-default" *ngIf="project.status === 'IDEA'">
+            <div class="card-header">
+                <h3 class="card-title" i18n="@@votes">Votes</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4 text-right">
+                        <button (click)="onSubmitVote(voteType.UP)"
+                            [ngClass]="{ 'btn-success': vote.id > 0 && vote.type == voteType.UP, 'btn-outline-success': vote.id <= 0 || vote.type != voteType.UP}"
+                            type="button" class="btn btn-outline-success btn-lg btn-flat">
+                            <i class="fa fa-arrow-up"></i>
+                            <span>{{ score.up }}</span>
+                        </button>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span class="vote-score">{{ score.up - score.down }}</span>
+                    </div>
+                    <div class="col-4 text-left">
+                        <button (click)="onSubmitVote(voteType.DOWN)"
+                            [ngClass]="{ 'btn-danger': vote.id > 0 && vote.type == voteType.DOWN, 'btn-outline-danger': vote.id <= 0 || vote.type != voteType.DOWN}"
+                            type="button" class="btn btn-lg btn-flat">
+                            <i class="fa fa-arrow-down"></i>
+                            <span>{{ score.down }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card card-default" *ngIf="project.status !== 'DRAFT' && project.status !== 'IDEA'">
             <div class="card-header">
                 <h3 class="card-title" i18n="@@founding">Founding</h3>
@@ -117,7 +150,7 @@
                         <img class="img-circle img-bordered-sm" [src]="getUser(news.author.id).avatarUrl"
                             alt="user image">
                         <span class="username">
-                            <b>{{ getUser(news.author.id).fullname }}</b>
+                            <b>{{ getUser(news.author.id).getFullname() }}</b>
                             <span *ngIf="news.type =='ARTICLE'" i18n="@@publishedNews"> published the news </span>
                             <span *ngIf="news.type =='IDEA_PUBLISHED'" i18n="@@newsTitleIdeaPublished"> has an idea :
                             </span>
@@ -144,9 +177,10 @@
             </div>
             <div class="card-body">
                 <dl class="dl-horizontal">
-                    <dt i18n="@@creator">Creator</dt>
-                    <dd *ngIf="!project.ideaHasAnonymousCreator">{{ leader.firstname }} {{ leader.lastname }}</dd>
+                    <dt *ngIf="project.status == projectStatus.IDEA" i18n="@@creator">Creator</dt>
+                    <dt *ngIf="project.status != projectStatus.IDEA" i18n="@@projectLeader">Project Leader</dt>
                     <dd *ngIf="project.ideaHasAnonymousCreator" i18n="@@anonymous">Anonymous</dd>
+                    <dd *ngIf="!project.ideaHasAnonymousCreator">{{ leader.firstname }} {{ leader.lastname }}</dd>
                     <dt i18n="@@createdAt">Created at</dt>
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt i18n="@@status">Status</dt>
@@ -312,7 +346,8 @@
                     <td i18n="@@contributeFinanciallyExpenses">Expenses : </td>
                     <td class="text-right">{{ selectedCampaign.donationsRequired.toFixed(2) }} €</td>
                 </tr>
-                <tr *ngIf="getBudget(account.budget.id).canFinanceTime && (selectedCampaign.daysRequired > 0 || selectedCampaign.hoursRequired > 0)">
+                <tr
+                    *ngIf="getBudget(account.budget.id).canFinanceTime && (selectedCampaign.daysRequired > 0 || selectedCampaign.hoursRequired > 0)">
                     <td>
                         <span>{{ selectedCampaign.daysRequired }}</span>
                         <span i18n="@@contributeFinanciallyDaysAbbr">d </span>

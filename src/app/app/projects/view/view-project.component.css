@@ -14,3 +14,14 @@
 .hasLeftTheOrganization {
     filter: grayscale(100%) blur(5px);
 }
+
+.vote-score {
+    display: inline-block;
+    font-size: xx-large;
+    border: 1px solid black;    
+    height: 50px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 50px;
+}

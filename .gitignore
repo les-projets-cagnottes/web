@@ -47,4 +47,6 @@ testem.log
 Thumbs.db
 
 # keys & certificats
+*.crt
+*.key
 *.pem

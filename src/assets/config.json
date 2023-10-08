@@ -1,7 +1,7 @@
 {
-    "webUrl": "http://localhost:4200",
+    "webUrl": "https://localhost:4200",
     "apiUrl": "http://localhost:8080/api",
-    "slackEnabled": false,
+    "slackEnabled": true,
     "slackClientId": "1267900044419.1280463132273",
     "microsoftEnabled": false,
     "microsoftTenantId": "ab8f3573-a42c-4b8b-a615-f03fd683bbbd",
