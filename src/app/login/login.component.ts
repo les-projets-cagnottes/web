@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
     if(this.router.url.startsWith('/login/slack')) {
       this.redirectUrlSlackOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
+      this.loading = true;
       this.authenticationService.slack(this.code, this.redirectUrlSlackOAuth)
         .subscribe(() => {
           this.router.navigate([this.returnUrl]);
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit {
     if(this.router.url.startsWith('/login/ms')) {
       this.redirectUrlMSOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
+      this.loading = true;
       this.authenticationService.microsoft(this.code, this.redirectUrlMSOAuth, this.configService.get('microsoftTenantId'))
         .subscribe(() => {
           this.router.navigate([this.returnUrl]);
@@ -92,7 +94,6 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
       .subscribe(
         () => {
-          console.debug(this.returnUrl);
           this.authenticationService.refresh()
           .subscribe(
             () => {

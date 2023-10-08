@@ -3,11 +3,12 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Budget, Campaign, Content, Donation, Project, User } from 'src/app/_entities';
-import { AccountModel, BudgetModel, CampaignModel, DataPage, DonationModel, GenericModel, NewsModel, ProjectModel, UserModel } from 'src/app/_models';
+import { AccountModel, BudgetModel, CampaignModel, DataPage, DonationModel, GenericModel, NewsModel, ProjectModel, ScoreModel, UserModel, VoteModel } from 'src/app/_models';
 import { CampaignStatus } from 'src/app/_models/campaign/campaign-status';
 import { Pager } from 'src/app/_models/pagination/pager/pager';
 import { ProjectStatus } from 'src/app/_models/project/project-status';
-import { AccountService, AuthenticationService, BudgetService, CampaignService, ContentService, DonationService, OrganizationService, PagerService, ProjectService, UserService } from 'src/app/_services';
+import { VoteType } from 'src/app/_models/vote/vote-type';
+import { AccountService, AuthenticationService, BudgetService, CampaignService, ContentService, DonationService, OrganizationService, PagerService, ProjectService, UserService, VoteService } from 'src/app/_services';
 import { NavService } from 'src/app/_services/nav/nav.service';
 
 @Component({
@@ -19,14 +20,17 @@ export class ViewProjectComponent implements OnInit {
 
   campaignStatus = CampaignStatus;
   projectStatus = ProjectStatus;
+  voteType = VoteType;
 
   // Data
   id = 0;
   accounts: Map<number, AccountModel> = new Map<number, AccountModel>();
-  users: Map<number, UserModel> = new Map<number, UserModel>();
+  users: Map<number, User> = new Map<number, User>();
   userLoggedIn = new User();
   project = new Project();
   leader = new User();
+  score = new ScoreModel();
+  vote = new VoteModel();
 
   // Informations Card
   isUserInTeam = false;
@@ -116,7 +120,8 @@ export class ViewProjectComponent implements OnInit {
     public navService: NavService,
     private organizationService: OrganizationService,
     private projectService: ProjectService,
-    private userService: UserService) {
+    private userService: UserService,
+    private voteService: VoteService) {
     this.route.params.subscribe(params => this.id = params['id']);
   }
 
@@ -131,11 +136,32 @@ export class ViewProjectComponent implements OnInit {
       .subscribe(response => {
         this.project = Project.fromModel(response);
         this.navService.setTitle(this.project.title);
+        this.refreshVote();
         this.refreshLeader();
         this.refreshMembers();
         this.refreshCampaigns();
         this.refreshNews();
       });
+  }
+
+  refreshVote() {
+    if(this.project.status == this.projectStatus.IDEA) {
+      this.vote = new VoteModel();
+      this.voteService.getUserVote(this.project.id)
+        .subscribe({
+          next: voteModel => {
+            this.vote = voteModel;
+          },
+          error: error => console.error(error)
+        });
+      this.voteService.getScoreByProjectId(this.project.id)
+        .subscribe({
+          next: scoreModel => {
+            this.score = scoreModel;
+          },
+          error: error => console.error(error)
+        });
+    }
   }
 
   refreshLeader() {
@@ -233,7 +259,7 @@ export class ViewProjectComponent implements OnInit {
               .subscribe({
                 next: (response) => {
                   response.forEach(user => {
-                    this.users.set(user.id, user);
+                    this.users.set(user.id, User.fromModel(user));
                   });
                   this.newsSyncStatus = 'success';
                   setTimeout(() => {
@@ -378,7 +404,7 @@ export class ViewProjectComponent implements OnInit {
                 .subscribe({
                   next: (response) => {
                     response.forEach(user => {
-                      this.users.set(user.id, user);
+                      this.users.set(user.id, User.fromModel(user));
                     });
                     this.donationsSyncStatus = 'success';
                     setTimeout(() => {
@@ -511,6 +537,22 @@ export class ViewProjectComponent implements OnInit {
     this.startProjectModalRef = this.modalService.show(template);
   }
 
+  onSubmitVote(voteType: VoteType) {
+    const submittedVote = new VoteModel();
+    submittedVote.project.id = this.id;
+    submittedVote.type = voteType;
+    this.voteService.vote(submittedVote)
+      .subscribe({
+        next: () => {
+          this.refreshVote();
+        },
+        complete: () => { },
+        error: error => {
+          console.error(error);
+        }
+      });
+  }
+
   publishIdeaSubmit() {
 
     const submittedProject = new ProjectModel();
@@ -608,7 +650,7 @@ export class ViewProjectComponent implements OnInit {
     return entity;
   }
 
-  getUser(id: number): UserModel {
+  getUser(id: number): User {
     let entity = this.users.get(id);
     if (entity === undefined) {
       entity = new User();
@@ -616,7 +658,7 @@ export class ViewProjectComponent implements OnInit {
     return entity;
   }
 
-  getContributorFromAccountId(accountId: number): UserModel {
+  getContributorFromAccountId(accountId: number): User {
     const account = this.accounts.get(accountId);
     let user;
     if (account !== undefined) {
@@ -625,7 +667,7 @@ export class ViewProjectComponent implements OnInit {
         return user;
       }
     }
-    return new UserModel()
+    return new User()
   }
 
 }

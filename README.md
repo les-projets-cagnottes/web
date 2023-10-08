@@ -62,9 +62,10 @@ Update the file `src/assets/config.json` with an HTTP URL :
 Then run the following commands :
 
 ```cmd
+npm i -g mkcert
 mkcert -install
 mkcert localhost
-angular-http-server --path dist\fr --https --cert localhost.pem --key localhost-key.pem -p 4200
+angular-http-server --path dist\fr --https --cert cert.crt --key cert.key -p 4200
 ```
 
 ### Run with Docker

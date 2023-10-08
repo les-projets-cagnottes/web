@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CampaignModel, DataPage, UserModel } from 'src/app/_models';
+import { CampaignModel, DataPage, ScoreModel, UserModel } from 'src/app/_models';
 import { CampaignStatus } from 'src/app/_models/campaign/campaign-status';
 import { Pager } from 'src/app/_models/pagination/pager/pager';
 import { ProjectModel } from 'src/app/_models/project/project.model';
-import { AuthenticationService, CampaignService, OrganizationService, PagerService, UserService } from 'src/app/_services';
+import { AuthenticationService, CampaignService, OrganizationService, PagerService, UserService, VoteService } from 'src/app/_services';
 
 @Component({
   selector: 'app-list-projects',
@@ -18,7 +18,8 @@ export class ListProjectsComponent implements OnInit {
   private campaigns = new Map<number, CampaignModel>();
   projectsTotalDonations = new Map<number, number>();
   projectsDonationsRequired = new Map<number, number>();
-  projectMissingBudget = new Map<number, boolean>();
+  projectsMissingBudget = new Map<number, boolean>();
+  projectsScores = new Map<number, ScoreModel>();
   users = new Map<number, UserModel>();
   status = 'in_progress';
 
@@ -36,7 +37,8 @@ export class ListProjectsComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private campaignService: CampaignService,
     private organizationService: OrganizationService,
-    private userService: UserService
+    private userService: UserService,
+    private voteService: VoteService
   ) {
   }
 
@@ -54,6 +56,7 @@ export class ListProjectsComponent implements OnInit {
           next: (data) => {
             this.projects = data;
             this.setPage(page);
+            this.getVotes();
             this.getUsers();
             this.getCampaigns();
             this.refreshStatus = 'success';
@@ -67,6 +70,18 @@ export class ListProjectsComponent implements OnInit {
           }
         });
     }
+  }
+
+  getVotes(): void {
+    var projectIds: number[] = [];
+    this.projects.content.forEach(project => projectIds.push(project.id));
+    this.voteService.getScoreByProjectIds(projectIds)
+      .subscribe({
+        next: response => {
+          response.forEach(scoreModel => this.projectsScores.set(scoreModel.projectId, scoreModel));
+        },
+        error: error => console.error(error)
+      });
   }
 
   getUsers(): void {
@@ -99,7 +114,7 @@ export class ListProjectsComponent implements OnInit {
             var projectCampaigns = data.filter(campaign => campaign.project.id === project.id);
             var projectTotalDonations = projectCampaigns.reduce((sum, current) => sum + current.totalDonations, 0);
             var projectDonationsRequired = projectCampaigns.reduce((sum, current) => {
-              if(current.status != CampaignStatus.FAILED) {
+              if (current.status != CampaignStatus.FAILED) {
                 return sum + current.donationsRequired
               } else {
                 return sum
@@ -107,7 +122,7 @@ export class ListProjectsComponent implements OnInit {
             }, 0);
             this.projectsTotalDonations.set(project.id, projectTotalDonations);
             this.projectsDonationsRequired.set(project.id, projectDonationsRequired);
-            this.projectMissingBudget.set(project.id, projectTotalDonations < projectDonationsRequired);
+            this.projectsMissingBudget.set(project.id, projectTotalDonations < projectDonationsRequired);
           });
         },
         complete: () => { },

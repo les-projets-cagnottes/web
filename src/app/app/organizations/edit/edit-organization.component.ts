@@ -169,9 +169,7 @@ export class EditOrganizationComponent implements OnInit {
         this.code = this.route.snapshot.queryParams['code'];
         this.slackTeamService.create(this.id, this.code, this.redirectUrlSlackOAuth)
           .subscribe(() => {
-            this.refreshInformations();
-            this.refreshMembers();
-            this.refreshContents();
+            this.router.navigate(['/organizations/edit/' + this.id]);
           });
       }
       

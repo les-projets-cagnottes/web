@@ -41,8 +41,11 @@
                 </div>
                 <div class="card-footer">
                     <div class="text-center">
-                        <a *ngIf="id == 0" class="btn btn-app bg-secondary" (click)="onSubmit()">
+                        <a *ngIf="id == 0" class="btn btn-app bg-gray" (click)="onSubmit(projectStatus.DRAFT)">
                             <i class="fas fa-save"></i> <span i18n="@@saveAsDraft">Save as draft</span>
+                        </a>
+                        <a *ngIf="id == 0" class="btn btn-app bg-yellow" (click)="onSubmit(projectStatus.IDEA)">
+                            <i class="fas fa-lightbulb"></i> <span i18n="@@editProjectPublishAsIdea">Publish as Idea</span>
                         </a>
                         <a *ngIf="id > 0" class="btn btn-app bg-secondary" (click)="onSubmit()">
                             <i class="fas fa-save"></i> <span i18n="@@save">Save</span>

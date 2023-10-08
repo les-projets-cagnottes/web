@@ -13,3 +13,4 @@ export * from './pager/pager.service';
 export * from './project/project.service';
 export * from './slack-team/slack-team.service';
 export * from './user/user.service';
+export * from './vote/vote.service';
