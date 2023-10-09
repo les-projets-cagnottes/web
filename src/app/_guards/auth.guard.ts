@@ -16,7 +16,7 @@ export class AuthGuard {
             complete: () => { },
             error: error => {
                 console.error(error);
-                this.authenticationService.logout();
+                this.authenticationService.logout(state.url);
             }
         });
         const currentUser = this.authenticationService.currentUserValue;

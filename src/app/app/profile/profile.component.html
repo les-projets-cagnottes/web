@@ -58,10 +58,11 @@
                             <td><a [routerLink]="['/projects/', project.id]">{{ project.title }}</a></td>
                             <td>{{ project.shortDescription }}</td>
                             <td>
-                                <span *ngIf="project.status === projectStatus.DRAFT" class="badge bg-gray" i18n="@@draft">Draft</span>
-                                <span *ngIf="project.status === projectStatus.IDEA" class="badge bg-blue" i18n="@@idea">Idea</span>
-                                <span *ngIf="project.status === projectStatus.IN_PROGRESS" class="badge bg-yellow" i18n="@@inProgress">In Progress</span>
-                                <span *ngIf="project.status === projectStatus.FINISHED" class="badge bg-green" i18n="@@finished">Finished</span>
+                                <span *ngIf="project.status === projectStatus.DRAFT" class="badge bg-gray" i18n="@@profileStatusDraft">Draft</span>
+                                <span *ngIf="project.status === projectStatus.IDEA" class="badge bg-blue" i18n="@@profileStatusIdea">Idea</span>
+                                <span *ngIf="project.status === projectStatus.IN_PROGRESS" class="badge bg-yellow" i18n="@@profileStatusInProgress">In Progress</span>
+                                <span *ngIf="project.status === projectStatus.ON_PAUSE" class="badge bg-gray" i18n="@@profileStatusOnPause">On Pause</span>
+                                <span *ngIf="project.status === projectStatus.FINISHED" class="badge bg-green" i18n="@@profileStatusFinished">Finished</span>
                             </td>
                         </tr>
                     </tbody>

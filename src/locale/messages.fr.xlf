@@ -268,14 +268,20 @@
       <trans-unit id="projects" datatype="html">
         <target>Projets</target>
       </trans-unit>
-      <trans-unit id="draft" datatype="html">
+      <trans-unit id="profileStatusDraft" datatype="html">
         <target>Brouillon</target>
       </trans-unit>
-      <trans-unit id="inProgress" datatype="html">
+      <trans-unit id="profileStatusIdea" datatype="html">
+        <target>Idée</target>
+      </trans-unit>
+      <trans-unit id="profileStatusInProgress" datatype="html">
         <target>En cours</target>
       </trans-unit>
-      <trans-unit id="finished" datatype="html">
-        <target>Terminé</target>
+      <trans-unit id="profileStatusOnPause" datatype="html">
+        <target>En pause</target>
+      </trans-unit>
+      <trans-unit id="profileStatusFinished" datatype="html">
+        <target>Clôturé</target>
       </trans-unit>
       <trans-unit id="contributions" datatype="html">
         <target>Contributions</target>
@@ -328,11 +334,44 @@
       <trans-unit id="saveAsDraft" datatype="html">
         <target>Créer Brouillon</target>
       </trans-unit>
-      <trans-unit id="ideas" datatype="html">
+      <trans-unit id="editProjectPublishAsIdea" datatype="html">
+        <target>Publier comme idée</target>
+      </trans-unit>
+      <trans-unit id="listProjectsStatusIdeas" datatype="html">
         <target>Idées</target>
+      </trans-unit>
+      <trans-unit id="listProjectsStatusInProgress" datatype="html">
+        <target>En cours</target>
+      </trans-unit>
+      <trans-unit id="listProjectsStatusOnPause" datatype="html">
+        <target>En pause</target>
+      </trans-unit>
+      <trans-unit id="listProjectsStatusFinished" datatype="html">
+        <target>Clôturés</target>
       </trans-unit>
       <trans-unit id="noProjectFound" datatype="html">
         <target>Aucun projet trouvé</target>
+      </trans-unit>
+      <trans-unit id="viewProjectVotes" datatype="html">
+        <target>Votes</target>
+      </trans-unit>
+      <trans-unit id="listProjectsTitle" datatype="html">
+        <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="listProjectsDescription" datatype="html">
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="listProjectsUpVotes" datatype="html">
+        <target>Votes +</target>
+      </trans-unit>
+      <trans-unit id="listProjectsDownVotes" datatype="html">
+        <target>Votes -</target>
+      </trans-unit>
+      <trans-unit id="listProjectsFunding" datatype="html">
+        <target>Financement</target>
+      </trans-unit>
+      <trans-unit id="listProjectsTeamMembers" datatype="html">
+        <target>Equipiers</target>
       </trans-unit>
       <trans-unit id="funding" datatype="html">
         <target>Financement</target>
@@ -442,17 +481,35 @@
       <trans-unit id="publishedTheNews" datatype="html">
         <target> a publié l'actualité </target>
       </trans-unit>
-      <trans-unit id="projectLeader" datatype="html">
-        <target>Porteur du projet</target>
-      </trans-unit>
-      <trans-unit id="creator" datatype="html">
+      <trans-unit id="viewProjectCreator" datatype="html">
         <target>Créateur</target>
       </trans-unit>
-      <trans-unit id="anonymous" datatype="html">
+      <trans-unit id="viewProjectLeader" datatype="html">
+        <target>Porteur du projet</target>
+      </trans-unit>
+      <trans-unit id="viewProjectAnonymous" datatype="html">
         <target>Anonyme</target>
       </trans-unit>
-      <trans-unit id="idea" datatype="html">
+      <trans-unit id="viewProjectCreatedAt" datatype="html">
+        <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="viewProjectStatus" datatype="html">
+        <target>Statut</target>
+      </trans-unit>
+      <trans-unit id="viewProjectStatusDraft" datatype="html">
+        <target>Brouillon</target>
+      </trans-unit>
+      <trans-unit id="viewProjectStatusIdea" datatype="html">
         <target>Idée</target>
+      </trans-unit>
+      <trans-unit id="viewProjectStatusInProgress" datatype="html">
+        <target>En cours</target>
+      </trans-unit>
+      <trans-unit id="viewProjectStatusOnPause" datatype="html">
+        <target>En pause</target>
+      </trans-unit>
+      <trans-unit id="viewProjectStatusFinished" datatype="html">
+        <target>Clôturé</target>
       </trans-unit>
       <trans-unit id="peopleNeeded" datatype="html">
         <target>Equipiers requis</target>
@@ -463,25 +520,31 @@
       <trans-unit id="wishedToLeadProject" datatype="html">
         <target> souhaitait en porter la réalisation.</target>
       </trans-unit>
-      <trans-unit id="publishAsIdea" datatype="html">
+      <trans-unit id="viewProjectEdit" datatype="html">
+        <target>Editer</target>
+      </trans-unit>
+      <trans-unit id="viewProjectPublishAsIdea" datatype="html">
         <target>C'est juste une idée</target>
       </trans-unit>
-      <trans-unit id="publishAsProject" datatype="html">
+      <trans-unit id="viewProjectPublishAsProject" datatype="html">
         <target>Lancer le projet</target>
       </trans-unit>
-      <trans-unit id="startProject" datatype="html">
+      <trans-unit id="viewProjectStartProject" datatype="html">
         <target>Lancer le projet</target>
       </trans-unit>
-      <trans-unit id="reopen" datatype="html">
+      <trans-unit id="viewProjectReopen" datatype="html">
         <target>Réouvrir</target>
       </trans-unit>
-      <trans-unit id="finish" datatype="html">
-        <target>Terminer</target>
+      <trans-unit id="viewProjectPause" datatype="html">
+        <target>Mettre en pause</target>
       </trans-unit>
-      <trans-unit id="joinTheTeam" datatype="html">
+      <trans-unit id="viewProjectClose" datatype="html">
+        <target>Clôturer</target>
+      </trans-unit>
+      <trans-unit id="viewProjectJoinTeam" datatype="html">
         <target>Rejoindre l'équipe</target>
       </trans-unit>
-      <trans-unit id="leaveTheTeam" datatype="html">
+      <trans-unit id="viewProjectLeaveTeam" datatype="html">
         <target>Quitter l'équipe</target>
       </trans-unit>
       <trans-unit id="team" datatype="html">
@@ -502,11 +565,38 @@
       <trans-unit id="campaigns" datatype="html">
         <target>Campagnes</target>
       </trans-unit>
-      <trans-unit id="donations" datatype="html">
+      <trans-unit id="reportTitle" datatype="html">
+        <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="reportCreatedAt" datatype="html">
+        <target>Créé le</target>
+      </trans-unit>
+      <trans-unit id="reportDescription" datatype="html">
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="reportTeamMembers" datatype="html">
+        <target>Equipiers</target>
+      </trans-unit>
+      <trans-unit id="reportDonations" datatype="html">
         <target>Contributions</target>
       </trans-unit>
-      <trans-unit id="donationsRequired" datatype="html">
+      <trans-unit id="reportDonationsRequired" datatype="html">
         <target>Contributions requises</target>
+      </trans-unit>
+      <trans-unit id="reportStatus" datatype="html">
+        <target>Statut</target>
+      </trans-unit>
+      <trans-unit id="reportStatusInProgress" datatype="html">
+        <target>En cours</target>
+      </trans-unit>
+      <trans-unit id="reportStatusFailed" datatype="html">
+        <target>Echec</target>
+      </trans-unit>
+      <trans-unit id="reportStatusSuccessful" datatype="html">
+        <target>Succès</target>
+      </trans-unit>
+      <trans-unit id="donations" datatype="html">
+        <target>Contributions</target>
       </trans-unit>
       <trans-unit id="usage" datatype="html">
         <target>Utilisation</target>
