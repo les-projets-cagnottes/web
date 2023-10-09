@@ -123,13 +123,13 @@ export class AuthenticationService {
             }));
     }
 
-    logout() {
+    logout(returnUrl = '') {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(new User());
         localStorage.removeItem('currentOrganization');
         this.currentOrganizationSubject.next(new Organization());
-        this.router.navigate(['login']);
+        this.router.navigate(['login'], { queryParams: { returnUrl: returnUrl } });
     }
 
     isSponsor(): boolean {

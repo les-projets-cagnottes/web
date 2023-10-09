@@ -13,19 +13,25 @@
                     [ngClass]="{ 'btn-primary': status === 'idea', 'btn-outline-primary': status !== 'idea'}"
                     routerLink="/projects" [queryParams]="{status: 'idea'}">
                     <i class="far fa-lightbulb"></i>
-                    <span i18n="@@ideas">Ideas</span>
+                    <span i18n="@@listProjectsStatusIdeas">Ideas</span>
                 </button>
                 <button type="button" class="btn btn-outline-primary"
                     [ngClass]="{ 'btn-primary': status === 'in_progress', 'btn-outline-primary': status !== 'in_progress'}"
                     routerLink="/projects" [queryParams]="{status: 'in_progress'}">
                     <i class="fa-solid fa-person-running"></i>
-                    <span i18n="@@inProgress">In Progress</span>
+                    <span i18n="@@listProjectsStatusInProgress">In Progress</span>
+                </button>
+                <button type="button" class="btn"
+                    [ngClass]="{ 'btn-primary': status === 'on_pause', 'btn-outline-primary': status !== 'on_pause'}"
+                    routerLink="/projects" [queryParams]="{status: 'on_pause'}">
+                    <i class="fa-solid fa-pause"></i>
+                    <span i18n="@@listProjectsStatusOnPause">On Pause</span>
                 </button>
                 <button type="button" class="btn"
                     [ngClass]="{ 'btn-primary': status === 'finished', 'btn-outline-primary': status !== 'finished'}"
                     routerLink="/projects" [queryParams]="{status: 'finished'}">
                     <i class="fa-solid fa-check"></i>
-                    <span i18n="@@finished">Finished</span>
+                    <span i18n="@@listProjectsStatusFinished">Finished</span>
                 </button>
             </div>
         </div>
@@ -46,26 +52,26 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-body p-0">
+            <div class="card-body table-responsive p-0">
                 <table class="table table-striped table-hover projects">
                     <thead>
                         <tr>
-                            <th style="width: 20%" i18n="@@title">
+                            <th i18n="@@listProjectsTitle" style="width: 20%">
                                 Project Name
                             </th>
-                            <th i18n="@@description">
+                            <th i18n="@@listProjectsDescription">
                                 Description
                             </th>
-                            <th i18n="@@listProjectsUpVotes" *ngIf="status == 'idea'">
+                            <th *ngIf="status == 'idea'" i18n="@@listProjectsUpVotes">
                                 Up Votes
                             </th>
-                            <th i18n="@@listProjectsDownVotes" *ngIf="status == 'idea'">
+                            <th *ngIf="status == 'idea'" i18n="@@listProjectsDownVotes">
                                 Down Votes
                             </th>
-                            <th style="width: 20%" i18n="@@funding" *ngIf="status != 'idea'">
+                            <th *ngIf="status != 'idea'" i18n="@@listProjectsFunding" style="width: 20%">
                                 Founding
                             </th>
-                            <th i18n="@@teammates" *ngIf="status != 'idea'">
+                            <th *ngIf="status != 'idea'" i18n="@@listProjectsTeamMembers">
                                 Team Members
                             </th>
                         </tr>

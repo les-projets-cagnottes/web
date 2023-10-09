@@ -627,6 +627,13 @@ export class ViewProjectComponent implements OnInit {
     this.startProjectSubmit();
   }
 
+  pause() {
+    this.projectService.updateStatus(this.id, ProjectStatus.ON_PAUSE)
+      .subscribe(() => {
+        this.refresh();
+      })
+  }
+
   finish() {
     this.projectService.updateStatus(this.id, ProjectStatus.FINISHED)
       .subscribe(() => {
