@@ -118,7 +118,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title" i18n="@@users">Users</h3>
+                <h3 class="card-title" i18n="@@reportAccountsState">Accounts State</h3>
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" (click)="refreshAccounts(accountsPager.currentPage)"
                         [ngClass]="{ 'text-success': accountsSyncStatus === 'success'}">
@@ -127,72 +127,67 @@
                 </div>
             </div>
             <!-- /.card-header -->
-            <div class="card-body table-responsive p-0">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th i18n="@@name">Name</th>
-                            <th i18n="@@usage">Usage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let account of pagedAccounts">
-                            <td>{{ account.owner.firstname }} {{ account.owner.lastname }}</td>
-                            <td>
-                                <div class="progress-group">
-                                    <div class="progress sm" title="{{ account.usage }}">
-                                        <div class="progress-bar progress-bar-striped"
-                                            [ngStyle]="{'width': account.usage }"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div *ngIf="accountsSyncStatus === 'running'" class="overlay">
-                <i class="fas fa-sync fa-spin"></i>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
+            <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-5">
-                        <div *ngIf="accountsPager.pages && accountsPager.pages.length" class="dataTables_info">
-                            <span i18n="@@pageShowing">Showing </span>
-                            <span>{{ accountsPager.startIndex + 1 }}</span>
-                            <span i18n="@@pageTo"> to </span>
-                            <span>{{ accountsPager.endIndex + 1 }}</span>
-                            <span i18n="@@pageOf"> of </span>
-                            <span>{{ accountsPager.totalItems }}</span>
-                            <span i18n="@@pageEntries"> entries</span>
+                    <div class="col-2" *ngFor="let account of pagedAccounts">
+                        <div class="info-box">
+                            <span class="info-box-icon"><img [src]="account.owner.avatarUrl" /></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">{{ account.owner.firstname }} {{ account.owner.lastname
+                                    }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar bg-yellow"
+                                        [ngStyle]="{'width': account.usage }"></div>
+                                </div>
+                                <span class="progress-description">
+                                    {{ account.amount }} € / {{ account.initialAmount }} €
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <ul *ngIf="accountsPager.pages && accountsPager.pages.length"
-                            class="pagination justify-content-end">
-                            <li class="page-item" [ngClass]="{disabled:accountsPager.currentPage === 1}">
-                                <a class="page-link" (click)="refreshAccounts(1)">&#171;</a>
-                            </li>
-                            <li class="page-item" [ngClass]="{disabled:accountsPager.currentPage === 1}">
-                                <a class="page-link"
-                                    (click)="refreshAccounts(accountsPager.currentPage - 1)">&#8249;</a>
-                            </li>
-                            <li class="page-item" *ngFor="let page of accountsPager.pages"
-                                [ngClass]="{active:accountsPager.currentPage === page}">
-                                <a class="page-link" (click)="refreshAccounts(page)">{{page}}</a>
-                            </li>
-                            <li class="page-item"
-                                [ngClass]="{disabled:accountsPager.currentPage === accountsPager.totalPages}">
-                                <a class="page-link"
-                                    (click)="refreshAccounts(accountsPager.currentPage + 1)">&#8250;</a>
-                            </li>
-                            <li class="page-item"
-                                [ngClass]="{disabled:accountsPager.currentPage === accountsPager.totalPages}">
-                                <a class="page-link" (click)="refreshAccounts(accountsPager.totalPages)">&#187;</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
+                <div *ngIf="accountsSyncStatus === 'running'" class="overlay">
+                    <i class="fas fa-sync fa-spin"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-5">
+                <div *ngIf="accountsPager.pages && accountsPager.pages.length" class="dataTables_info">
+                    <span i18n="@@pageShowing">Showing </span>
+                    <span>{{ accountsPager.startIndex + 1 }}</span>
+                    <span i18n="@@pageTo"> to </span>
+                    <span>{{ accountsPager.endIndex + 1 }}</span>
+                    <span i18n="@@pageOf"> of </span>
+                    <span>{{ accountsPager.totalItems }}</span>
+                    <span i18n="@@pageEntries"> entries</span>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <ul *ngIf="accountsPager.pages && accountsPager.pages.length"
+                    class="pagination justify-content-end">
+                    <li class="page-item" [ngClass]="{disabled:accountsPager.currentPage === 1}">
+                        <a class="page-link" (click)="refreshAccounts(1)">&#171;</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:accountsPager.currentPage === 1}">
+                        <a class="page-link"
+                            (click)="refreshAccounts(accountsPager.currentPage - 1)">&#8249;</a>
+                    </li>
+                    <li class="page-item" *ngFor="let page of accountsPager.pages"
+                        [ngClass]="{active:accountsPager.currentPage === page}">
+                        <a class="page-link" (click)="refreshAccounts(page)">{{page}}</a>
+                    </li>
+                    <li class="page-item"
+                        [ngClass]="{disabled:accountsPager.currentPage === accountsPager.totalPages}">
+                        <a class="page-link"
+                            (click)="refreshAccounts(accountsPager.currentPage + 1)">&#8250;</a>
+                    </li>
+                    <li class="page-item"
+                        [ngClass]="{disabled:accountsPager.currentPage === accountsPager.totalPages}">
+                        <a class="page-link" (click)="refreshAccounts(accountsPager.totalPages)">&#187;</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-.time-label > span {
+.time-label>span {
     border-radius: 4px;
     background-color: #fff;
     display: inline-block;
@@ -6,19 +6,21 @@
     padding: 5px;
 }
 
-.time-label, .timeline-item {
+.time-label,
+.timeline-item {
     margin-bottom: 15px;
     margin-right: 10px;
     position: relative;
 }
 
-.timeline div::after, .timeline div::before {
+.timeline div::after,
+.timeline div::before {
     content: "";
     display: table;
 }
 
 .timeline-item {
-    box-shadow: 0 0 1px rgba(0,0,0,.125),0 1px 3px rgba(0,0,0,.2);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
     border-radius: .25rem;
     background-color: #fff;
     color: #495057;
@@ -29,7 +31,7 @@
     position: relative;
 }
 
-.timeline-item > .time {
+.timeline-item>.time {
     color: #999;
     float: right;
     font-size: 12px;
@@ -37,7 +39,7 @@
 }
 
 .timeline-header {
-    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
     color: #495057;
     font-size: 16px;
     line-height: 1.1;
@@ -45,11 +47,12 @@
     padding: 10px;
 }
 
-.timeline-header > a {
+.timeline-header>a {
     font-weight: 600;
 }
 
-.timeline-body, .timeline-footer {
+.timeline-body,
+.timeline-footer {
     padding: 10px;
 }
 
@@ -66,8 +69,22 @@
 }
 
 :host ::ng-deep .timeline-body img {
-    max-width:100%;
-    max-height:100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@media (min-width: 600px) {
+    :host ::ng-deep .timeline-body img {
+        max-width: 50%;
+        max-height: 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    :host ::ng-deep .timeline-body img {
+        max-width: 25%;
+        max-height: 25%;
+    }
 }
 
 .newsTitle {

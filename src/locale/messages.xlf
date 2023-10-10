@@ -61,10 +61,6 @@
           <context context-type="sourcefile">src/app/app/organizations/list/list-organizations.component.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="amountPerMember" datatype="html">
         <source>Amount per member</source>
@@ -354,18 +350,25 @@
           <context context-type="linenumber">157,159</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="newsTitleCampaignStarted" datatype="html">
+        <source> launched a funding campaign for </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/news/list/list-news.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="newsTitleProject" datatype="html">
         <source> in the project </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/news/list/list-news.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="editNews" datatype="html">
         <source>Edit News</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/news/list/list-news.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="members" datatype="html">
@@ -476,7 +479,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/list/list-projects.component.html</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">131</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -488,7 +491,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/users/users.component.html</context>
@@ -511,7 +514,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/list/list-projects.component.html</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">133</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -523,7 +526,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">163</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/users/users.component.html</context>
@@ -546,7 +549,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/list/list-projects.component.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">135</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -558,7 +561,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">162</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/users/users.component.html</context>
@@ -581,7 +584,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/list/list-projects.component.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">137</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -593,7 +596,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">164</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/users/users.component.html</context>
@@ -1693,26 +1696,11 @@
           <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="users" datatype="html">
-        <source>Users</source>
+      <trans-unit id="reportAccountsState" datatype="html">
+        <source>Accounts State</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/report/report.component.html</context>
           <context context-type="linenumber">121</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/sidebar/sidebar.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/users/users.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="usage" datatype="html">
-        <source>Usage</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/report/report.component.html</context>
-          <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navProjects" datatype="html">
@@ -1769,6 +1757,17 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/sidebar/sidebar.component.html</context>
           <context context-type="linenumber">70,71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="users" datatype="html">
+        <source>Users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/sidebar/sidebar.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/users/users.component.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navDocumentation" datatype="html">

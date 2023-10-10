@@ -7,6 +7,10 @@
     transition: none;
 }
 
+.hasLeftTheOrganization {
+    filter: grayscale(100%) blur(5px);
+}
+
 @keyframes clignoter {
     0% {
         opacity: 1;

@@ -597,7 +597,9 @@ export class ViewProjectComponent implements OnInit {
     submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
 
-    if (this.project.leader.id > 0) {
+    if (this.project.status == ProjectStatus.IDEA && !this.project.ideaHasLeaderCreator) {
+      submittedProject.leader.id = this.authenticationService.currentUserValue.id;
+    } else if(this.project.leader.id > 0) {
       submittedProject.leader.id = this.project.leader.id;
     } else {
       submittedProject.leader.id = this.authenticationService.currentUserValue.id;

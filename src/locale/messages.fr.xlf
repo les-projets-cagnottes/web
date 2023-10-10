@@ -170,7 +170,10 @@
         <target> a une idée : </target>
       </trans-unit>
       <trans-unit id="newsTitleProjectPublished" datatype="html">
-        <target> a lancé le projet : </target>
+        <target> a lancé le projet </target>
+      </trans-unit>
+      <trans-unit id="newsTitleCampaignStarted" datatype="html">
+        <target> a lancé une campagne de financement pour </target>
       </trans-unit>
       <trans-unit id="newsTitleProject" datatype="html">
         <target> concernant le projet </target>
@@ -594,6 +597,9 @@
       </trans-unit>
       <trans-unit id="reportStatusSuccessful" datatype="html">
         <target>Succès</target>
+      </trans-unit>
+      <trans-unit id="reportAccountsState" datatype="html">
+        <target>Etat des cagnottes</target>
       </trans-unit>
       <trans-unit id="donations" datatype="html">
         <target>Contributions</target>
