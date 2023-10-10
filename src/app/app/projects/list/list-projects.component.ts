@@ -92,7 +92,10 @@ export class ListProjectsComponent implements OnInit {
     this.userService.getAllByIds(userIds)
       .subscribe({
         next: (data) => {
-          data.forEach(user => this.users.set(user.id, user));
+          data.forEach(user => {
+            user.hasLeftTheOrganization = !this.authenticationService.currentOrganizationValue.membersRef.some(orgMemberId => orgMemberId == user.id);
+            this.users.set(user.id, user);
+          });
         },
         complete: () => { },
         error: error => {

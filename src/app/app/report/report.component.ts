@@ -33,7 +33,7 @@ export class ReportComponent implements OnInit {
   private rawAccountsResponse: DataPage<AccountModel> = new DataPage<AccountModel>();
   accountsPager = new Pager();
   pagedAccounts: Account[] = [];
-  accountsPageSize = 10;
+  accountsPageSize = 24;
   accountsSyncStatus = 'idle';
 
   constructor(
@@ -109,18 +109,22 @@ export class ReportComponent implements OnInit {
           const accountUserRef = []
           this.pagedAccounts.forEach(account => accountUserRef.push(account.owner.id));
           this.budgetService.getUsers(this.selectBudgetForm.controls['budget'].value)
-            .subscribe(users => {
-              this.pagedAccounts.forEach(account => account.setOwner(User.fromModels(users)));
-              this.accountsSyncStatus = 'success';
-              setTimeout(() => {
-                this.accountsSyncStatus = 'idle';
-              }, 1000);
-            }, error => {
-              this.accountsSyncStatus = 'error';
-              console.log(error);
-              setTimeout(() => {
-                this.accountsSyncStatus = 'idle';
-              }, 1000);
+            .subscribe({
+              next: (users) => {
+                this.pagedAccounts.forEach(account => account.setOwner(User.fromModels(users)));
+                this.accountsSyncStatus = 'success';
+                setTimeout(() => {
+                  this.accountsSyncStatus = 'idle';
+                }, 1000);
+              },
+              complete: () => { },
+              error: error => {
+                this.accountsSyncStatus = 'error';
+                console.log(error);
+                setTimeout(() => {
+                  this.accountsSyncStatus = 'idle';
+                }, 1000);
+              }
             });
         });
     }
@@ -136,7 +140,7 @@ export class ReportComponent implements OnInit {
     this.pagedAccounts = [];
     this.rawAccountsResponse.content.forEach(model => {
       const account = Account.fromModel(model);
-      account.usage = this.computeNumberPercent(account.initialAmount - account.amount, account.initialAmount) + "%";
+      account.usage = this.computeNumberPercent(account.amount, account.initialAmount) + "%";
       this.pagedAccounts.push(account);
     });
   }

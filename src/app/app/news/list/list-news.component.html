@@ -21,6 +21,8 @@
                     <span *ngIf="news.type =='IDEA_PUBLISHED'" i18n="@@newsTitleIdeaPublished"> has an idea : </span>
                     <span *ngIf="news.type =='PROJECT_PUBLISHED'" i18n="@@newsTitleProjectPublished"> launched the
                         project </span>
+                    <span *ngIf="news.type =='CAMPAIGN_STARTED'" i18n="@@newsTitleCampaignStarted"> launched a funding
+                        campaign for </span>
 
                     <a *ngIf="news.project.id > 0" routerLink="/projects/{{ news.project.id }}">
                         <b>{{ news.title }}</b>

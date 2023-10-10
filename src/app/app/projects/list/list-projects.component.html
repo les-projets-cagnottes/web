@@ -112,7 +112,9 @@
                             <td *ngIf="status != 'idea'">
                                 <ul class="list-inline">
                                     <li class="list-inline-item" *ngFor="let userId of item.peopleGivingTimeRef">
-                                        <img alt="Avatar" class="table-avatar" [src]="users.get(userId)?.avatarUrl">
+                                        <img [src]="users.get(userId)?.avatarUrl"
+                                            [ngClass]="{ 'hasLeftTheOrganization': users.get(userId)?.hasLeftTheOrganization}"
+                                            alt="Avatar" class="table-avatar" />
                                     </li>
                                 </ul>
                             </td>
