@@ -145,7 +145,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   refreshVote() {
-    if(this.project.status == this.projectStatus.IDEA) {
+    if (this.project.status == this.projectStatus.IDEA) {
       this.vote = new VoteModel();
       this.voteService.getUserVote(this.project.id)
         .subscribe({
@@ -165,33 +165,39 @@ export class ViewProjectComponent implements OnInit {
   }
 
   refreshLeader() {
-    this.userService.getById(this.project.leader.id)
-      .subscribe(leader => {
-        this.leader = User.fromModel(leader);
-      });
+    if (this.project.leader.id > 0) {
+      this.userService.getById(this.project.leader.id)
+        .subscribe(leader => {
+          this.leader = User.fromModel(leader);
+        });
+    }
   }
 
   refreshMembers() {
     this.membersSyncStatus = 'running';
     this.projectService.getTeammates(this.project.id)
-      .subscribe(members => {
-        this.membersSyncStatus = 'success';
-        this.members = User.fromModels(members);
-        this.members.forEach(member => {
-          member.hasLeftTheOrganization = !this.authenticationService.currentOrganizationValue.membersRef.some(orgMemberId => orgMemberId == member.id);
-        });
-        this.isUserInTeam = this.members.find(user => {
-          return this.userLoggedIn.id === user.id;
-        }) !== undefined;
-        setTimeout(() => {
-          this.membersSyncStatus = 'idle';
-        }, 1000);
-      }, error => {
-        console.log(error);
-        this.membersSyncStatus = 'error';
-        setTimeout(() => {
-          this.membersSyncStatus = 'idle';
-        }, 1000);
+      .subscribe({
+        next: (members) => {
+          this.membersSyncStatus = 'success';
+          this.members = User.fromModels(members);
+          this.members.forEach(member => {
+            member.hasLeftTheOrganization = !this.authenticationService.currentOrganizationValue.membersRef.some(orgMemberId => orgMemberId == member.id);
+          });
+          this.isUserInTeam = this.members.find(user => {
+            return this.userLoggedIn.id === user.id;
+          }) !== undefined;
+          setTimeout(() => {
+            this.membersSyncStatus = 'idle';
+          }, 1000);
+        },
+        complete: () => { },
+        error: error => {
+          console.log(error);
+          this.membersSyncStatus = 'error';
+          setTimeout(() => {
+            this.membersSyncStatus = 'idle';
+          }, 1000);
+        }
       });
   }
 
@@ -201,42 +207,48 @@ export class ViewProjectComponent implements OnInit {
       .subscribe(response => {
         this.project = Project.fromModel(response);
         this.campaignService.getAllByIds(this.project.campaignsRef)
-          .subscribe(campaignModels => {
-            this.campaigns = Campaign.fromModels(campaignModels).sort((a, b) => {
-              if (a.createdAt > b.createdAt) {
-                return -1;
-              } else if (a.createdAt < b.createdAt) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
-            let budgetsId: number[] = [];
-            this.campaigns.forEach(campaign => {
-              const remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
-              campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
-              budgetsId.push(campaign.budget.id);
-            });
-            budgetsId = [... new Set(budgetsId)];
-            this.budgetService.getAllByIds(budgetsId)
-              .subscribe(response => {
-                response.forEach(budget => {
-                  this.campaignsBudgets.set(budget.id, budget);
-                });
+          .subscribe({
+            next: (campaignModels) => {
+              this.campaigns = Campaign.fromModels(campaignModels).sort((a, b) => {
+                if (a.createdAt > b.createdAt) {
+                  return -1;
+                } else if (a.createdAt < b.createdAt) {
+                  return 1;
+                } else {
+                  return 0;
+                }
               });
-            this.isUserInTeam = this.members.find(user => {
-              return this.userLoggedIn.id === user.id;
-            }) !== undefined;
-            this.campaignsSyncStatus = 'success';
-            setTimeout(() => {
-              this.campaignsSyncStatus = 'idle';
-            }, 1000);
-          }, error => {
-            this.campaignsSyncStatus = 'error';
-            console.error(error);
-            setTimeout(() => {
-              this.campaignsSyncStatus = 'idle';
-            }, 1000);
+              let budgetsId: number[] = [];
+              this.campaigns.forEach(campaign => {
+                const remainingTime = Math.abs(new Date(campaign.fundingDeadline).getTime() - new Date().getTime());
+                campaign.remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+                budgetsId.push(campaign.budget.id);
+              });
+              budgetsId = [... new Set(budgetsId)];
+              this.budgetService.getAllByIds(budgetsId)
+                .subscribe(response => {
+                  response.forEach(budget => {
+                    this.campaignsBudgets.set(budget.id, budget);
+                  });
+                });
+              this.isUserInTeam = this.members.find(user => {
+                return this.userLoggedIn.id === user.id;
+              }) !== undefined;
+              this.campaignsSyncStatus = 'success';
+              setTimeout(() => {
+                this.campaignsSyncStatus = 'idle';
+              }, 1000);
+            },
+            complete: () => { },
+            error: error => {
+
+              this.campaignsSyncStatus = 'error';
+              console.error(error);
+              setTimeout(() => {
+                this.campaignsSyncStatus = 'idle';
+              }, 1000);
+
+            }
           });
       });
   }
@@ -599,7 +611,7 @@ export class ViewProjectComponent implements OnInit {
 
     if (this.project.status == ProjectStatus.IDEA && !this.project.ideaHasLeaderCreator) {
       submittedProject.leader.id = this.authenticationService.currentUserValue.id;
-    } else if(this.project.leader.id > 0) {
+    } else if (this.project.leader.id > 0) {
       submittedProject.leader.id = this.project.leader.id;
     } else {
       submittedProject.leader.id = this.authenticationService.currentUserValue.id;
