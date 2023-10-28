@@ -1,5 +1,5 @@
 <div class="row action-bar" [formGroup]="selectBudgetForm">
-    <div class="col-2">
+    <div class="col-md-2">
         <div class="form-group">
             <label for="amount" i18n="@@budget">Budget</label>
             <select class="form-control" style="width: 100%;" formControlName="budget">
@@ -7,7 +7,13 @@
             </select>
         </div>
     </div>
-    <div class="col-10">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label for="amount" i18n="@@reportRulesLabel">Rules</label>
+            <button type="button" class="btn btn-block btn-default" (click)="onViewTermsOfUse(viewRulesModalTemplate)" i18n="@@reportRulesButton">View rules</button>
+        </div>
+    </div>
+    <div class="col-md-8">
         <div id="budgetUsage" class="progress-group">
             <span class="progress-text" i18n="@@usageOverview">Usage overview</span>
             <div class="progress" title="{{ budgetUsage }}">
@@ -54,7 +60,7 @@
                             <td><span *ngIf="projects.get(campaign.project.id) !== undefined">{{
                                     getProject(campaign.project.id).peopleGivingTimeRef.length }} / 3</span></td>
                             <td>{{ campaign.totalDonations.toFixed(2) }} €</td>
-                            <td>{{ campaign.donationsRequired.toFixed(2) }} €</td>
+                            <td>{{ campaign.totalRequired.toFixed(2) }} €</td>
                             <td>
                                 <span *ngIf="campaign.status === 'IN_PROGRESS'" class="badge bg-yellow"
                                     i18n="@@reportStatusInProgress">In Progress</span>
@@ -192,3 +198,17 @@
         </div>
     </div>
 </div>
+
+<ng-template #viewRulesModalTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ rules.name }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="viewRulesModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" [innerHTML]="rules.value">
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="viewRulesModal.hide()" i18n="@@close">Close</button>
+    </div>
+</ng-template>

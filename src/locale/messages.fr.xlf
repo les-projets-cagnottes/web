@@ -68,6 +68,9 @@
       <trans-unit id="costOfHour" datatype="html">
         <target>Coût d'une heure</target>
       </trans-unit>
+      <trans-unit id="budgetsRules" datatype="html">
+        <target>Règles d'utilisation</target>
+      </trans-unit>
       <trans-unit id="budgetFieldDisabled" datatype="html">
         <target> Certains champs ont été désactivés car le budget est déjà distribué entre les membres de l'organisation. </target>
       </trans-unit>
@@ -561,6 +564,12 @@
       </trans-unit>
       <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
         <target>Je souhaite porter la réalisation de cette idée</target>
+      </trans-unit>
+      <trans-unit id="reportRulesLabel" datatype="html">
+        <target>Règles associées</target>
+      </trans-unit>
+      <trans-unit id="reportRulesButton" datatype="html">
+        <target>Afficher les règles</target>
       </trans-unit>
       <trans-unit id="usageOverview" datatype="html">
         <target>Utilisation</target>
