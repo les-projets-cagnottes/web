@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
-import { Account, Budget, User } from 'src/app/_entities';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Account, Budget, Content, User } from 'src/app/_entities';
 import { AccountModel, CampaignModel, DataPage, ProjectModel } from 'src/app/_models';
 import { Pager } from 'src/app/_models/pagination/pager/pager';
-import { AuthenticationService, BudgetService, OrganizationService, PagerService, ProjectService } from 'src/app/_services';
+import { AuthenticationService, BudgetService, ContentService, OrganizationService, PagerService, ProjectService } from 'src/app/_services';
 
 @Component({
   selector: 'app-report',
@@ -22,6 +23,10 @@ export class ReportComponent implements OnInit {
     budget: [0]
   });
 
+  // Rules Modal
+  viewRulesModal = new BsModalRef();
+  rules = new Content();
+
   // Campaigns Box
   private rawProjectsResponse = new DataPage<CampaignModel>();
   campaignPager = new Pager();
@@ -37,12 +42,14 @@ export class ReportComponent implements OnInit {
   accountsSyncStatus = 'idle';
 
   constructor(
+    private modalService: BsModalService,
+    private fb: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
     private budgetService: BudgetService,
+    private contentService: ContentService,
     private organizationService: OrganizationService,
     private projectService: ProjectService,
-    private pagerService: PagerService,
-    private fb: UntypedFormBuilder) { }
+    private pagerService: PagerService) { }
 
   ngOnInit() {
     this.refresh();
@@ -56,7 +63,7 @@ export class ReportComponent implements OnInit {
       });
     this.selectBudgetForm.controls['budget'].valueChanges.subscribe(val => {
       const budgetFound = this.budgets.find(budget => budget.id === +val);
-      if(budgetFound !== undefined) {
+      if (budgetFound !== undefined) {
         this.budget = budgetFound;
         this.budgetUsage = this.computeNumberPercent(this.budget.totalDonations, this.authenticationService.currentOrganizationValue.membersRef.length * this.budget.amountPerMember) + "%";
         this.refreshCampaigns(this.campaignPager.currentPage);
@@ -69,32 +76,39 @@ export class ReportComponent implements OnInit {
     if (this.pagerService.canChangePage(this.campaignPager, page)) {
       this.campaignsSyncStatus = 'running';
       this.budgetService.getCampaigns(this.selectBudgetForm.controls['budget'].value, page - 1, this.campaignsPageSize)
-        .subscribe(response => {
-          this.rawProjectsResponse = response;
-          this.setCampaignsPage(page);
-          const projectIds: number[] = [];
-          this.pagedCampaigns.forEach(campaign => {
-            if(campaign.project.id > 0) {
-              projectIds.push(campaign.project.id);
-            }
-          });
-          this.projectService.getAllByIds(projectIds)
-            .subscribe(response => {
-              response.forEach(prj => this.projects.set(prj.id, prj))
-            },
-            error => {
-              console.log(error);
+        .subscribe({
+          next: (response) => {
+            this.rawProjectsResponse = response;
+            this.setCampaignsPage(page);
+            const projectIds: number[] = [];
+            this.pagedCampaigns.forEach(campaign => {
+              if (campaign.project.id > 0) {
+                projectIds.push(campaign.project.id);
+              }
             });
-          this.campaignsSyncStatus = 'success';
-          setTimeout(() => {
-            this.campaignsSyncStatus = 'idle';
-          }, 1000);
-        }, error => {
-          this.campaignsSyncStatus = 'error';
-          console.log(error);
-          setTimeout(() => {
-            this.campaignsSyncStatus = 'idle';
-          }, 1000);
+            this.projectService.getAllByIds(projectIds)
+              .subscribe({
+                next: (response) => response.forEach(prj => this.projects.set(prj.id, prj)),
+                complete: () => { },
+                error: error => {
+                  console.log(error);
+                }
+              });
+            this.campaignsSyncStatus = 'success';
+            setTimeout(() => {
+              this.campaignsSyncStatus = 'idle';
+            }, 1000);
+
+          },
+          complete: () => { },
+          error: error => {
+            this.campaignsSyncStatus = 'error';
+            console.log(error);
+            setTimeout(() => {
+              this.campaignsSyncStatus = 'idle';
+            }, 1000);
+
+          }
         });
     }
   }
@@ -147,7 +161,7 @@ export class ReportComponent implements OnInit {
 
   getProject(id: number): ProjectModel {
     let entity = this.projects.get(id);
-    if(entity === undefined) {
+    if (entity === undefined) {
       entity = new ProjectModel();
     }
     return entity;
@@ -158,5 +172,13 @@ export class ReportComponent implements OnInit {
       return "0";
     }
     return 100 * number / max;
+  }
+  
+  onViewTermsOfUse(template: TemplateRef<string>) {
+    this.contentService.getById(this.budget.rules.id)
+      .subscribe(content => {
+        this.rules = Content.fromModel(content);
+        this.viewRulesModal = this.modalService.show(template);
+      });
   }
 }

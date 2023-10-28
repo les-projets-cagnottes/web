@@ -12,7 +12,7 @@
             </a>
         </div>
     </div>
-    <div class="card-body p-0">
+    <div class="card-body p-0 table-responsive">
         <table class="table table-striped projects">
             <thead>
                 <tr>
@@ -155,7 +155,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="rules">Rules</label>
+                <label for="rules" i18n="@@budgetsRules">Rules</label>
                 <select class="custom-select" class="form-control" style="width: 100%;" formControlName="rules"
                     id="rules">
                     <option *ngFor="let item of rules | keyvalue" value="{{ item.key }}">{{ item.value.name }}</option>

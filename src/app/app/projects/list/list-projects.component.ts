@@ -117,8 +117,9 @@ export class ListProjectsComponent implements OnInit {
             var projectCampaigns = data.filter(campaign => campaign.project.id === project.id);
             var projectTotalDonations = projectCampaigns.reduce((sum, current) => sum + current.totalDonations, 0);
             var projectDonationsRequired = projectCampaigns.reduce((sum, current) => {
+              console.log(current.status + " : " + current.totalRequired);
               if (current.status != CampaignStatus.FAILED) {
-                return sum + current.donationsRequired
+                return sum + current.totalRequired
               } else {
                 return sum
               }
