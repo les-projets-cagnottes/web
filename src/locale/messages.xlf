@@ -21,7 +21,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/documentation/getting-started/getting-started.component.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="budgets" datatype="html">
@@ -266,7 +266,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -314,11 +314,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="publishedNewsSystem" datatype="html">
@@ -622,7 +622,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -841,11 +841,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="profileStatusDraft" datatype="html">
@@ -1068,7 +1068,7 @@
         <source>People needed (in addition of the project leader)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">36,37</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
@@ -1079,14 +1079,66 @@
         <source>Save as draft</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="editProjectPublishAsIdea" datatype="html">
         <source>Publish as Idea</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="publishIdea" datatype="html">
+        <source>Publish the idea</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">285</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="publishIdeaAnonymously" datatype="html">
+        <source>Publish this idea anonymously</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">297</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
+        <source>I want to lead the realization of the idea</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
+          <context context-type="linenumber">80,81</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">304,306</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="submit" datatype="html">
+        <source>Submit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/edit/edit-project.component.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">312</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">334</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
+          <context context-type="linenumber">405</context>
         </context-group>
       </trans-unit>
       <trans-unit id="listProjectsStatusIdeas" datatype="html">
@@ -1424,42 +1476,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
           <context context-type="linenumber">257</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="publishIdea" datatype="html">
-        <source>Publish the idea</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">285</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="publishIdeaAnonymously" datatype="html">
-        <source>Publish this idea anonymously</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">297</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="userWhantToLeadRealOfIdea" datatype="html">
-        <source>I want to lead the realization of the idea</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">304,306</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="submit" datatype="html">
-        <source>Submit</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">312</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">334</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/app/projects/view/view-project.component.html</context>
-          <context context-type="linenumber">405</context>
         </context-group>
       </trans-unit>
       <trans-unit id="campaignGoals" datatype="html">

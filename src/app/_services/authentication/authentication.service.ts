@@ -20,7 +20,7 @@ export class AuthenticationService {
     public currentOrganization: Observable<Organization>;
 
     constructor(
-        private http: HttpClient, 
+        private http: HttpClient,
         private router: Router,
         private configService: ConfigService) {
         const userInLocalStorage = localStorage.getItem('currentUser');
