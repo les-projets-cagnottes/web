@@ -41,7 +41,7 @@ export class ViewProjectComponent implements OnInit {
   campaignsBudgets = new Map<number, BudgetModel>();
 
   // Publish Idea Modal
-  publishIdeaModalRef = new BsModalRef();
+  publishIdeaModal = new BsModalRef();
   publishIdeaForm: UntypedFormGroup = this.formBuilder.group({
     ideaHasAnonymousCreator: [false],
     ideaHasLeaderCreator: [false]

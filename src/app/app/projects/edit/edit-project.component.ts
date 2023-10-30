@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,6 +9,7 @@ import { Media } from 'src/app/_models/media/media';
 import { AuthenticationService, FileService, ProjectService } from 'src/app/_services';
 
 import 'quill-emoji/dist/quill-emoji.js'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-edit-project',
@@ -34,9 +35,17 @@ export class EditProjectComponent implements OnInit {
 
   // Long Description editor config
   editor: any;
+  
+  // Publish Idea Modal
+  publishIdeaModal = new BsModalRef();
+  publishIdeaForm: UntypedFormGroup = this.formBuilder.group({
+    ideaHasAnonymousCreator: [false],
+    ideaHasLeaderCreator: [false]
+  });
 
   constructor(
     private route: ActivatedRoute,
+    private modalService: BsModalService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
@@ -113,9 +122,16 @@ export class EditProjectComponent implements OnInit {
     submittedProject.longDescription = this.form.controls['longDescription'].value;
     submittedProject.peopleRequired = this.form.controls['peopleRequired'].value;
     submittedProject.workspace = this.project.workspace;
-    submittedProject.ideaHasAnonymousCreator = this.project.ideaHasAnonymousCreator;
-    submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
     submittedProject.organization.id = this.authenticationService.currentOrganizationValue.id;
+
+    // In case of publishing as an IDEA
+    if(status === this.projectStatus.IDEA) {
+      submittedProject.ideaHasAnonymousCreator = this.publishIdeaForm.controls['ideaHasAnonymousCreator'].value;
+      submittedProject.ideaHasLeaderCreator = this.publishIdeaForm.controls['ideaHasLeaderCreator'].value;
+    } else {
+      submittedProject.ideaHasAnonymousCreator = this.project.ideaHasAnonymousCreator;
+      submittedProject.ideaHasLeaderCreator = this.project.ideaHasLeaderCreator;
+    }
 
     if(status !== undefined) {
       submittedProject.status = status;
@@ -131,6 +147,7 @@ export class EditProjectComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.submitting = false;
+            this.publishIdeaModal.hide();
             this.router.navigate(['/projects/' + response.id]);
           },
           complete: () => { },
@@ -145,6 +162,7 @@ export class EditProjectComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.submitting = false;
+            this.publishIdeaModal.hide();
             this.router.navigate(['/projects/' + response.id]);
           },
           complete: () => { },
@@ -167,5 +185,9 @@ export class EditProjectComponent implements OnInit {
           console.error(error);
         }
       });
+  }
+
+  openPublishIdeaModal(template: TemplateRef<string>) {
+    this.publishIdeaModal = this.modalService.show(template);
   }
 }

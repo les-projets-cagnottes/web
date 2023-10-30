@@ -347,7 +347,7 @@
             <div class="form-group has-feedback"
                 [ngClass]="{ 'has-error': contentForm.controls['value'].errors }">
                 <label for="value" i18n="@@content">Content</label>
-                <quill-editor id="content" formControlName="content" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
+                <quill-editor id="content" formControlName="value" (onEditorCreated)="onImageUpload($event)" [sanitize]="true"></quill-editor>
             </div>
         </form>
     </div>

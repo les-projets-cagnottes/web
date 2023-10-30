@@ -52,22 +52,58 @@ export class LoginComponent implements OnInit {
       && !this.router.url.startsWith('/login/ms')) {
       this.redirectUrlMSOAuth = location.href.replace(/\/login.*/, "/login/ms");
     }
-    if(this.router.url.startsWith('/login/slack')) {
+    if (this.router.url.startsWith('/login/slack')) {
       this.redirectUrlSlackOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
       this.loading = true;
       this.authenticationService.slack(this.code, this.redirectUrlSlackOAuth)
-        .subscribe(() => {
-          this.router.navigate([this.returnUrl]);
+        .subscribe({
+          next: () => {
+            this.authenticationService.refresh()
+              .subscribe({
+                next: () => {
+                  this.router.navigate([this.returnUrl]);
+                  this.loading = false;
+                },
+                complete: () => { },
+                error: error => {
+                  console.error(error);
+                  this.loading = false;
+                }
+              });
+          },
+          complete: () => { },
+          error: error => {
+            console.error(error);
+            this.loading = false;
+          }
         });
     }
-    if(this.router.url.startsWith('/login/ms')) {
+    if (this.router.url.startsWith('/login/ms')) {
       this.redirectUrlMSOAuth = encodeURIComponent(location.href.replace(/\?code.*/, "").replace(/&code.*/, ""));
       this.code = this.route.snapshot.queryParams['code'];
       this.loading = true;
       this.authenticationService.microsoft(this.code, this.redirectUrlMSOAuth, this.configService.get('microsoftTenantId'))
-        .subscribe(() => {
-          this.router.navigate([this.returnUrl]);
+        .subscribe({
+          next: () => {
+            this.authenticationService.refresh()
+              .subscribe({
+                next: () => {
+                  this.router.navigate([this.returnUrl]);
+                  this.loading = false;
+                },
+                complete: () => { },
+                error: error => {
+                  console.error(error);
+                  this.loading = false;
+                }
+              });
+          },
+          complete: () => { },
+          error: error => {
+            console.error(error);
+            this.loading = false;
+          }
         });
     }
     this.slackClientId = this.configService.get('slackClientId');
@@ -92,22 +128,26 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     this.authenticationService.login(this.loginForm.controls['email'].value, this.loginForm.controls['password'].value)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.authenticationService.refresh()
-          .subscribe(
-            () => {
-              this.router.navigate([this.returnUrl]);
-              this.loading = false;
-            },
-            error => {
-              console.error(error);
-              this.loading = false;
-            })
+            .subscribe({
+              next: () => {
+                this.router.navigate([this.returnUrl]);
+                this.loading = false;
+              },
+              complete: () => { },
+              error: error => {
+                console.error(error);
+                this.loading = false;
+              }
+            });
         },
-        error => {
+        complete: () => { },
+        error: error => {
           console.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 }

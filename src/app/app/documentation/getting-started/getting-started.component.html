@@ -1,20 +1,19 @@
 <div class="row">
-    <div class="col-9">
+    <div class="col-md-9 order-12 order-md-1">
         <div class="card card-default">
             <div class="card-header with-border">
                 <h3 class="card-title">Documentation : Guide pratique</h3>
             </div>
             <div class="card-body">
-                <h2 id="manage-project">1. Gérer un projet</h2>
-                <h3 id="create-project">1.1. Créer un projet</h3>
+                <h2 id="manage-project">1. Gérer ses idées et projets</h2>
+                <h3 id="create-project">1.1. Créer une idée ou un projet</h3>
                 <p>
-                    N’importe qui peut proposer un projet à l'organisation. Pour cela, rendez-vous une fois identifié
-                    sur <b><a [routerLink]="['/projects/new']">Soumettre mon projet</a></b> et remplissez les champs
-                    requis. A noter qu'il faut au moins 3 personnes dans l'équipe projet (soit 2 en plus du porteur du
-                    projet).
+                    N'importe qui peut proposer un projet à l'organisation. Pour cela, rendez-vous une fois identifié
+                    sur <b><a [routerLink]="['/projects/new']">J'ai une idée</a></b> et remplissez les champs
+                    requis.
                 </p>
                 <p>
-                    Dans l'espace "Présentation Détaillée", veillez à renseigner un maximum d’informations pour
+                    Dans l'espace <b>Présentation Détaillée</b>, veillez à renseigner un maximum d'informations pour
                     convaincre la communauté, notamment :
                 </p>
                 <ul>
@@ -26,27 +25,34 @@
                 <p>
                     Cet espace est le vôtre ! N'hésitez pas à changer la mise en forme comme bon vous semble.
                 </p>
+                <p>Vous aurez la possibilité de créer un <b>Brouillon</b> ou de publier en tant qu'idée.</p>
                 <p>
-                    Une fois créé, le projet est à l'état <b>Brouillon</b>. Tant qu'il est dans cet état, le projet
-                    n'apparaît pas dans la liste des projets en cours mais est accessible si vous communiquez le lien.
-                    Une fois que vous êtes prêts, pensez à <b>Publier</b> le projet.
+                    A l'état <b>Brouillon</b>, un projet n'apparaît pas dans la liste des projets en cours mais est
+                    accessible si vous communiquez le lien. Une fois que vous êtes prêts, pensez à <b>Publier</b> en
+                    tant qu'<b>Idée</b> ou <b>Projet</b>.
                 </p>
+                <p>A l'état <b>Idée</b>, les membres de l'organisation peuvent <b>accorder des votes</b> positifs ou
+                    négatifs.
+                    Cela permet d'afficher un score, révélateur de l'engouement des participants. Si le créateur de
+                    l'idée l'a permis, n'importe qui peut prendre la main sur une idée et lancer son projet à partir de
+                    là.</p>
                 <h3 id="create-campaign">1.2. Créer une campagne de financement</h3>
                 <p>
-                    Une fois que vous avez identifié un besoin de financement, vous pouvez lancer une campagne pour
-                    votre projet. Pour cela, rendez-vous sur la page du projet et cliquez sur le <i
-                        class="fas fa-plus-circle"></i> en haut à droite de la section "Financement". A noter que :
+                    Une fois que vous avez réuni au moins 3 personnes dans l'équipe et que vous avez identifié un besoin
+                    de financement, vous pouvez lancer une campagne pour votre projet. Pour cela, rendez-vous sur la
+                    page du projet et cliquez sur le <i class="fas fa-plus-circle"></i> en haut à droite de la section
+                    "Financement". A noter que :
                 </p>
                 <ul>
                     <li>
-                        Le champ "Date limite de financement" défini combien de temps vous vous donner pour réunir votre
-                        équipe et votre
-                        budget. Passé cette date, 2 possibilités :
+                        La <b>Date limite de financement</b> défini combien de temps vous vous donner pour réunir votre
+                        équipe et votre budget. Passé cette date, 2 possibilités :
                         <ul>
-                            <li>Soit vous avez collecté suffisamment d'argent sur la campagne et le nombre d'équipiers
-                                est supérieur à 3
-                                dans ce cas : la campagne est validée</li>
-                            <li>Soit il manque des membres ou du financement auquel cas la campagne est abandonnée</li>
+                            <li><i class="fas fa-check text-green"></i> Vous avez collecté suffisamment d'argent : la
+                                campagne est validée</li>
+                            <li><i class="fas fa-xmark text-red"></i> Il manque du financement : la campagne est
+                                abandonnée et les contributeurs sont
+                                remboursés</li>
                         </ul>
                     </li>
                     <li>Une fois la campagne lancée, le projet passe automatiquement à l'état <b>En cours</b> et sera
@@ -58,12 +64,18 @@
                 <p>Pour ce faire, rendez-vous sur la page de visualisation d'un projet et cliquez sur le <i
                         class="fas fa-plus-circle"></i> en haut à droite de la section "Actualités". Il suffira alors de
                     saisir le contenu de l'article et un titre.</p>
+                <h3 id="stop-project">1.4. Pause ou clôture</h3>
+                <p>Si pour quelque raison que ce soit, le projet est à l'arrêt, vous pouvez <b>Mettre en pause</b> ou
+                    <b>Clôturer</b> le projet à partir de sa page dédiée. Vous n'êtes pas obligé d'en expliquer les
+                    raisons précises mais pensez à <b>Publier une actualité</b> pour informer les personnes qui vous suivent.
+                </p>
                 <h2 id="contribute-to-a-project">2. Contribuer à un projet</h2>
+                <h3 id="give-pot">2.1. Les cagnottes</h3>
                 <p>
-                    Chaque membre d'une organisation dispose d’une cagnotte dont le montant s’affiche sur son profil.
-                    Pour y accéder, cliquez sur <a [routerLink]="['/profile']">ce lien</a> ou sur votre nom en haut à
-                    gauche. Il est possible de contribuer
-                    de 3 façons à un projet :
+                    Chaque membre d'une organisation dispose d'une cagnotte dont le montant s'affiche sur son profil.
+                    Pour y accéder, rendez-vous <b><a [routerLink]="['/profile']">votre profil</a></b> ou sur votre nom
+                    en haut à
+                    gauche. Il est possible de contribuer de 3 façons à un projet :
                 </p>
                 <ul>
                     <li>en offrant tout ou partie de sa cagnotte</li>
@@ -74,29 +86,30 @@
                 <ol>
                     <li>Dans <b><a [routerLink]="['/projects']">Découvrir les projets</a></b>, cliquez sur le projet que
                         vous souhaitez soutenir</li>
-                    <li>Cliquez sur le bouton "Contribuer financièrement" en face d'une campagne dans la section
+                    <li>Cliquez sur le bouton <b>Contribuer financièrement</b> en face d'une campagne dans la section
                         "Financement"</li>
                     <li>Dans le formulaire qui apparaît, vous pouvez choisir le montant que vous souhaitez donner en
                         remplissant le champ "Montant"</li>
                     <li>Valider en cliquant sur "Envoyer"</li>
-                    <li>Vous pouvez consulter votre contribution et éventuellement la supprimer en vous rendant sur <a
-                            [routerLink]="['/profile']">votre profil.</a></li>
+                    <li>Vous pouvez consulter votre contribution et éventuellement la supprimer en vous rendant sur
+                        <b><a [routerLink]="['/profile']">votre profil</a></b>
+                    </li>
                 </ol>
                 <h3 id="give-time">2.2 Donner du temps au projet</h3>
                 <ol>
                     <li>Dans <b><a [routerLink]="['/projects']">Découvrir les projets</a></b>, cliquez sur le projet que
-                        vous souhaitez soutenir</li>
-                    <li>Cliquez sur le bouton "Rejoindre l'équipe"</li>
-                    <li>Votre inscription apparaît dans la liste des équipiers sur la page du projet ainsi que sur <a
-                            [routerLink]="['/profile']">votre profil.</a></li>
+                        vous souhaitez rejoindre</li>
+                    <li>Cliquez sur le bouton <b>Rejoindre l'équipe</b></li>
+                    <li>Votre inscription apparaît dans la liste des équipiers sur la page du projet ainsi que sur <b><a
+                                [routerLink]="['/profile']">votre profil</a></b></li>
                 </ol>
                 <p>
-                    Vous pouvez vous retirer de l’équipe à tout moment en cliquant sur "Quitter l'équipe".
+                    Vous pouvez vous retirer de l'équipe à tout moment en cliquant sur <b>Quitter l'équipe</b>.
                 </p>
             </div>
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-md-3 order-1 order-md-12">
         <div class="card card-default">
             <div class="card-header with-border">
                 <h3 class="card-title" i18n="@@summary">Summary</h3>
@@ -110,6 +123,7 @@
                             <li><a href="/doc/getting-started#create-campaign">Créer une campagne de financement</a>
                             </li>
                             <li><a href="/doc/getting-started#create-news">Publier des actualités</a></li>
+                            <li><a href="/doc/getting-started#stop-project">Pause ou clôture</a></li>
                         </ol>
                     </li>
                     <li>

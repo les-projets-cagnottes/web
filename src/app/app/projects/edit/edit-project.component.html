@@ -14,7 +14,6 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <!-- general form elements -->
             <div class="card">
                 <div class="card-header with-border">
                     <h3 class="card-title" i18n="@@informations">Informations</h3>
@@ -44,7 +43,7 @@
                         <a *ngIf="id == 0" class="btn btn-app bg-gray" (click)="onSubmit(projectStatus.DRAFT)">
                             <i class="fas fa-save"></i> <span i18n="@@saveAsDraft">Save as draft</span>
                         </a>
-                        <a *ngIf="id == 0" class="btn btn-app bg-yellow" (click)="onSubmit(projectStatus.IDEA)">
+                        <a *ngIf="id == 0" class="btn btn-app bg-yellow" (click)="openPublishIdeaModal(publishIdeaModalRef)">
                             <i class="fas fa-lightbulb"></i> <span i18n="@@editProjectPublishAsIdea">Publish as Idea</span>
                         </a>
                         <a *ngIf="id > 0" class="btn btn-app bg-secondary" (click)="onSubmit()">
@@ -56,3 +55,35 @@
         </div>
     </div>
 </form>
+
+<ng-template #publishIdeaModalRef>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left" i18n="@@publishIdea">Publish the idea</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="publishIdeaModal.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="publishIdeaForm">
+            <div class="form-group">
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="ideaHasAnonymousCreator"
+                        formControlName="ideaHasAnonymousCreator">
+                    <label class="custom-control-label" for="ideaHasAnonymousCreator"
+                        i18n="@@publishIdeaAnonymously">Publish this idea anonymously</label>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="!publishIdeaForm.controls['ideaHasAnonymousCreator'].value">
+                <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                    <input type="checkbox" class="custom-control-input" id="ideaHasLeaderCreator"
+                        formControlName="ideaHasLeaderCreator">
+                    <label class="custom-control-label" for="ideaHasLeaderCreator" i18n="@@userWhantToLeadRealOfIdea">I
+                        want to lead the realization of the idea</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="onSubmit(projectStatus.IDEA)" i18n="@@submit">Submit</button>
+    </div>
+</ng-template>
