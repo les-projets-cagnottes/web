@@ -185,12 +185,17 @@
                     <dd>{{ project.createdAt | date:'medium' }}</dd>
                     <dt i18n="@@viewProjectStatus">Status</dt>
                     <dd [ngSwitch]="project.status">
-                        <span *ngSwitchCase="projectStatus.DRAFT" i18n="@@viewProjectStatusDraft" class="badge bg-gray">Draft</span>
-                        <span *ngSwitchCase="projectStatus.IDEA" i18n="@@viewProjectStatusIdea" class="badge bg-blue">Idea</span>
-                        <span *ngSwitchCase="projectStatus.IN_PROGRESS" i18n="@@viewProjectStatusInProgress" class="badge bg-yellow">In
+                        <span *ngSwitchCase="projectStatus.DRAFT" i18n="@@viewProjectStatusDraft"
+                            class="badge bg-gray">Draft</span>
+                        <span *ngSwitchCase="projectStatus.IDEA" i18n="@@viewProjectStatusIdea"
+                            class="badge bg-blue">Idea</span>
+                        <span *ngSwitchCase="projectStatus.IN_PROGRESS" i18n="@@viewProjectStatusInProgress"
+                            class="badge bg-yellow">In
                             Progress</span>
-                        <span *ngSwitchCase="projectStatus.ON_PAUSE" i18n="@@viewProjectStatusOnPause" class="badge bg-gray">On Pause</span>
-                        <span *ngSwitchCase="projectStatus.FINISHED" i18n="@@viewProjectStatusFinished" class="badge bg-green">Finished</span>
+                        <span *ngSwitchCase="projectStatus.ON_PAUSE" i18n="@@viewProjectStatusOnPause"
+                            class="badge bg-gray">On Pause</span>
+                        <span *ngSwitchCase="projectStatus.FINISHED" i18n="@@viewProjectStatusFinished"
+                            class="badge bg-green">Finished</span>
                     </dd>
                     <dt *ngIf="project.status === projectStatus.IN_PROGRESS || project.status === projectStatus.FINISHED"
                         i18n="@@peopleNeeded">People needed</dt>
@@ -484,9 +489,7 @@
                                     Deadline</label>
                                 <div class="input-group date" id="fundingDeadline">
                                     <input type="date" class="form-control datetimepicker-input"
-                                        formControlName="fundingDeadline"
-                                        value="{{ fundingDeadlineValue | date:'yyyy-MM-dd' }}"
-                                        min="{{ now | date:'yyyy-MM-dd' }}"
+                                        formControlName="fundingDeadline" min="{{ now | date:'yyyy-MM-dd' }}"
                                         max="{{ nowPlus3Months | date:'yyyy-MM-dd' }}"
                                         [ngClass]="{ 'is-invalid': fFunding['fundingDeadline'].errors }" />
                                 </div>
@@ -638,3 +641,21 @@
         </div>
     </div>
 </ng-template>
+
+<div class="toasts-top-right fixed" *ngIf="showConfirmContributingToast">
+    <div class="toast bg-success fade show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header"><strong class="mr-auto">Merci</strong><button
+                data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span
+                    aria-hidden="true">×</span></button></div>
+        <div class="toast-body">Votre contribution a été prise en compte. Patientez et rafraîchissez la page.</div>
+    </div>
+</div>
+
+<div class="toasts-top-right fixed" *ngIf="showConfirmDeleteDonationToast">
+    <div class="toast bg-success fade show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header"><strong class="mr-auto">Merci</strong><button
+                data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span
+                    aria-hidden="true">×</span></button></div>
+        <div class="toast-body">Votre contribution va être supprimée. Patientez et rafraîchissez la page.</div>
+    </div>
+</div>

@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
 
   // Contributions Tab
   deleteDonationsStatus: string[] = [];
+  showConfirmDeleteDonationToast = false;
 
   // Settings Tab
   editUserForm = this.fb.group({
@@ -77,7 +78,7 @@ export class ProfileComponent implements OnInit {
     this.donations = new Map<number, Donation>();
     this.projects = new Map<number, Project>();
     this.organizations = new Map<number, Organization>();
-    
+
     var now = new Date();
 
     this.organizationService.getBudgets(this.organization.id)
@@ -150,13 +151,20 @@ export class ProfileComponent implements OnInit {
 
   deleteDonations(donation: Donation) {
     this.donationService.delete(donation.id)
-      .subscribe(() => {
-        this.refresh();
-      },
-        error => {
+      .subscribe({
+        next: () => { },
+        complete: () => {
+          this.refresh();
+          this.showConfirmDeleteDonationToast = true;
+          setTimeout(() => {
+            this.showConfirmDeleteDonationToast = false;
+          }, 5000);
+        },
+        error: error => {
           console.log(error);
           this.deleteDonationsStatus[donation.id] = 'error';
-        });
+        }
+      });
   }
 
   generateApiToken(template: TemplateRef<string>) {
@@ -236,10 +244,10 @@ export class ProfileComponent implements OnInit {
     return 100 * number / max;
   }
 
-  
+
   getAccount(id: number): Account {
     let entity = this.accounts.get(id);
-    if(entity === undefined) {
+    if (entity === undefined) {
       entity = new Account();
     }
     return entity;
@@ -247,7 +255,7 @@ export class ProfileComponent implements OnInit {
 
   getBudget(id: number): Budget {
     let entity = this.budgets.get(id);
-    if(entity === undefined) {
+    if (entity === undefined) {
       entity = new Budget();
     }
     return entity;
@@ -255,7 +263,7 @@ export class ProfileComponent implements OnInit {
 
   getCampaign(id: number): Campaign {
     let entity = this.campaigns.get(id);
-    if(entity === undefined) {
+    if (entity === undefined) {
       entity = new Campaign();
     }
     return entity;
@@ -263,7 +271,7 @@ export class ProfileComponent implements OnInit {
 
   getProject(id: number): Project {
     let entity = this.projects.get(id);
-    if(entity === undefined) {
+    if (entity === undefined) {
       entity = new Project();
     }
     return entity;

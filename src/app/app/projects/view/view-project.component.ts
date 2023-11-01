@@ -60,6 +60,7 @@ export class ViewProjectComponent implements OnInit {
   donationForm = this.formBuilder.group({
     amount: [10, [Validators.min(0), Validators.max(0)]]
   });
+  showConfirmContributingToast = false;
 
   // Funding Modal
   private campaign = new CampaignModel();
@@ -84,6 +85,7 @@ export class ViewProjectComponent implements OnInit {
   donationsLength = 10;
   donationsSyncStatus = 'idle';
   deleteDonationsStatus: string[] = [];
+  showConfirmDeleteDonationToast = false;
 
   // Rules Modal
   viewRulesModal = new BsModalRef();
@@ -322,13 +324,19 @@ export class ViewProjectComponent implements OnInit {
     donation.account = this.account;
 
     this.donationService.create(donation)
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.contributeFinanciallyModalRef.hide();
+          this.showConfirmContributingToast = true;
+          setTimeout(() => {
+            this.showConfirmContributingToast = false;
+          }, 5000);
         },
-        error => {
+        complete: () => { },
+        error: error => {
           console.log(error);
-        });
+        }
+      });
   }
 
   refreshBudgets() {
@@ -356,7 +364,7 @@ export class ViewProjectComponent implements OnInit {
     this.formFunding.controls['daysRequired'].setValue(0);
     this.formFunding.controls['hoursRequired'].setValue(0);
     this.nowPlus3Months.setMonth(this.now.getMonth() + 3);
-    this.fundingDeadlineValue.setMonth(this.now.getMonth() + 1);
+    this.campaign.fundingDeadline.setMonth(this.now.getMonth() + 1);
     this.openFundingModal(template);
   }
 
@@ -459,7 +467,11 @@ export class ViewProjectComponent implements OnInit {
       .subscribe({
         next: () => { },
         complete: () => {
-          this.refreshDonations(this.viewDonationsSelectedCampaign.id, this.donationsPager.currentPage);
+          this.viewDonationsModal.hide();
+          this.showConfirmDeleteDonationToast = true;
+          setTimeout(() => {
+            this.showConfirmDeleteDonationToast = false;
+          }, 5000);
         },
         error: error => {
           console.log(error);

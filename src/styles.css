@@ -65,3 +65,8 @@ a.disabled {
 .bold {
     font-weight: bold;
 }
+
+.toasts-top-right {
+    top: 1em;
+    right: 1em;
+}
